@@ -26,7 +26,7 @@ public class FreemarkerFilter implements Filter {
 	 private Locale locale;
 	public void init(FilterConfig filterConfig) throws ServletException {
 		String localeStr = filterConfig.getInitParameter("locale");
-        if(com.rpframework.utils.StringUtils.isNotBlank(localeStr)){
+        if(StringUtils.isNotBlank(localeStr)){
             locale = new Locale(localeStr);
         }else {
             locale = Locale.getDefault();
