@@ -24,11 +24,6 @@
     	<version>1.0</version>
     </dependency>
     <dependency>
-    	<groupId>com.rpframework.module.test</groupId>
-    	<artifactId>test-module</artifactId>
-    	<version>1.0</version>
-    </dependency>
-    <dependency>
     	<groupId>com.rpframework</groupId>
     	<artifactId>admin-base-module</artifactId>
     	<version>1.0</version>
