@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import com.rpframework.core.freemarker.directive.BaseTemplateDirectiveModel;
 import com.rpframework.core.freemarker.directive.DirectiveUtils;
 import com.rpframework.core.utils.SpringUtils;
+import com.rpframework.core.utils.cache.CacheUtils;
 import com.rpframework.module.adminbase.act.AdminBaseAct;
 import com.rpframework.module.adminbase.domain.AdminAuthRes;
 import com.rpframework.module.adminbase.domain.AdminMenu;
@@ -20,6 +21,8 @@ import com.rpframework.module.adminbase.event.RoleAdminAuthResVerifyEvent;
 import com.rpframework.module.adminbase.service.AdminAuthResService;
 import com.rpframework.module.adminbase.service.AdminMenuService;
 import com.rpframework.module.adminbase.service.AdminRoleService;
+import com.rpframework.module.adminbase.utils.cache.RoleAdminAuthResCache;
+import com.rpframework.utils.CollectionUtils;
 
 import freemarker.core.Environment;
 import freemarker.template.ObjectWrapper;
@@ -68,13 +71,25 @@ public class AdminBaseTemplateDirectiveModel extends BaseTemplateDirectiveModel 
 			paramWarp.put("ar_list", ObjectWrapper.DEFAULT_WRAPPER.wrap(list));
 		} else if(StringUtils.equals(cmd, AD_ROLE_HAS_PERM)) {
 			AdminRole adminRole = DirectiveUtils.getObject("adminRole", params);
-			String uri = DirectiveUtils.getString("uri", params);
-			
-			if(StringUtils.isBlank(uri)) {
-				
+			if(adminRole == null) {
+				pass = false;
 			} else {
-				pass = roleAdminAuthResVerifyEvent.checkRoleLimit(adminRole, uri);
+				Integer adminAuthResId = DirectiveUtils.getInt("adminAuthResId", params);
+				RoleAdminAuthResCache cache = CacheUtils.getIntance().get2(RoleAdminAuthResCache.k);
+				
+				List<AdminAuthRes> list = cache.getByRoleId(adminRole.getId());
+				
+				pass = false;
+				if(CollectionUtils.isNotEmpty(list)) {
+					for (AdminAuthRes adminAuthRes : list) {
+						if(adminAuthResId == adminAuthRes.getId()) {
+							pass = true;
+							break;
+						}
+					}
+				}
 			}
+			
 		}
 		
 		Map origWarp = DirectiveUtils.addParamsToVariable(env, paramWarp);

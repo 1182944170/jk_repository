@@ -1,5 +1,6 @@
 package com.rpframework.module.adminbase.act;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -15,15 +16,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.rpframework.core.utils.cache.CacheUtils;
 import com.rpframework.module.adminbase.domain.AdminRole;
 import com.rpframework.module.adminbase.exception.AdminIllegalArgumentException;
 import com.rpframework.module.adminbase.service.AdminRoleService;
+import com.rpframework.module.adminbase.service.RoleAdminAuthResService;
+import com.rpframework.module.adminbase.utils.cache.RoleAdminAuthResCache;
+import com.rpframework.utils.CollectionUtils;
 import com.rpframework.utils.NumberUtils;
 
 @Controller
 @RequestMapping("/admin/adminrole")
 public class AdminRoleAct extends AdminBaseAct {
 	@Resource AdminRoleService adminRoleService;
+	@Resource RoleAdminAuthResService roleAdminAuthResService;
 	
 	@RequestMapping("/list")
 	public String list(Map<Object, Object> model, RedirectAttributes attr){
@@ -62,7 +68,7 @@ public class AdminRoleAct extends AdminBaseAct {
 	}
 	
 	@RequestMapping("/dosave")
-	public String doSaveOrUpdate(@ModelAttribute AdminRole adminRole, @RequestParam String roleAdminAuthResArrString, HttpSession session, HttpServletRequest request,RedirectAttributes attr){
+	public String doSaveOrUpdate(@ModelAttribute AdminRole adminRole, @RequestParam(value="adminRoleCheck", required=false) List<Integer> roleAdminAuthList, HttpSession session, HttpServletRequest request,RedirectAttributes attr){
 		if(adminRole == null || StringUtils.isBlank(adminRole.getName())) {
 			throw new AdminIllegalArgumentException("参数异常!");
 		}
@@ -72,6 +78,14 @@ public class AdminRoleAct extends AdminBaseAct {
 		} else {
 			adminRoleService.adminRoleDao.insert(adminRole);
 		}
+		
+		if(CollectionUtils.isEmpty(roleAdminAuthList)) {
+			roleAdminAuthList = new ArrayList<Integer>();
+		}
+		
+		roleAdminAuthResService.resetRoleAdminAuthRes(adminRole, roleAdminAuthList);
+		CacheUtils.getIntance().reInit(RoleAdminAuthResCache.k);
+		
 		setInfoMsg("操作成功！", attr);
 		return redirect("/admin/adminrole/list");
 	}

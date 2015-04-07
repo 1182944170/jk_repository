@@ -31,17 +31,18 @@ public class RoleAdminAuthResCache extends CacheObj {
 	}
 	
 	public List<AdminAuthRes> getAllRes() {
+		this.getV();
 		return all;
 	}	
-	public List<AdminAuthRes> getByRoleId(long roleId) {
-		Map<Long, List<AdminAuthRes>> m = getAdminRes();
+	public List<AdminAuthRes> getByRoleId(int roleId) {
+		Map<Integer, List<AdminAuthRes>> m = getAdminRes();
 		if(CollectionUtils.isEmpty(m))
 			return null;
 		return m.get(roleId);
 	}
 	
-	public Map<Long, List<AdminAuthRes>> getAdminRes() {
-		Map<Long, List<AdminAuthRes>> m = super.getV();
+	public Map<Integer, List<AdminAuthRes>> getAdminRes() {
+		Map<Integer, List<AdminAuthRes>> m = super.getV();
 		return m;
 	}
 	@Override

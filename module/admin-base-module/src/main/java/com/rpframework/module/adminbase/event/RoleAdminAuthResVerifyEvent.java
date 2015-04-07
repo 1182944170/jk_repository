@@ -60,7 +60,6 @@ public class RoleAdminAuthResVerifyEvent {
 			return false;
 		}
 		RoleAdminAuthResCache cache = CacheUtils.getIntance().get2(RoleAdminAuthResCache.k);
-		cache.getV();
 		if(isExits(uri, cache.getByRoleId(adminRole.getId()))) { //如果uri包括在这角色的资源映射里面的话
 			return true;
 		}
@@ -76,7 +75,6 @@ public class RoleAdminAuthResVerifyEvent {
 
 	public boolean isExits(String uri) {
 		RoleAdminAuthResCache cache = CacheUtils.getIntance().get2(RoleAdminAuthResCache.k);
-		cache.getV();
 		if(isExits(uri, cache.getAllRes())) {
 			return true;
 		}

@@ -18,4 +18,6 @@ public interface IRoleAdminAuthResDao extends IDao {
 	List<RoleAdminAuthRes> getRoleAdminAuthResList(Integer adminRoleId);
 	List<RoleAdminAuthRes> findAllRoleAdminAuthRes();
 	List<RoleAdminAuthRes> getRoleAdminAuthResListByAdminAuthResId(Integer adminAuthResId);
+	boolean deleteByRoleId(Integer roleId);
+	boolean deleteByAdminAuthResId(Integer adminAuthResId);
 }

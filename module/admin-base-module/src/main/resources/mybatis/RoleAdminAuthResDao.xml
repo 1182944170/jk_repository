@@ -19,6 +19,12 @@
 	<select id="findAllRoleAdminAuthRes" resultMap="roleAdminAuthRes">
 		select * from role_admin_auth_res where 1=1
 	</select>
+	<delete id="deleteByRoleId" parameterType="Integer">
+		delete from role_admin_auth_res where adminRoleId=#{adminRoleId}
+	</delete>
+	<delete id="deleteByAdminAuthResId" parameterType="Integer">
+		delete from role_admin_auth_res where adminAuthResId=#{adminAuthResId}
+	</delete>
 	
 	<update id="update" parameterType="com.rpframework.module.adminbase.domain.RoleAdminAuthRes" />
 	<insert id="insert" parameterType="com.rpframework.module.adminbase.domain.RoleAdminAuthRes" useGeneratedKeys="true" keyProperty="id"/>

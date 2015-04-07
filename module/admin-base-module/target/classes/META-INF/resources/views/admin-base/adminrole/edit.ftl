@@ -66,13 +66,13 @@
 			<#list ar_list as vo>
 			<div>
 			<span class="blue bigger-150">${vo.name}&nbsp;&nbsp;</span>
-			<input name="adminRoleCheck" type="checkbox" value="${vo.id}" <@admin_perm cmd="ad_role_has_perm" adminRole=adminRole uri=vo.path> checked="checked" </@admin_perm>/>
+			<input name="adminRoleCheck" type="checkbox" value="${vo.id}" <@admin_perm cmd="ad_role_has_perm" adminRole=adminRole adminAuthResId=vo.id> checked="checked" </@admin_perm>/>
 			<#if vo.children?has_content>
 				<div>
 					<#list vo.children as voChild>
 					<span>
 						<span class="green bigger-110">&nbsp;&nbsp;&nbsp;&nbsp;${voChild.name}&nbsp;&nbsp;</span>
-						<input name="adminRoleCheck" type="checkbox" value="${voChild.id}" <@admin_perm cmd="ad_role_has_perm" adminRole=adminRole uri=vo.path> checked="checked" </@admin_perm>/>
+						<input name="adminRoleCheck" type="checkbox" value="${voChild.id}" <@admin_perm cmd="ad_role_has_perm" adminRole=adminRole adminAuthResId=voChild.id> checked="checked" </@admin_perm>/>
 					</span>
 					</#list>
 				</div>
@@ -168,18 +168,18 @@ $(document).ready(function(){
 		},
 		
 		submitHandler: function(form) {
-			
+			/**
 			var isSuper = $("#isSuper").val();
 			if(isSuper != 1) {
-				var roleAdminAuthResArrString = "";
+				var roleAdminAuthResArrString = [];
 				$("input[name='adminRoleCheck'][type='checkbox']").each(function(){
 					if(this.checked) {
-						roleAdminAuthResArrString += this.value + ",";
+						roleAdminAuthResArrString.push(this.value);
 					}
 				});
 				form.roleAdminAuthResArrString.value = roleAdminAuthResArrString;
 			}
-			
+			**/
 			RP.Form.submitHandler(form);
 		}
 	});

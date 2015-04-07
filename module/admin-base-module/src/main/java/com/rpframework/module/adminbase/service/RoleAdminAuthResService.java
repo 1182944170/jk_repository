@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.rpframework.core.BaseService;
 import com.rpframework.module.adminbase.dao.IRoleAdminAuthResDao;
+import com.rpframework.module.adminbase.domain.AdminAuthRes;
+import com.rpframework.module.adminbase.domain.AdminRole;
 import com.rpframework.module.adminbase.domain.RoleAdminAuthRes;
 import com.rpframework.utils.CollectionUtils;
 
@@ -43,5 +45,25 @@ public class RoleAdminAuthResService extends BaseService {
 			}
 		}
 		return ret;
+	}
+
+	public boolean resetRoleAdminAuthRes(AdminRole adminRole, List<Integer> roleAdminAuthList) {
+		roleAdminAuthResDao.deleteByRoleId(adminRole.getId());
+		if(CollectionUtils.isNotEmpty(roleAdminAuthList)) {
+			RoleAdminAuthRes roleAdminAuthRes;
+			AdminAuthRes adminAuthRes;
+			for (Integer adminAuthResId : roleAdminAuthList) {
+				roleAdminAuthRes = new RoleAdminAuthRes();
+				adminAuthRes = new AdminAuthRes();
+				adminAuthRes.setId(adminAuthResId);
+				
+				roleAdminAuthRes.setAdminAuthRes(adminAuthRes);
+				roleAdminAuthRes.setAdminRole(adminRole);
+				
+				this.roleAdminAuthResDao.insert(roleAdminAuthRes);
+			}
+		}
+		
+		return true;
 	}
 }
