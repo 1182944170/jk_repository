@@ -18,7 +18,7 @@
 
 		<!-- fonts -->
 
-		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,300" />
+		<link rel="stylesheet" href="${ctx}/resources/cssframework/ace/css/open_Sans.css" />
 
 		<!-- ace styles -->
 
