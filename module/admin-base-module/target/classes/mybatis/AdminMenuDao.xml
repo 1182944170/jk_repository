@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.module.adminbase.dao.IAdminMenuDao">
+
+	<resultMap type="com.rpframework.module.adminbase.domain.AdminMenu" id="adminMenu">
+		<id property="id" column="id" />
+		<result property="menuName" column="menuName" />
+		<result property="linkUrl" column="linkUrl" />
+		<result property="icon" column="icon" />
+		<result property="orderIndex" column="orderIndex" />
+		<result property="state" column="state" />
+
+		<association property="parent" column="parentId" select="select" fetchType="eager" />
+		<collection property="children" column="id" fetchType="eager" select="getMenuListByParentId" />
+	</resultMap>
+
+	<select id="getMenuListByParentId" parameterType="Integer" resultMap="adminMenu">
+		select * from admin_menu where 1=1 
+		<choose>
+            <when test="_parameter>0">
+				and parentId=#{parentId}
+            </when>
+            <otherwise>
+				and parentId is NULL
+            </otherwise>
+        </choose>
+        
+        order by orderIndex
+	</select>
+	
+	<update id="update" parameterType="com.rpframework.module.adminbase.domain.AdminMenu" />
+	<insert id="insert" parameterType="com.rpframework.module.adminbase.domain.AdminMenu" useGeneratedKeys="true" keyProperty="id"/>
+	<delete id="delete" parameterType="com.rpframework.module.adminbase.domain.AdminMenu" />
+	<select id="select" parameterType="Integer" resultMap="adminMenu">
+		select * from admin_menu where id=#{id}
+	</select>
+</mapper>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.module.adminbase.dao.IRoleAdminAuthResDao">
+
+	<resultMap type="com.rpframework.module.adminbase.domain.RoleAdminAuthRes" id="roleAdminAuthRes">
+		<id property="id" column="id"/>
+		<association property="adminRole" column="adminRoleId" select="com.rpframework.module.adminbase.dao.IAdminRoleDao.select" fetchType="eager"/>
+		<association property="adminAuthRes" column="adminAuthResId" select="com.rpframework.module.adminbase.dao.IAdminAuthResDao.select" fetchType="eager"/>
+	</resultMap>
+	
+	<select id="getRoleAdminAuthResList" parameterType="Integer" resultMap="roleAdminAuthRes">
+		select * from role_admin_auth_res where 1=1 and adminRoleId=#{adminRoleId}
+	</select>
+	<select id="getRoleAdminAuthResListByAdminAuthResId" parameterType="Integer" resultMap="roleAdminAuthRes">
+		select * from role_admin_auth_res where 1=1 and adminAuthResId=#{adminAuthResId}
+	</select>
+	
+	<select id="findAllRoleAdminAuthRes" resultMap="roleAdminAuthRes">
+		select * from role_admin_auth_res where 1=1
+	</select>
+	
+	<update id="update" parameterType="com.rpframework.module.adminbase.domain.RoleAdminAuthRes" />
+	<insert id="insert" parameterType="com.rpframework.module.adminbase.domain.RoleAdminAuthRes" useGeneratedKeys="true" keyProperty="id"/>
+	<delete id="delete" parameterType="com.rpframework.module.adminbase.domain.RoleAdminAuthRes" />
+	<select id="select" parameterType="Integer" resultMap="roleAdminAuthRes">
+		select * from role_admin_auth_res where id=#{id}
+	</select>
+</mapper>

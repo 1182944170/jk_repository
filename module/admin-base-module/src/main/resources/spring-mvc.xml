@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 查找最新的schemaLocation 访问 http://www.springframework.org/schema/ -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop   
+        http://www.springframework.org/schema/aop/spring-aop-4.0.xsd   
+        http://www.springframework.org/schema/beans   
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd   
+        http://www.springframework.org/schema/context   
+        http://www.springframework.org/schema/context/spring-context-4.0.xsd   
+        http://www.springframework.org/schema/mvc   
+        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd   
+        http://www.springframework.org/schema/tx   
+        http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+	<!-- 指定Sping组件扫描的基本包路径 -->
+	<context:component-scan base-package="com.rpframework.module.adminbase" />
+	
+	<mvc:interceptors>  
+    <mvc:interceptor>  
+        <mvc:mapping path="/admin/**"/>
+        <mvc:exclude-mapping path="/admin"/>
+        <mvc:exclude-mapping path="/admin/login"/>
+        <mvc:exclude-mapping path="/admin/dologin"/>
+        <!-- 定义在mvc:interceptor下面的表示是对特定的请求才进行拦截的 -->  
+        <bean class="com.rpframework.module.adminbase.springmvc.Interceptor.AdminInterceptor"/>  
+    </mvc:interceptor>  
+</mvc:interceptors>
+</beans>  
