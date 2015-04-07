@@ -53,6 +53,7 @@
 			<#if menu1.children?has_content>
 			<ul class="submenu">
 				<#list menu1.children as menu2>
+				<@admin_perm uri=menu2.linkUrl>
 				<li <#if menuWasContain2(menu2,tempURI)>class="active"</#if>>
 					<a href="${ctx}/${menu2.linkUrl}">
 						<#if menu2.icon?has_content>
@@ -64,6 +65,7 @@
 						 ${menu2.menuName} 
 					</a>
 				</li>
+				</@admin_perm>
 				</#list>
 			</ul>
 			</#if>

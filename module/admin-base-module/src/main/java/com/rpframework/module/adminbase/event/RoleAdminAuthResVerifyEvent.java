@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.AntPathMatcher;
 
 import com.rpframework.core.utils.cache.CacheUtils;
 import com.rpframework.module.adminbase.domain.AdminAuthRes;
@@ -12,7 +13,6 @@ import com.rpframework.module.adminbase.domain.AdminRole;
 import com.rpframework.module.adminbase.domain.AdminUser;
 import com.rpframework.module.adminbase.utils.cache.RoleAdminAuthResCache;
 import com.rpframework.utils.CollectionUtils;
-import com.rpframework.utils.NumberUtils;
 
 /**  
  * title: AdminAuthResVerifyEvent.java 
@@ -26,6 +26,11 @@ import com.rpframework.utils.NumberUtils;
  */  
 
 public class RoleAdminAuthResVerifyEvent {
+	AntPathMatcher antPathMatcher = null;
+	
+	public RoleAdminAuthResVerifyEvent(){
+		antPathMatcher = new AntPathMatcher();
+	}
 	final Logger logger = LoggerFactory.getLogger(getClass());
 	public boolean checkLimit(AdminUser au, String uri) {
 		//验证是否有权限操作逻辑
@@ -87,16 +92,23 @@ public class RoleAdminAuthResVerifyEvent {
 			return false;
 		}
 		
+		
 		for (AdminAuthRes ar : l) {
-//			logger.info("-----------------------{}, {}, {}",ar.getName(), ar.getPath());
-			//
-//			System.out.println(uri);
-			if(NumberUtils.parseInt(uri.substring(uri.length() - 1), -1) != -1) {
-				if(uri.equals(ar.getPath())) {
-					return true;
+			if(StringUtils.indexOf(ar.getPath(), uri) >= 0) {
+				return true;
+			} else {
+				if(StringUtils.indexOf(ar.getPath(), ".") > 0) {
+					String[] arrString = ar.getPath().split(".");
+					for (String subPath : arrString) {
+						if(antPathMatcher.match(subPath, uri)) {
+							return true;
+						}
+					}
+				} else {
+					if(antPathMatcher.match(ar.getPath(), uri)) {
+						return true;
+					}
 				}
-			} else if(StringUtils.indexOf(ar.getPath(), uri) >= 0) {
-					return true;
 			}
 		}
 		return false;

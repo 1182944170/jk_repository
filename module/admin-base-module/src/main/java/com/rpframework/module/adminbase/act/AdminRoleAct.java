@@ -75,6 +75,11 @@ public class AdminRoleAct extends AdminBaseAct {
 		
 		if(NumberUtils.isValid(adminRole.getId())) {//update
 			adminRoleService.adminRoleDao.update(adminRole);
+			
+			//如果修改的是正在登陆的，则同步
+			if(adminRole.getId().equals(super.getSessionAdminUser(session).getAdminRole().getId())) {
+				super.getSessionAdminUser(session).setAdminRole(adminRole);
+			}
 		} else {
 			adminRoleService.adminRoleDao.insert(adminRole);
 		}
