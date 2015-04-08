@@ -1,4 +1,4 @@
-package com.rpframework.module.adminbase.springmvc.Interceptor;
+package com.rpframework.module.adminbase.springmvc.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

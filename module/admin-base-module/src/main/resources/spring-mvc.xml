@@ -18,13 +18,13 @@
 	<context:component-scan base-package="com.rpframework.module.adminbase" />
 	
 	<mvc:interceptors>  
-    <mvc:interceptor>  
-        <mvc:mapping path="/admin/**"/>
-        <mvc:exclude-mapping path="/admin"/>
-        <mvc:exclude-mapping path="/admin/login"/>
-        <mvc:exclude-mapping path="/admin/dologin"/>
-        <!-- 定义在mvc:interceptor下面的表示是对特定的请求才进行拦截的 -->  
-        <bean class="com.rpframework.module.adminbase.springmvc.Interceptor.AdminInterceptor"/>  
-    </mvc:interceptor>  
-</mvc:interceptors>
+	    <mvc:interceptor>  
+	        <mvc:mapping path="/admin/**"/>
+	        <mvc:exclude-mapping path="/admin"/>
+	        <mvc:exclude-mapping path="/admin/login"/>
+	        <mvc:exclude-mapping path="/admin/dologin"/>
+	        <!-- 定义在mvc:interceptor下面的表示是对特定的请求才进行拦截的 -->  
+	        <bean class="com.rpframework.module.adminbase.springmvc.interceptor.AdminInterceptor"/>  
+	    </mvc:interceptor>  
+	</mvc:interceptors>
 </beans>  

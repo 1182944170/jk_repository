@@ -6,6 +6,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 public class BaseAct {
+	public static final String SESSION_ADMIN_USER_KEY = "sessionAdminUser";
+	public static final String SESSION_USER_KEY = "sessionUser";
 	private String errorMsg = "";
 	private String infoMsg = "";
 	

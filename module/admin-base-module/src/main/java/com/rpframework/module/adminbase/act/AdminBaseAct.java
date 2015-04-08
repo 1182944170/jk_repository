@@ -7,8 +7,6 @@ import com.rpframework.module.adminbase.domain.AdminUser;
 
 public class AdminBaseAct extends BaseModuleAct {
 	
-	public static final String SESSION_ADMIN_USER_KEY = "sessionAdminUser";
-
 	public AdminUser getSessionAdminUser(HttpSession session){
 		Object attribute = session.getAttribute(SESSION_ADMIN_USER_KEY);
 		if(attribute == null) {
