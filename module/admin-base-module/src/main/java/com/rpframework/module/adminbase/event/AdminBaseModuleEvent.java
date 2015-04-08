@@ -5,13 +5,13 @@ import javax.servlet.ServletContext;
 import org.sitemesh.builder.SiteMeshFilterBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import com.rpframework.core.event.IModuleEvent;
 import com.rpframework.core.utils.cache.CacheUtils;
 import com.rpframework.module.adminbase.utils.cache.RoleAdminAuthResCache;
 
-@Service
+@Component
 public class AdminBaseModuleEvent implements IModuleEvent {
 	final Logger logger = LoggerFactory.getLogger(getClass());
 	/**

@@ -2,6 +2,7 @@ package com.rpframework.website.xtexam.springmvc.interceptor;
 
 import java.util.Date;
 
+import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,12 +18,16 @@ import com.rpframework.website.xtexam.exception.NoLoginException;
 import com.rpframework.website.xtexam.utils.XTExamConfig;
 
 public class XTExamApiInterceptor implements HandlerInterceptor {
-	XTExamConfig xtExamConfig = SpringUtils.getBean(XTExamConfig.class);
-	TokenUtils tokenUtils = new TokenUtils(xtExamConfig.tokenkey);
+	XTExamConfig xtExamConfig = null;
+	TokenUtils tokenUtils = null;
 	final Logger logger = LoggerFactory.getLogger(getClass());
 	@Override
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler) throws Exception {
+		if(xtExamConfig == null) {
+			xtExamConfig = SpringUtils.getBean(XTExamConfig.class);
+			tokenUtils = new TokenUtils(xtExamConfig.tokenkey);
+		}
 //		logger.info("preHandle....");
 //		Object adminUserObj = request.getSession().getAttribute(BaseAct.SESSION_ADMIN_USER_KEY);
 //		if(adminUserObj == null) {

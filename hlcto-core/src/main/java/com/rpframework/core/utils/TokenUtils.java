@@ -2,9 +2,8 @@ package com.rpframework.core.utils;
 
 import java.util.Date;
 
-import junit.framework.Assert;
-
 import org.apache.commons.lang.time.FastDateFormat;
+import org.springframework.util.Assert;
 
 import com.google.common.base.Charsets;
 import com.google.common.hash.Hashing;
@@ -13,7 +12,7 @@ public class TokenUtils {
 	private String privateKey = "fdas34ljfr好sja@#8$%dfkl;js&4*daklfjsdl;akfjsa342";
 
 	public TokenUtils(String privateKey) {
-		Assert.assertNotNull(privateKey, "密钥不能为nil.");
+		Assert.notNull(privateKey, "密钥不能为nil.");
 		this.privateKey = privateKey;
 	}
 	public String getToken(String password, String date) {

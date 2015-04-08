@@ -25,5 +25,10 @@
   </modules>
   <properties>
   	<spring-version>4.1.5.RELEASE</spring-version>
+  	<java.version>1.7</java.version>
   </properties>
+
+ <build>
+   
+  </build>
 </project>
