@@ -26,11 +26,11 @@
 	</modules>
 	<properties>
 		<spring-version>4.1.5.RELEASE</spring-version>
-		<!-- <java-version>1.7</java-version>
-		<encoding>UTF-8</encoding> -->
+		<java-version>1.7</java-version>
+		<encoding>UTF-8</encoding>
 	</properties>
 
-	<!--<build>
+	<!-- <build>
 		 <plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -42,6 +42,5 @@
 				</configuration>
 			</plugin>
 		</plugins> 
-
-	</build>-->
+	</build> -->
 </project>
