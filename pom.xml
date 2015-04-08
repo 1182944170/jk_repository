@@ -26,9 +26,25 @@
   <properties>
   	<spring-version>4.1.5.RELEASE</spring-version>
   	<java.version>1.7</java.version>
+  	<encoding>UTF-8</encoding>
   </properties>
 
  <build>
-   
+  <!-- <plugins>
+	<plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.3</version>
+        <configuration>
+          <compilerId>eclipse</compilerId>
+        </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>plexus-compiler-eclipse</groupId>
+            <artifactId>plexus-compiler-csharp</artifactId>
+            <version>1.6</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+</plugins> -->
   </build>
 </project>
