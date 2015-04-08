@@ -41,7 +41,7 @@
           <dependency>
             <groupId>plexus-compiler-eclipse</groupId>
             <artifactId>plexus-compiler-csharp</artifactId>
-            <version>1.6</version>
+            <version>${java.version}</version>
           </dependency>
         </dependencies>
       </plugin>
