@@ -21,5 +21,6 @@
   <modules>
     <module>testwebsite</module>
     <module>xuetian-exam</module>
+    <module>edongwang</module>
   </modules>
 </project>
