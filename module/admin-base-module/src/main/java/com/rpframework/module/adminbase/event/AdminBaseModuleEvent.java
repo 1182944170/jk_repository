@@ -1,5 +1,10 @@
 package com.rpframework.module.adminbase.event;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.ServletContext;
 
 import org.sitemesh.builder.SiteMeshFilterBuilder;
@@ -8,8 +13,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.rpframework.core.event.IModuleEvent;
+import com.rpframework.core.utils.DictionarySettingUtils;
+import com.rpframework.core.utils.SpringUtils;
 import com.rpframework.core.utils.cache.CacheUtils;
+import com.rpframework.core.utils.cache.KVObj;
+import com.rpframework.module.adminbase.domain.Dictionary;
+import com.rpframework.module.adminbase.service.DictionaryService;
 import com.rpframework.module.adminbase.utils.cache.RoleAdminAuthResCache;
+import com.rpframework.utils.CollectionUtils;
 
 @Component
 public class AdminBaseModuleEvent implements IModuleEvent {
@@ -31,7 +42,48 @@ public class AdminBaseModuleEvent implements IModuleEvent {
 	
 	@Override
 	public void init(ServletContext servletContext) {
+		this.initDictionary();
 		CacheUtils.getIntance().add(new RoleAdminAuthResCache());
 	}
-
+	
+	public void initDictionary() {
+		//读取数据库的字典
+		DictionaryService dictionaryService = SpringUtils.getBean(DictionaryService.class);
+		List<Dictionary> list = dictionaryService.quertAll();
+		if(CollectionUtils.isNotEmpty(list)) {
+			Map<String, String> constantsMap = new HashMap<String, String>();
+			List<KVObj> constantsList = new ArrayList<KVObj>();
+			KVObj kvObj = null;
+			for (Dictionary dictionary : list) {
+				if("map".equalsIgnoreCase(dictionary.getType())) {
+					constantsMap.put(dictionary.getVariable(), dictionary.getValue());
+				} else if("list".equalsIgnoreCase(dictionary.getType())) {
+					kvObj = new KVObj(dictionary.getVariable(), dictionary.getValue());
+					constantsList.add(kvObj);
+				} else {
+					logger.warn("不支持的字典类型:{}", dictionary.getType());
+				}
+			}
+			
+			DictionarySettingUtils.setAllConstantsList(constantsList);
+			DictionarySettingUtils.setAllConstantsMap(constantsMap);
+			DictionarySettingUtils.reInit();
+		} else {
+			logger.info("字典集合为 nil !");
+		}
+		
+//		Test
+//		Dictionary dictionary = dictionaryService.dictionaryDao.select("admin.name");
+//		dictionary.setVariable("hhh.jjj24591rt");
+//		dictionaryService.dictionaryDao.insert(dictionary);
+//		dictionaryService.dictionaryDao.delete(dictionary.getVariable());
+//		
+//		
+//		dictionary.setVariable("hhh.jjj2090");
+//		dictionaryService.dictionaryDao.insert(dictionary);
+//		
+//		
+//		dictionary.setValue("dddd");
+//		dictionaryService.dictionaryDao.update(dictionary);
+	}
 }

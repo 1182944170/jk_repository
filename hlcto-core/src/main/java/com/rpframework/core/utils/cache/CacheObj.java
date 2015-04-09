@@ -6,12 +6,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-public abstract class CacheObj {
+public abstract class CacheObj extends KVObj{
 	public static final long DEFAULT_T = 5 * 60;
 	protected final Log log = LogFactory.getLog(this.getClass());
 	protected final Logger logger = LoggerFactory.getLogger(this.getClass());
-	protected String k;
-	protected Object v;
 	protected long intervalSecond;
 	public abstract Object load();
 

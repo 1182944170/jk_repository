@@ -8,7 +8,7 @@
 			<a href="#" class="navbar-brand">
 				<small>
 					<i class="icon-leaf"></i>
-					Admin 后台管理系统
+					${dicSetting.getParameterValue("admin.name")!"Admin"} 后台管理系统
 				</small>
 			</a><!-- /.brand -->
 		</div><!-- /.navbar-header -->

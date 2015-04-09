@@ -265,7 +265,13 @@ public class SqlBuilder {
         	if(uniqueKeyNames.length != 1) {
         		throw new RuntimeException("参数为非实体时而主键有多个时不匹配！");
         	}
-        	sql.append(uniqueKeyNames[0]).append("=").append(object);
+        	sql.append(uniqueKeyNames[0]).append("=");
+        	if(object instanceof Number) {
+        		sql.append(object);
+        	} else {
+        		sql.append("'").append(object).append("'");
+        	}
+        	
         } else {
         	for (int i = 0; i < uniqueKeyNames.length; i++) {
                 sql.append(uniqueKeyNames[i]);
@@ -315,7 +321,13 @@ public class SqlBuilder {
         	if(uniqueKeyNames.length != 1) {
         		throw new RuntimeException("参数为非实体时而主键有多个时不匹配！");
         	}
-        	whereSql.append(uniqueKeyNames[0]).append("=").append(object);
+        	
+        	whereSql.append(uniqueKeyNames[0]).append("=");
+        	if(object instanceof Number) {
+        		whereSql.append(object);
+        	} else {
+        		whereSql.append("'").append(object).append("'");
+        	}
         } else {
 			for (int i = 0; i < uniqueKeyNames.length; i++) {
 				whereSql.append(uniqueKeyNames[i]);

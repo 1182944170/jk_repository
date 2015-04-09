@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.module.adminbase.dao.IDictionaryDao">
+
+	<resultMap type="com.rpframework.module.adminbase.domain.Dictionary" id="dictionary">
+		<id property="variable" column="variable"/>
+		<result property="value" column="value" />
+		<result property="type" column="type" />
+		<result property="sortIndex" column="sortIndex" />
+	</resultMap>
+	
+	<select id="queryAll" resultMap="dictionary">
+		select * from dictionary_setting where 1=1 
+	</select>
+
+	<update id="update" parameterType="com.rpframework.module.adminbase.domain.Dictionary" />
+	<insert id="insert" parameterType="com.rpframework.module.adminbase.domain.Dictionary" useGeneratedKeys="true" keyProperty="variable"/>
+	<delete id="delete" parameterType="com.rpframework.module.adminbase.domain.Dictionary" />
+	<select id="select" parameterType="String" resultMap="dictionary">
+		select * from dictionary_setting where variable=#{variable}
+	</select>
+</mapper>
