@@ -23,11 +23,13 @@ public class Member extends Domain{
 	
 	public static Integer MSEX_GENTLEMAN = 2 ; //男士
 	
-	public static Integer STATUS_NORMAL = 0; //正常
+	public static Integer STATUS_NORMAL = 0; //激活
 	
-	public static Integer STATUS_DISABLE = 1; //禁用
+	public static Integer STATUS_DISABLE = 1; //未激活
 	
-	public static Integer AUDIT_STATUS_PASS = 1 ; //审核通过
+	public static Integer AUDIT_STATUS_PASS = 2 ; //审核通过
+	
+	public static Integer AUDIT_STATUS_ING = 1 ; //审核中  提交过申请
 	
 	public static Integer AUDIT_STATUS_NORMAL = 0 ; //默认不需要审核
 	
@@ -103,6 +105,7 @@ public class Member extends Domain{
 		return sex;
 	}
 
+	
 	public void setSex(Integer sex) {
 		this.sex = sex;
 	}
