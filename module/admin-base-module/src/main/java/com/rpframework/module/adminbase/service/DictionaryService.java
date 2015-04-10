@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.rpframework.core.BaseService;
 import com.rpframework.module.adminbase.dao.IDictionaryDao;
 import com.rpframework.module.adminbase.domain.Dictionary;
+import com.rpframework.utils.Pager;
 
 /**
  * 
@@ -27,5 +28,13 @@ public class DictionaryService extends BaseService {
 	
 	public List<Dictionary> quertAll(){
 		return dictionaryDao.queryAll();
+	}
+	
+	public Pager<Dictionary> getDictionaryPager(Pager<Dictionary> pager) {
+		long startTime = System.currentTimeMillis();
+		List<Dictionary> itemList = dictionaryDao.doPager(this.packageMyBatisParam(pager));
+		pager.setItemList(itemList);
+		pager.setCostTime(System.currentTimeMillis() - startTime);
+		return pager;
 	}
 }

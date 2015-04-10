@@ -98,7 +98,7 @@
 
 												
 												<div class="clearfix">
-													<button type="submit" class="width-35 pull-right btn btn-sm btn-primary">
+													<button type="submit" class="width-100 pull-right btn btn-sm btn-primary">
 														<i class="icon-key"></i>
 														Login
 													</button>

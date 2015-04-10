@@ -28,8 +28,26 @@ public class Dictionary extends Domain {
 	@FieldMapperAnnotation
 	String type;
 	@FieldMapperAnnotation
+	Integer canUpdate;
+	@FieldMapperAnnotation
+	Integer canDelete;
+	
+	@FieldMapperAnnotation
 	Long sortIndex;
 	
+	
+	public Integer getCanUpdate() {
+		return canUpdate;
+	}
+	public void setCanUpdate(Integer canUpdate) {
+		this.canUpdate = canUpdate;
+	}
+	public Integer getCanDelete() {
+		return canDelete;
+	}
+	public void setCanDelete(Integer canDelete) {
+		this.canDelete = canDelete;
+	}
 	public String getVariable() {
 		return variable;
 	}

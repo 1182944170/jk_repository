@@ -17,7 +17,7 @@
 
 <#macro formSingleSelect options checkValue name="_formSingleSelectDefaultName_" listKey="id" listValue="value" attributes="">
     <select id="${name}" name="${name}" ${attributes}>
-    	<option value <#if -1== checkValue> checked="checked"</#if> >--please chooice--</option>
+    	<option value <#if checkValue?is_string> <#if "-1" == checkValue> checked="checked"</#if> <#else><#if -1 == checkValue> checked="checked"</#if></#if> >--please chooice--</option>
         <#list options as value>
         <option value="${value[listKey]?html}" <#if value[listKey] == checkValue> selected="selected"</#if> >${value[listValue]?html}</option>
         </#list>

@@ -22,9 +22,9 @@
 						<td>${u.contact}</td>
 						<td class="hidden-480">
 							<#if u.state == 1>
-								<span class="label label-sm label-success arrowed arrowed-righ">正常状态</span>
+								<span class="label label-sm label-success arrowed">正常状态</span>
 							<#else>
-								<span class="label label-sm label-warning arrowed arrowed-righ">禁用状态</span>
+								<span class="label label-sm label-warning arrowed">禁用状态</span>
 							</#if>
 						</td>
 
@@ -33,10 +33,11 @@
 							<a class="green" href="${ctx}/admin/adminuser/${u.id}/edit" alt="Edit">
 								<i class="icon-pencil bigger-130"></i>
 							</a>
-
+							<!--
 							<a class="red" href="${ctx}/admin/adminuser/${u.id}/delete" alt="Delete">
-								<i class="icon-trash bigger-130"></i>
-							</a>
+								<i class="icon-trash bigger-130"></i> 
+								
+							</a>-->
 						</div>
 
 						<div class="visible-xs visible-sm hidden-md hidden-lg">
@@ -52,14 +53,14 @@
 											</span>
 										</a>
 									</li>
-
+									<!--
 									<li>
 										<a href="${ctx}/admin/adminuser/${u.id}/delete" class="tooltip-error" data-rel="tooltip" title="" data-original-title="Delete">
 											<span class="red">
 												<i class="icon-trash bigger-120"></i>
 											</span>
 										</a>
-									</li>
+									</li>-->
 								</ul>
 							</div>
 						</div>

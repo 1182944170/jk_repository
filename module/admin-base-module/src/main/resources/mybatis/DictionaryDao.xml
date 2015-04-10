@@ -7,11 +7,17 @@
 		<id property="variable" column="variable"/>
 		<result property="value" column="value" />
 		<result property="type" column="type" />
+		<result property="canUpdate" column="canUpdate" />
+		<result property="canDelete" column="canDelete" />
 		<result property="sortIndex" column="sortIndex" />
 	</resultMap>
 	
 	<select id="queryAll" resultMap="dictionary">
 		select * from dictionary_setting where 1=1 
+	</select>
+	
+	<select id="doPager" parameterType="map" resultMap="dictionary">
+		select * from dictionary_setting where 1=1
 	</select>
 
 	<update id="update" parameterType="com.rpframework.module.adminbase.domain.Dictionary" />

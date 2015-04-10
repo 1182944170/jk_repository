@@ -21,16 +21,16 @@
 						<td>${u.description}</td>
 						<td class="hidden-480">
 							<#if u.state == 1>
-								<span class="label label-sm label-success arrowed arrowed-righ">正常状态</span>
+								<span class="label label-sm label-success arrowed">正常状态</span>
 							<#else>
-								<span class="label label-sm label-warning arrowed arrowed-righ">禁用状态</span>
+								<span class="label label-sm label-warning arrowed">禁用状态</span>
 							</#if>
 						</td>
 						<td>
 							<#if u.isSuper == 1>
-								<span class="label label-sm label-success arrowed arrowed-righ">是</span>
+								<span class="label label-sm label-success arrowed">是</span>
 							<#else>
-								<span class="label label-sm label-warning arrowed arrowed-righ">否</span>
+								<span class="label label-sm label-warning arrowed">否</span>
 							</#if>
 						</td>
 						<td>
