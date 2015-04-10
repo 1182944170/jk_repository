@@ -48,6 +48,13 @@ public class MyFreeMarkerConfigurer extends FreeMarkerConfigurer {
 			
 			logger.info("注入自定义标签 dicSetting:, bean:" + templateModel);
 			variables.put("dicSetting", templateModel);
+			
+			
+			TemplateModel tagUtilsTemplateModel = wrapper.getStaticModels().get("com.rpframework.core.utils.TagUtils");
+			Assert.notNull(tagUtilsTemplateModel, "cannot find com.rpframework.core.utils.TagUtils class!");
+			
+			logger.info("注入自定义标签 tagUtils:, bean:" + tagUtilsTemplateModel);
+			variables.put("tagUtils", tagUtilsTemplateModel);
 		} catch (TemplateModelException e) {
 			e.printStackTrace();
 		}
