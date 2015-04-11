@@ -4,13 +4,16 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.rpframework</groupId>
-    <artifactId>website</artifactId>
+    <artifactId>module</artifactId>
     <version>1.0</version>
   </parent>
-  <artifactId>xuetian-exam</artifactId>
-  <packaging>war</packaging>
-  <name>xuetian-exam Maven Webapp</name>
+  <groupId>com.rpframework.module.test</groupId>
+  <artifactId>common-module</artifactId>
+  <name>common-module</name>
   <url>http://maven.apache.org</url>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -20,16 +23,8 @@
     </dependency>
     <dependency>
     	<groupId>com.rpframework</groupId>
-    	<artifactId>admin-base-module</artifactId>
-    	<version>1.0</version>
-    </dependency>
-    <dependency>
-    	<groupId>com.rpframework.module.test</groupId>
-    	<artifactId>common-module</artifactId>
+    	<artifactId>springmvc</artifactId>
     	<version>1.0</version>
     </dependency>
   </dependencies>
-  <build>
-    <finalName>xuetian-exam</finalName>
-  </build>
 </project>

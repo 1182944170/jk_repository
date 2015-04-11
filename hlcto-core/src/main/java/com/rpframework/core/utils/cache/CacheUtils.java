@@ -50,9 +50,12 @@ public class CacheUtils {
 	public CacheObj get(String k) {
 		if(!cacheMap.containsKey(k)) {
 			log.info("cacheMap 不包含key:" + k);
+			return null;
 		}
 		
-		return cacheMap.get(k);
+		CacheObj cacheObj = cacheMap.get(k);
+		cacheObj.getV();
+		return cacheObj;
 	}
 	
 	public void add(CacheObj o) {

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.module.common.dao.IProvinceDao">
+
+	<resultMap type="com.rpframework.module.common.domain.Province" id="mProvince" autoMapping="true" />
+
+	<select id="queryAll" resultMap="mProvince">
+		select * from province where 1=1
+	</select>
+	
+	<update id="update" parameterType="com.rpframework.module.common.domain.Province" />
+	<insert id="insert" parameterType="com.rpframework.module.common.domain.Province" useGeneratedKeys="true" keyProperty="code"/>
+	<delete id="delete" parameterType="com.rpframework.module.common.domain.Province" />
+	<select id="select" parameterType="String" resultMap="mProvince">
+		select * from province where code=#{code}
+	</select> 
+</mapper>

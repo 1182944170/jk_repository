@@ -31,7 +31,6 @@ public class RoleAdminAuthResCache extends CacheObj {
 	}
 	
 	public List<AdminAuthRes> getAllRes() {
-		this.getV();
 		return all;
 	}	
 	public List<AdminAuthRes> getByRoleId(int roleId) {

@@ -20,6 +20,6 @@
   </dependencies>
   <modules>
     <module>admin-base-module</module>
-    <module>test-module</module>
+    <module>common-module</module>
   </modules>
 </project>
