@@ -17,4 +17,24 @@
 
 	<!-- 指定Sping组件扫描的基本包路径 -->
 	<context:component-scan base-package="com.rpframework.module.common" />
+
+	<!-- Setup a simple strategy: 1. Take all the defaults. 2. Return XML by default when not sure. -->
+	<bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+		 <property name="favorPathExtension" value="false" />
+	    <property name="favorParameter" value="true" />
+	    <property name="parameterName" value="mediaType" />
+	    <property name="ignoreAcceptHeader" value="true"/>
+	    <property name="useJaf" value="false"/>
+	    <property name="defaultContentType" value="application/json" />
+	 
+	    <property name="mediaTypes">
+	        <map>
+	            <entry key="json" value="application/json" />
+	            <entry key="xml" value="application/xml" />
+	       </map>
+	    </property>
+	</bean>
+
+	<!-- Make this available across all of Spring MVC -->
+	<mvc:annotation-driven content-negotiation-manager="contentNegotiationManager" />
 </beans>  

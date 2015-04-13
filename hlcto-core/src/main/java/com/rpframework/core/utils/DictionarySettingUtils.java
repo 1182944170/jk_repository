@@ -72,6 +72,13 @@ public class DictionarySettingUtils {
 		Map tempMap = (Map) allSettings.get(settings[0]);
 		for (int i = 1; i < settings.length - 1; i++) {
 			tempMap = (Map) tempMap.get(settings[i]);
+			if(tempMap == null) {
+				return null;
+			}
+		}
+		
+		if(tempMap == null) {
+			return null;
 		}
 		return tempMap.get(settings[settings.length - 1]);
 	}

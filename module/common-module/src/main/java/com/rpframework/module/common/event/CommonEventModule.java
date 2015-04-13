@@ -22,5 +22,18 @@ public class CommonEventModule implements IModuleEvent {
 	@Override
 	public void init(ServletContext servletContext) {
 		CacheUtils.getIntance().add(new CountryCache());
+		
+		//for test
+//		FileService fileService = SpringUtils.getBean(FileService.class);
+//		File file = new File("/Users/rplees/Desktop/maven");
+//		String path = "file/saveFile/maven.txt";
+//		try {
+//			fileService.saveFile(file, path);
+//			
+//			InputStream inputStream = fileService.retrieveFileStream(path);
+//			fileService.deleteFile(path);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 	}
 }

@@ -18,6 +18,7 @@ public class InitServlet extends HttpServlet {
 
 	/**描述*/  
 	public static String CTX = "";
+	public static String REAL_PATH = "";//本程序位于web服务器的真实路径
 	private static final long serialVersionUID = 1L;
 
 	@Override
@@ -29,6 +30,8 @@ public class InitServlet extends HttpServlet {
 	public void init(ServletConfig config) throws ServletException {
 		ServletContext servletContext = config.getServletContext();
 		CTX = servletContext.getContextPath();
+		REAL_PATH = servletContext.getRealPath("");
+		
 		servletContext.setAttribute("ctx", CTX);
 		
 		SpringUtils.setServletContext(servletContext);
