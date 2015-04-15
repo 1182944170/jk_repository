@@ -96,7 +96,7 @@
 		</div>
 	</div>
 </div>
-
+<div class="form-group">
 <div class="col-md-offset-3 col-md-9">
 	<button class="btn btn-info" type="submit">
 		<i class="icon-ok bigger-110"></i>
@@ -107,6 +107,19 @@
 		<i class="icon-undo bigger-110"></i>
 		Reset
 	</button>
+</div>
+</div>
+
+
+<div class="form-group">
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right">Role Group:</label>
+	<div class="col-xs-12 col-sm-9">
+		<div class="clearfix">
+		<@fck value="sfsdfsdfsd" instanceName="dsfsdhkfhsdkfh" inputName="news.content" height="300px;" SkinPath="skins/office2003/">
+	    	${fck_body}
+	    </@fck>
+		</div>
+	</div>
 </div>
 </fieldset>
 </form>

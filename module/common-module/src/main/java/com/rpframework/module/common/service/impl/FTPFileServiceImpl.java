@@ -5,15 +5,21 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.SocketException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.Assert;
 
-import com.rpframework.module.common.service.FileService;
+import com.rpframework.core.api.FileService;
+import com.rpframework.core.utils.DictionarySettingUtils;
 import com.rpframework.utils.CodeUtils;
+import com.rpframework.utils.CollectionUtils;
 
 /**
  * 
@@ -156,7 +162,7 @@ public class FTPFileServiceImpl extends FileService {
     	ftpClient.enterLocalPassiveMode();
     	return ftpClient.retrieveFileStream(relativelyPath);
 	}
-
+	
 	public boolean ifNeedCreateDirecroty(String relativelyPath) throws IOException{
 		relativelyPath = StringUtils.replace(relativelyPath, "//", "/");
 		String directory = StringUtils.substring(relativelyPath, 0, relativelyPath.lastIndexOf("/") + 1);
@@ -164,37 +170,7 @@ public class FTPFileServiceImpl extends FileService {
 			return true;
 		}
 		
-		if (!directory.equalsIgnoreCase("/") && !ftpClient.changeWorkingDirectory(CodeUtils.changeISO2GBK(directory))) {  
-            //如果远程目录不存在，则递归创建远程服务器目录   
-            int start=0;   
-            int end = 0;   
-            if(directory.startsWith("/")){   
-                start = 1;   
-            }else{   
-                start = 0;   
-            }   
-            end = directory.indexOf("/",start);   
-            while(true){   
-                String subDirectory = CodeUtils.changeISO2GBK(relativelyPath.substring(start,end));   
-                if(!ftpClient.changeWorkingDirectory(subDirectory)){   
-                    if(ftpClient.makeDirectory(subDirectory)){   
-                        ftpClient.changeWorkingDirectory(subDirectory);   
-                    }else {   
-                        logger.info("创建目录失败, subDirectory:{}, relativelyPath:{}", subDirectory,relativelyPath);   
-                        return false;   
-                    }   
-                }   
-                   
-                start = end + 1;   
-                end = directory.indexOf("/",start);   
-                   
-                //检查所有目录是否创建完毕   
-                if(end <= start){   
-                    break;   
-                }   
-            }   
-        }   
-        return true;   
+		return this.createDirecroty(directory);  
 	}
 	
 	@Override
@@ -208,5 +184,83 @@ public class FTPFileServiceImpl extends FileService {
     	ftpClient.deleteFile(relativelyPath);
 	    int status = ftpClient.getReplyCode();
 	    return status == 250 ;
+	}
+
+	@Override
+	public String getWebUrl() {
+		String webUrl = DictionarySettingUtils.getParameterValue(WEB_URL_KEY);
+		Assert.notNull(webUrl, "webUrl cannot be nil.");
+		return webUrl;
+	}
+
+	@Override
+	public List<FTPFile> getData(String remote, boolean isFloder) {
+		try {
+			boolean b = ftpClient.changeWorkingDirectory(remote);
+			
+			if(!b) {
+				logger.error("{} 远程 path 不存在!", remote);
+				return null;
+			}
+			
+			FTPFile[] listFiles = ftpClient.listFiles();
+			if(CollectionUtils.isEmpty(listFiles)) {
+				return null;
+			}
+			
+			List<FTPFile> list = new ArrayList<FTPFile>();
+			
+			for(FTPFile ftpFile: listFiles) {
+				if(isFloder) {
+					if(ftpFile.isDirectory()) {
+						list.add(ftpFile);
+					}
+				} else {
+					if(!ftpFile.isDirectory()) {
+						list.add(ftpFile);
+					}
+				}
+			}
+			return list;
+		} catch (IOException e) {
+			logger.error("getData error:{}", e);
+			return null;
+		}
+		
+	}
+
+	@Override
+	public boolean createDirecroty(String directory) throws IOException {
+		if (!directory.equalsIgnoreCase("/") && !ftpClient.changeWorkingDirectory(CodeUtils.changeISO2GBK(directory))) {  
+            //如果远程目录不存在，则递归创建远程服务器目录   
+            int start=0;   
+            int end = 0;   
+            if(directory.startsWith("/")){   
+                start = 1;   
+            }else{   
+                start = 0;   
+            }   
+            end = directory.indexOf("/",start);   
+            while(true){   
+                String subDirectory = CodeUtils.changeISO2GBK(directory.substring(start,end));   
+                if(!ftpClient.changeWorkingDirectory(subDirectory)){   
+                    if(ftpClient.makeDirectory(subDirectory)){   
+                        ftpClient.changeWorkingDirectory(subDirectory);   
+                    }else {   
+                        logger.info("创建目录失败, subDirectory:{}, relativelyPath:{}", subDirectory,directory);   
+                        return false;   
+                    }   
+                }   
+                   
+                start = end + 1;   
+                end = directory.indexOf("/",start);   
+                   
+                //检查所有目录是否创建完毕   
+                if(end <= start){   
+                    break;   
+                }   
+            }   
+        }   
+        return true; 
 	}
 }

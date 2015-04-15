@@ -4,10 +4,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang.StringUtils;
 
 import freemarker.core.Environment;
 import freemarker.ext.beans.BeanModel;
+import freemarker.ext.servlet.HttpRequestHashModel;
 import freemarker.ext.servlet.HttpSessionHashModel;
 import freemarker.template.TemplateBooleanModel;
 import freemarker.template.TemplateException;
@@ -45,6 +48,10 @@ public abstract class DirectiveUtils {
 	 */
 	public static final String PARAM_TPL_SUB = "tplSub";
 
+	public static HttpServletRequest getRequest(Environment env) throws TemplateModelException{
+		HttpServletRequest request = ((HttpRequestHashModel)env.getGlobalVariable("Request")).getRequest();
+		return request;
+	}
 	@SuppressWarnings("unchecked")
 	public static <T> T getSessionAttrFormEnvironment(Environment env,String sessionKey) throws TemplateModelException {
 		HttpSessionHashModel httpSessionHashModel = (HttpSessionHashModel)env.getGlobalVariable("Session");

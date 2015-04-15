@@ -1,16 +1,19 @@
 package com.rpframework.module.common.service.impl;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.net.ftp.FTPFile;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import com.rpframework.core.api.FileService;
 import com.rpframework.core.utils.DictionarySettingUtils;
-import com.rpframework.module.common.service.FileService;
 import com.rpframework.utils.NumberUtils;
 
 @Service("fileService")
@@ -65,5 +68,21 @@ public class FileServiceImpl extends FileService {
 	@Override
 	public boolean deleteFile(String relativelyPath) throws Exception {
 		return getFileServiceInstance().deleteFile(relativelyPath);
+	}
+
+	@Override
+	public String getWebUrl() {
+		return getFileServiceInstance().getWebUrl();
+	}
+
+	@Override
+	public boolean createDirecroty(String floderPath)
+			throws IOException {
+		return getFileServiceInstance().createDirecroty(floderPath);
+	}
+
+	@Override
+	public List<FTPFile> getData(String remote, boolean isFloder) {
+		return getFileServiceInstance().getData(remote, isFloder);
 	}
 }

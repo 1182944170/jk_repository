@@ -35,6 +35,7 @@ public class AdminBaseTemplateDirectiveModel extends BaseTemplateDirectiveModel 
 	static final String AD_MENU_LIST = "ad_menu_list";
 	static final String AD_ROLE_LIST = "ad_role_list";
 	static final String AD_ROLE_HAS_PERM = "ad_role_has_perm";
+	static final String AD_CHECK_MENU_LIMIT = "ad_check_menu_limit";
 	static final String AD_PARENT_ADMINAUTHRES_LIST = "ad_parent_adminauthres_list";
 	RoleAdminAuthResVerifyEvent roleAdminAuthResVerifyEvent = new RoleAdminAuthResVerifyEvent();
 	
@@ -61,6 +62,25 @@ public class AdminBaseTemplateDirectiveModel extends BaseTemplateDirectiveModel 
 			AdminMenuService adminMenuService = SpringUtils.getBean("adminMenuService");
 			List<AdminMenu> list = adminMenuService.adminMenuDao.getMenuListByParentId(pId);
 			paramWarp.put("m_list", ObjectWrapper.DEFAULT_WRAPPER.wrap(list));
+		} else if(StringUtils.equals(cmd, AD_CHECK_MENU_LIMIT)) {
+			AdminMenu adminMenu = DirectiveUtils.getObject("adminMenu", params);
+			if(StringUtils.isBlank(adminMenu.getLinkUrl())) {
+				if(CollectionUtils.isEmpty(adminMenu.getChildren())) {
+					pass = false;
+				} else {
+					pass = false;
+					for (AdminMenu tempam : adminMenu.getChildren()) {
+						boolean t = roleAdminAuthResVerifyEvent.checkLimit(adminUser, tempam.getLinkUrl());
+						if(t) {
+							pass = true;
+							break;
+						}
+					}
+				}
+			} else {
+				pass = roleAdminAuthResVerifyEvent.checkLimit(adminUser, adminMenu.getLinkUrl());
+			}
+			
 		} else if(StringUtils.equals(cmd, AD_ROLE_LIST)) {
 			AdminRoleService adminRoleService = SpringUtils.getBean("adminRoleService");
 			List<AdminRole> list = adminRoleService.findAll();

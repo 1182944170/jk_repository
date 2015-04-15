@@ -2,12 +2,19 @@ package com.rpframework.module.common.service.impl;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.net.ftp.FTPFile;
 import org.springframework.util.Assert;
 
-import com.rpframework.module.common.service.FileService;
+import com.rpframework.core.api.FileService;
+import com.rpframework.core.utils.DictionarySettingUtils;
+import com.rpframework.utils.CollectionUtils;
 import com.rpframework.utils.FileUtils;
 
 /**
@@ -57,19 +64,77 @@ public class LocationFileServiceImpl extends FileService {
 		Assert.isTrue(file.exists(), "file cannot exists.relativelyPath:" + relativelyPath);
 		return file.delete();
 	}
-
-	public boolean ifNeedCreateDirecroty(String relativelyPath){
+	public boolean ifNeedCreateDirecroty(String relativelyPath) throws IOException{
 		relativelyPath = StringUtils.replace(relativelyPath, "//", "/");
 		String directory = StringUtils.substring(relativelyPath, 0, relativelyPath.lastIndexOf("/") + 1);
 		if(StringUtils.isBlank(directory)) {
 			return true;
 		}
 		
-		File floderFile = new File(getFullFilePath(directory));
-		return floderFile.mkdirs();
+		return this.createDirecroty(directory);
 	}
 	
 	public String getFullFilePath(String relativelyPath) {
 		return locationPath + File.separator + relativelyPath;
+	}
+	
+	@Override
+	public String getWebUrl() {
+		String webUrl = DictionarySettingUtils.getParameterValue(WEB_URL_KEY);
+		Assert.notNull(webUrl, "webUrl cannot be nil.");
+		return webUrl;
+	}
+
+	@Override
+	public List<FTPFile> getData(String remote, boolean isFloder) {
+		File file = new File(getFullFilePath(remote));
+		File[] listFiles = file.listFiles();
+		
+		List<FTPFile> list = new ArrayList<FTPFile>();
+		if(CollectionUtils.isNotEmpty(listFiles)) {
+			for (File f : listFiles) {
+				if(isFloder) {
+					if(f.isDirectory()) {
+						list.add(fileConvert2FtpFile(f));
+					}
+				} else {
+					if(!f.isDirectory()) {
+						list.add(fileConvert2FtpFile(f));
+					}
+				}
+			}
+		}
+		return list;
+	}
+
+	private FTPFile fileConvert2FtpFile(File f) {
+		FTPFile ftpFile = new FTPFile();
+		ftpFile.setName(f.getName());
+		ftpFile.setTimestamp(Calendar.getInstance());
+		
+		if(! f.isDirectory() && f.exists()) {
+			FileInputStream in = null;
+			try {
+				in = new FileInputStream(f);
+				ftpFile.setSize(in.available());
+			} catch (IOException e) {
+				e.printStackTrace();
+				ftpFile.setSize(0);
+			} finally {
+				try {
+					in.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		return ftpFile;
+	}
+
+	@Override
+	public boolean createDirecroty(String floderPath) throws IOException {
+		File floderFile = new File(getFullFilePath(floderPath));
+		return floderFile.mkdirs();
 	}
 }

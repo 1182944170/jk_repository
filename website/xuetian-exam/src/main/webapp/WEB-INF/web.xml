@@ -47,6 +47,10 @@
 			<param-name>encoding</param-name>
 			<param-value>utf-8</param-value>
 		</init-param>
+		<init-param>
+			<param-name>forceEncoding</param-name>
+			<param-value>true</param-value>
+		</init-param>
 	</filter>
 	<filter-mapping>
 		<filter-name>characterEncodingFilter</filter-name>
@@ -74,6 +78,20 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
+	
+	<!-- fck start -->
+	<servlet>
+		<servlet-name>fckservlet</servlet-name>
+		<servlet-class>net.fckeditor.connector.ConnectorServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>fckservlet</servlet-name>
+		<!-- Filter all resources -->
+		<url-pattern>/resources/plugins/fckeditor/editor/filemanager/connectors/*</url-pattern>
+	</servlet-mapping>
+	<!-- fck end -->
 	
 	<servlet>
 		<servlet-name>initServlet</servlet-name>

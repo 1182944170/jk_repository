@@ -48,6 +48,9 @@ public class CodeUtils {
 		if (StringUtils.isBlank(n))
 			return n;
 		byte[] bytes;
+		if(!isMessyCode(n)) {
+			return n;
+		}
 		try {
 			bytes = n.getBytes("ISO-8859-1");
 			String n2 = new String(bytes, "UTF-8");

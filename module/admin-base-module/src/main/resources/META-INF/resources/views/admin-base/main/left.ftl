@@ -40,7 +40,7 @@
 			<#assign tempURI=springMacroRequestContext.servletContext.getAttribute("_admin_left_menupath_uri_") />
 		</#if>
 		<#list m_list as menu1>
-		<@admin_perm uri=menu1.linkUrl>
+		<@admin_perm cmd="ad_check_menu_limit" adminMenu=menu1>
 		<li <#if menuWasContain2(menu1,tempURI)>class="active<#if menu1.children?has_content> open</#if>"</#if>>
 			<a href="<#if menu1.linkUrl?has_content>${ctx}/${menu1.linkUrl}<#else>#</#if>" 
 				class="<#if menu1.children?has_content>dropdown-toggle</#if>">
@@ -53,7 +53,7 @@
 			<#if menu1.children?has_content>
 			<ul class="submenu">
 				<#list menu1.children as menu2>
-				<@admin_perm uri=menu2.linkUrl>
+				<@admin_perm cmd="ad_check_menu_limit" adminMenu=menu2>
 				<li <#if menuWasContain2(menu2,tempURI)>class="active"</#if>>
 					<a href="${ctx}/${menu2.linkUrl}">
 						<#if menu2.icon?has_content>
