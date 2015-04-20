@@ -6,13 +6,15 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.sitemesh.builder.SiteMeshFilterBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.rpframework.core.event.IModuleEvent;
+import com.rpframework.core.event.impl.ModuleEvent;
 import com.rpframework.core.utils.DictionarySettingUtils;
 import com.rpframework.core.utils.SpringUtils;
 import com.rpframework.core.utils.cache.CacheUtils;
@@ -23,7 +25,7 @@ import com.rpframework.module.adminbase.utils.cache.RoleAdminAuthResCache;
 import com.rpframework.utils.CollectionUtils;
 
 @Component
-public class AdminBaseModuleEvent implements IModuleEvent {
+public class AdminBaseModuleEvent extends ModuleEvent {
 	final Logger logger = LoggerFactory.getLogger(getClass());
 	/**
 	 * 文件请放在/views/下面，可以方便通过spring取值
@@ -85,5 +87,11 @@ public class AdminBaseModuleEvent implements IModuleEvent {
 //		
 //		dictionary.setValue("dddd");
 //		dictionaryService.dictionaryDao.update(dictionary);
+	}
+
+	@Override
+	public void fisrtRequset(HttpServletRequest request,
+			HttpServletResponse response) {
+		
 	}
 }

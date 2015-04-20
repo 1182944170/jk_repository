@@ -69,6 +69,7 @@
 
 		<script type="text/javascript">
 			if("ontouchend" in document) document.write("<script src='${ctx}/resources/cssframework/ace/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+			ctx = '${ctx}';
 		</script>
 		<script src="${ctx}/resources/cssframework/ace/js/bootstrap.min.js"></script>
 		<script src="${ctx}/resources/cssframework/ace/js/typeahead-bs2.min.js"></script>
@@ -79,6 +80,8 @@
 		<script src="${ctx}/resources/cssframework/ace/js/bootbox.min.js"></script>
 		<script src="${ctx}/resources/cssframework/ace/js/jquery.maskedinput.min.js"></script>
 		<script src="${ctx}/resources/cssframework/ace/js/select2.min.js"></script>
+		<!-- mindmup-editabletable.js-->
+		<script src="${ctx}/resources/plugins/mindmup-editabletable.js"></script>
 		
 		<!-- page specific plugin scripts -->
 
@@ -89,29 +92,10 @@
 		<!--custom js import -->
 		<script src="${ctx}/resources/js/admin.js"></script>
 		<script src="${ctx}/resources/js/showpages.js"></script>
+		<@common cmd="has_include_file" file="admin/sub_website_include_js.ftl">
+			<#include "admin/sub_website_include_js.ftl">
+		</@common>
 		<sitemesh:write property='head'/>
-		<script type="text/javascript">
-			var RP = RP || {};
-			RP.addBreadcrumb = function(param){
-				var breadcrumb = $("#breadcrumbs ul");
-				var arr = null;
-				if(param instanceof Array) {
-					arr = param;
-				} else {
-					arr = [];
-					arr.push(param);
-				}
-				
-				for(var idx in arr) {
-					var vo = arr[idx];
-					if(vo.active) {
-						breadcrumb.append('<li>'+vo.name+'</li>');
-					} else {
-						breadcrumb.append('<li class="active"><a href="'+ (vo.linkUrl ? vo.linkUrl : "#") +'">'+vo.name+'</a></li>');
-					}
-				}
-			}
-		</script>
 	</head>
 
 	<body>

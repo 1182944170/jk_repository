@@ -5,7 +5,7 @@ import com.rpframework.core.BaseModuleAct;
 public class CommonBaseAct extends BaseModuleAct {
 	
 	public String getModuleName() {
-		return "parser";
+		return "common-admin";
 	};
 	
 	public String doPackageURI(String uri) {

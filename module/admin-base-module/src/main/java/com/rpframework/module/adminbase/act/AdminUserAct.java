@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.rpframework.core.exception.AdminIllegalArgumentException;
 import com.rpframework.module.adminbase.domain.AdminRole;
 import com.rpframework.module.adminbase.domain.AdminUser;
-import com.rpframework.module.adminbase.exception.AdminIllegalArgumentException;
 import com.rpframework.module.adminbase.service.AdminRoleService;
 import com.rpframework.module.adminbase.service.AdminUserService;
 import com.rpframework.utils.AlgorithmEnum;

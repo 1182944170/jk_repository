@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.website.xtexam.dao.IExamSubjectDao">
+	<resultMap type="com.rpframework.website.xtexam.domain.ExamSubject" id="examSubject" autoMapping="true">
+		<id property="id" column="id"/>
+		<association property="examClassify" column="examClassifyId" select="com.rpframework.website.xtexam.dao.IExamSubChapterClassifyDao.select" />
+		<association property="document" column="documentId" select="com.rpframework.module.common.dao.IDocumentDao.select" />
+		<collection property="options" column="id" select="com.rpframework.website.xtexam.dao.IExamSubjectOptionDao.getListBySubjectId" />
+	</resultMap>
+	
+	<select id="doPager" parameterType="map" resultMap="examSubject">
+		select * from xt_exam_subject where 1=1
+		<if test="page.searchMap.examClassifyId != null">
+			and examClassifyId=#{page.searchMap.examClassifyId}
+		</if>
+		 order by id
+	</select>
+	
+	<select id="getListBySubChapterId" parameterType="Integer" resultMap="examSubject">
+		select * from xt_exam_subject where examClassifyId=#{examClassifyId}
+	</select>
+
+	<update id="update" parameterType="com.rpframework.website.xtexam.domain.ExamSubject" />
+	<insert id="insert" parameterType="com.rpframework.website.xtexam.domain.ExamSubject" useGeneratedKeys="true" keyProperty="id"/>
+	<delete id="delete" parameterType="com.rpframework.website.xtexam.domain.ExamSubject" />
+	<select id="select" parameterType="Integer" resultMap="examSubject">
+		select * from xt_exam_subject where id=#{id}
+	</select>
+</mapper>

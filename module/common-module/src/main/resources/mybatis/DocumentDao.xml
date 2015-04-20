@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.module.common.dao.IDocumentDao">
+
+	<resultMap type="com.rpframework.module.common.domain.Document" id="mDocument" autoMapping="true">
+		<association property="parent" column="parentId" select="select" />
+	</resultMap>
+
+	<select id="queryAllByParentId" resultMap="mDocument">
+		select * from document where 1=1
+		<choose>
+            <when test="_parameter>0">
+				and parentId=#{parentId}
+            </when>
+            <otherwise>
+				and parentId is NULL
+            </otherwise>
+        </choose>
+	</select>
+	<select id="doPager" parameterType="map" resultMap="mDocument">
+		select * from document where 1=1
+		<if test="page.searchMap.parentId != null">
+			parentId=#{page.searchMap.parentId}
+		</if>
+		 order by id
+	</select>
+
+	<update id="update" parameterType="com.rpframework.module.common.domain.Document" />
+	<insert id="insert" parameterType="com.rpframework.module.common.domain.Document" useGeneratedKeys="true" keyProperty="code"/>
+	<delete id="delete" parameterType="com.rpframework.module.common.domain.Document" />
+	<select id="select" parameterType="Integer" resultMap="mDocument">
+		select * from document where id=#{id}
+	</select> 
+</mapper>

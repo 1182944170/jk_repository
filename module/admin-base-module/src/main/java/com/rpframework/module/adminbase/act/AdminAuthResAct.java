@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.rpframework.core.exception.AdminIllegalArgumentException;
 import com.rpframework.module.adminbase.domain.AdminAuthRes;
-import com.rpframework.module.adminbase.exception.AdminIllegalArgumentException;
 import com.rpframework.module.adminbase.service.AdminAuthResService;
 import com.rpframework.utils.NumberUtils;
 

@@ -7,9 +7,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
-
 import com.rpframework.core.event.IModuleEvent;
 import com.rpframework.core.utils.SpringUtils;
 import com.rpframework.utils.CollectionUtils;
@@ -19,6 +16,7 @@ public class InitServlet extends HttpServlet {
 	/**描述*/  
 	public static String CTX = "";
 	public static String REAL_PATH = "";//本程序位于web服务器的真实路径
+	public static String DOMAIN = ""; //网站的域名,该值会在 commonIntercept 注入，方便获取
 	private static final long serialVersionUID = 1L;
 
 	@Override
@@ -33,17 +31,15 @@ public class InitServlet extends HttpServlet {
 		REAL_PATH = servletContext.getRealPath("");
 		
 		servletContext.setAttribute("ctx", CTX);
-		
 		SpringUtils.setServletContext(servletContext);
 		
-		ApplicationContext applicationContext = WebApplicationContextUtils.getWebApplicationContext(config.getServletContext());
-		Map<String, IModuleEvent> beans = applicationContext.getBeansOfType(IModuleEvent.class);
+		Map<String, IModuleEvent> beans = SpringUtils.getApplicationContext().getBeansOfType(IModuleEvent.class);
 		if(CollectionUtils.isNotEmpty(beans)) {
-			IModuleEvent iModuleEvent = null;
+			IModuleEvent moduleEvent = null;
 			for(String keys : beans.keySet()) {
-				iModuleEvent = beans.get(keys);
+				moduleEvent = beans.get(keys);
 				
-				iModuleEvent.init(servletContext);
+				moduleEvent.init(servletContext);
 			}
 		}
 		super.init(config);

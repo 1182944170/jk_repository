@@ -52,8 +52,15 @@ public class SqlBuilder {
             tableMapper = new TableMapper();
             Annotation[] classAnnotations = dtoClass.getDeclaredAnnotations();
             if (classAnnotations.length == 0) {
-                throw new RuntimeException("Class " + dtoClass.getName()
-                        + " has no annotation, I can't build 'TableMapper' for it.");
+            	//如果本Class没有注解，看看父类有没有，而且仅仅是第一集父类
+            	classAnnotations = dtoClass.getSuperclass().getDeclaredAnnotations();
+            	if(classAnnotations.length == 0) {//父类也没有的话 就抛出异常
+            		throw new RuntimeException("Class " + dtoClass.getName()
+                            + " and parent has no annotation, I can't build 'TableMapper' for it.");
+            	} else {
+            		dtoClass = dtoClass.getSuperclass();
+            	}
+                
             }
             for (Annotation an : classAnnotations) {
                 if (an instanceof TableMapperAnnotation) {

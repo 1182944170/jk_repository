@@ -10,11 +10,14 @@ import java.util.TreeMap;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.stereotype.Component;
 
+import com.rpframework.core.freemarker.BaseRegistFreemarker;
 import com.rpframework.core.utils.cache.KVObj;
 import com.rpframework.utils.CollectionUtils;
 
-public class DictionarySettingUtils {
+@Component("dicSetting")
+public class DictionarySettingUtils extends BaseRegistFreemarker {
 	private static Log log = LogFactory.getLog(DictionarySettingUtils.class);
 	
 	private static Map<String, String> allConstantsMap = new HashMap<String, String>();

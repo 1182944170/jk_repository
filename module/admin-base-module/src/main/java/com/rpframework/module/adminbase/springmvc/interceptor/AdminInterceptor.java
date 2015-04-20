@@ -10,10 +10,10 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.rpframework.core.InitServlet;
+import com.rpframework.core.exception.AdminNoLimtArgumentException;
 import com.rpframework.module.adminbase.act.AdminBaseAct;
 import com.rpframework.module.adminbase.domain.AdminUser;
 import com.rpframework.module.adminbase.event.RoleAdminAuthResVerifyEvent;
-import com.rpframework.module.adminbase.exception.AdminNoLimtArgumentException;
 
 public class AdminInterceptor implements HandlerInterceptor {
 	final Logger logger = LoggerFactory.getLogger(getClass());

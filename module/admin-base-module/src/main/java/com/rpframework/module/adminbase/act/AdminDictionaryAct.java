@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.rpframework.core.exception.AdminIllegalArgumentException;
 import com.rpframework.core.utils.SpringUtils;
 import com.rpframework.module.adminbase.domain.Dictionary;
 import com.rpframework.module.adminbase.event.AdminBaseModuleEvent;
-import com.rpframework.module.adminbase.exception.AdminIllegalArgumentException;
 import com.rpframework.module.adminbase.service.DictionaryService;
 import com.rpframework.utils.Pager;
 

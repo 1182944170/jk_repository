@@ -31,3 +31,23 @@ RP.Form = {
 
 		submitHandler: function(form) { form.submit(); }
 }
+
+RP.addBreadcrumb = function(param){
+	var breadcrumb = $("#breadcrumbs ul");
+	var arr = null;
+	if(param instanceof Array) {
+		arr = param;
+	} else {
+		arr = [];
+		arr.push(param);
+	}
+	
+	for(var idx in arr) {
+		var vo = arr[idx];
+		if(vo.active) {
+			breadcrumb.append('<li>'+vo.name+'</li>');
+		} else {
+			breadcrumb.append('<li class="active"><a href="'+ (vo.linkUrl ? vo.linkUrl : "#") +'">'+vo.name+'</a></li>');
+		}
+	}
+}

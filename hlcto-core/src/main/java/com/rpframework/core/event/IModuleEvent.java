@@ -1,6 +1,8 @@
 package com.rpframework.core.event;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.sitemesh.builder.SiteMeshFilterBuilder;
 
@@ -19,4 +21,6 @@ public interface IModuleEvent extends IBaseEvent {
 	void applySiteMeshCustomConfiguration(SiteMeshFilterBuilder builder);
 	
 	void init(ServletContext servletContext);
+
+	void fisrtRequset(HttpServletRequest request, HttpServletResponse response);
 }

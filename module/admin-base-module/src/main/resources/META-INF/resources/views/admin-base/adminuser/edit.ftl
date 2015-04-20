@@ -110,7 +110,7 @@
 </div>
 </div>
 
-
+<!--
 <div class="form-group">
 	<label class="control-label col-xs-12 col-sm-3 no-padding-right">Role Group:</label>
 	<div class="col-xs-12 col-sm-9">
@@ -120,7 +120,7 @@
 	    </@fck>
 		</div>
 	</div>
-</div>
+</div> -->
 </fieldset>
 </form>
 <#if errorMsg??>

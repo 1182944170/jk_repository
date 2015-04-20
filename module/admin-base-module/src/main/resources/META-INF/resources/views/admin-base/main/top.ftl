@@ -232,8 +232,8 @@
 					<a data-toggle="dropdown" href="#" class="dropdown-toggle">
 						<img class="nav-user-photo" src="${ctx}/resources/cssframework/ace/avatars/user.jpg" alt="Jason's Photo" />
 						<span class="user-info">
-							<small>Welcome,</small>
-							<div class="center">${(sessionAdminUser.userName)!''}</div>
+							<small>Welcome</small>
+							<div class="center">${(sessionAdminUser.userName)!''} &nbsp;[${(sessionAdminUser.adminRole.name)!''}] </div>
 						</span>
 
 						<i class="icon-caret-down"></i>

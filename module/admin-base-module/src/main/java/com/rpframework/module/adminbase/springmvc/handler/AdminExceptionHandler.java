@@ -12,8 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.rpframework.module.adminbase.exception.AdminIllegalArgumentException;
-import com.rpframework.module.adminbase.exception.AdminNoLimtArgumentException;
+import com.rpframework.core.exception.AdminIllegalArgumentException;
+import com.rpframework.core.exception.AdminNoLimtArgumentException;
 
 @Controller
 public class AdminExceptionHandler implements HandlerExceptionResolver {

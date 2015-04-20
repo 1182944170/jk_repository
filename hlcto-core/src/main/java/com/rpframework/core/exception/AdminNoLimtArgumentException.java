@@ -1,4 +1,4 @@
-package com.rpframework.module.adminbase.exception;
+package com.rpframework.core.exception;
 
 public class AdminNoLimtArgumentException extends IllegalArgumentException {
 

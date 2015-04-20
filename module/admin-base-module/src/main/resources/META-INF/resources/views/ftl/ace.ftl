@@ -1,5 +1,6 @@
 <#ftl strip_whitespace=true>
 <#assign commonStateOptions = [{"value": 1, "valueString":"启用","labClass":"blue","inputClass":"ace"}, {"value": 0, "valueString":"禁用","labClass":"red","inputClass":"ace"}]/>
+<#assign commonStateOptionsYN = [{"value": 1, "valueString":"是","labClass":"blue","inputClass":"ace"}, {"value": 0, "valueString":"否","labClass":"red","inputClass":"ace"}]/>
 <#assign commonOptions = [{"value": 1, "valueString":"Yes","labClass":"blue","inputClass":"ace"}, {"value": 0, "valueString":"No","labClass":"red","inputClass":"ace"}]/>
 <#--
  *

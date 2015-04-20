@@ -16,9 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.rpframework.core.exception.AdminIllegalArgumentException;
 import com.rpframework.core.utils.cache.CacheUtils;
 import com.rpframework.module.adminbase.domain.AdminRole;
-import com.rpframework.module.adminbase.exception.AdminIllegalArgumentException;
+import com.rpframework.module.adminbase.domain.AdminUser;
 import com.rpframework.module.adminbase.service.AdminRoleService;
 import com.rpframework.module.adminbase.service.RoleAdminAuthResService;
 import com.rpframework.module.adminbase.utils.cache.RoleAdminAuthResCache;
@@ -76,9 +77,10 @@ public class AdminRoleAct extends AdminBaseAct {
 		if(NumberUtils.isValid(adminRole.getId())) {//update
 			adminRoleService.adminRoleDao.update(adminRole);
 			
+			AdminUser sessionAdminUser = super.getSessionAdminUser(session);
 			//如果修改的是正在登陆的，则同步
-			if(adminRole.getId().equals(super.getSessionAdminUser(session).getAdminRole().getId())) {
-				super.getSessionAdminUser(session).setAdminRole(adminRole);
+			if(adminRole.getId().equals(sessionAdminUser.getAdminRole().getId())) {
+				sessionAdminUser.setAdminRole(adminRole);
 			}
 		} else {
 			adminRoleService.adminRoleDao.insert(adminRole);

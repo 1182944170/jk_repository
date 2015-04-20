@@ -43,6 +43,7 @@ public class AdminBaseTemplateDirectiveModel extends BaseTemplateDirectiveModel 
 	@Override
 	public void execute(Environment env, Map params, TemplateModel[] loopVars,
 			TemplateDirectiveBody body) throws TemplateException, IOException {
+		
 		String cmd = DirectiveUtils.getString("cmd", params);
 		Map paramWarp = new HashMap(params);
 		AdminUser adminUser = DirectiveUtils.getSessionAttrFormEnvironment(env, AdminBaseAct.SESSION_ADMIN_USER_KEY);

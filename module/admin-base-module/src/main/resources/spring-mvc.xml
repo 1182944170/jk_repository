@@ -22,6 +22,7 @@
 	        <mvc:mapping path="/admin/**"/>
 	        <mvc:exclude-mapping path="/admin"/>
 	        <mvc:exclude-mapping path="/admin/login"/>
+	        <mvc:exclude-mapping path="/**/sync_static**"/> <!-- 约定 sync_static 前缀的一般都是同步功能 -->
 	        <mvc:exclude-mapping path="/admin/dologin"/>
 	        <!-- 定义在mvc:interceptor下面的表示是对特定的请求才进行拦截的 -->  
 	        <bean class="com.rpframework.module.adminbase.springmvc.interceptor.AdminInterceptor"/>  
