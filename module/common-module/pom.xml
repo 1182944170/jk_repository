@@ -7,7 +7,6 @@
     <artifactId>module</artifactId>
     <version>1.0</version>
   </parent>
-  <groupId>com.rpframework.module.test</groupId>
   <artifactId>common-module</artifactId>
   <name>common-module</name>
   <url>http://maven.apache.org</url>
