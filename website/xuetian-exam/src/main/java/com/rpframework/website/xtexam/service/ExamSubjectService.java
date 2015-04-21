@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import com.rpframework.core.BaseService;
+import com.rpframework.utils.CollectionUtils;
 import com.rpframework.utils.NumberUtils;
 import com.rpframework.utils.Pager;
 import com.rpframework.website.xtexam.dao.IExamSubjectDao;
@@ -18,7 +19,6 @@ import com.rpframework.website.xtexam.domain.ExamSubjectOption;
 @Service
 public class ExamSubjectService extends BaseService{
 	public @Resource IExamSubjectDao examSubjectDao;
-	@Resource ExamSubjectOptionService examSubjectOptionService;
 	
 	/**
 	 * 获取试卷下的的试题
@@ -45,33 +45,39 @@ public class ExamSubjectService extends BaseService{
 			throw new IllegalArgumentException("参数异常!");
 		}
 		
+		if(subject.getSubjectType() == ExamSubject.CHOOICE_SUBJECT_TYPE) {
+			if(CollectionUtils.isEmpty(subject.getOptions()) || subject.getOptions().size() != 4) {
+				throw new IllegalArgumentException("选择题仅支持4个选项!");
+			}
+			
+			//判断是否单选
+			int rightAnswerNum = 0;
+			for (ExamSubjectOption option : subject.getOptions()) {
+				if(option.getIsRightAnswer() == 1) {
+					rightAnswerNum ++;
+				}
+				
+				if(rightAnswerNum < 1) {
+					throw new IllegalArgumentException("需要一个正确的答案!");
+				}
+			}
+			
+			subject.setIsSingeChoice(rightAnswerNum > 1 ? 0 : 1);
+		} else {
+			subject.setExt("");
+		}
+		
+		
 		if(NumberUtils.isValid(subject.getId())) {//update
 			ExamSubject subjectDB = examSubjectDao.select(subject.getId());
 			Assert.notNull(subjectDB, "找不到试卷ID :" + subject.getId());
-			List<ExamSubjectOption> options = subject.getOptions();
-			for (ExamSubjectOption option : options) {
-				ExamSubjectOption optionDB = examSubjectOptionService.findOptionBySubjectIdAndOptionName(subject.getId(), option.getOptionName());
-				Assert.notNull(optionDB, "找不到试卷选项[subjectId,optionId] :" + subject.getId() + "," + option.getOptionName());
-				option.setId(optionDB.getId());
-				option.setExamSubject(subject);
-				
-				boolean updateFlag = examSubjectOptionService.examSubjectOptionDao.update(option);
-				Assert.isTrue(updateFlag, "试卷选项更新失败.");
-			}
+			
+			return examSubjectDao.update(subject);
 		} else {//insert
-			boolean flag = examSubjectDao.insert(subject);//TODO:考虑事务
+			boolean flag = examSubjectDao.insert(subject);
 			Assert.isTrue(flag, "试卷保存失败.");
 			Assert.notNull(subject.getId(), "未知错误.");
-			
-			List<ExamSubjectOption> options = subject.getOptions();
-			for (ExamSubjectOption option : options) {
-				option.setExamSubject(subject);
-				
-				boolean insertFlag = examSubjectOptionService.examSubjectOptionDao.insert(option);
-				Assert.isTrue(insertFlag, "试卷选项新增失败.");
-			}
+			return flag;
 		}
-		
-		return true;
 	}
 }

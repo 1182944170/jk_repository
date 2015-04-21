@@ -6,7 +6,6 @@
 		<id property="id" column="id"/>
 		<association property="examClassify" column="examClassifyId" select="com.rpframework.website.xtexam.dao.IExamSubChapterClassifyDao.select" />
 		<association property="document" column="documentId" select="com.rpframework.module.common.dao.IDocumentDao.select" />
-		<collection property="options" column="id" select="com.rpframework.website.xtexam.dao.IExamSubjectOptionDao.getListBySubjectId" />
 	</resultMap>
 	
 	<select id="doPager" parameterType="map" resultMap="examSubject">

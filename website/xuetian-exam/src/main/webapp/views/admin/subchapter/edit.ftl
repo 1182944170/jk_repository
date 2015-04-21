@@ -61,7 +61,7 @@
 				<button type="button" class="btn spinner-up btn-xs btn-info"><i class="icon-chevron-up"></i></button>
 				<button type="button" class="btn spinner-down btn-xs btn-info"><i class="icon-chevron-down"></i></button>
 			</div>
-			<label class="gray"> *单位为分钟</label>
+			<small>* 单位为分钟</small>
 		</div>
 	</div>
 </div>
@@ -110,7 +110,7 @@
 		<div class="clearfix">
 			<span class="block input-icon width-25">
 				<input type="text" name="price" id="price" value="${(subChapter.price)!'0'}" class="form-control" placeholder="价格"/>
-				<label class="gray"> * 免费填 0</label>
+				<small> * 免费填 0</small>
 				<i class="icon-user"></i>
 			</span>
 		</div>

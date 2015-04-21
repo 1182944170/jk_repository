@@ -1,4 +1,4 @@
-package com.rpframework.module.common.event;
+package com.rpframework.module.common.event.impl;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +20,7 @@ public class CommonEventModule extends ModuleEvent {
 	public void applySiteMeshCustomConfiguration(SiteMeshFilterBuilder builder) {
 		
 	}
-
+	
 	@Override
 	public void init(ServletContext servletContext) {
 		CacheUtils.getIntance().add(new CountryCache());

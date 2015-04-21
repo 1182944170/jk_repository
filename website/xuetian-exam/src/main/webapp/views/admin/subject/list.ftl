@@ -19,7 +19,7 @@
 						<th>ID</th>
 						<th>题目</th>
 						<th>所属试卷名</th>
-						<th>单选?</th>
+						<th>试题类型</th>
 						<th>点赞数</th>
 						<th>评论数</th>
 						<th><i class="icon-time bigger-110"></i> 状态</th>
@@ -33,10 +33,10 @@
 						<td><span class="gray center">${u.title}</span></td>
 						<td>${xtUtils.getExamClassifyPath(u.examClassify.id)}</td>
 						<td class="hidden-480">
-							<#if u.isSingeChoice == 1>
-								<span class="label label-sm label-success arrowed">是</span>
+							<#if u.subjectType == 1>
+								<span class="label label-sm label-success arrowed">选择题</span>
 							<#else>
-								<span class="label label-sm label-warning arrowed">否</span>
+								<span class="label label-sm label-warning arrowed">简答题</span>
 							</#if>
 						</td>
 						<td>${u.supportNum}</td>

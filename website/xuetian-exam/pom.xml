@@ -24,7 +24,7 @@
     	<version>1.0</version>
     </dependency>
     <dependency>
-    	<groupId>com.rpframework.module.test</groupId>
+    	<groupId>com.rpframework</groupId>
     	<artifactId>common-module</artifactId>
     	<version>1.0</version>
     </dependency>

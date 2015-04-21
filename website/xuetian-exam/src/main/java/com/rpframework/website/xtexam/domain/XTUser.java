@@ -46,6 +46,9 @@ public class XTUser extends Domain {
 	String loginIp;
 	@FieldMapperAnnotation
 	String lastLoginIp;
+	@FieldMapperAnnotation
+	Integer sourceType; //1-网站 2-主网站
+	
 	public Integer getId() {
 		return id;
 	}

@@ -1,4 +1,4 @@
-package com.rpframework.website.xtexam.event;
+package com.rpframework.website.xtexam.event.impl;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +15,7 @@ import com.rpframework.core.event.impl.ModuleEvent;
 import com.rpframework.core.utils.SpringUtils;
 import com.rpframework.core.utils.TagUtils;
 import com.rpframework.core.utils.cache.CacheUtils;
+import com.rpframework.module.common.service.SMSService;
 import com.rpframework.utils.FileUtils;
 import com.rpframework.utils.HttpClientUtils;
 import com.rpframework.website.xtexam.utils.XTExamConfig;
@@ -32,6 +33,13 @@ public class XTExamModuleEvent extends ModuleEvent {
 		
 		XTExamConfig xtExamConfig = SpringUtils.getBean(XTExamConfig.class);
 		logger.info(ToStringBuilder.reflectionToString(xtExamConfig, ToStringStyle.MULTI_LINE_STYLE));
+		
+//		//测试
+//		SMSService smsService = SpringUtils.getBean(SMSService.class);
+//		boolean sendSMS = smsService.sendSMS(1, "15390891113", "1113", "才是验证码");
+//		logger.info("" + sendSMS);
+//		
+//		smsService.checkVerifyCode(1, "15390891113", "1113");
 	}
 
 	@Override

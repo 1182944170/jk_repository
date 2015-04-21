@@ -80,12 +80,8 @@ public class AdminExamSubjectAct extends AdminAct {
 	}
 	
 	@RequestMapping("/dosave")
-	public String doSaveOrUpdate(@RequestParam(value="optionArray") String optionArrayString, @ModelAttribute ExamSubject subject, HttpSession session, HttpServletRequest request,RedirectAttributes attr){
+	public String doSaveOrUpdate(@RequestParam(value="optionArray", required = false) String optionArrayString, @ModelAttribute ExamSubject subject, HttpSession session, HttpServletRequest request,RedirectAttributes attr){
 		JsonArray optionArray = new JsonParser().parse(optionArrayString).getAsJsonArray();
-		if(optionArray.size() != 4) {
-			throw new IllegalArgumentException("试题的选项只允许4个.");
-		}
-		
 		Gson gson = new Gson();
 		List<ExamSubjectOption> options = new ArrayList<ExamSubjectOption>();
 		for (JsonElement optionJson : optionArray) {

@@ -114,15 +114,26 @@
 
 <div class="form-group">
 <div class="form-group width-50 pull-left">
-	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="isSingeChoice">是否单选:</label>
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right">试题类型:</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
-		<span class="block input-icon">
-			<@ace.radioGroup options=ace.commonStateOptionsYN checkValue=(subject.isSingeChoice)!-1 name="isSingeChoice" isWrap=false/>
-		</span>
+		<#assign subjectTypeOptions = [{"value": 1, "valueString":"单选题"}, {"value": 2, "valueString":"简写题"}]/>
+		<@ace.formSingleSelect options=subjectTypeOptions checkValue=(subject.subjectType)!1 name="subjectType" listKey="value" listValue="valueString"/>
+		<small>* 简写题不需要填写选项内容</small>
 		</div>
 	</div>
 </div>
+<div class="form-group width-50 pull-left">
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right">状态:</label>
+	<div class="col-xs-12 col-sm-9">
+		<div class="clearfix">
+		<@ace.radioGroup options=ace.commonStateOptions checkValue=(subject.state)!-1 name="state" isWrap=false/>
+		</div>
+	</div>
+</div>
+</div>
+
+<div class="form-group">
 <div class="form-group width-50 pull-left">
 	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="score">知识点:</label>
 	<div class="col-xs-12 col-sm-9">
@@ -136,7 +147,6 @@
 	</div>
 </div>
 </div>
-
 
 <div class="form-group">
 <div class="form-group width-50 pull-left">
@@ -175,14 +185,6 @@
 	</div>
 </div>
 
-<div class="form-group">
-	<label class="control-label col-xs-12 col-sm-3 no-padding-right">状态:</label>
-	<div class="col-xs-12 col-sm-9">
-		<div class="clearfix">
-		<@ace.radioGroup options=ace.commonStateOptions checkValue=(subject.state)!-1 name="state" isWrap=true/>
-		</div>
-	</div>
-</div>
 <div class="form-group">
 	<div class="col-md-offset-3 col-md-9">
 		<button class="btn btn-info" type="submit"><i class="icon-ok bigger-110"></i>提  交</button>
