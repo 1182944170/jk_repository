@@ -8,6 +8,7 @@
 						<th>ID</th>
 						<th>科目名称</th>
 						<th>简写</th>
+						<th>是否公开课</th>
 						<th><i class="icon-time bigger-110 hidden-480"></i> 状态</th>
 						<th></th>
 					</tr>
@@ -18,6 +19,14 @@
 						<td><span class="green center">${u.id}</span></td>
 						<td><span class="gray center">${u.name}</span></td>
 						<td>${u.thumb}</td>
+						<td class="hidden-480">
+							<#if u.isOpen == 1>
+								<span class="label label-sm label-success arrowed">是</span>
+							<#else>
+								<span class="label label-sm label-warning arrowed">否</span>
+							</#if>
+						</td>
+						
 						<td class="hidden-480">
 							<#if u.state == 1>
 								<span class="label label-sm label-success arrowed">正常状态</span>

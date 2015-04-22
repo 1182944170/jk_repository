@@ -24,7 +24,6 @@ public class ExamCoursesService {
 		}
 		
 		courses.setLevelEnum(ExamClassifyLevelEnum.COURSES);
-		courses.setExt("{}");
 		courses.setParent(new ExamCoursesClassify());
 		if(NumberUtils.isValid(courses.getId())) {//update
 			ExamCoursesClassify coursesDB = this.examCoursesClassifyDao.select(courses.getId());

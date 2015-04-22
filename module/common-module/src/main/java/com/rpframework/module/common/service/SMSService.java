@@ -43,6 +43,18 @@ public class SMSService extends BaseService {
 		return this.sendSMS(channelType, phone, verifyCode, content, DateUtils.minAdd(30).getTime()/1000);
 	}
 	
+	public boolean setVerifyCodeVaild(int channelType, String phone){
+		SMS sms = smsDao.findSMSByChannelTypeAndPhone(channelType, phone);
+		if(sms == null) {
+			return false;
+		} else {
+			//update
+			sms.setState(SMS.SMS_STATE_VERIFYED);
+			sms.setVerifyTime(System.currentTimeMillis() / 1000);
+			return smsDao.update(sms);
+		}
+	}
+	
 	public boolean checkVerifyCode(int channelType, String phone, String inputVerfiyCode) {
 		SMS sms = smsDao.findSMSByChannelTypeAndPhone(channelType, phone);
 		if(sms == null) {
@@ -59,11 +71,6 @@ public class SMSService extends BaseService {
 			if(!StringUtils.equals(sms.getVerifyCode(), inputVerfiyCode)) {
 				return false;
 			}
-			
-			//update
-			sms.setState(SMS.SMS_STATE_VERIFYED);
-			sms.setVerifyTime(System.currentTimeMillis() / 1000);
-			smsDao.update(sms);
 			return true;
 		}
 	}

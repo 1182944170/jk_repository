@@ -11,4 +11,6 @@ public interface IXTUserDao extends IDao {
 	
 	@SuppressWarnings("rawtypes")
 	List<XTUser> doPager(Map map);
+
+	XTUser findXTUserByContact(String contact);
 }

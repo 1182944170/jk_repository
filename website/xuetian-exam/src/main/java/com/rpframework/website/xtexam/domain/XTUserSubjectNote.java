@@ -35,8 +35,8 @@ public class XTUserSubjectNote extends Domain {
 	@FieldMapperAnnotation(dbFieldName="userId", fieldType=FieldType.Object)
 	XTUser user;
 	
-	@FieldMapperAnnotation(dbFieldName="examClassifyId", fieldType=FieldType.Object)
-	ExamSubChapterClassify examClassify;
+	@FieldMapperAnnotation(dbFieldName="subjectId", fieldType=FieldType.Object)
+	ExamSubject subject;
 	
 	@FieldMapperAnnotation
 	String content;
@@ -63,14 +63,14 @@ public class XTUserSubjectNote extends Domain {
 	public void setUser(XTUser user) {
 		this.user = user;
 	}
-	public ExamSubChapterClassify getExamClassify() {
-		return examClassify;
-	}
-	public void setExamClassify(ExamSubChapterClassify examClassify) {
-		this.examClassify = examClassify;
-	}
 	public String getContent() {
 		return content;
+	}
+	public ExamSubject getSubject() {
+		return subject;
+	}
+	public void setSubject(ExamSubject subject) {
+		this.subject = subject;
 	}
 	public void setContent(String content) {
 		this.content = content;

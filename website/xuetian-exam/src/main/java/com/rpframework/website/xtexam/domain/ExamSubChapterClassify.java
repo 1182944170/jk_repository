@@ -49,7 +49,7 @@ public class ExamSubChapterClassify extends ExamClassify {
 			this.totalSubjectNum = GsonUtils.getInt(jsonObject, "totalSubjectNum");
 			this.totalScore = GsonUtils.getInt(jsonObject, "totalScore");
 			this.passScore = GsonUtils.getInt(jsonObject, "passScore");
-			this.price = GsonUtils.getDouble(jsonObject, "passScore");
+			this.price = GsonUtils.getDouble(jsonObject, "price");
 			this.discount = GsonUtils.getDouble(jsonObject, "discount");
 		}
 	}

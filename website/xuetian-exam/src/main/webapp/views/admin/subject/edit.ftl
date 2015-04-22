@@ -31,7 +31,7 @@
 						</tr>
 					</thead>
 					<tbody>
-					<#if subject??>
+					<#if subject.options??>
 						<#list subject.options as option>
 						<tr>
 							<td>${option.optionName}</td>

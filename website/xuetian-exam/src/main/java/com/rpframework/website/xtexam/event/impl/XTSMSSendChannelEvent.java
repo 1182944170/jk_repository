@@ -7,7 +7,6 @@ import com.rpframework.module.common.event.impl.SMSAbstractSendChannel1Event;
 @Component
 public class XTSMSSendChannelEvent extends SMSAbstractSendChannel1Event {
 
-	
 	@Override
 	public void initForSet() {
 		/**

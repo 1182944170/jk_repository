@@ -9,6 +9,9 @@
 	<select id="findXTUserByUserName" parameterType="String" resultMap="xtUser">
 		select * from xt_user where 1=1 and userName=#{userNmae}
 	</select>
+	<select id="findXTUserByContact" parameterType="String" resultMap="xtUser">
+		select * from xt_user where 1=1 and contact=#{contact}
+	</select>
 	
 	<select id="doPager" parameterType="map" resultMap="xtUser">
 		select * from xt_user where 1=1

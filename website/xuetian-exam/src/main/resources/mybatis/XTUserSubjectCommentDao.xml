@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.website.xtexam.dao.IXTUserSubjectCommentDao">
+	<resultMap type="com.rpframework.website.xtexam.domain.XTUserSubjectComment" id="mXTUserSubjectCommentDao" autoMapping="true">
+		<id property="id" column="id"/>
+		<association property="subject" column="subjectId" select="com.rpframework.website.xtexam.dao.IExamSubjectDao.select" />
+		<association property="user" column="userId" select="com.rpframework.website.xtexam.dao.IXTUserDao.select" />
+	</resultMap>
+	
+	<update id="update" parameterType="com.rpframework.website.xtexam.domain.XTUserSubjectComment" />
+	<insert id="insert" parameterType="com.rpframework.website.xtexam.domain.XTUserSubjectComment" useGeneratedKeys="true" keyProperty="id"/>
+	<delete id="delete" parameterType="com.rpframework.website.xtexam.domain.XTUserSubjectComment" />
+	<select id="select" parameterType="Integer" resultMap="mXTUserSubjectCommentDao">
+		select * from xt_user_subject_comment where id=#{id}
+	</select>
+	<select id="findBySubjectId" parameterType="Integer" resultMap="mXTUserSubjectCommentDao">
+		select * from xt_user_subject_comment where subjectId = #{subjectId}
+	</select>
+</mapper>

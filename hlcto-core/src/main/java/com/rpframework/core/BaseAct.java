@@ -2,12 +2,35 @@ package com.rpframework.core;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 public class BaseAct {
 	public static final String SESSION_ADMIN_USER_KEY = "sessionAdminUser";
 	public static final String SESSION_USER_KEY = "sessionUser";
+	
+	@SuppressWarnings("unchecked")
+	public <T> T getSessionAdminUser(HttpSession session){
+		Object attribute = session.getAttribute(SESSION_ADMIN_USER_KEY);
+		if(attribute == null) {
+			return null;
+		}
+		
+		return (T) attribute;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public <T> T getSessionUser(HttpSession session){
+		Object attribute = session.getAttribute(SESSION_USER_KEY);
+		if(attribute == null) {
+			return null;
+		}
+		
+		return (T) attribute;
+	}
+	
 	private String errorMsg = "";
 	private String infoMsg = "";
 	

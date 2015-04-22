@@ -25,6 +25,10 @@ public class XTUserService extends BaseService {
 		return pager;
 	}
 
+	public XTUser findXTUserByContact(String contact) {
+		return xtUserDao.findXTUserByContact(contact);
+	}
+	
 	public XTUser findXTUserByUserName(String userName) {
 		return xtUserDao.findXTUserByUserName(userName);
 	}

@@ -19,6 +19,8 @@ import com.rpframework.website.xtexam.domain.ExamSubjectOption;
 @Service
 public class ExamSubjectService extends BaseService{
 	public @Resource IExamSubjectDao examSubjectDao;
+	public @Resource XTUserSubjectCommentService xtUserSubjectCommentService;
+	public @Resource XTUserSubjectNoteService xtUserSubjectNoteService;
 	
 	/**
 	 * 获取试卷下的的试题
@@ -37,7 +39,38 @@ public class ExamSubjectService extends BaseService{
 		return pager;
 	}
 
-	public boolean doSaveOrUpdate(ExamSubject subject) {//TODO:考虑事务
+	public boolean likeSubject(Integer userId, Integer subjectId){
+		ExamSubject subject = examSubjectDao.select(subjectId);
+		if(subject == null) {
+			throw new IllegalArgumentException("找不到试题ID:" + subjectId);
+		}
+		
+		if(xtUserSubjectNoteService.hasLikeSubject(userId, subjectId)) {
+			return false;
+		}
+		subject.setSupportNum(subject.getSupportNum() + 1);
+		boolean flag = examSubjectDao.update(subject);
+		
+		if(flag) {
+			xtUserSubjectNoteService.addLikeSubject(userId, subjectId);
+		}
+		return flag;
+	}
+	public boolean addCommentToSubject(Integer userId, Integer subjectId, String content){
+		ExamSubject subject = examSubjectDao.select(subjectId);
+		if(subject == null) {
+			throw new IllegalArgumentException("找不到试题ID:" + subjectId);
+		}
+		
+		subject.setCommentNum(subject.getCommentNum() + 1);
+		boolean flag = examSubjectDao.update(subject);
+		
+		if(flag) {
+			xtUserSubjectCommentService.addComment(userId, subjectId, content);
+		}
+		return flag;
+	}
+	public boolean doSaveOrUpdate(ExamSubject subject) {
 		if(subject == null || StringUtils.isBlank(subject.getTitle())
 				|| StringUtils.isBlank(subject.getVedioPath())
 				|| subject.getDocument() == null || NumberUtils.isNotValid(subject.getDocument().getId())
@@ -56,12 +89,10 @@ public class ExamSubjectService extends BaseService{
 				if(option.getIsRightAnswer() == 1) {
 					rightAnswerNum ++;
 				}
-				
-				if(rightAnswerNum < 1) {
-					throw new IllegalArgumentException("需要一个正确的答案!");
-				}
 			}
-			
+			if(rightAnswerNum < 1) {
+				throw new IllegalArgumentException("需要一个正确的答案!");
+			}
 			subject.setIsSingeChoice(rightAnswerNum > 1 ? 0 : 1);
 		} else {
 			subject.setExt("");

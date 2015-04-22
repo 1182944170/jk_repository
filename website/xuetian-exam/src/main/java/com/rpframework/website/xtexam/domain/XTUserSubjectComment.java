@@ -16,14 +16,21 @@ public class XTUserSubjectComment extends Domain {
 	Integer id;
 	@FieldMapperAnnotation(dbFieldName="userId", fieldType=FieldType.Object)
 	XTUser user;
-	
-	@FieldMapperAnnotation(dbFieldName="examClassifyId", fieldType=FieldType.Object)
-	ExamSubChapterClassify examClassify;
-	
+	@FieldMapperAnnotation(dbFieldName="subjectId", fieldType=FieldType.Object)
+	ExamSubject subject;
 	@FieldMapperAnnotation
 	String content;
 	@FieldMapperAnnotation
 	Integer state;
+	@FieldMapperAnnotation
+	Long recoreCreateTime;
+	
+	public Long getRecoreCreateTime() {
+		return recoreCreateTime;
+	}
+	public void setRecoreCreateTime(Long recoreCreateTime) {
+		this.recoreCreateTime = recoreCreateTime;
+	}
 	public Integer getId() {
 		return id;
 	}
@@ -36,11 +43,11 @@ public class XTUserSubjectComment extends Domain {
 	public void setUser(XTUser user) {
 		this.user = user;
 	}
-	public ExamSubChapterClassify getExamClassify() {
-		return examClassify;
+	public ExamSubject getSubject() {
+		return subject;
 	}
-	public void setExamClassify(ExamSubChapterClassify examClassify) {
-		this.examClassify = examClassify;
+	public void setSubject(ExamSubject subject) {
+		this.subject = subject;
 	}
 	public String getContent() {
 		return content;

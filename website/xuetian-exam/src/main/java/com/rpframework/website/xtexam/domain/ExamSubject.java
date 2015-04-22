@@ -55,6 +55,33 @@ public class ExamSubject extends Domain {
 		return ext;
 	}
 	
+	public boolean checkIsRightAnswer(String userAnswer) {
+		if(this.getSubjectType() == CHOOICE_SUBJECT_TYPE) {
+			String[] answers;
+			int rightCount = 0;
+			if(this.getIsSingeChoice() == 1) { //单选题
+				answers = new String[]{userAnswer};
+			} else {
+				answers = StringUtils.split(userAnswer, "|");
+			}
+			
+			for (ExamSubjectOption option : this.getOptions()) {
+				if(option.isRightAnswer == 1) {
+					for (String answer : answers) {
+						if(StringUtils.equals(option.getOptionName(), answer)) {
+							rightCount+=1;
+							break;
+						}
+					}
+				}
+			}
+			
+			return answers.length == rightCount;
+		} else {
+			return true;
+		}
+	}
+	
 	public void setExt(String ext) {
 		this.ext = ext;
 		

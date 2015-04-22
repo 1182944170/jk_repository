@@ -38,7 +38,14 @@
 		</div>
 	</div>
 </div>
-
+<div class="form-group">
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right">是否公开课:</label>
+	<div class="col-xs-12 col-sm-9">
+		<div class="clearfix">
+		<@ace.radioGroup options=ace.commonOptions checkValue=(courses.isOpen)!0 name="isOpen" isWrap=true/>
+		</div>
+	</div>
+</div>
 <div class="form-group">
 	<label class="control-label col-xs-12 col-sm-3 no-padding-right">状态:</label>
 	<div class="col-xs-12 col-sm-9">
@@ -81,6 +88,9 @@ $(document).ready(function(){
 				required: true
 			},
 			state: {
+				required: true
+			},
+			isOpen:{
 				required: true
 			}
 		},

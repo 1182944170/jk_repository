@@ -41,9 +41,19 @@ public class XTUserExamLog extends Domain {
 	@FieldMapperAnnotation
 	Integer state;
 	@FieldMapperAnnotation
-	Integer recordCreateTime;
+	Long recordCreateTime;
+	@FieldMapperAnnotation
+	Long finishedTime;
 	
 	List<XTUserExamSubjectLog> examSubjectLogs; //每道题目的记录
+
+	public Long getFinishedTime() {
+		return finishedTime;
+	}
+
+	public void setFinishedTime(Long finishedTime) {
+		this.finishedTime = finishedTime;
+	}
 
 	public Integer getId() {
 		return id;
@@ -85,11 +95,11 @@ public class XTUserExamLog extends Domain {
 		this.state = state;
 	}
 
-	public Integer getRecordCreateTime() {
+	public Long getRecordCreateTime() {
 		return recordCreateTime;
 	}
 
-	public void setRecordCreateTime(Integer recordCreateTime) {
+	public void setRecordCreateTime(Long recordCreateTime) {
 		this.recordCreateTime = recordCreateTime;
 	}
 
