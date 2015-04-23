@@ -31,7 +31,7 @@ public class XTOrder extends Domain {
 	@FieldMapperAnnotation
 	Integer lastModifyTime;
 	
-	Integer rechargeExamSubChapterId;//充值的试卷ID
+	Integer rechargeExamSubchapterId;//充值的试卷ID
 
 	public String getOrderNo() {
 		return orderNo;
@@ -105,11 +105,11 @@ public class XTOrder extends Domain {
 		this.lastModifyTime = lastModifyTime;
 	}
 
-	public Integer getRechargeExamSubChapterId() {
-		return rechargeExamSubChapterId;
+	public Integer getRechargeExamSubchapterId() {
+		return rechargeExamSubchapterId;
 	}
 
-	public void setRechargeExamSubChapterId(Integer rechargeExamSubChapterId) {
-		this.rechargeExamSubChapterId = rechargeExamSubChapterId;
+	public void setRechargeExamSubchapterId(Integer rechargeExamSubchapterId) {
+		this.rechargeExamSubchapterId = rechargeExamSubchapterId;
 	}
 }

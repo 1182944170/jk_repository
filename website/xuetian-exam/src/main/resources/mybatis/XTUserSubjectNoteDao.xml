@@ -8,6 +8,20 @@
 		<association property="user" column="userId" select="com.rpframework.website.xtexam.dao.IXTUserDao.select" />
 	</resultMap>
 	
+	<select id="getUserFavCount" parameterType="Integer" resultType="Integer">
+		select count(1) from xt_user_subject_note where userId=#{0} and isFav=1
+	</select>
+	
+	<select id="getUserCommentCount" parameterType="Integer" resultType="Integer">
+		select count(1) from xt_user_subject_note where userId=#{0} and content !='' and content IS NOT NULL
+	</select>
+	<select id="getUserFav" parameterType="Integer" resultMap="mXTUserSubjectNote">
+		select * from xt_user_subject_note where userId=#{0} and isFav=1
+	</select>
+	
+	<select id="getUserComment" parameterType="Integer" resultMap="mXTUserSubjectNote">
+		select * from xt_user_subject_note where userId=#{0} and content !='' and content IS NOT NULL
+	</select>
 	
 	<select id="findByUserIdAndSubjectId" resultMap="mXTUserSubjectNote">
 		select * from xt_user_subject_note where userId=#{0} and subjectId = #{1}

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.module.common.dao.INoticeDao">
+
+	<resultMap type="com.rpframework.module.common.domain.Notice" id="mNotice" autoMapping="true">
+		<id property="id" column="id"/>
+	</resultMap>
+
+	<select id="doPager" resultMap="mNotice">
+		select * from notice
+	</select>
+	<select id="queryAllEffectiveNotice" resultMap="mNotice">
+		select * from notice where state=1
+	</select>
+
+	<update id="update" parameterType="com.rpframework.module.common.domain.Notice" />
+	<insert id="insert" parameterType="com.rpframework.module.common.domain.Notice" useGeneratedKeys="true" keyProperty="id"/>
+	<delete id="delete" parameterType="com.rpframework.module.common.domain.Notice" />
+	<select id="select" parameterType="Integer" resultMap="mNotice">
+		select * from notice where id=#{id}
+	</select> 
+</mapper>

@@ -16,7 +16,11 @@
 		select * from xt_user_exam_log where id=#{id}
 	</select>
 	
-	<select id="findExamLogByUserId" parameterType="Integer" resultMap="mXTUserExamLog">
+	<select id="getUserExamLog" parameterType="Integer" resultMap="mXTUserExamLog">
 		select * from xt_user_exam_log where userId=#{userId}
+	</select>
+	
+	<select id="getUserExamLogCount" parameterType="Integer" resultType="Integer">
+		select COUNT(1) from xt_user_exam_log where userId=#{userId}
 	</select>
 </mapper>

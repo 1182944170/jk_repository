@@ -9,4 +9,8 @@ public interface IXTUserExamSubjectLogDao extends IDao {
 	List<XTUserExamSubjectLog> getListByExamLogId(Integer examLogId);
 
 	XTUserExamSubjectLog findByExamLogIdAndSubjectId(Integer examLogId, Integer subjectId);
+
+	int getUserWrongAnswerCount(Integer userId);
+
+	List<XTUserExamSubjectLog> getUserWrongAnswer(Integer userId);
 }

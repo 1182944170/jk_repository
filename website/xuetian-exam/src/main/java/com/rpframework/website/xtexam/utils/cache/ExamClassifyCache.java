@@ -84,6 +84,7 @@ public class ExamClassifyCache extends CacheObj {
 		for (ExamCoursesClassify courses : all) {
 			JsonObject coursesJson = new JsonObject();
 			JsonArray specialtys = new JsonArray();
+			coursesJson.addProperty("id", courses.getId());
 			coursesJson.addProperty("name", courses.getName());
 			coursesJson.addProperty("isOpen", courses.getIsOpen());
 			coursesJson.add("specialtys", specialtys);
@@ -94,6 +95,7 @@ public class ExamClassifyCache extends CacheObj {
 			for (ExamSpecialtyClassify specialty : specialtyList) {
 				JsonObject specialtyJson = new JsonObject();
 				JsonArray chapters = new JsonArray();
+				specialtyJson.addProperty("id", specialty.getId());
 				specialtyJson.addProperty("name", specialty.getName());
 				specialtyJson.add("chapters", chapters);
 				specialtys.add(specialtyJson);
@@ -103,6 +105,7 @@ public class ExamClassifyCache extends CacheObj {
 				for (ExamChapterClassify chapter : chapterList) {
 					JsonObject chapterJson = new JsonObject();
 					JsonArray subchapters = new JsonArray();
+					chapterJson.addProperty("id", chapter.getId());
 					chapterJson.addProperty("name", chapter.getName());
 					chapterJson.add("subchapters", subchapters);
 					chapters.add(chapterJson);
@@ -110,6 +113,7 @@ public class ExamClassifyCache extends CacheObj {
 					List<ExamSubChapterClassify> subchapterList = subchapterService.examSubChapterClassifyDao.getListEffectiveByChapterId(chapter.getId());
 					for (ExamSubChapterClassify subchapter : subchapterList) {
 						JsonObject subchapterJson = new JsonObject();
+						subchapterJson.addProperty("id", subchapter.getId());
 						subchapterJson.addProperty("name", subchapter.getName());
 						subchapterJson.addProperty("examTime", subchapter.getExamTime());
 						subchapterJson.addProperty("totalSubjectNum", subchapter.getTotalSubjectNum());

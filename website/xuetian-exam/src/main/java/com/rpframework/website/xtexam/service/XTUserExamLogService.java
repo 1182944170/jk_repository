@@ -101,7 +101,11 @@ public class XTUserExamLogService extends BaseService {
 		return null;
 	}
 
-	public List<XTUserExamLog> findExamLogByUserId(Integer userId) {
-		return userExamLogDao.findExamLogByUserId(userId);
+	public List<XTUserExamLog> getUserExamLog(Integer userId) {
+		return userExamLogDao.getUserExamLog(userId);
+	}
+
+	public int getUserExamLogCount(Integer userId) {
+		return userExamLogDao.getUserExamLogCount(userId);
 	}
 }

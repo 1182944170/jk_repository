@@ -86,7 +86,7 @@ public class XTApiAct extends BaseAct {
 		String pwd = request.getParameter("pwd");
 		String areaPath = request.getParameter("areaPath");
 		String contact = request.getParameter("contact");
-		int examClassifyId = NumberUtils.parseInt(request.getParameter("examClassifyId"), -1);
+		String examClassifyIds = request.getParameter("examClassifyIds");
 		String verifyCode = request.getParameter("verifyCode");
 		
 		if(StringUtils.isBlank(userName)
@@ -94,7 +94,7 @@ public class XTApiAct extends BaseAct {
 				||StringUtils.isBlank(areaPath)
 				||StringUtils.isBlank(contact)
 				||StringUtils.isBlank(verifyCode)
-				|| examClassifyId < 0 ) {
+				|| StringUtils.isBlank(examClassifyIds)) {
 			throw new APICodeException(-1, "非法参数!");
 		}
 		
@@ -117,7 +117,7 @@ public class XTApiAct extends BaseAct {
 		xtUser.setAreaPath(areaPath);
 		xtUser.setContact(contact);
 		xtUser.setEmail("");
-		xtUser.setExamClassifyId(examClassifyId);
+		xtUser.setExamClassifyIds(examClassifyIds);
 		xtUser.setNickName("");
 		xtUser.setPwd(password);
 		xtUser.setRecordCreateTime(System.currentTimeMillis() / 1000);

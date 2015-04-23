@@ -19,4 +19,11 @@ public class XTUserExamSubjectLogService extends BaseService {
 	public XTUserExamSubjectLog findByExamLogIdAndSubjectId(Integer examLogId, Integer subjectId) {
 		return examSubjectLogDao.findByExamLogIdAndSubjectId(examLogId, subjectId);
 	}
+	public int getUserWrongAnswerCount(Integer userId) {
+		return examSubjectLogDao.getUserWrongAnswerCount(userId);
+	}
+	
+	public List<XTUserExamSubjectLog> getUserWrongAnswer(Integer userId) {
+		return examSubjectLogDao.getUserWrongAnswer(userId);
+	}
 }

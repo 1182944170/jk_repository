@@ -51,6 +51,41 @@ public class ExamSubject extends Domain {
 	@FieldMapperAnnotation
 	String ext;
 	
+	public JsonObject getJson(){
+		JsonObject json = new JsonObject();
+		Gson gson = new Gson();
+		ExamSubject subject = this;
+		
+		json.addProperty("subjectId", subject.getId());
+		json.addProperty("title", subject.getTitle());
+		json.addProperty("vedioPath", subject.getVedioPath());
+		json.addProperty("commentNum", subject.getCommentNum());
+		json.addProperty("supportNum", subject.getSupportNum());
+		json.addProperty("score", subject.getScore());
+		json.addProperty("subjectType", subject.getSubjectType());
+		json.addProperty("subchapterId", subject.getExamClassify().getId());
+
+		if(subject.getDocument() != null) {
+			json.addProperty("document", subject.getDocument().getContent());
+		} else {
+			json.addProperty("document", "");
+		}
+		
+		if(subject.getSubjectType() == ExamSubject.CHOOICE_SUBJECT_TYPE) {
+			JsonArray optionArray = new JsonArray();
+			json.addProperty("isSingeChoice", subject.getIsSingeChoice());
+			json.add("options", optionArray);
+			
+			if(CollectionUtils.isNotEmpty(subject.getOptions())) {
+				for (ExamSubjectOption option : subject.getOptions()) {
+					JsonObject optionJson = gson.toJsonTree(option).getAsJsonObject();
+					optionArray.add(optionJson);
+				}
+			}
+		}
+		
+		return json;
+	}
 	public String getExt() {
 		return ext;
 	}

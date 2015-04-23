@@ -47,15 +47,15 @@ public class XTUser extends Domain {
 	@FieldMapperAnnotation
 	String lastLoginIp;
 	@FieldMapperAnnotation
-	Integer examClassifyId; //1-网站 2-主网站
+	String examClassifyIds; //
 	@FieldMapperAnnotation
 	Integer sourceType; //1-网站 2-主网站
 	
-	public Integer getExamClassifyId() {
-		return examClassifyId;
+	public String getExamClassifyIds() {
+		return examClassifyIds;
 	}
-	public void setExamClassifyId(Integer examClassifyId) {
-		this.examClassifyId = examClassifyId;
+	public void setExamClassifyIds(String examClassifyIds) {
+		this.examClassifyIds = examClassifyIds;
 	}
 	public Integer getSourceType() {
 		return sourceType;
