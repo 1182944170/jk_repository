@@ -8,6 +8,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -28,7 +29,7 @@ public class XTApiAct extends BaseAct {
 	@Resource SMSService smsService;
 	
 	@RequestMapping("/login")
-	public JsonElement login(@RequestParam(required=false) String userName, @RequestParam(required=false) String pwd, HttpSession session, HttpServletRequest request){
+	public @ResponseBody JsonElement login(@RequestParam(required=false) String userName, @RequestParam(required=false) String pwd, HttpSession session, HttpServletRequest request){
 		if(StringUtils.isBlank(userName) || StringUtils.isBlank(pwd)) {
 			throw new APICodeException(-5, "非法参数!");
 		}
@@ -63,7 +64,7 @@ public class XTApiAct extends BaseAct {
 	}
 	
 	@RequestMapping("/sendsms_for_regist")
-	public JsonElement sendSMSForRegist(@RequestParam(required=false) String contact, HttpSession session, HttpServletRequest request) {
+	public @ResponseBody JsonElement sendSMSForRegist(@RequestParam(required=false) String contact, HttpSession session, HttpServletRequest request) {
 		if(StringUtils.isEmpty(contact)) {
 			throw new APICodeException(-1, "非法参数!");
 		}
@@ -81,7 +82,7 @@ public class XTApiAct extends BaseAct {
 	}
 	
 	@RequestMapping(value="/regist") //, method=RequestMethod.POST
-	public JsonElement regist(HttpSession session, HttpServletRequest request) {
+	public @ResponseBody JsonElement regist(HttpSession session, HttpServletRequest request) {
 		String userName = request.getParameter("userName");
 		String pwd = request.getParameter("pwd");
 		String areaPath = request.getParameter("areaPath");
@@ -133,7 +134,7 @@ public class XTApiAct extends BaseAct {
 	}
 	
 	@RequestMapping("/logout")
-	public JsonElement logout(HttpSession session, HttpServletRequest request){
+	public @ResponseBody JsonElement logout(HttpSession session, HttpServletRequest request){
 		session.removeAttribute(SESSION_USER_KEY);
 		JsonObject json = new JsonObject();
 		json.addProperty("succ", true);

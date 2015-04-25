@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.website.yunpiaopiao.dao.IMovieActorDao">
+	<resultMap type="com.rpframework.website.yunpiaopiao.domian.MovieActor" id="mMovieActor" autoMapping="true">
+		<id property="id" column="id"/>
+		<association property="actor" column="actorId" select="com.rpframework.website.yunpiaopiao.dao.IActorDao.select"/>
+	</resultMap>
+	
+	<select id="getMovieActorByMovieId" parameterType="Integer" resultMap="mMovieActor">
+		select * from movie_actor where 1=1 and movieId=#{movieId}
+	</select>
+	
+	<delete id="deleteListByMovieId">
+		delete from movie_actor where movieId=#{movieId}
+	</delete>
+	
+	<update id="update" parameterType="com.rpframework.website.yunpiaopiao.domian.MovieActor" />
+	<insert id="insert" parameterType="com.rpframework.website.yunpiaopiao.domian.MovieActor" useGeneratedKeys="true" keyProperty="id"/>
+	<delete id="delete" parameterType="com.rpframework.website.yunpiaopiao.domian.MovieActor" />
+	<select id="select" parameterType="Integer" resultMap="mMovieActor">
+		select * from movie_actor where id=#{id}
+	</select>
+</mapper>

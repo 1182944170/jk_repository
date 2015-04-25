@@ -1,4 +1,4 @@
-<title>通知列表</title>
+<title>幻灯片列表</title>
 <div class="row">
 	<div class="col-xs-12">
 		<div class="table-responsive">
@@ -6,18 +6,24 @@
 				<thead>
 					<tr>
 						<th>ID</th>
+						<th>ICON</th>
 						<th>标题</th>
-						<th>内容</th>
+						<th>链接地址</th>
+						<th>类型</th>
+						<th>排列</th>
 						<th><i class="icon-time bigger-110 hidden-480"></i> 状态</th>
 						<th></th>
 					</tr>
 				</thead>
 				<tbody>
-				<#list pager.itemList as u>
+				<#list list as u>
 					<tr>
 						<td><span class="green center">${u.id}</span></td>
-						<td><span class="gray center">${u.title}</span></td>
-						<td>${u.content}</td>
+						<td><img src="${tagUtils.getFileFullPath(u.icon)}" alt="${u.icon}" width=100 /></td>
+						<td>${u.title}</td>
+						<td>${u.url}</td>
+						<td>${dicSetting.getParameterValue("slideshow.type." + u.type)}</td>
+						<td>${u.sortIndex}</td>
 						<td class="hidden-480">
 							<#if u.state == 1>
 								<span class="label label-sm label-success arrowed">正常状态</span>
@@ -25,13 +31,12 @@
 								<span class="label label-sm label-warning arrowed">禁用状态</span>
 							</#if>
 						</td>
-
 						<td>
 						<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
-							<a class="green" href="${ctx}/admin/common/notice/${u.id}/edit" alt="编辑">
+							<a class="green" href="${ctx}/admin/common/slideshow/${u.id}/edit" alt="编辑">
 								<i class="icon-pencil bigger-130"></i>
 							</a>
-							<a class="red" href="${ctx}/admin/common/notice/${u.id}/delete" alt="Delete">
+							<a class="red" href="${ctx}/admin/common/slideshow/${u.id}/delete" alt="Delete">
 								<i class="icon-trash bigger-130"></i> 
 							</a>
 						</div>
@@ -43,14 +48,14 @@
 								</button>
 								<ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
 									<li>
-										<a href="${ctx}/admin/common/notice/${u.id}/edit" class="tooltip-success" data-rel="tooltip" title="" data-original-title="编辑">
+										<a href="${ctx}/admin/common/slideshow/${u.id}/edit" class="tooltip-success" data-rel="tooltip" title="" data-original-title="编辑">
 											<span class="green">
 												<i class="icon-edit bigger-120"></i>
 											</span>
 										</a>
 									</li>
 									<li>
-										<a href="${ctx}/admin/common/notice/${u.id}/delete" class="tooltip-error" data-rel="tooltip" title="" data-original-title="Delete">
+										<a href="${ctx}/admin/common/slideshow/${u.id}/delete" class="tooltip-error" data-rel="tooltip" title="" data-original-title="Delete">
 											<span class="red">
 												<i class="icon-trash bigger-120"></i>
 											</span>
@@ -67,7 +72,6 @@
 		</div><!-- /.table-responsive -->
 		
 		<div class="hr hr-18 dotted hr-double"></div>
-		<@h.page pager=pager action="${ctx}/admin/common/notice/list" />
 	</div><!-- /span -->
 </div><!-- /row -->
 
@@ -88,8 +92,7 @@
 </#if>
 <script>
 $(document).ready(function(){
-	RP.addBreadcrumb([{name:"基础配置"}, {name:"通知列表", active: true}]);
-	$("#breadcrumbs ul").append('&nbsp;&nbsp;&nbsp;&nbsp;<a href="${ctx}/admin/common/notice/add"><i class="icon-zoom-in"></i><span class="label label-warning arrowed-in arrowed-in arrowed-right">新增通知</span></a>');
+	RP.addBreadcrumb([{name:"基础配置"}, {name:"幻灯片列表", active: true}]);
+	$("#breadcrumbs ul").append('&nbsp;&nbsp;&nbsp;&nbsp;<a href="${ctx}/admin/common/slideshow/add"><i class="icon-zoom-in"></i><span class="label label-warning arrowed-in arrowed-in arrowed-right">新增幻灯片</span></a>');
 });
 </script>
-

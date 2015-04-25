@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.website.yunpiaopiao.dao.IUserDao">
+	<resultMap type="com.rpframework.website.yunpiaopiao.domian.User" id="mUser" autoMapping="true">
+		<id property="id" column="id"/>
+	</resultMap>
+	
+	<select id="findUserByUserName" parameterType="String" resultMap="mUser">
+		select * from user where 1=1 and userName=#{userNmae}
+	</select>
+	<select id="findUserByContact" parameterType="String" resultMap="mUser">
+		select * from user where 1=1 and contact=#{contact}
+	</select>
+	
+	<select id="doPager" parameterType="map" resultMap="mUser">
+		select * from user where 1=1
+		<if test="page.searchMap.userNmae != null">
+			and userNmae like '%#{page.searchMap.userNmae}%'
+		</if>
+		 order by id
+	</select>
+
+	<update id="update" parameterType="com.rpframework.website.yunpiaopiao.domian.User" />
+	<insert id="insert" parameterType="com.rpframework.website.yunpiaopiao.domian.User" useGeneratedKeys="true" keyProperty="id"/>
+	<delete id="delete" parameterType="com.rpframework.website.yunpiaopiao.domian.User" />
+	<select id="select" parameterType="Integer" resultMap="mUser">
+		select * from user where id=#{id}
+	</select>
+</mapper>

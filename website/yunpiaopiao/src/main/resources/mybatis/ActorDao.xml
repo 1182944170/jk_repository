@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.website.yunpiaopiao.dao.IActorDao">
+	<resultMap type="com.rpframework.website.yunpiaopiao.domian.Actor" id="mActor" autoMapping="true">
+		<id property="id" column="id"/>
+	</resultMap>
+	
+	<select id="queryAll" resultMap="mActor">
+		select * from actor where 1=1
+	</select>
+	
+	<select id="doPager" resultMap="mActor">
+		select * from actor where 1=1
+	</select>
+
+	<update id="update" parameterType="com.rpframework.website.yunpiaopiao.domian.Actor" />
+	<insert id="insert" parameterType="com.rpframework.website.yunpiaopiao.domian.Actor" useGeneratedKeys="true" keyProperty="id"/>
+	<delete id="delete" parameterType="com.rpframework.website.yunpiaopiao.domian.Actor" />
+	<select id="select" parameterType="Integer" resultMap="mActor">
+		select * from actor where id=#{id}
+	</select>
+</mapper>

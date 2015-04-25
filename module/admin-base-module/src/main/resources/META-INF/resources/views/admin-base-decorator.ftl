@@ -18,6 +18,14 @@
 
 		<!-- page specific plugin styles -->
 
+		<link rel="stylesheet" href="${ctx}/resources/cssframework/ace/css/jquery-ui-1.10.3.custom.min.css" />
+		<link rel="stylesheet" href="${ctx}/resources/cssframework/ace/css/chosen.css" />
+		<link rel="stylesheet" href="${ctx}/resources/cssframework/ace/css/datepicker.css" />
+		<link rel="stylesheet" href="${ctx}/resources/cssframework/ace/css/bootstrap-timepicker.css" />
+		<link rel="stylesheet" href="${ctx}/resources/cssframework/ace/css/daterangepicker.css" />
+		<link rel="stylesheet" href="${ctx}/resources/cssframework/ace/css/colorpicker.css" />
+		
+
 		<!-- fonts -->
 
 		<link rel="stylesheet" href="${ctx}/resources/cssframework/ace/css/open_Sans.css" />
@@ -80,6 +88,22 @@
 		<script src="${ctx}/resources/cssframework/ace/js/bootbox.min.js"></script>
 		<script src="${ctx}/resources/cssframework/ace/js/jquery.maskedinput.min.js"></script>
 		<script src="${ctx}/resources/cssframework/ace/js/select2.min.js"></script>
+		
+		<script src="${ctx}/resources/cssframework/ace/js/jquery-ui-1.10.3.custom.min.js"></script>
+		<script src="${ctx}/resources/cssframework/ace/js/jquery.ui.touch-punch.min.js"></script>
+		<script src="${ctx}/resources/cssframework/ace/js/chosen.jquery.min.js"></script>
+		<script src="${ctx}/resources/cssframework/ace/js/fuelux/fuelux.spinner.min.js"></script>
+		<script src="${ctx}/resources/cssframework/ace/js/date-time/bootstrap-datepicker.min.js"></script>
+		<script src="${ctx}/resources/cssframework/ace/js/date-time/bootstrap-timepicker.min.js"></script>
+		<script src="${ctx}/resources/cssframework/ace/js/date-time/moment.min.js"></script>
+		<script src="${ctx}/resources/cssframework/ace/js/date-time/daterangepicker.min.js"></script>
+		<script src="${ctx}/resources/cssframework/ace/js/bootstrap-colorpicker.min.js"></script>
+		<script src="${ctx}/resources/cssframework/ace/js/jquery.knob.min.js"></script>
+		<script src="${ctx}/resources/cssframework/ace/js/jquery.autosize.min.js"></script>
+		<script src="${ctx}/resources/cssframework/ace/js/jquery.inputlimiter.1.3.1.min.js"></script>
+		<script src="${ctx}/resources/cssframework/ace/js/jquery.maskedinput.min.js"></script>
+		<script src="${ctx}/resources/cssframework/ace/js/bootstrap-tag.min.js"></script>
+		
 		<!-- mindmup-editabletable.js-->
 		<script src="${ctx}/resources/plugins/mindmup-editabletable.js"></script>
 		

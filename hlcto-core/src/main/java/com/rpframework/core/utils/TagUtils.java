@@ -10,6 +10,7 @@ import com.rpframework.core.InitServlet;
 import com.rpframework.core.api.FileService;
 import com.rpframework.core.freemarker.BaseRegistFreemarker;
 import com.rpframework.utils.DateUtils;
+import com.rpframework.utils.FileUtils;
 
 @Component("tagUtils")
 public class TagUtils extends BaseRegistFreemarker {
@@ -33,5 +34,9 @@ public class TagUtils extends BaseRegistFreemarker {
 	public static String getWebUrl(){
 		FileService fileService = SpringUtils.getBean(FileService.class);
 		return fileService.getWebUrl();
+	}
+	
+	public static String getFileFullPath(String absPath) {
+		return FileUtils.splicePaths(getWebUrl(), absPath);
 	}
 }
