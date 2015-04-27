@@ -67,7 +67,7 @@
 
 											<div class="space-6"></div>
 
-											<form name="validation-form" id="validation-form" class="form-horizontal" action="${ctx}/admin/dologin" method="post">
+											<form name="validation-form" id="validation-form" class="form-horizontal" action="${ctx}/admin/dologin${suffix}" method="post">
 												<fieldset>
 												<div class="form-group">
 													<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="userName">Username:</label>

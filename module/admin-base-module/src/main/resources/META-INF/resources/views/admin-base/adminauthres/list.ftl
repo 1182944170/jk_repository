@@ -6,11 +6,11 @@
 			<div>
 			<span class="blue bigger-150">${vo.name}&nbsp;&nbsp;</span>
 			<div class="btn-group">
-				<a class="green" href="${ctx}/admin/adminauthres/${vo.id}/edit" alt="Edit">
+				<a class="green" href="${ctx}/admin/adminauthres/${vo.id}/edit${suffix}" alt="Edit">
 					<i class="icon-pencil bigger-130"></i>
 				</a>
 
-				<a class="red" href="${ctx}/admin/adminauthres/${vo.id}/delete" alt="Delete">
+				<a class="red" href="${ctx}/admin/adminauthres/${vo.id}/delete${suffix}" alt="Delete">
 					<i class="icon-trash bigger-130"></i>
 				</a>
 			</div>
@@ -19,11 +19,11 @@
 					<#list vo.children as voChild>
 					<span>
 						<span class="green bigger-110">&nbsp;&nbsp;&nbsp;&nbsp;${voChild.name}&nbsp;&nbsp;</span>
-						<a class="green" href="${ctx}/admin/adminauthres/${voChild.id}/edit" alt="Edit">
+						<a class="green" href="${ctx}/admin/adminauthres/${voChild.id}/edit${suffix}" alt="Edit">
 							<i class="icon-pencil bigger-130"></i>
 						</a>
 		
-						<a class="red" href="${ctx}/admin/adminauthres/${voChild.id}/delete" alt="Delete">
+						<a class="red" href="${ctx}/admin/adminauthres/${voChild.id}/delete${suffix}" alt="Delete">
 							<i class="icon-trash bigger-130"></i>
 						</a>
 					</span>
@@ -53,7 +53,7 @@
 </#if>
 <script>
 $(document).ready(function(){
-	RP.addBreadcrumb([{name:"资源映射配置"}, {name:"资源映射列表", linkUrl:"${ctx}/admin/adminauthres/list", active: true}]);
+	RP.addBreadcrumb([{name:"资源映射配置"}, {name:"资源映射列表", linkUrl:"${ctx}/admin/adminauthres/list${suffix}", active: true}]);
 });
 </script>
 

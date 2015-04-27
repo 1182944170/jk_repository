@@ -8,7 +8,7 @@
 	</h1>
 </div>
 
-<form class="form-horizontal" role="form" id="validation-form" method="POST" action="${ctx}/admin/dictionary/dosave">
+<form class="form-horizontal" role="form" id="validation-form" method="POST" action="${ctx}/admin/dictionary/dosave${suffix}">
 <fieldset>
 <div class="form-group">
 	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="variable">variable:</label>

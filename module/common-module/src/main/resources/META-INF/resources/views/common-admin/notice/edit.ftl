@@ -8,7 +8,7 @@
 	</h1>
 </div>
 
-<form class="form-horizontal" role="form" id="validation-form" method="POST" action="${ctx}/admin/common/notice/dosave">
+<form class="form-horizontal" role="form" id="validation-form" method="POST" action="${ctx}/admin/common/notice/dosave${suffix}">
 <#if notice??>
 	<input type="hidden" name="id" value="${notice.id}"/>
 </#if>

@@ -241,14 +241,14 @@
 
 					<ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
 						<li>
-							<a href="${ctx}/admin/adminuser/settings">
+							<a href="${ctx}/admin/adminuser/settings${suffix}">
 								<i class="icon-cog"></i>
 								Settings
 							</a>
 						</li>
 
 						<li>
-							<a href="${ctx}/admin/adminuser/profile">
+							<a href="${ctx}/admin/adminuser/profile${suffix}">
 								<i class="icon-user"></i>
 								Profile
 							</a>
@@ -257,7 +257,7 @@
 						<li class="divider"></li>
 
 						<li>
-							<a href="${ctx}/admin/logout">
+							<a href="${ctx}/admin/logout${suffix}">
 								<i class="icon-off"></i>
 								Logout
 							</a>

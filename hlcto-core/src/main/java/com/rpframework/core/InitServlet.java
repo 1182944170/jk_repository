@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 
 import com.rpframework.core.event.IModuleEvent;
+import com.rpframework.core.utils.DictionarySettingUtils;
 import com.rpframework.core.utils.SpringUtils;
 import com.rpframework.utils.CollectionUtils;
 
@@ -17,6 +18,7 @@ public class InitServlet extends HttpServlet {
 	public static String CTX = "";
 	public static String REAL_PATH = "";//本程序位于web服务器的真实路径
 	public static String DOMAIN = ""; //网站的域名,该值会在 commonIntercept 注入，方便获取
+	public static String SUFFIX = "";
 	private static final long serialVersionUID = 1L;
 
 	@Override
@@ -42,6 +44,9 @@ public class InitServlet extends HttpServlet {
 				moduleEvent.init(servletContext);
 			}
 		}
+		
+		SUFFIX = DictionarySettingUtils.getParameterValue("baseconfig.url_suffix");//网站url的后缀
+		servletContext.setAttribute("suffix", SUFFIX);
 		super.init(config);
 	}
 }

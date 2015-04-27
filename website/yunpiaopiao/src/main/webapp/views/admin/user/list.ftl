@@ -1,6 +1,6 @@
 <title>用户列表</title>
 
-<form class="form-horizontal" role="form" id="validation-form" method="GET" action="${ctx}/admin/user/list" onsubmit="return fromSearch(this)">
+<form class="form-horizontal" role="form" id="validation-form" method="GET" action="${ctx}/admin/user/list${suffix}" onsubmit="return fromSearch(this)">
 	<input type="hidden" name="pager" value="1_"/>
 	<button class="btn btn-minier btn-success" type="submit"><i class="icon-search"></i>搜  索</button>
 </form>
@@ -42,7 +42,7 @@
 		</div><!-- /.table-responsive -->
 		
 		<div class="hr hr-18 dotted hr-double"></div>
-		<@h.page pager=pager action="${ctx}/admin/user/list" />
+		<@h.page pager=pager action="${ctx}/admin/user/list${suffix}" />
 	</div><!-- /span -->
 </div><!-- /row -->
 

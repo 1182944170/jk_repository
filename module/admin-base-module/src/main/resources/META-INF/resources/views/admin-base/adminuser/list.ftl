@@ -30,11 +30,11 @@
 
 						<td>
 						<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
-							<a class="green" href="${ctx}/admin/adminuser/${u.id}/edit" alt="Edit">
+							<a class="green" href="${ctx}/admin/adminuser/${u.id}/edit${suffix}" alt="Edit">
 								<i class="icon-pencil bigger-130"></i>
 							</a>
 							<!--
-							<a class="red" href="${ctx}/admin/adminuser/${u.id}/delete" alt="Delete">
+							<a class="red" href="${ctx}/admin/adminuser/${u.id}/delete${suffix}" alt="Delete">
 								<i class="icon-trash bigger-130"></i> 
 								
 							</a>-->
@@ -47,7 +47,7 @@
 								</button>
 								<ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
 									<li>
-										<a href="${ctx}/admin/adminuser/${u.id}/edit" class="tooltip-success" data-rel="tooltip" title="" data-original-title="Edit">
+										<a href="${ctx}/admin/adminuser/${u.id}/edit${suffix}" class="tooltip-success" data-rel="tooltip" title="" data-original-title="Edit">
 											<span class="green">
 												<i class="icon-edit bigger-120"></i>
 											</span>
@@ -55,7 +55,7 @@
 									</li>
 									<!--
 									<li>
-										<a href="${ctx}/admin/adminuser/${u.id}/delete" class="tooltip-error" data-rel="tooltip" title="" data-original-title="Delete">
+										<a href="${ctx}/admin/adminuser/${u.id}/delete${suffix}" class="tooltip-error" data-rel="tooltip" title="" data-original-title="Delete">
 											<span class="red">
 												<i class="icon-trash bigger-120"></i>
 											</span>
@@ -72,7 +72,7 @@
 		</div><!-- /.table-responsive -->
 		
 		<div class="hr hr-18 dotted hr-double"></div>
-		<@h.page pager=pager action="${ctx}/admin/adminuser/list" />
+		<@h.page pager=pager action="${ctx}/admin/adminuser/list${suffix}" />
 	</div><!-- /span -->
 </div><!-- /row -->
 
@@ -93,7 +93,7 @@
 </#if>
 <script>
 $(document).ready(function(){
-	RP.addBreadcrumb([{name:"后台基础配置"}, {name:"用户列表", linkUrl:"${ctx}/admin/adminuser/list", active: true}]);
+	RP.addBreadcrumb([{name:"后台基础配置"}, {name:"用户列表", linkUrl:"${ctx}/admin/adminuser/list${suffix}", active: true}]);
 });
 </script>
 

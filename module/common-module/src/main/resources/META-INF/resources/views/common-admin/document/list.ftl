@@ -28,7 +28,7 @@
 
 						<td>
 						<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
-							<a class="green" href="${ctx}/admin/common/document/${u.id}/edit" alt="编辑">
+							<a class="green" href="${ctx}/admin/common/document/${u.id}/edit${suffix}" alt="编辑">
 								<i class="icon-pencil bigger-130"></i>
 							</a>
 						</div>
@@ -40,7 +40,7 @@
 								</button>
 								<ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
 									<li>
-										<a href="${ctx}/admin/common/document/${u.id}/edit" class="tooltip-success" data-rel="tooltip" title="" data-original-title="编辑">
+										<a href="${ctx}/admin/common/document/${u.id}/edit${suffix}" class="tooltip-success" data-rel="tooltip" title="" data-original-title="编辑">
 											<span class="green">
 												<i class="icon-edit bigger-120"></i>
 											</span>
@@ -57,7 +57,7 @@
 		</div><!-- /.table-responsive -->
 		
 		<div class="hr hr-18 dotted hr-double"></div>
-		<@h.page pager=pager action="${ctx}/admin/common/document/list" />
+		<@h.page pager=pager action="${ctx}/admin/common/document/list${suffix}" />
 	</div><!-- /span -->
 </div><!-- /row -->
 
@@ -79,7 +79,7 @@
 <script>
 $(document).ready(function(){
 	RP.addBreadcrumb([{name:"基础配置"}, {name:"知识库列表", active: true}]);
-	$("#breadcrumbs ul").append('&nbsp;&nbsp;&nbsp;&nbsp;<a href="${ctx}/admin/common/document/add"><i class="icon-zoom-in"></i><span class="label label-warning arrowed-in arrowed-in arrowed-right">新增知识库</span></a>');
+	$("#breadcrumbs ul").append('&nbsp;&nbsp;&nbsp;&nbsp;<a href="${ctx}/admin/common/document/add${suffix}"><i class="icon-zoom-in"></i><span class="label label-warning arrowed-in arrowed-in arrowed-right">新增知识库</span></a>');
 });
 </script>
 

@@ -42,7 +42,7 @@
 		<#list m_list as menu1>
 		<@admin_perm cmd="ad_check_menu_limit" adminMenu=menu1>
 		<li <#if menuWasContain2(menu1,tempURI)>class="active<#if menu1.children?has_content> open</#if>"</#if>>
-			<a href="<#if menu1.linkUrl?has_content>${ctx}/${menu1.linkUrl}<#else>#</#if>" 
+			<a href="<#if menu1.linkUrl?has_content>${ctx}/${menu1.linkUrl}${suffix}<#else>#</#if>" 
 				class="<#if menu1.children?has_content>dropdown-toggle</#if>">
 				
 				<i class="${menu1.icon}"></i>
@@ -55,7 +55,7 @@
 				<#list menu1.children as menu2>
 				<@admin_perm cmd="ad_check_menu_limit" adminMenu=menu2>
 				<li <#if menuWasContain2(menu2,tempURI)>class="active"</#if>>
-					<a href="${ctx}/${menu2.linkUrl}">
+					<a href="${ctx}/${menu2.linkUrl}${suffix}">
 						<#if menu2.icon?has_content>
 							<i class="${menu2.icon}"></i>
 						<#else>

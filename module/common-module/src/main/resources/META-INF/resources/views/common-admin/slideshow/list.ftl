@@ -33,10 +33,10 @@
 						</td>
 						<td>
 						<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
-							<a class="green" href="${ctx}/admin/common/slideshow/${u.id}/edit" alt="编辑">
+							<a class="green" href="${ctx}/admin/common/slideshow/${u.id}/edit${suffix}" alt="编辑">
 								<i class="icon-pencil bigger-130"></i>
 							</a>
-							<a class="red" href="${ctx}/admin/common/slideshow/${u.id}/delete" alt="Delete">
+							<a class="red" href="${ctx}/admin/common/slideshow/${u.id}/delete${suffix}" alt="Delete">
 								<i class="icon-trash bigger-130"></i> 
 							</a>
 						</div>
@@ -48,14 +48,14 @@
 								</button>
 								<ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
 									<li>
-										<a href="${ctx}/admin/common/slideshow/${u.id}/edit" class="tooltip-success" data-rel="tooltip" title="" data-original-title="编辑">
+										<a href="${ctx}/admin/common/slideshow/${u.id}/edit${suffix}" class="tooltip-success" data-rel="tooltip" title="" data-original-title="编辑">
 											<span class="green">
 												<i class="icon-edit bigger-120"></i>
 											</span>
 										</a>
 									</li>
 									<li>
-										<a href="${ctx}/admin/common/slideshow/${u.id}/delete" class="tooltip-error" data-rel="tooltip" title="" data-original-title="Delete">
+										<a href="${ctx}/admin/common/slideshow/${u.id}/delete${suffix}" class="tooltip-error" data-rel="tooltip" title="" data-original-title="Delete">
 											<span class="red">
 												<i class="icon-trash bigger-120"></i>
 											</span>

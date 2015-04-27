@@ -9,7 +9,7 @@
 	</h1>
 </div>
 
-<form class="form-horizontal" role="form" id="validation-form" method="POST" action="${ctx}/admin/adminuser/dosave">
+<form class="form-horizontal" role="form" id="validation-form" method="POST" action="${ctx}/admin/adminuser/dosave${suffix}">
 <fieldset>
 
 <div class="form-group">

@@ -38,13 +38,13 @@
 						<td>
 						<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
 							<#if u.canUpdate == 1>
-							<a class="green" href="${ctx}/admin/dictionary/${u.variable}/edit" alt="Edit">
+							<a class="green" href="${ctx}/admin/dictionary/${u.variable}/edit${suffix}" alt="Edit">
 								<i class="icon-pencil bigger-130"></i>
 							</a>
 							</#if>
 							
 							<#if u.canDelete == 1>
-							<a class="red" href="${ctx}/admin/dictionary/${u.variable}/delete" alt="Delete">
+							<a class="red" href="${ctx}/admin/dictionary/${u.variable}/delete${suffix}" alt="Delete">
 								<i class="icon-trash bigger-130"></i> 
 							</a>
 							</#if>
@@ -58,7 +58,7 @@
 								<ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
 									<#if u.canUpdate == 1>
 									<li>
-										<a href="${ctx}/admin/dictionary/${u.variable}/edit" class="tooltip-success" data-rel="tooltip" title="" data-original-title="Edit">
+										<a href="${ctx}/admin/dictionary/${u.variable}/edit${suffix}" class="tooltip-success" data-rel="tooltip" title="" data-original-title="Edit">
 											<span class="green">
 												<i class="icon-edit bigger-120"></i>
 											</span>
@@ -68,7 +68,7 @@
 									
 									<#if u.canDelete == 1>
 									<li>
-										<a href="${ctx}/admin/dictionary/${u.variable}/delete" class="tooltip-error" data-rel="tooltip" title="" data-original-title="Delete">
+										<a href="${ctx}/admin/dictionary/${u.variable}/delete${suffix}" class="tooltip-error" data-rel="tooltip" title="" data-original-title="Delete">
 											<span class="red">
 												<i class="icon-trash bigger-120"></i>
 											</span>
@@ -107,8 +107,8 @@
 </#if>
 <script>
 $(document).ready(function(){
-	RP.addBreadcrumb([{name:"后台基础配置"}, {name:"字典列表", linkUrl:"${ctx}/admin/dictionary/list", active: true}]);
-	$("#breadcrumbs ul").append('&nbsp;&nbsp;&nbsp;&nbsp;<a href="${ctx}/admin/dictionary/sync"><span class="label label-warning arrowed-in arrowed-in arrowed-right">同步字典</span></a>');
+	RP.addBreadcrumb([{name:"后台基础配置"}, {name:"字典列表", linkUrl:"${ctx}/admin/dictionary/list${suffix}", active: true}]);
+	$("#breadcrumbs ul").append('&nbsp;&nbsp;&nbsp;&nbsp;<a href="${ctx}/admin/dictionary/sync${suffix}"><span class="label label-warning arrowed-in arrowed-in arrowed-right">同步字典</span></a>');
 });
 </script>
 

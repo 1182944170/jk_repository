@@ -8,7 +8,7 @@
 	</h1>
 </div>
 
-<form class="form-horizontal" role="form" id="validation-form" method="POST" action="${ctx}/admin/actor/dosave" enctype="multipart/form-data">
+<form class="form-horizontal" role="form" id="validation-form" method="POST" action="${ctx}/admin/actor/dosave${suffix}" enctype="multipart/form-data">
 <#if actor??>
 	<input type="hidden" name="id" value="${actor.id}"/>
 	<input type="hidden" name="icon" value="${actor.icon}"/>

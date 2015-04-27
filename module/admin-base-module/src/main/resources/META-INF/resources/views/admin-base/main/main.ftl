@@ -24,6 +24,6 @@
 </div>
 <script>
 	$(document).ready(function(){
-		RP.addBreadcrumb({name:"控制台", linkUrl:"${ctx}/admin/main", active: true});
+		RP.addBreadcrumb({name:"控制台", linkUrl:"${ctx}/admin/main${suffix}", active: true});
 	});
 </script>

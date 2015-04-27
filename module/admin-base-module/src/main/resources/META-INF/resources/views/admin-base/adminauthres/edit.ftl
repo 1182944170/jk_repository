@@ -8,7 +8,7 @@
 	</h1>
 </div>
 
-<form class="form-horizontal" role="form" id="validation-form" method="POST" action="${ctx}/admin/adminauthres/dosave">
+<form class="form-horizontal" role="form" id="validation-form" method="POST" action="${ctx}/admin/adminauthres/dosave${suffix}">
 <#if adminAuthRes??>
 	<input type="hidden" name="id" value="${adminAuthRes.id}"/>
 <#else>

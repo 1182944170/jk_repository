@@ -39,7 +39,7 @@ public class BaseAct {
 	}
 	
 	public String redirect(String uri){
-		return "redirect:" + uri;
+		return "redirect:" + uri + InitServlet.SUFFIX;
 	}
 	
 	public ModelAndView forward2(String uri) {
@@ -47,7 +47,7 @@ public class BaseAct {
 	}
 	
 	public String forward(String uri){
-		return "forward:" + uri;
+		return "forward:" + uri + InitServlet.SUFFIX;
 	}
 
 	public String getErrorMsg() {
