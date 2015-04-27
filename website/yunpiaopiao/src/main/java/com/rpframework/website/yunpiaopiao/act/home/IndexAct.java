@@ -1,12 +1,18 @@
 package com.rpframework.website.yunpiaopiao.act.home;
 
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.rpframework.website.yunpiaopiao.service.UserService;
 
 @Controller
 @RequestMapping("/")
 public class IndexAct {
-
+	
+	@Resource UserService userService;
+	
 	@RequestMapping
 	public String execute(){
 
@@ -15,6 +21,9 @@ public class IndexAct {
 	
 	@RequestMapping("/register")
 	public String register(){
+		
+		
+		
 		
 		return "/home/register";
 	}

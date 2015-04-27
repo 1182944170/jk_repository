@@ -1,5 +1,5 @@
 <#include "public/top.ftl"/>
-<body>
+
 <div class="z_main1">
 <div class="z_login">
 	<div class="z_logintitle">
@@ -16,8 +16,8 @@
                 <div id="tab">
                     <div class="tabList">
                         <ul class="clearfix">
-                            <li><a href="${ctx}/register">邮箱注册</a></li>
-                            <li class="cur"><a href="${ctx}/reghone">手机注册</a></li>
+                            <li><a href="${ctx}/register${suffix}">邮箱注册</a></li>
+                            <li class="cur"><a href="${ctx}/reghone${suffix}">手机注册</a></li>
                         </ul>
                     </div>
                     <div class="tabCon">
@@ -37,7 +37,7 @@
             </div>
             <div class="z_loginmain_right" style="height:551px;">
                 <h3>我有云票票网账号</h3>
-                <a href="${ctx}/login">立即登陆</a>
+                <a href="${ctx}/login${suffix}">立即登陆</a>
             </div>
         </form>
         <div class="clearfix"></div>

@@ -1,13 +1,11 @@
-
 <#include "public/top.ftl"/>
-
-<body>
 <#include "public/head.ftl"/>
 <!--content begin-->
 <div class="index-content">
 	<div class="banner">
 		<img src="${ctx}/resources/images/demoimg/banner.jpg">
 	</div>
+
 	<div class="index-column">
 		<ul class="center clearfix">
 			<li><a class="column-ico01"></a><span>兑换码查询</span></li>

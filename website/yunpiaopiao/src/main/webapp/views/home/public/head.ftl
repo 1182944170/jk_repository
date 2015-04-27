@@ -1,3 +1,5 @@
+
+
 <!--首页频道部分-->
 <!--header begin-->
 <div class="header">
@@ -6,8 +8,8 @@
 		<div class="center">
 			<div class="left float-l">
 				<span>欢迎访问云票票网</span>
-				<span><a href="${ctx}/login" class="login">登陆</a>|<a href="${ctx}/register"  class="reg">注册</a></span>
-				<span class="myinfor"><a href="${ctx}/member">我的云票票</a><i class="tri01"></i></span>
+				<span><a href="${ctx}/login${suffix}" class="login">登陆</a>|<a href="${ctx}/register${suffix}"  class="reg">注册</a></span>
+				<span class="myinfor"><a href="${ctx}/member${suffix}">我的云票票</a><i class="tri01"></i></span>
 			</div>
 			<div class="right float-r">
 				<a onclick="AddFavorite(window.location,document.title)"><i class="home"></i>设为首页</a>

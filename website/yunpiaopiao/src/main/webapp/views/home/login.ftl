@@ -1,7 +1,7 @@
 
 <#include "public/top.ftl"/>
 
-<body>
+
 <div class="z_main">
 <div class="z_login">
 	<div class="z_logintitle">
@@ -28,7 +28,7 @@
                 <h3>我还不是云票票网用户</h3>
                 <p>注册即享受在线选座，轻松购票！参加丰富多彩的特价活动！</p>
                 <p>注册得积分，抵票价！</p>
-                <a href="${ctx}/register">立即注册</a>
+                <a href="${ctx}/register${suffix}">立即注册</a>
             </div>
         </form>
         <div class="clearfix"></div>
