@@ -103,9 +103,9 @@
 $(document).ready(function(){
 	RP.addBreadcrumb([{name:"基础设置"}, {name:"<#if slideshow??>编辑<#else>新增</#if>幻灯片",  active: true}]);
 	$('#id-input-file-2').ace_file_input({
-		no_file:'No File ...',
-		btn_choose:'Choose',
-		btn_change:'Change',
+		no_file:'没图片 ...',
+		btn_choose:'请选择图片',
+		btn_change:'重新选择图片',
 		droppable:false,
 		onchange:null,
 		thumbnail:false
@@ -119,7 +119,7 @@ $(document).ready(function(){
 			title: {
 				required: true
 			},
-			url: {
+			url:{
 				required: true
 			},
 			type: {

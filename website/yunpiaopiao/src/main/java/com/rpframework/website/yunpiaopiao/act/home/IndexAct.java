@@ -4,12 +4,24 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.rpframework.core.BaseAct;
+import com.rpframework.module.common.service.SlideshowService;
+import com.rpframework.website.yunpiaopiao.service.CinemaService;
+import com.rpframework.website.yunpiaopiao.service.MovieService;
 import com.rpframework.website.yunpiaopiao.service.UserService;
 
 @Controller
 @RequestMapping("/")
-public class IndexAct {
+public class IndexAct extends BaseAct{
+	
+	
+	@Resource MovieService movieService; //电影
+	
+	@Resource CinemaService cinemaService; //影院
+	
+	@Resource SlideshowService slideshowService; //幻灯片
 	
 	@Resource UserService userService;
 	
@@ -35,10 +47,16 @@ public class IndexAct {
 	}
 	
 	
-	@RequestMapping("/login")
+	@RequestMapping(value="/login",method=RequestMethod.GET)
 	public String login(){
 		
 		return "/home/login";
+	}
+	
+	@RequestMapping(value="/doLogin",method=RequestMethod.POST)
+	public String doLogin(){
+		System.out.println("---doLogin---");
+		return "";
 	}
 
 }

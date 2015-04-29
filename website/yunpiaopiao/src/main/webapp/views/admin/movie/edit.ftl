@@ -37,7 +37,7 @@
 </div>
 
 <div class="form-group">
-	<label class="control-label col-xs-12 col-sm-3 no-padding-right">所属区域:</label>
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right">国家/地区:</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 		<#assign slideshowTypes=dicSetting.getParameterMap("movie.countryArea") />
@@ -59,7 +59,7 @@
 	<label class="control-label col-xs-12 col-sm-3 no-padding-right">演员列表:</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
-		<@ace.formMultiSelect options=actorList checkValues=(actors)! name="actors" attributes="class='chosen-select width-60' data-placeholder='Choose Actor...'" listKey="id" listValue="name"/>
+		<@ace.formMultiSelect options=actorList checkValues=(actors)! name="actors" attributes="class='chosen-select width-60' data-placeholder='请选择演员...'" listKey="id" listValue="name"/>
 		</div>
 	</div>
 </div>
@@ -68,13 +68,13 @@
 	<label class="control-label col-xs-12 col-sm-3 no-padding-right">上线影院列表:</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
-		<@ace.formMultiSelect options=cinemaList checkValues=(cinemas)! name="cinemas" attributes="class='chosen-select width-60' data-placeholder='Choose Ciname...'" listKey="id" listValue="name"/>
+		<@ace.formMultiSelect options=cinemaList checkValues=(cinemas)! name="cinemas" attributes="class='chosen-select width-60' data-placeholder='请选择需要上线的影院...'" listKey="id" listValue="name"/>
 		</div>
 	</div>
 </div>
 
 <div class="form-group">
-	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="mark">mark分:</label>
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="mark">评分:</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<span class="block input-icon width-40">
@@ -127,7 +127,7 @@
 </div> 
 
 <div class="form-group">
-	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="url">ICON:</label>
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="url">电影主图:</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<div class="ace-file-input width-40">
@@ -171,9 +171,9 @@
 $(document).ready(function(){
 	RP.addBreadcrumb([{name:"基础"}, {name:"<#if movie??>编辑<#else>新增</#if>电影",  active: true}]);
 	$('#id-input-file-2').ace_file_input({
-		no_file:'No File ...',
-		btn_choose:'Choose',
-		btn_change:'Change',
+		no_file:'没有选择图片 ...',
+		btn_choose:'选择图片',
+		btn_change:'重新选择图片',
 		droppable:false,
 		onchange:null,
 		thumbnail:false

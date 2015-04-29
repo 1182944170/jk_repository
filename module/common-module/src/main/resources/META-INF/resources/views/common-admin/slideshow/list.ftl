@@ -6,7 +6,7 @@
 				<thead>
 					<tr>
 						<th>ID</th>
-						<th>ICON</th>
+						<th>缩略图</th>
 						<th>标题</th>
 						<th>链接地址</th>
 						<th>类型</th>
