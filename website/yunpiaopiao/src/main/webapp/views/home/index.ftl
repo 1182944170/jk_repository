@@ -4,7 +4,12 @@
 <div class="index-content">
 	<div class="banner">
 		<!--js 幻灯片效果-->
-		<img src="${ctx}/resources/images/demoimg/banner.jpg" width="100%">
+		<@common cmd="slideshow_list" type=1>
+		<#list m_list as slideshow>
+		<!-- -->
+		<a href="${slideshow.url}"><img src="${tagUtils.getFileFullPath(slideshow.icon)}" width="100%"></a>
+		</#list>
+		</@common>
 	</div>
 
 	<div class="index-column">
@@ -32,7 +37,7 @@
 				<#list m_pager.itemList as u>
 					<li class="hover-active">
 						<h3>
-							<a>
+							<a href="${ctx}/movie/${u.id}${suffix}">
 								<img src="${tagUtils.getFileFullPath(u.icon)}" width="165" height="210"/>
 								<div class="movie-text clearfix">
 									<span class="movie-infor float-l">
@@ -131,7 +136,7 @@
 								<#list m_pager.itemList as u>
 									<li>
 		                         		<div class="img-box">
-		                         			<img src="${tagUtils.getFileFullPath(u.icon)}">
+		                         			<a href="${ctx}/cinema/${u.id}${suffix}"><img src="${tagUtils.getFileFullPath(u.icon)}" /></a>
 		                         		</div>
 										<span>${u.name}</span>
 		                         	</li>

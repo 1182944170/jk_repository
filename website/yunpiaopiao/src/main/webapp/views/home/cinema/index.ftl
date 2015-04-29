@@ -66,7 +66,7 @@
 								<div class="y-cinema-con-l float-l"><img src="${tagUtils.getFileFullPath(u.icon)}"></div>
 								<div class="y-cinema-con-r float-r">
 									<div class="y-cinema-tit">
-										<a href="${ctx}/cinema/${u.id}/view${suffix}" class="float-l yy_ljx">${u.name}</a>
+										<a href="${ctx}/cinema/${u.id}${suffix}" class="float-l yy_ljx">${u.name}</a>
 										<div class="tit-score float-r">
 											<span>评分：</span>
 											<span class="tit-num">${u.mark}</span>

@@ -11,7 +11,7 @@
 			<@common cmd="notice_list" pagerString="1_" pageSize=7>
 				<#if m_pager.itemList?has_content>
 				<#list m_pager.itemList as u>
-					<li><a href="${ctx}/notice/${u.id}/view${suffix}"><i>${u_index + 1}</i>${u.title}</a></li>
+					<li><a href="${ctx}/notice/${u.id}${suffix}"><i>${u_index + 1}</i>${u.title}</a></li>
 				</#list>
 				</#if>
 			</@common>

@@ -36,7 +36,7 @@ public class MovieAction {
 		return "/home/movie/index";
 	}
 	
-	@RequestMapping("/{movieId}/view")
+	@RequestMapping("/{movieId}")
 	public String view(@PathVariable Integer movieId, Map<String, Object> model){
 		Movie movie = movieService.select(movieId);
 		Assert.notNull(movie, "找不到通知ID ：" + movieId);

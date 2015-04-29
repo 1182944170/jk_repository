@@ -41,11 +41,11 @@
             			<li>
 	                        <div class="dyrm1_l">
 	                        	<div class="dyrm1_l2">
-	                            	<img src="${tagUtils.getFileFullPath(u.icon)}" width="152" height="200"/>
+	                            	<a href="${ctx}/movie/${u.id}.html" title="${u.name}"><img src="${tagUtils.getFileFullPath(u.icon)}" width="152" height="200"/></a>
 	                            </div>
 	                        </div>
 	                        <div class="dyrm1_r">
-	                        	<div class="p1"><a href="${ctx}/movie/${u.id}/view.html" title="${u.name}">${u.name}</a></div>
+	                        	<div class="p1"><a href="${ctx}/movie/${u.id}.html" title="${u.name}">${u.name}</a></div>
 	                        	<div class="p2">主演 :<span> 
 	                        	<#if u.movieActors?has_content>
 	                        	<#list u.movieActors as movieActors>
@@ -58,7 +58,7 @@
 	                        	<div class="p2">国家/地区 :<span> ${dicSetting.getParameterValue("movie.countryArea." + u.countryArea)}</span></div>
 	                        	<div class="p2">上映日期 :<span> ${tagUtils.formatDate((u.onlineTime)!0, 'yyyy-MM-dd')}</span></div>
 	                        	<div class="p4">评分 :<span>${u.mark}</span></div>
-	                            <div class="p3"><a href="${ctx}/movie/${u.id}/view.html">购票</a></div>
+	                            <div class="p3"><a href="${ctx}/movie/${u.id}.html">购票</a></div>
 	                        </div>
 	                    </li>
             		</#list>

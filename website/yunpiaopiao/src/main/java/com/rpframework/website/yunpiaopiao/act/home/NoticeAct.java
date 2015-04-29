@@ -18,7 +18,7 @@ import com.rpframework.module.common.service.NoticeService;
 public class NoticeAct {
 	@Resource NoticeService noticeService;
 	
-	@RequestMapping("/{noticeId}/view")
+	@RequestMapping("/{noticeId}")
 	public String view(@PathVariable Integer noticeId, Map<String, Object> model){
 		Notice notice = noticeService.select(noticeId);
 		Assert.notNull(notice, "找不到通知ID ：" + noticeId);

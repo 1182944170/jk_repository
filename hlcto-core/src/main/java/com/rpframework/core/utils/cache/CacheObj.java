@@ -37,6 +37,7 @@ public abstract class CacheObj extends KVObj{
 		setV(null);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public <T> T getV() {
 		if(v == null) {
 			v = load();
