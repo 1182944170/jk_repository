@@ -9,124 +9,123 @@ import com.rpframework.core.mybatis.plugin.annotation.UniqueKeyType;
 public class Province extends Domain {
 
 	/**描述*/  
+	
 	private static final long serialVersionUID = 1L;
-
+	
 	/**
-	 * 代码	名称	级别	面积	人口	驻地	邮政编码	区号	经度	纬度	卫星地图	普通地图
-	 */
+	  * 代码	ISO代码	国标代码	省份名称	简称	面积(平方公里)	人口(万)	省会城市	省政府详细地址	卫星地图	普通地图
+	  */
 	@FieldMapperAnnotation
 	String code;
 	@FieldMapperAnnotation
+	String isoCode;
+	@FieldMapperAnnotation
+	String globalCode;
+	@FieldMapperAnnotation
 	String name;
 	@FieldMapperAnnotation
-	String level;
+	String thumbName;
 	@FieldMapperAnnotation
 	Double area;
 	@FieldMapperAnnotation
 	Double population;
 	@FieldMapperAnnotation
-	String station;
+	String capitalCity;
 	@FieldMapperAnnotation
-	Integer postalCode;
-	@FieldMapperAnnotation
-	Integer areaCode;
-	@FieldMapperAnnotation
-	Double longitude;
-	@FieldMapperAnnotation
-	Double dimensions;
-	@FieldMapperAnnotation
-	String countryCode;
-	
+	String provincialAddress;
 	public Province(){}
+	
 	public Province(String code,
+			String isoCode,
+			String globalCode,
 			String name,
-			String level,
+			String thumbName,
 			Double area,
 			Double population,
-			String station,
-			Integer postalCode,
-			Integer areaCode,
-			Double longitude,
-			Double dimensions,
-			
-			String countryCode
-			){
+			String capitalCity,
+			String provincialAddress){
 		this.code = code;
+		this.isoCode = isoCode;
+		this.globalCode = globalCode;
 		this.name = name;
-		this.level = level;
+		this.thumbName = thumbName;
 		this.area = area;
 		this.population = population;
-		this.station = station;
-		this.postalCode = postalCode;
-		this.areaCode = areaCode;
-		this.longitude = longitude;
-		this.dimensions = dimensions;
-		this.countryCode = countryCode;
+		this.capitalCity = capitalCity;
+		this.population = population;
+		this.provincialAddress = provincialAddress;
 	}
+
 	public String getCode() {
 		return code;
 	}
-	public String getLevel() {
-		return level;
-	}
-	public void setLevel(String level) {
-		this.level = level;
-	}
-	public String getCountryCode() {
-		return countryCode;
-	}
-	public void setCountryCode(String countryCode) {
-		this.countryCode = countryCode;
-	}
+
 	public void setCode(String code) {
 		this.code = code;
 	}
+
+	public String getIsoCode() {
+		return isoCode;
+	}
+
+	public void setIsoCode(String isoCode) {
+		this.isoCode = isoCode;
+	}
+
+	public String getGlobalCode() {
+		return globalCode;
+	}
+
+	public void setGlobalCode(String globalCode) {
+		this.globalCode = globalCode;
+	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	public String getThumbName() {
+		return thumbName;
+	}
+
+	public void setThumbName(String thumbName) {
+		this.thumbName = thumbName;
+	}
+
+
 	public Double getArea() {
 		return area;
 	}
+
 	public void setArea(Double area) {
 		this.area = area;
 	}
+
 	public Double getPopulation() {
 		return population;
 	}
+
 	public void setPopulation(Double population) {
 		this.population = population;
 	}
-	public String getStation() {
-		return station;
+
+	public String getCapitalCity() {
+		return capitalCity;
 	}
-	public void setStation(String station) {
-		this.station = station;
+
+	public void setCapitalCity(String capitalCity) {
+		this.capitalCity = capitalCity;
 	}
-	public Integer getPostalCode() {
-		return postalCode;
+
+	public String getProvincialAddress() {
+		return provincialAddress;
 	}
-	public void setPostalCode(Integer postalCode) {
-		this.postalCode = postalCode;
-	}
-	public Integer getAreaCode() {
-		return areaCode;
-	}
-	public void setAreaCode(Integer areaCode) {
-		this.areaCode = areaCode;
-	}
-	public Double getLongitude() {
-		return longitude;
-	}
-	public void setLongitude(Double longitude) {
-		this.longitude = longitude;
-	}
-	public Double getDimensions() {
-		return dimensions;
-	}
-	public void setDimensions(Double dimensions) {
-		this.dimensions = dimensions;
+
+	public void setProvincialAddress(String provincialAddress) {
+		this.provincialAddress = provincialAddress;
 	}
 }

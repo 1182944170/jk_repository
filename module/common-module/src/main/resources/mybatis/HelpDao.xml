@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.module.common.dao.IHelpDao">
+
+	<resultMap type="com.rpframework.module.common.domain.Help" id="mHelp" autoMapping="true" />
+
+	<select id="doPager" resultMap="mHelp">
+		select * from help where 1=1
+	</select>
+	
+	<select id="getHelpByaliasesTitle" parameterType="String" resultMap="mHelp">
+		select * from help where state=1 and aliasesTitle=#{aliasesTitle}
+	</select>
+
+	<update id="update" parameterType="com.rpframework.module.common.domain.Help" />
+	<insert id="insert" parameterType="com.rpframework.module.common.domain.Help" useGeneratedKeys="true" keyProperty="id"/>
+	<delete id="delete" parameterType="com.rpframework.module.common.domain.Help" />
+	<select id="select" parameterType="Integer" resultMap="mHelp">
+		select * from help where id=#{id}
+	</select> 
+</mapper>

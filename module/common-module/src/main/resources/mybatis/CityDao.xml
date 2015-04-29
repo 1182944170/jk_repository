@@ -8,7 +8,7 @@
 	<select id="queryAll" resultMap="mCity">
 		select * from city where 1=1
 	</select>
-
+	
 	<update id="update" parameterType="com.rpframework.module.common.domain.City" />
 	<insert id="insert" parameterType="com.rpframework.module.common.domain.City" useGeneratedKeys="true" keyProperty="code"/>
 	<delete id="delete" parameterType="com.rpframework.module.common.domain.City" />

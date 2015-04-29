@@ -5,8 +5,8 @@ import com.rpframework.core.mybatis.plugin.annotation.FieldMapperAnnotation;
 import com.rpframework.core.mybatis.plugin.annotation.TableMapperAnnotation;
 import com.rpframework.core.mybatis.plugin.annotation.UniqueKeyType;
 
-@TableMapperAnnotation(tableName = "city", uniqueKeyType = UniqueKeyType.Single, uniqueKey = "code")
-public class City extends Domain {
+@TableMapperAnnotation(tableName = "county", uniqueKeyType = UniqueKeyType.Single, uniqueKey = "code")
+public class County extends Domain {
 
 	/**描述*/  
 	private static final long serialVersionUID = 1L;
@@ -23,8 +23,6 @@ public class City extends Domain {
 	@FieldMapperAnnotation
 	Double area;
 	@FieldMapperAnnotation
-	Double population;
-	@FieldMapperAnnotation
 	String station;
 	@FieldMapperAnnotation
 	Integer postalCode;
@@ -35,48 +33,34 @@ public class City extends Domain {
 	@FieldMapperAnnotation
 	Double dimensions;
 	@FieldMapperAnnotation
-	String countryCode;
-	
-	public City(){}
-	public City(String code,
+	String provinceCode;
+	public County(){}
+	public County(String code,
 			String name,
 			String level,
 			Double area,
-			Double population,
 			String station,
 			Integer postalCode,
 			Integer areaCode,
 			Double longitude,
 			Double dimensions,
 			
-			String countryCode
+			String provinceCode
 			){
 		this.code = code;
 		this.name = name;
 		this.level = level;
 		this.area = area;
-		this.population = population;
 		this.station = station;
 		this.postalCode = postalCode;
 		this.areaCode = areaCode;
 		this.longitude = longitude;
 		this.dimensions = dimensions;
-		this.countryCode = countryCode;
+		
+		this.provinceCode = provinceCode;
 	}
 	public String getCode() {
 		return code;
-	}
-	public String getLevel() {
-		return level;
-	}
-	public void setLevel(String level) {
-		this.level = level;
-	}
-	public String getCountryCode() {
-		return countryCode;
-	}
-	public void setCountryCode(String countryCode) {
-		this.countryCode = countryCode;
 	}
 	public void setCode(String code) {
 		this.code = code;
@@ -93,17 +77,23 @@ public class City extends Domain {
 	public void setArea(Double area) {
 		this.area = area;
 	}
-	public Double getPopulation() {
-		return population;
-	}
-	public void setPopulation(Double population) {
-		this.population = population;
-	}
 	public String getStation() {
 		return station;
 	}
 	public void setStation(String station) {
 		this.station = station;
+	}
+	public String getLevel() {
+		return level;
+	}
+	public void setLevel(String level) {
+		this.level = level;
+	}
+	public String getProvinceCode() {
+		return provinceCode;
+	}
+	public void setProvinceCode(String provinceCode) {
+		this.provinceCode = provinceCode;
 	}
 	public Integer getPostalCode() {
 		return postalCode;

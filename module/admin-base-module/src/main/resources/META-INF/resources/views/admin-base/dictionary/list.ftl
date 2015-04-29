@@ -86,7 +86,7 @@
 		</div><!-- /.table-responsive -->
 		
 		<div class="hr hr-18 dotted hr-double"></div>
-		<@h.page pager=pager action="${ctx}/admin/dictionary/list" />
+		<@h.page pager=pager action="${ctx}/admin/dictionary/list${suffix}" />
 	</div><!-- /span -->
 </div><!-- /row -->
 

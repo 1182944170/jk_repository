@@ -10,22 +10,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.JsonObject;
-import com.rpframework.module.common.domain.City;
-import com.rpframework.module.common.domain.Country;
+import com.rpframework.module.common.domain.County;
 import com.rpframework.module.common.domain.Province;
+import com.rpframework.module.common.domain.City;
 import com.rpframework.module.common.http.CityParser;
 import com.rpframework.module.common.http.CountryParser;
 import com.rpframework.module.common.http.ProvinceParser;
-import com.rpframework.module.common.service.CityService;
-import com.rpframework.module.common.service.CountryService;
+import com.rpframework.module.common.service.CountyService;
 import com.rpframework.module.common.service.ProvinceService;
+import com.rpframework.module.common.service.CityService;
 
 @Controller
 @RequestMapping("/common/parser/country")
 public class ParserAct extends CommonBaseAct {
-	@Resource CountryService countryService;
 	@Resource ProvinceService provinceService;
 	@Resource CityService cityService;
+	@Resource CountyService countyService;
 	
 	@RequestMapping("/synchttp")
 	public @ResponseBody String synchttp(final CountryParser countryParser, final ProvinceParser provinceParser, final CityParser cityParser) throws ParserException, InterruptedException{
@@ -34,18 +34,18 @@ public class ParserAct extends CommonBaseAct {
 			public void run() {
 				// Country country = countryService.countryDao.select("11");
 				try {
-					List<Country> list = countryParser.parserAllCountry();
+					List<Province> list = countryParser.parserAllCountry();
 
-					for (Country country : list) {
-						boolean insert = countryService.countryDao.insert(country);
+					for (Province country : list) {
+						boolean insert = provinceService.provinceDao.insert(country);
 						if (insert) {
-							List<Province> allProvinceByCountryCode = provinceParser.parserAllProvinceByCountryCode(country.getCode());
-							for (Province province : allProvinceByCountryCode) {
-								boolean insert2 = provinceService.provinceDao.insert(province);
+							List<City> allProvinceByCountryCode = provinceParser.parserAllProvinceByCountryCode(country.getCode());
+							for (City province : allProvinceByCountryCode) {
+								boolean insert2 = cityService.cityDao.insert(province);
 								if (insert2) {
-									List<City> parserAllCityByProvinceCode = cityParser.parserAllCityByProvinceCode(province .getCode());
-									for (City city : parserAllCityByProvinceCode) {
-										boolean insert3 = cityService.cityDao.insert(city);
+									List<County> parserAllCityByProvinceCode = cityParser.parserAllCityByProvinceCode(province .getCode());
+									for (County city : parserAllCityByProvinceCode) {
+										boolean insert3 = countyService.countyDao.insert(city);
 										if (!insert3) {
 											logger.info("city insert fail: {}",city);
 											break;

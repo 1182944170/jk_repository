@@ -26,8 +26,8 @@ public abstract class SMSAbstractSendChannel1Event implements ISMSEvent {
 	protected String charset = "UTF-8";
 	protected String serverIP = "222.73.117.158";
 	protected String serverPort = "80";
-	protected String accout = "jiekou-cs-02";
-	protected String pswd = "Tch147259";
+	protected String accout = "jiekou-cs-01";
+	protected String pswd = "Tch147200";
 	
 	public abstract void initForSet();
 	
@@ -78,6 +78,18 @@ public abstract class SMSAbstractSendChannel1Event implements ISMSEvent {
 			e1.printStackTrace();
 			return false;
 		}
+	}
+	
+	public static void main(String[] args) {
+		SMSAbstractSendChannel1Event s = new SMSAbstractSendChannel1Event() {
+			
+			@Override
+			public void initForSet() {
+				
+			}
+		};
+		
+		s.sendSMS("15390891113", "TEST....");
 	}
 
 }
