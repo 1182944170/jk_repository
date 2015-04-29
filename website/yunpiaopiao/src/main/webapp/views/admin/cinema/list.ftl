@@ -9,9 +9,9 @@
 						<th>影院名称</th>
 						<th>地址</th>
 						<th>联系电话</th>
-						<th>特色</th>
-						<th>Icon</th>
-						<th>mark</th>
+						<th width="18%">特色</th>
+						<th>影院图片</th>
+						<th>评分</th>
 						<th>是否推荐</th>
 						<th>内容</th>
 						<th></th>

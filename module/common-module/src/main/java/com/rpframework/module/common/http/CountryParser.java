@@ -18,7 +18,7 @@ import org.htmlparser.util.ParserException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.rpframework.module.common.domain.Country;
+import com.rpframework.module.common.domain.Province;
 import com.rpframework.utils.NumberUtils;
 
 public class CountryParser {
@@ -28,7 +28,7 @@ public class CountryParser {
 	public String fomartText(String t) {
 		return StringUtils.replace(t, "&nbsp;", "");
 	}
-	public List<Country> parserAllCountry() throws ParserException {
+	public List<Province> parserAllCountry() throws ParserException {
 		 Parser parser = new Parser();
 		 parser.setURL(COUNTRY_URI);
 		 AndFilter andFilter = new AndFilter(new NodeClassFilter(TableTag.class), new HasAttributeFilter("bordercolor","#663333"));
@@ -39,12 +39,12 @@ public class CountryParser {
 			 System.out.println("parser url is nil:" + parser.getURL());
 		 }
 		 
-		 List<Country> list = new ArrayList<Country>();
+		 List<Province> list = new ArrayList<Province>();
 		 for(int j = 1 ; j < tableTag.getRowCount(); j++) {   
              TableRow row = tableTag.getRow(j);   
              TableColumn[] columns = row.getColumns();   
              
-             Country country = new Country(fomartText(columns[0].toPlainTextString()),
+             Province country = new Province(fomartText(columns[0].toPlainTextString()),
             		 fomartText(columns[1].toPlainTextString()),
             		 fomartText(columns[2].toPlainTextString()),
             		 fomartText(columns[3].toPlainTextString()),
@@ -61,7 +61,7 @@ public class CountryParser {
 	}
 	
 	public static void main(String[] args) throws ParserException {
-		List<Country> list = new CountryParser().parserAllCountry();
+		List<Province> list = new CountryParser().parserAllCountry();
 		System.out.println(ToStringBuilder.reflectionToString(list, ToStringStyle.MULTI_LINE_STYLE));
 	}
 }

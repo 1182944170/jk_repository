@@ -9,12 +9,12 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.rpframework.core.utils.SpringUtils;
 import com.rpframework.core.utils.cache.CacheObj;
-import com.rpframework.module.common.domain.City;
-import com.rpframework.module.common.domain.Country;
+import com.rpframework.module.common.domain.County;
 import com.rpframework.module.common.domain.Province;
-import com.rpframework.module.common.service.CityService;
-import com.rpframework.module.common.service.CountryService;
+import com.rpframework.module.common.domain.City;
+import com.rpframework.module.common.service.CountyService;
 import com.rpframework.module.common.service.ProvinceService;
+import com.rpframework.module.common.service.CityService;
 import com.rpframework.utils.CollectionUtils;
 
 /**  
@@ -28,9 +28,9 @@ import com.rpframework.utils.CollectionUtils;
  */  
 public class CountryCache extends CacheObj {
 	public static final String k = "_country_cache_";
-	public Map<String, Country> countryMap = new LinkedHashMap<String, Country>();
-	public Map<String, List<Province>> provinceMap = new LinkedHashMap<String, List<Province>>();
+	public Map<String, Province> provinceMap = new LinkedHashMap<String, Province>();
 	public Map<String, List<City>> cityMap = new LinkedHashMap<String, List<City>>();
+	public Map<String, List<County>> countyMap = new LinkedHashMap<String, List<County>>();
 	public JsonArray countrys = null;
 	
 	public CountryCache() {
@@ -39,71 +39,71 @@ public class CountryCache extends CacheObj {
 	
 	@Override
 	public Object load() {
-		countryMap.clear();
 		provinceMap.clear();
 		cityMap.clear();
+		countyMap.clear();
 		countrys = new JsonArray();
 		
-		CountryService countryService = SpringUtils.getBean(CountryService.class);
 		ProvinceService provinceService = SpringUtils.getBean(ProvinceService.class);
 		CityService cityService = SpringUtils.getBean(CityService.class);
+		CountyService countyService = SpringUtils.getBean(CountyService.class);
 		
-		List<City> tempCityList = null;
-		List<City> cityList = cityService.cityDao.queryAll();
-		for (City city : cityList) {
-			if(cityMap.containsKey(city.getProvinceCode())) {
-				tempCityList = cityMap.get(city.getProvinceCode());
+		List<County> tempCityList = null;
+		List<County> cityList = countyService.countyDao.queryAll();
+		for (County city : cityList) {
+			if(countyMap.containsKey(city.getProvinceCode())) {
+				tempCityList = countyMap.get(city.getProvinceCode());
 			} else {
-				tempCityList = new ArrayList<City>();
-				cityMap.put(city.getProvinceCode(), tempCityList);
+				tempCityList = new ArrayList<County>();
+				countyMap.put(city.getProvinceCode(), tempCityList);
 			}
 			
 			tempCityList.add(city);
 		}
 		
-		List<Province> provinceList = provinceService.provinceDao.queryAll();
-		List<Province> tempProvinceList = null;
-		for (Province province : provinceList) {
-			if(provinceMap.containsKey(province.getCountryCode())) {
-				tempProvinceList = provinceMap.get(province.getCountryCode());
+		List<City> provinceList = cityService.cityDao.queryAll();
+		List<City> tempProvinceList = null;
+		for (City province : provinceList) {
+			if(cityMap.containsKey(province.getCountryCode())) {
+				tempProvinceList = cityMap.get(province.getCountryCode());
 			} else {
-				tempProvinceList = new ArrayList<Province>();
-				provinceMap.put(province.getCountryCode(), tempProvinceList);
+				tempProvinceList = new ArrayList<City>();
+				cityMap.put(province.getCountryCode(), tempProvinceList);
 			}
 			tempProvinceList.add(province);
 		}
 		
-		List<Country> countryList = countryService.countryDao.queryAll();
-		for (Country country : countryList) {
-			countryMap.put(country.getCode(), country);
+		List<Province> countryList = provinceService.provinceDao.queryAll();
+		for (Province country : countryList) {
+			provinceMap.put(country.getCode(), country);
 			
 			JsonObject jsonObject = new JsonObject();
-			JsonArray provinces = new JsonArray();
+			JsonArray citys = new JsonArray();
 			jsonObject.addProperty("code", country.getCode());
 			jsonObject.addProperty("name", country.getName());
-			jsonObject.add("provinces", provinces);
+			jsonObject.add("citys", citys);
 			
-			List<Province> pList = provinceMap.get(country.getCode());
+			List<City> pList = cityMap.get(country.getCode());
 			if(CollectionUtils.isNotEmpty(pList)) {
-				for (Province province : pList) {
+				for (City province : pList) {
 					JsonObject provinceJson = new JsonObject();
-					JsonArray citys = new JsonArray();
+					JsonArray countys = new JsonArray();
 					provinceJson.addProperty("code", province.getCode());
 					provinceJson.addProperty("name", province.getName());
-					provinceJson.add("citys", citys);
+					provinceJson.add("countys", countys);
 					
-					List<City> cityList2 = cityMap.get(province.getCode());
+					List<County> cityList2 = countyMap.get(province.getCode());
 					if(CollectionUtils.isNotEmpty(cityList2)) {
-						for (City city : cityList2) {
+						for (County city : cityList2) {
 							JsonObject cityJson = new JsonObject();
 							cityJson.addProperty("code", city.getCode());
 							cityJson.addProperty("name", city.getName());
 							
-							citys.add(cityJson);
+							countys.add(cityJson);
 						}
 					}
 					
-					provinces.add(provinceJson);
+					citys.add(provinceJson);
 				}
 			}
 			

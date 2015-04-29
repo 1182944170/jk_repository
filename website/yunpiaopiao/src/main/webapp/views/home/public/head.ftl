@@ -1,3 +1,5 @@
+
+
 <!--首页频道部分-->
 <!--header begin-->
 <div class="header">
@@ -6,8 +8,8 @@
 		<div class="center">
 			<div class="left float-l">
 				<span>欢迎访问云票票网</span>
-				<span><a href="${ctx}/login" class="login">登陆</a>|<a href="${ctx}/register"  class="reg">注册</a></span>
-				<span class="myinfor"><a href="${ctx}/member">我的云票票</a><i class="tri01"></i></span>
+				<span><a href="${ctx}/login${suffix}" class="login">登陆</a>|<a href="${ctx}/register${suffix}"  class="reg">注册</a></span>
+				<span class="myinfor"><a href="${ctx}/member${suffix}">我的云票票</a><i class="tri01"></i></span>
 			</div>
 			<div class="right float-r">
 				<a onclick="AddFavorite(window.location,document.title)"><i class="home"></i>设为首页</a>
@@ -47,13 +49,13 @@
 	<!--navigation-bg begin-->
 	<div class="navigation-bg">
 		<ul class="navigation center clearfix">
-			<li class="border-l navigation-current"><a href="${ctx}/resources/static/index.html">首页</a></li>
-			<li><a href="${ctx}/resources/dianying/dy.html">电影</a></li>
-			<li><a href="${ctx}/resources/dianying/cinema.html">影院</a></li>
-			<li><a href="${ctx}/resources/dianying/rmhd.html">热门活动</a></li>
-			<li><a href="${ctx}/resources/dianying/dyk_3.html">电子卷</a></li>
-			<li><a href="${ctx}/resources/dianying/dyk_2.html">实体卷</a></li>
-			<li class="border-r "><a href="${ctx}/resources/dianying/dyk_1.html">电影卡</a></li>
+			<li class="border-l navigation-current"><a href="${ctx}/">首页</a></li>
+			<li><a href="${ctx}/movie.html">电影</a></li>
+			<li><a href="${ctx}/cinema.html">影院</a></li>
+			<li><a href="${ctx}/activice.html">热门活动</a></li>
+			<li><a href="${ctx}/electronic.html">电子券</a></li>
+			<li><a href="${ctx}/entity.html">实体券</a></li>
+			<li class="border-r "><a href="${ctx}/card.html">电影卡</a></li>
 		</ul>
 	</div>
 	<!--navigation-bg end-->

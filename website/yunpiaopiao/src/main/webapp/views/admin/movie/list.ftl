@@ -8,11 +8,11 @@
 						<th>ID</th>
 						<th>电影名称</th>
 						<th>类别</th>
-						<th>所属区域</th>
-						<th>mark</th>
+						<th>国家/地区</th>
+						<th>评分</th>
 						<th>上线时间</th>
 						<th>下线时间</th>
-						<th>icon</th>
+						<th>电影图片</th>
 						<th>语言</th>
 						<th>时长</th>
 						<th>内容</th>

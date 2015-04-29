@@ -5,9 +5,9 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.rpframework.core.BaseService;
-import com.rpframework.module.common.dao.ICountryDao;
+import com.rpframework.module.common.dao.ICountyDao;
 
-@Service("countryService")
-public class CountryService extends BaseService {
-	@Resource public ICountryDao countryDao;
+@Service
+public class CountyService extends BaseService {
+	@Resource public ICountyDao countyDao;
 }

@@ -7,8 +7,11 @@
 <meta name="description" content="" >
 <title>云票票网</title>
 <link rel="stylesheet" href="${ctx}/resources/css/reset.css">
+<link rel="stylesheet" href="${ctx}/resources/css/dy.css">
 <link rel="stylesheet" href="${ctx}/resources/css/login/login.css">
 <script src="${ctx}/resources/js/jquery-2.0.3.js" type="text/javascript"></script>
 <script src="${ctx}/resources/js/common.js" type="text/javascript"></script>
 <script src="${ctx}/resources/js/index_public.js" type="text/javascript"></script>
+
 </head>
+<body>

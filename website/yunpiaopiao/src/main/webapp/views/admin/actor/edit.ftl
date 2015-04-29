@@ -28,13 +28,13 @@
 </div>
 
 <div class="form-group">
-	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="url">幻灯片ICON:</label>
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="url">演员图片:</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<div class="ace-file-input width-40">
 				<input type="file" name="iconFile" id="id-input-file-2">
 			</div>
-			<small>* 已经存在的icon如果不修改则不需要填写</small>
+			<small>* 已经存在的图片,如果不修改则不需要填写</small>
 		</div>
 	</div>
 </div>
@@ -79,11 +79,11 @@
 
 <script>
 $(document).ready(function(){
-	RP.addBreadcrumb([{name:"题库"}, {name:"<#if actor??>编辑<#else>新增</#if>演员",  active: true}]);
+	RP.addBreadcrumb([{name:"演员"}, {name:"<#if actor??>编辑<#else>新增</#if>演员",  active: true}]);
 	$('#id-input-file-2').ace_file_input({
-		no_file:'No File ...',
-		btn_choose:'Choose',
-		btn_change:'Change',
+		no_file:'没图片 ...',
+		btn_choose:'请选择图片',
+		btn_change:'重新选择图片',
 		droppable:false,
 		onchange:null,
 		thumbnail:false

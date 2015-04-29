@@ -114,6 +114,9 @@
 		<script src="${ctx}/resources/cssframework/ace/js/ace.min.js"></script>
 		
 		<!--custom js import -->
+		<script src="${ctx}/resources/js/base_x.js"></script>
+		<script src="${ctx}/resources/static/data_country_static.js"></script>
+		<script src="${ctx}/resources/js/country_static.js"></script>
 		<script src="${ctx}/resources/js/admin.js"></script>
 		<script src="${ctx}/resources/js/showpages.js"></script>
 		<@common cmd="has_include_file" file="admin/sub_website_include_js.ftl">

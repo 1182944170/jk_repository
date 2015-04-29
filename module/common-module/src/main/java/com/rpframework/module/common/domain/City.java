@@ -23,6 +23,8 @@ public class City extends Domain {
 	@FieldMapperAnnotation
 	Double area;
 	@FieldMapperAnnotation
+	Double population;
+	@FieldMapperAnnotation
 	String station;
 	@FieldMapperAnnotation
 	Integer postalCode;
@@ -33,34 +35,48 @@ public class City extends Domain {
 	@FieldMapperAnnotation
 	Double dimensions;
 	@FieldMapperAnnotation
-	String provinceCode;
+	String countryCode;
+	
 	public City(){}
 	public City(String code,
 			String name,
 			String level,
 			Double area,
+			Double population,
 			String station,
 			Integer postalCode,
 			Integer areaCode,
 			Double longitude,
 			Double dimensions,
 			
-			String provinceCode
+			String countryCode
 			){
 		this.code = code;
 		this.name = name;
 		this.level = level;
 		this.area = area;
+		this.population = population;
 		this.station = station;
 		this.postalCode = postalCode;
 		this.areaCode = areaCode;
 		this.longitude = longitude;
 		this.dimensions = dimensions;
-		
-		this.provinceCode = provinceCode;
+		this.countryCode = countryCode;
 	}
 	public String getCode() {
 		return code;
+	}
+	public String getLevel() {
+		return level;
+	}
+	public void setLevel(String level) {
+		this.level = level;
+	}
+	public String getCountryCode() {
+		return countryCode;
+	}
+	public void setCountryCode(String countryCode) {
+		this.countryCode = countryCode;
 	}
 	public void setCode(String code) {
 		this.code = code;
@@ -77,23 +93,17 @@ public class City extends Domain {
 	public void setArea(Double area) {
 		this.area = area;
 	}
+	public Double getPopulation() {
+		return population;
+	}
+	public void setPopulation(Double population) {
+		this.population = population;
+	}
 	public String getStation() {
 		return station;
 	}
 	public void setStation(String station) {
 		this.station = station;
-	}
-	public String getLevel() {
-		return level;
-	}
-	public void setLevel(String level) {
-		this.level = level;
-	}
-	public String getProvinceCode() {
-		return provinceCode;
-	}
-	public void setProvinceCode(String provinceCode) {
-		this.provinceCode = provinceCode;
 	}
 	public Integer getPostalCode() {
 		return postalCode;

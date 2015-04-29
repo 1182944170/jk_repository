@@ -63,7 +63,7 @@
 </div> 
 
 <div class="form-group">
-	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="mark">mark分:</label>
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="mark">评分:</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<span class="block input-icon width-40">
@@ -75,13 +75,13 @@
 </div> 
 
 <div class="form-group">
-	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="url">ICON:</label>
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="url">影院图片:</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<div class="ace-file-input width-40">
 				<input type="file" name="iconFile" id="id-input-file-2">
 			</div>
-			<small>* 已经存在的icon如果不修改则不需要填写</small>
+			<small>* 如已经存在的影院图片,如果不修改则不需要填写</small>
 		</div>
 	</div>
 </div>
@@ -126,11 +126,11 @@
 
 <script>
 $(document).ready(function(){
-	RP.addBreadcrumb([{name:"题库"}, {name:"<#if cinema??>编辑<#else>新增</#if>影院",  active: true}]);
+	RP.addBreadcrumb([{name:"影院"}, {name:"<#if cinema??>编辑<#else>新增</#if>影院",  active: true}]);
 	$('#id-input-file-2').ace_file_input({
-		no_file:'No File ...',
-		btn_choose:'Choose',
-		btn_change:'Change',
+		no_file:'没图片 ...',
+		btn_choose:'请选择图片',
+		btn_change:'重新选择图片',
 		droppable:false,
 		onchange:null,
 		thumbnail:false

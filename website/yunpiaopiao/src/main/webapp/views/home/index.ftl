@@ -1,13 +1,12 @@
-
 <#include "public/top.ftl"/>
-
-<body>
 <#include "public/head.ftl"/>
 <!--content begin-->
 <div class="index-content">
 	<div class="banner">
-		<img src="${ctx}/resources/images/demoimg/banner.jpg">
+		<!--js 幻灯片效果-->
+		<img src="${ctx}/resources/images/demoimg/banner.jpg" width="100%">
 	</div>
+
 	<div class="index-column">
 		<ul class="center clearfix">
 			<li><a class="column-ico01"></a><span>兑换码查询</span></li>
@@ -24,7 +23,7 @@
 				<li class="active">正在热映</li>
 				<li>即将上映</li>
 			</ul>
-			<a class="title-more float-r">+more</a>
+			<a class="title-more float-r" href="${ctx}/movie${suffix}">+more</a>
 		</div>
 		<div class="tab-con tab-con01">
 			<ul class="playing-movie thisclass">
@@ -34,7 +33,7 @@
 							<img src="${ctx}/resources/images/demoimg/index_img01.jpg">
 							<div class="movie-text clearfix">
 								<span class="movie-infor float-l">
-									<span>亲爱的</span>
+									<span>亲爱的1</span>
 									<span>已售票1000张</span>
 								</span>
 								<span class="movie-mark float-r">9.3</span>
@@ -51,7 +50,7 @@
 							<img src="${ctx}/resources/images/demoimg/index_img01.jpg">
 							<div class="movie-text clearfix">
 								<span class="movie-infor float-l">
-									<span>亲爱的</span>
+									<span>亲爱的2</span>
 									<span>已售票1000张</span>
 								</span>
 								<span class="movie-mark float-r">9.3</span>
@@ -68,7 +67,7 @@
 							<img src="${ctx}/resources/images/demoimg/index_img01.jpg">
 							<div class="movie-text clearfix">
 								<span class="movie-infor float-l">
-									<span>亲爱的</span>
+									<span>亲爱的3</span>
 									<span>已售票1000张</span>
 								</span>
 								<span class="movie-mark float-r">9.3</span>
@@ -85,7 +84,7 @@
 							<img src="${ctx}/resources/images/demoimg/index_img01.jpg">
 							<div class="movie-text clearfix">
 								<span class="movie-infor float-l">
-									<span>亲爱的</span>
+									<span>亲爱的4</span>
 									<span>已售票1000张</span>
 								</span>
 								<span class="movie-mark float-r">9.3</span>
@@ -102,7 +101,7 @@
 							<img src="${ctx}/resources/images/demoimg/index_img01.jpg">
 							<div class="movie-text clearfix">
 								<span class="movie-infor float-l">
-									<span>亲爱的</span>
+									<span>亲爱的5</span>
 									<span>已售票1000张</span>
 								</span>
 								<span class="movie-mark float-r">9.3</span>
@@ -119,7 +118,7 @@
 							<img src="${ctx}/resources/images/demoimg/index_img01.jpg">
 							<div class="movie-text clearfix">
 								<span class="movie-infor float-l">
-									<span>亲爱的</span>
+									<span>亲爱的6</span>
 									<span>已售票1000张</span>
 								</span>
 								<span class="movie-mark float-r">9.3</span>
@@ -138,7 +137,7 @@
 							<img src="${ctx}/resources/images/demoimg/index_img01.jpg">
 							<div class="movie-text clearfix">
 								<span class="movie-infor float-l">
-									<span>亲爱的</span>
+									<span>亲爱的7</span>
 									<span>已售票1000张</span>
 								</span>
 								<span class="movie-mark float-r">9.3</span>
@@ -155,7 +154,7 @@
 							<img src="${ctx}/resources/images/demoimg/index_img01.jpg">
 							<div class="movie-text clearfix">
 								<span class="movie-infor float-l">
-									<span>亲爱的</span>
+									<span>亲爱的8</span>
 									<span>已售票1000张</span>
 								</span>
 								<span class="movie-mark float-r">9.3</span>
@@ -172,7 +171,7 @@
 							<img src="${ctx}/resources/images/demoimg/index_img01.jpg">
 							<div class="movie-text clearfix">
 								<span class="movie-infor float-l">
-									<span>亲爱的</span>
+									<span>亲爱的9</span>
 									<span>已售票1000张</span>
 								</span>
 								<span class="movie-mark float-r">9.3</span>
@@ -189,7 +188,7 @@
 							<img src="${ctx}/resources/images/demoimg/index_img01.jpg">
 							<div class="movie-text clearfix">
 								<span class="movie-infor float-l">
-									<span>亲爱的</span>
+									<span>亲爱的10</span>
 									<span>已售票1000张</span>
 								</span>
 								<span class="movie-mark float-r">9.3</span>
@@ -206,7 +205,7 @@
 							<img src="${ctx}/resources/images/demoimg/index_img01.jpg">
 							<div class="movie-text clearfix">
 								<span class="movie-infor float-l">
-									<span>亲爱的</span>
+									<span>亲爱11</span>
 									<span>已售票1000张</span>
 								</span>
 								<span class="movie-mark float-r">9.3</span>
@@ -223,7 +222,7 @@
 							<img src="${ctx}/resources/images/demoimg/index_img01.jpg">
 							<div class="movie-text clearfix">
 								<span class="movie-infor float-l">
-									<span>亲爱的</span>
+									<span>亲爱的12</span>
 									<span>已售票1000张</span>
 								</span>
 								<span class="movie-mark float-r">9.3</span>
@@ -306,7 +305,7 @@
 		<div class="cinema-show">
 			<div class="y-title">
 				影院展示
-				<a class="title-more float-r">+more</a>
+				<a class="title-more float-r" href="${ctx}/cinema${suffix}">+more</a>
 			</div>
 			<div class="scroll-content">
           		<i class="prev"></i>

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import com.rpframework.core.BaseService;
 import com.rpframework.module.common.dao.ICityDao;
 
-@Service("cityService")
+@Service
 public class CityService extends BaseService {
 	@Resource public ICityDao cityDao;
 }

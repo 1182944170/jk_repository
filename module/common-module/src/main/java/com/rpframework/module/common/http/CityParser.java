@@ -18,7 +18,7 @@ import org.htmlparser.util.ParserException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.rpframework.module.common.domain.City;
+import com.rpframework.module.common.domain.County;
 import com.rpframework.utils.NumberUtils;
 
 public class CityParser {
@@ -28,13 +28,13 @@ public class CityParser {
 	public String fomartText(String t) {
 		return StringUtils.replace(t, "&nbsp;", "");
 	}
-	public List<City> parserAllCityByProvinceCode(String provinceCode) throws ParserException {
+	public List<County> parserAllCityByProvinceCode(String provinceCode) throws ParserException {
 		 Parser parser = new Parser();
 		 parser.setURL(CITY_URI + provinceCode);
 		 AndFilter andFilter = new AndFilter(new NodeClassFilter(TableTag.class), new HasAttributeFilter("bordercolor","#663333"));
 		 NodeList tables = parser.extractAllNodesThatMatch(andFilter);
 		 TableTag tableTag = (TableTag)tables.elementAt(0);
-		 List<City> list = new ArrayList<City>();
+		 List<County> list = new ArrayList<County>();
 		 if(tableTag == null) {
 			 System.out.println("parser url is nil:" + parser.getURL());
 			 return list;
@@ -44,7 +44,7 @@ public class CityParser {
              TableRow row = tableTag.getRow(j);   
              TableColumn[] columns = row.getColumns();   
              
-             City city = new City(fomartText(columns[0].toPlainTextString()),
+             County city = new County(fomartText(columns[0].toPlainTextString()),
             		 fomartText(columns[1].toPlainTextString()),
             		 fomartText(columns[2].toPlainTextString()),
             		 NumberUtils.parseDouble(fomartText(columns[3].toPlainTextString())),
@@ -63,7 +63,7 @@ public class CityParser {
 	}
 	
 	public static void main(String[] args) throws ParserException {
-		List<City> list = new CityParser().parserAllCityByProvinceCode("361000");
+		List<County> list = new CityParser().parserAllCityByProvinceCode("361000");
 		System.out.println(ToStringBuilder.reflectionToString(list, ToStringStyle.MULTI_LINE_STYLE));
 	}
 }

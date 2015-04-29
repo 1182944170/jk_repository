@@ -22,10 +22,10 @@
 .dy_t1r a{ height:30px; line-height:30px; display: inline-block; float:left; padding:0px 10px; color:#666; margin:0px 5px;}
 .dy_t1r .a1{ background:url(../images/dy/an2.png) no-repeat top left;  background-size:100% 100%; color:#fff;}
 .dy_sys{ width:100%; height:40px; margin-top:20px;}
-.dy_sys a{ width:113px; display:block; float:left; height:38px; border:1px solid #dbdbdb; background:#fff; line-height:38px; text-align:center; font-family:"微软雅黑"; font-size:18px; color:#2084eb;}
-.dy_sys a.p1{ background:#2084eb; border:1px solid #2084eb; color:#fff;}
+.dy_sys li{ width:113px; display:block; float:left; height:38px; border:1px solid #dbdbdb; background:#fff; line-height:38px; text-align:center; font-family:"微软雅黑"; font-size:18px; color:#2084eb;}
+.dy_sys li.p1{ background:#2084eb; border:1px solid #2084eb; color:#fff;}
 
-
+.con2,.con3{display:none;}
 
 .dy1_com{margin: 20px 0 88px;padding:10px 5px;border: 1px solid #d9d9d9;background: #fff;}
 .dyrm_cm{ width:778px; margin:0 auto; }

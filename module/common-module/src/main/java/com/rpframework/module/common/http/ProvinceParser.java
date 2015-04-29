@@ -18,7 +18,7 @@ import org.htmlparser.util.ParserException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.rpframework.module.common.domain.Province;
+import com.rpframework.module.common.domain.City;
 import com.rpframework.utils.NumberUtils;
 
 public class ProvinceParser {
@@ -28,13 +28,13 @@ public class ProvinceParser {
 	public String fomartText(String t) {
 		return StringUtils.replace(t, "&nbsp;", "");
 	}
-	public List<Province> parserAllProvinceByCountryCode(String countryCode) throws ParserException {
+	public List<City> parserAllProvinceByCountryCode(String countryCode) throws ParserException {
 		 Parser parser = new Parser();
 		 parser.setURL(PROVINCE_URI + countryCode);
 		 AndFilter andFilter = new AndFilter(new NodeClassFilter(TableTag.class), new HasAttributeFilter("bordercolor","#663333"));
 		 NodeList tables = parser.extractAllNodesThatMatch(andFilter);
 		 TableTag tableTag = (TableTag)tables.elementAt(0);
-		 List<Province> list = new ArrayList<Province>();
+		 List<City> list = new ArrayList<City>();
 		 if(tableTag == null) {
 			 System.out.println("parser url is nil:" + parser.getURL());
 			 return list;
@@ -44,7 +44,7 @@ public class ProvinceParser {
              TableRow row = tableTag.getRow(j);   
              TableColumn[] columns = row.getColumns();   
              
-             Province province = new Province(fomartText(columns[0].toPlainTextString()),
+             City province = new City(fomartText(columns[0].toPlainTextString()),
             		 fomartText(columns[1].toPlainTextString()),
             		 fomartText(columns[2].toPlainTextString()),
             		 NumberUtils.parseDouble(fomartText(columns[3].toPlainTextString())),
@@ -63,7 +63,7 @@ public class ProvinceParser {
 	}
 	
 	public static void main(String[] args) throws ParserException {
-		List<Province> list = new ProvinceParser().parserAllProvinceByCountryCode("36");
+		List<City> list = new ProvinceParser().parserAllProvinceByCountryCode("36");
 		System.out.println(ToStringBuilder.reflectionToString(list, ToStringStyle.MULTI_LINE_STYLE));
 	}
 }
