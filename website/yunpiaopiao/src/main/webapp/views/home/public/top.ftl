@@ -13,6 +13,7 @@
 <script src="${ctx}/resources/js/jquery-2.0.3.js" type="text/javascript"></script>
 <script src="${ctx}/resources/js/common.js" type="text/javascript"></script>
 <script src="${ctx}/resources/js/index_public.js" type="text/javascript"></script>
+<script src="${ctx}/resources/js/showpages.js"></script>
 
 </head>
 <body>

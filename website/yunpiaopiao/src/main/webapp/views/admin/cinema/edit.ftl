@@ -40,6 +40,15 @@
 </div>
 
 <div class="form-group">
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right">支持的服务:</label>
+	<div class="col-xs-12 col-sm-9">
+		<div class="clearfix">
+		<@ace.formMultiSelect options=allServices checkValues=(supportServices)! name="supportServices" attributes="class='chosen-select width-60' data-placeholder='请选择...'" listKey="k" listValue="v"/>
+		</div>
+	</div>
+</div>
+
+<div class="form-group">
 	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="contact">联系电话:</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
@@ -127,6 +136,7 @@
 <script>
 $(document).ready(function(){
 	RP.addBreadcrumb([{name:"影院"}, {name:"<#if cinema??>编辑<#else>新增</#if>影院",  active: true}]);
+	$(".chosen-select").chosen();
 	$('#id-input-file-2').ace_file_input({
 		no_file:'没图片 ...',
 		btn_choose:'请选择图片',

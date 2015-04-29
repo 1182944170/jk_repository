@@ -8,6 +8,9 @@
 	
 	<select id="doPager" resultMap="mCinema">
 		select * from cinema where 1=1
+		<if test="page.searchMap.isRecommend != null">
+			and isRecommend=${page.searchMap.isRecommend}
+		</if>
 	</select>
 	
 	<select id="queryAll" resultMap="mCinema">

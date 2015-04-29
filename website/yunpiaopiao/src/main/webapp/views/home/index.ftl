@@ -27,212 +27,54 @@
 		</div>
 		<div class="tab-con tab-con01">
 			<ul class="playing-movie thisclass">
-				<li class="hover-active">
-					<h3>
-						<a>
-							<img src="${ctx}/resources/images/demoimg/index_img01.jpg">
-							<div class="movie-text clearfix">
-								<span class="movie-infor float-l">
-									<span>亲爱的1</span>
-									<span>已售票1000张</span>
-								</span>
-								<span class="movie-mark float-r">9.3</span>
-							</div>
-						</a>
-					</h3>
-					<div class="buy-btn">
-						<a>购票</a>
-					</div>
-				</li>
-				<li>
-					<h3>
-						<a>
-							<img src="${ctx}/resources/images/demoimg/index_img01.jpg">
-							<div class="movie-text clearfix">
-								<span class="movie-infor float-l">
-									<span>亲爱的2</span>
-									<span>已售票1000张</span>
-								</span>
-								<span class="movie-mark float-r">9.3</span>
-							</div>
-						</a>
-					</h3>
-					<div class="buy-btn">
-						<a>购票</a>
-					</div>
-				</li>
-				<li>
-					<h3>
-						<a>
-							<img src="${ctx}/resources/images/demoimg/index_img01.jpg">
-							<div class="movie-text clearfix">
-								<span class="movie-infor float-l">
-									<span>亲爱的3</span>
-									<span>已售票1000张</span>
-								</span>
-								<span class="movie-mark float-r">9.3</span>
-							</div>
-						</a>
-					</h3>
-					<div class="buy-btn">
-						<a>购票</a>
-					</div>
-				</li>
-				<li>
-					<h3>
-						<a>
-							<img src="${ctx}/resources/images/demoimg/index_img01.jpg">
-							<div class="movie-text clearfix">
-								<span class="movie-infor float-l">
-									<span>亲爱的4</span>
-									<span>已售票1000张</span>
-								</span>
-								<span class="movie-mark float-r">9.3</span>
-							</div>
-						</a>
-					</h3>
-					<div class="buy-btn">
-						<a>购票</a>
-					</div>
-				</li>
-				<li>
-					<h3>
-						<a>
-							<img src="${ctx}/resources/images/demoimg/index_img01.jpg">
-							<div class="movie-text clearfix">
-								<span class="movie-infor float-l">
-									<span>亲爱的5</span>
-									<span>已售票1000张</span>
-								</span>
-								<span class="movie-mark float-r">9.3</span>
-							</div>
-						</a>
-					</h3>
-					<div class="buy-btn">
-						<a>购票</a>
-					</div>
-				</li>
-				<li class="margin-r">
-					<h3>
-						<a>
-							<img src="${ctx}/resources/images/demoimg/index_img01.jpg">
-							<div class="movie-text clearfix">
-								<span class="movie-infor float-l">
-									<span>亲爱的6</span>
-									<span>已售票1000张</span>
-								</span>
-								<span class="movie-mark float-r">9.3</span>
-							</div>
-						</a>
-					</h3>
-					<div class="buy-btn">
-						<a>购票</a>
-					</div>
-				</li>
+			<@ypp cmd="do_movie_pager" pageSize=6 pagerString="1_movieState--1">
+				<#if m_pager.itemList?has_content>
+				<#list m_pager.itemList as u>
+					<li class="hover-active">
+						<h3>
+							<a>
+								<img src="${tagUtils.getFileFullPath(u.icon)}" width="165" height="210"/>
+								<div class="movie-text clearfix">
+									<span class="movie-infor float-l">
+										<span>${u.name}</span>
+										<!--<span>已售票1000张</span>-->
+									</span>
+									<span class="movie-mark float-r">${u.mark}</span>
+								</div>
+							</a>
+						</h3>
+						<!-- <div class="buy-btn">
+							<a>购票</a>
+						</div> -->
+					</li>
+				</#list>
+				</#if>
+			</@ypp>
 			</ul>
 			<ul class="playing-movie">
-				<li class="hover-active">
-					<h3>
-						<a>
-							<img src="${ctx}/resources/images/demoimg/index_img01.jpg">
-							<div class="movie-text clearfix">
-								<span class="movie-infor float-l">
-									<span>亲爱的7</span>
-									<span>已售票1000张</span>
-								</span>
-								<span class="movie-mark float-r">9.3</span>
-							</div>
-						</a>
-					</h3>
-					<div class="buy-btn">
-						<a>购票</a>
-					</div>
-				</li>
-				<li>
-					<h3>
-						<a>
-							<img src="${ctx}/resources/images/demoimg/index_img01.jpg">
-							<div class="movie-text clearfix">
-								<span class="movie-infor float-l">
-									<span>亲爱的8</span>
-									<span>已售票1000张</span>
-								</span>
-								<span class="movie-mark float-r">9.3</span>
-							</div>
-						</a>
-					</h3>
-					<div class="buy-btn">
-						<a>购票</a>
-					</div>
-				</li>
-				<li>
-					<h3>
-						<a>
-							<img src="${ctx}/resources/images/demoimg/index_img01.jpg">
-							<div class="movie-text clearfix">
-								<span class="movie-infor float-l">
-									<span>亲爱的9</span>
-									<span>已售票1000张</span>
-								</span>
-								<span class="movie-mark float-r">9.3</span>
-							</div>
-						</a>
-					</h3>
-					<div class="buy-btn">
-						<a>购票</a>
-					</div>
-				</li>
-				<li>
-					<h3>
-						<a>
-							<img src="${ctx}/resources/images/demoimg/index_img01.jpg">
-							<div class="movie-text clearfix">
-								<span class="movie-infor float-l">
-									<span>亲爱的10</span>
-									<span>已售票1000张</span>
-								</span>
-								<span class="movie-mark float-r">9.3</span>
-							</div>
-						</a>
-					</h3>
-					<div class="buy-btn">
-						<a>购票</a>
-					</div>
-				</li>
-				<li>
-					<h3>
-						<a>
-							<img src="${ctx}/resources/images/demoimg/index_img01.jpg">
-							<div class="movie-text clearfix">
-								<span class="movie-infor float-l">
-									<span>亲爱11</span>
-									<span>已售票1000张</span>
-								</span>
-								<span class="movie-mark float-r">9.3</span>
-							</div>
-						</a>
-					</h3>
-					<div class="buy-btn">
-						<a>购票</a>
-					</div>
-				</li>
-				<li class="margin-r">
-					<h3>
-						<a>
-							<img src="${ctx}/resources/images/demoimg/index_img01.jpg">
-							<div class="movie-text clearfix">
-								<span class="movie-infor float-l">
-									<span>亲爱的12</span>
-									<span>已售票1000张</span>
-								</span>
-								<span class="movie-mark float-r">9.3</span>
-							</div>
-						</a>
-					</h3>
-					<div class="buy-btn">
-						<a>购票</a>
-					</div>
-				</li>
+				<@ypp cmd="do_movie_pager" pageSize=6 pagerString="1_movieState--2">
+					<#if m_pager.itemList?has_content>
+					<#list m_pager.itemList as u>
+						<li class="hover-active">
+							<h3>
+								<a href="${ctx}/movie/${u.id}${suffix}">
+									<img src="${tagUtils.getFileFullPath(u.icon)}" width="165" height="210"/>
+									<div class="movie-text clearfix">
+										<span class="movie-infor float-l">
+											<span>${u.name}</span>
+											<!--<span>已售票1000张</span>-->
+										</span>
+										<span class="movie-mark float-r">${u.mark}</span>
+									</div>
+								</a>
+							</h3>
+							<!-- <div class="buy-btn">
+								<a>购票</a>
+							</div> -->
+						</li>
+					</#list>
+					</#if>
+				</@ypp>
 			</ul>
 		</div>
 		<!--tab-con end-->
@@ -267,36 +109,7 @@
 					<p><a>[详情点击查询]</a></p>
 				</dd>
 			</dl>
-			<div class="notice-column float-r">
-				<div class="tab-title-box02">
-					<ul class="tab-title float-l">
-						<li class="not-tit active">最新公告</li>
-						<li class="act-tit">热门活动</li>
-					</ul>
-					<a class="title-more float-r">+more</a>
-				</div>
-				<div class="tab-con tab-con02">
-					<ul class="last-notice thisclass">
-						<li><a><i>1</i>新华国际影城-大兴店万圣节专场优惠新华国际影城-大兴店万圣节专场优惠</a></li>
-						<li><a><i>2</i>新华国际影城-大兴店万圣节专场优惠新华国际影城-大兴店万圣节专场优惠</a></li>
-						<li><a><i>3</i>新华国际影城-大兴店万圣节专场优惠新华国际影城-大兴店万圣节专场优惠</a></li>
-						<li><a><i>4</i>新华国际影城-大兴店万圣节专场优惠新华国际影城-大兴店万圣节专场优惠</a></li>
-						<li><a><i>5</i>新华国际影城-大兴店万圣节专场优惠新华国际影城-大兴店万圣节专场优惠</a></li>
-						<li><a><i>6</i>新华国际影城-大兴店万圣节专场优惠新华国际影城-大兴店万圣节专场优惠</a></li>
-						<li class="last-li"><a><i>7</i>新华国际影城-大兴店万圣节专场优惠新华国际影城-大兴店万圣节专场优惠</a></li>
-					</ul>
-					<ul class="popular-activities">
-						<li><a><i>1</i>热门活动新华国际影城-大兴店万圣节专场优惠新华国际影城-大兴店万圣节专场优惠</a></li>
-						<li><a><i>2</i>新华国际影城-大兴店万圣节专场优惠新华国际影城-大兴店万圣节专场优惠</a></li>
-						<li><a><i>3</i>新华国际影城-大兴店万圣节专场优惠新华国际影城-大兴店万圣节专场优惠</a></li>
-						<li><a><i>4</i>新华国际影城-大兴店万圣节专场优惠新华国际影城-大兴店万圣节专场优惠</a></li>
-						<li><a><i>5</i>新华国际影城-大兴店万圣节专场优惠新华国际影城-大兴店万圣节专场优惠</a></li>
-						<li><a><i>6</i>新华国际影城-大兴店万圣节专场优惠新华国际影城-大兴店万圣节专场优惠</a></li>
-						<li class="last-li"><a><i>7</i>新华国际影城-大兴店万圣节专场优惠新华国际影城-大兴店万圣节专场优惠</a></li>
-					</ul>
-				</div>
-			</div>
-			<!--notice-column end-->
+			<#include "notice/notice_thumb.ftl"/>
 			<ul>
 				
 			</ul>
@@ -313,68 +126,18 @@
           		<div class="scroll">
                		<div class="scroll-pic">
                      	<ul class="count">
-                         	<li>
-                         		<div class="img-box">
-                         			<img src="${ctx}/resources/images/demoimg/cinema_img.jpg">
-                         		</div>
-								<span>新华国际影城（大兴店）</span>
-                         	</li>
-                         	<li>
-                         		<div class="img-box">
-                         			<img src="${ctx}/resources/images/demoimg/cinema_img.jpg">
-                         		</div>
-								<span>新华国际影城（大兴店）</span>
-                         	</li>
-                         	<li>
-                         		<div class="img-box">
-                         			<img src="${ctx}/resources/images/demoimg/cinema_img.jpg">
-                         		</div>
-								<span>新华国际影城（大兴店）</span>
-                         	</li>
-                         	<li>
-                         		<div class="img-box">
-                         			<img src="${ctx}/resources/images/demoimg/cinema_img.jpg">
-                         		</div>
-								<span>新华国际影城（大兴店）</span>
-                         	</li>
-                         	<li class="margin-r">
-                         		<div class="img-box">
-                         			<img src="${ctx}/resources/images/demoimg/cinema_img.jpg">
-                         		</div>
-								<span>新华国际影城（大兴店）</span>
-                         	</li>
-                     	</ul>
-                      	<ul>
-                         	<li>
-                         		<div class="img-box">
-                         			<img src="${ctx}/resources/images/demoimg/cinema_img.jpg">
-                         		</div>
-								<span>新华国际影城（大兴店）</span>
-                         	</li>
-                         	<li>
-                         		<div class="img-box">
-                         			<img src="${ctx}/resources/images/demoimg/cinema_img.jpg">
-                         		</div>
-								<span>新华国际影城（大兴店）</span>
-                         	</li>
-                         	<li>
-                         		<div class="img-box">
-                         			<img src="${ctx}/resources/images/demoimg/cinema_img.jpg">
-                         		</div>
-								<span>新华国际影城（大兴店）</span>
-                         	</li>
-                         	<li>
-                         		<div class="img-box">
-                         			<img src="${ctx}/resources/images/demoimg/cinema_img.jpg">
-                         		</div>
-								<span>新华国际影城（大兴店）</span>
-                         	</li>
-                         	<li class="margin-r">
-                         		<div class="img-box">
-                         			<img src="${ctx}/resources/images/demoimg/cinema_img.jpg">
-                         		</div>
-								<span>新华国际影城（大兴店）</span>
-                         	</li>
+                     		<@ypp cmd="do_cinema_pager" pageSize=10 pagerString="1_isRecommend--1">
+								<#if m_pager.itemList?has_content>
+								<#list m_pager.itemList as u>
+									<li>
+		                         		<div class="img-box">
+		                         			<img src="${tagUtils.getFileFullPath(u.icon)}">
+		                         		</div>
+										<span>${u.name}</span>
+		                         	</li>
+								</#list>
+								</#if>
+							</@ypp>
                      	</ul>
                		</div>
           		</div>

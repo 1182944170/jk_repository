@@ -14,6 +14,7 @@
 						<th>下线时间</th>
 						<th>电影图片</th>
 						<th>语言</th>
+						<th>版本</th>
 						<th>时长</th>
 						<th>内容</th>
 						<th></th>
@@ -31,6 +32,7 @@
 						<td>${tagUtils.formatDate((u.offTime)!0, 'yyyy-MM-dd')}</td>
 						<td><img src="${tagUtils.getFileFullPath(u.icon)}" alt="${u.icon}" width=100 /></td>
 						<td>${dicSetting.getParameterValue("movie.lang." + u.lang)}</td>
+						<td>${dicSetting.getParameterValue("movie.ver." + u.ver)}</td>
 						<td>${u.time}</td>
 						<td>${u.content}</td>
 						<td>

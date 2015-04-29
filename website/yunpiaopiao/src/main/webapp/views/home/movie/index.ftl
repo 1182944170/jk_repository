@@ -9,316 +9,63 @@
 				<div class="dy_t1">
                 	<div class="dy_t1l">类型:</div>
                     <div class="dy_t1r">
-                    	<a href="#" class="a1">全部</a>
-                    	<a href="#">科幻</a>
-                    	<a href="#">冒险</a>
-                    	<a href="#">喜剧</a>
-                    	<a href="#">记录</a>
-                    	<a href="#">纪录片</a>
-                    	<a href="#">惊悚</a>
-                    	<a href="#">悬疑</a>
-                    	<a href="#">爱情</a>
-                    	<a href="#">剧情</a>
-                    	<a href="#">动画</a>
-                    	<a href="#">家庭</a>
-                    	<a href="#">少儿</a>
-                    	<a href="#">动作</a>
+                    	<a href="${ctx}/movie${suffix}?pager=1_" <#if ((pager.searchMap.type)!"0") == "0">class="a1"</#if>>全部</a>
+                    	<#assign movieTypes=dicSetting.getParameterMap("movie.type") />
+                    	<#list movieTypes?keys as value>
+                    		<a href="${ctx}/movie${suffix}?pager=1_type--${value?html}" <#if ((pager.searchMap.type)!"0") == value>class="a1"</#if>>${movieTypes[value]?html}</a>
+			            </#list>
                     </div>
-                
                 </div>
                 <div class="dy_t2">
                 	<div class="dy_t1l">版本:</div>
                     <div class="dy_t1r">
-                    	<a href="#" class="a1">全部</a>
-                    	<a href="#">2D</a>
-                    	<a href="#">3D</a>
+                    	<a href="${ctx}/movie${suffix}?pager=1_" <#if ((pager.searchMap.ver)!"0") == "0">class="a1"</#if>>全部</a>
+                    	<#assign verTypes=dicSetting.getParameterMap("movie.ver") />
+                    	<#list verTypes?keys as value>
+                    		<a href="${ctx}/movie${suffix}?pager=1_ver--${value?html}" <#if ((pager.searchMap.ver)!"0") == value>class="a1"</#if>>${verTypes[value]?html}</a>
+			            </#list>
                     </div>
                 </div>
                 <div class="nofl"></div>
 			</div>
             
-            
-            
-            
             <!--2015-4-27开始-->
             <div class="tab">
                 <ul class="menu dy_sys">
-                    <li class="p1">正在热映</li>
-                    <li>即将上映</li>
+                    <li <#if (pager.searchMap.movieState) == "1">class="p1"</#if>><a href="${ctx}/movie${suffix}?pager=1_movieState--1">正在热映</a></li>
+                    <li <#if (pager.searchMap.movieState) != "1">class="p1"</#if>><a href="${ctx}/movie${suffix}?pager=1_movieState--2">即将上映</a></li>
                 </ul>
                 <div class="con1 dy1_com">
             		<ul class="dyrm_cm">
-                    <li>
-                        <div class="dyrm1_l">
-                        	<div class="dyrm1_l2">
-                            	<img src="${ctx}/resources/images/dy/pic1.jpg" width="152" height="200"/>
-                            </div>
-                        </div>
-                        <div class="dyrm1_r">
-                        	<div class="p1"><a href="dyxx-1.html" title="一个人的武林">一个人的武林</a></div>
-                        	<div class="p2">主演 :<span> 甄子丹/王宝强/杨采妮...</span></div>
-                        	<div class="p2">类型 :<span> 动作</span></div>
-                        	<div class="p2">国家/地区 :<span> 中国大陆</span></div>
-                        	<div class="p2">上映日期 :<span> 2014年10月31日</span></div>
-                        	<div class="p4">评分 :<span>7.8</span></div>
-                            <div class="p3"><a href="dyxx-1.html">购票</a></div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="dyrm1_l">
-                        	<div class="dyrm1_l2">
-                            	<img src="${ctx}/resources/images/dy/pic1.jpg" width="152" height="200"/>
-                            </div>
-                        </div>
-                        <div class="dyrm1_r">
-                        	<div class="p1"><a href="dyxx-1.html" title="一个人的武林">一个人的武林</a></div>
-                        	<div class="p2">主演 :<span> 甄子丹/王宝强/杨采妮...</span></div>
-                        	<div class="p2">类型 :<span> 动作</span></div>
-                        	<div class="p2">国家/地区 :<span> 中国大陆</span></div>
-                        	<div class="p2">上映日期 :<span> 2014年10月31日</span></div>
-                        	<div class="p4">评分 :<span>7.8</span></div>
-                            <div class="p3"><a href="dyxx-1.html">购票</a></div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="dyrm1_l">
-                        	<div class="dyrm1_l2">
-                            	<img src="${ctx}/resources/images/dy/pic1.jpg" width="152" height="200"/>
-                            </div>
-                        </div>
-                        <div class="dyrm1_r">
-                        	<div class="p1"><a href="dyxx-1.html" title="一个人的武林">一个人的武林</a></div>
-                        	<div class="p2">主演 :<span> 甄子丹/王宝强/杨采妮...</span></div>
-                        	<div class="p2">类型 :<span> 动作</span></div>
-                        	<div class="p2">国家/地区 :<span> 中国大陆</span></div>
-                        	<div class="p2">上映日期 :<span> 2014年10月31日</span></div>
-                        	<div class="p4">评分 :<span>7.8</span></div>
-                            <div class="p3"><a href="dyxx-1.html">购票</a></div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="dyrm1_l">
-                        	<div class="dyrm1_l2">
-                            	<img src="${ctx}/resources/images/dy/pic1.jpg" width="152" height="200"/>
-                            </div>
-                        </div>
-                        <div class="dyrm1_r">
-                        	<div class="p1"><a href="dyxx-1.html" title="一个人的武林">一个人的武林</a></div>
-                        	<div class="p2">主演 :<span> 甄子丹/王宝强/杨采妮...</span></div>
-                        	<div class="p2">类型 :<span> 动作</span></div>
-                        	<div class="p2">国家/地区 :<span> 中国大陆</span></div>
-                        	<div class="p2">上映日期 :<span> 2014年10月31日</span></div>
-                        	<div class="p4">评分 :<span>7.8</span></div>
-                            <div class="p3"><a href="dyxx-1.html">购票</a></div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="dyrm1_l">
-                        	<div class="dyrm1_l2">
-                            	<img src="${ctx}/resources/images/dy/pic1.jpg" width="152" height="200"/>
-                            </div>
-                        </div>
-                        <div class="dyrm1_r">
-                        	<div class="p1"><a href="dyxx-1.html" title="一个人的武林">一个人的武林</a></div>
-                        	<div class="p2">主演 :<span> 甄子丹/王宝强/杨采妮...</span></div>
-                        	<div class="p2">类型 :<span> 动作</span></div>
-                        	<div class="p2">国家/地区 :<span> 中国大陆</span></div>
-                        	<div class="p2">上映日期 :<span> 2014年10月31日</span></div>
-                        	<div class="p4">评分 :<span>7.8</span></div>
-                            <div class="p3"><a href="dyxx-1.html">购票</a></div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="dyrm1_l">
-                        	<div class="dyrm1_l2">
-                            	<img src="${ctx}/resources/images/dy/pic1.jpg" width="152" height="200"/>
-                            </div>
-                        </div>
-                        <div class="dyrm1_r">
-                        	<div class="p1"><a href="dyxx-1.html" title="一个人的武林">一个人的武林</a></div>
-                        	<div class="p2">主演 :<span> 甄子丹/王宝强/杨采妮...</span></div>
-                        	<div class="p2">类型 :<span> 动作</span></div>
-                        	<div class="p2">国家/地区 :<span> 中国大陆</span></div>
-                        	<div class="p2">上映日期 :<span> 2014年10月31日</span></div>
-                        	<div class="p4">评分 :<span>7.8</span></div>
-                            <div class="p3"><a href="dyxx-1.html">购票</a></div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="dyrm1_l">
-                        	<div class="dyrm1_l2">
-                            	<img src="${ctx}/resources/images/dy/pic1.jpg" width="152" height="200"/>
-                            </div>
-                        </div>
-                        <div class="dyrm1_r">
-                        	<div class="p1"><a href="dyxx-1.html" title="一个人的武林">一个人的武林</a></div>
-                        	<div class="p2">主演 :<span> 甄子丹/王宝强/杨采妮...</span></div>
-                        	<div class="p2">类型 :<span> 动作</span></div>
-                        	<div class="p2">国家/地区 :<span> 中国大陆</span></div>
-                        	<div class="p2">上映日期 :<span> 2014年10月31日</span></div>
-                        	<div class="p4">评分 :<span>7.8</span></div>
-                            <div class="p3"><a href="dyxx-1.html">购票</a></div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="dyrm1_l">
-                        	<div class="dyrm1_l2">
-                            	<img src="${ctx}/resources/images/dy/pic1.jpg" width="152" height="200"/>
-                            </div>
-                        </div>
-                        <div class="dyrm1_r">
-                        	<div class="p1"><a href="dyxx-1.html" title="一个人的武林">一个人的武林</a></div>
-                        	<div class="p2">主演 :<span> 甄子丹/王宝强/杨采妮...</span></div>
-                        	<div class="p2">类型 :<span> 动作</span></div>
-                        	<div class="p2">国家/地区 :<span> 中国大陆</span></div>
-                        	<div class="p2">上映日期 :<span> 2014年10月31日</span></div>
-                        	<div class="p4">评分 :<span>7.8</span></div>
-                            <div class="p3"><a href="dyxx-1.html">购票</a></div>
-                        </div>
-                    </li>
-                </ul>	
-                
+            		<#list pager.itemList as u>
+            			<li>
+	                        <div class="dyrm1_l">
+	                        	<div class="dyrm1_l2">
+	                            	<img src="${tagUtils.getFileFullPath(u.icon)}" width="152" height="200"/>
+	                            </div>
+	                        </div>
+	                        <div class="dyrm1_r">
+	                        	<div class="p1"><a href="${ctx}/movie/${u.id}/view.html" title="${u.name}">${u.name}</a></div>
+	                        	<div class="p2">主演 :<span> 
+	                        	<#if u.movieActors?has_content>
+	                        	<#list u.movieActors as movieActors>
+	                        		${movieActors.actor.name}/
+	                        	</#list>
+	                        	</#if>
+	                        	</if>
+	                        	</span></div>
+	                        	<div class="p2">类型 :<span> ${dicSetting.getParameterValue("movie.type." + u.type)}</span></div>
+	                        	<div class="p2">国家/地区 :<span> ${dicSetting.getParameterValue("movie.countryArea." + u.countryArea)}</span></div>
+	                        	<div class="p2">上映日期 :<span> ${tagUtils.formatDate((u.onlineTime)!0, 'yyyy-MM-dd')}</span></div>
+	                        	<div class="p4">评分 :<span>${u.mark}</span></div>
+	                            <div class="p3"><a href="${ctx}/movie/${u.id}/view.html">购票</a></div>
+	                        </div>
+	                    </li>
+            		</#list>
+                    
                 <div class="nofl"></div>
-				<div class="pagination">
-					<a class="noclick">&laquo;&laquo;</a><a class="noclick">上一页</a><a href="#" class="pagination-current" title="1">1</a> <a href="#" title="2">2</a><a href="#" title="3">3</a><a href="#" title="4">4</a><a href="#" title="5">5</a><a href="#">下一页</a><a href="#">&raquo;&raquo;</a>
-				</div>	
-                </div>
-                <div class="con2 dy1_com">
-                     <ul class="dyrm_cm">
-                    <li>
-                        <div class="dyrm1_l">
-                        	<div class="dyrm1_l2">
-                            	<img src="${ctx}/resources/images/dy/pic1.jpg" width="152" height="200"/>
-                            </div>
-                        </div>
-                        <div class="dyrm1_r">
-                        	<div class="p1"><a href="dyxx-1.html" title="一个人的武林">一个人的武林</a></div>
-                        	<div class="p2">主演 :<span> 子丹/王宝强/杨采妮...</span></div>
-                        	<div class="p2">类型 :<span> 动作</span></div>
-                        	<div class="p2">国家/地区 :<span> 中国大陆</span></div>
-                        	<div class="p2">上映日期 :<span> 2014年10月31日</span></div>
-                        	<div class="p4">评分 :<span>7.8</span></div>
-                            <div class="p3"><a href="dyxx-1.html">购票</a></div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="dyrm1_l">
-                        	<div class="dyrm1_l2">
-                            	<img src="${ctx}/resources/images/dy/pic1.jpg" width="152" height="200"/>
-                            </div>
-                        </div>
-                        <div class="dyrm1_r">
-                        	<div class="p1"><a href="dyxx-1.html" title="一个人的武林">一个人的武林</a></div>
-                        	<div class="p2">主演 :<span> 甄子丹/王宝强/杨采妮...</span></div>
-                        	<div class="p2">类型 :<span> 动作</span></div>
-                        	<div class="p2">国家/地区 :<span> 中国大陆</span></div>
-                        	<div class="p2">上映日期 :<span> 2014年10月31日</span></div>
-                        	<div class="p4">评分 :<span>7.8</span></div>
-                            <div class="p3"><a href="dyxx-1.html">购票</a></div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="dyrm1_l">
-                        	<div class="dyrm1_l2">
-                            	<img src="${ctx}/resources/images/dy/pic1.jpg" width="152" height="200"/>
-                            </div>
-                        </div>
-                        <div class="dyrm1_r">
-                        	<div class="p1"><a href="dyxx-1.html" title="一个人的武林">一个人的武林</a></div>
-                        	<div class="p2">主演 :<span> 甄子/王宝强/杨采妮...</span></div>
-                        	<div class="p2">类型 :<span> 动作</span></div>
-                        	<div class="p2">国家/地区 :<span> 中国大陆</span></div>
-                        	<div class="p2">上映日期 :<span> 2014年10月31日</span></div>
-                        	<div class="p4">评分 :<span>7.8</span></div>
-                            <div class="p3"><a href="dyxx-1.html">购票</a></div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="dyrm1_l">
-                        	<div class="dyrm1_l2">
-                            	<img src="${ctx}/resources/images/dy/pic1.jpg" width="152" height="200"/>
-                            </div>
-                        </div>
-                        <div class="dyrm1_r">
-                        	<div class="p1"><a href="dyxx-1.html" title="一个人的武林">一个人的武林</a></div>
-                        	<div class="p2">主演 :<span> 甄子丹/王宝强/杨采妮...</span></div>
-                        	<div class="p2">类型 :<span> 动作</span></div>
-                        	<div class="p2">国家/地区 :<span> 中国大陆</span></div>
-                        	<div class="p2">上映日期 :<span> 2014年10月31日</span></div>
-                        	<div class="p4">评分 :<span>7.8</span></div>
-                            <div class="p3"><a href="dyxx-1.html">购票</a></div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="dyrm1_l">
-                        	<div class="dyrm1_l2">
-                            	<img src="${ctx}/resources/images/dy/pic1.jpg" width="152" height="200"/>
-                            </div>
-                        </div>
-                        <div class="dyrm1_r">
-                        	<div class="p1"><a href="dyxx-1.html" title="一个人的武林">一个人的武林</a></div>
-                        	<div class="p2">主演 :<span> 甄子丹/王宝强/杨采妮...</span></div>
-                        	<div class="p2">类型 :<span> 动作</span></div>
-                        	<div class="p2">国家/地区 :<span> 中国大陆</span></div>
-                        	<div class="p2">上映日期 :<span> 2014年10月31日</span></div>
-                        	<div class="p4">评分 :<span>7.8</span></div>
-                            <div class="p3"><a href="dyxx-1.html">购票</a></div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="dyrm1_l">
-                        	<div class="dyrm1_l2">
-                            	<img src="${ctx}/resources/images/dy/pic1.jpg" width="152" height="200"/>
-                            </div>
-                        </div>
-                        <div class="dyrm1_r">
-                        	<div class="p1"><a href="dyxx-1.html" title="一个人的武林">一个人的武林</a></div>
-                        	<div class="p2">主演 :<span> 甄子丹/王宝强/杨采妮...</span></div>
-                        	<div class="p2">类型 :<span> 动作</span></div>
-                        	<div class="p2">国家/地区 :<span> 中国大陆</span></div>
-                        	<div class="p2">上映日期 :<span> 2014年10月31日</span></div>
-                        	<div class="p4">评分 :<span>7.8</span></div>
-                            <div class="p3"><a href="dyxx-1.html">购票</a></div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="dyrm1_l">
-                        	<div class="dyrm1_l2">
-                            	<img src="${ctx}/resources/images/dy/pic1.jpg" width="152" height="200"/>
-                            </div>
-                        </div>
-                        <div class="dyrm1_r">
-                        	<div class="p1"><a href="dyxx-1.html" title="一个人的武林">一个人的武林</a></div>
-                        	<div class="p2">主演 :<span> 甄子丹/王宝强/杨采妮...</span></div>
-                        	<div class="p2">类型 :<span> 动作</span></div>
-                        	<div class="p2">国家/地区 :<span> 中国大陆</span></div>
-                        	<div class="p2">上映日期 :<span> 2014年10月31日</span></div>
-                        	<div class="p4">评分 :<span>7.8</span></div>
-                            <div class="p3"><a href="dyxx-1.html">购票</a></div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="dyrm1_l">
-                        	<div class="dyrm1_l2">
-                            	<img src="${ctx}/resources/images/dy/pic1.jpg" width="152" height="200"/>
-                            </div>
-                        </div>
-                        <div class="dyrm1_r">
-                        	<div class="p1"><a href="dyxx-1.html" title="一个人的武林">一个人的武林</a></div>
-                        	<div class="p2">主演 :<span> 甄子丹/王宝强/杨采妮...</span></div>
-                        	<div class="p2">类型 :<span> 动作</span></div>
-                        	<div class="p2">国家/地区 :<span> 中国大陆</span></div>
-                        	<div class="p2">上映日期 :<span> 2014年10月31日</span></div>
-                        	<div class="p4">评分 :<span>7.8</span></div>
-                            <div class="p3"><a href="dyxx-1.html">购票</a></div>
-                        </div>
-                    </li>
-                </ul>	
-                
-                <div class="nofl"></div>
-				<div class="pagination">
-					<a class="noclick">&laquo;&laquo;</a><a class="noclick">上一页</a><a href="#" class="pagination-current" title="1">1</a> <a href="#" title="2">2</a><a href="#" title="3">3</a><a href="#" title="4">4</a><a href="#" title="5">5</a><a href="#">下一页</a><a href="#">&raquo;&raquo;</a>
-				</div>
+               
+                 <@h.page pager=pager action="${ctx}/movie${suffix}" />
                 </div>
             </div>
             <!--2015-4-27结束--> 
@@ -330,36 +77,7 @@
 		</div>
 		<!--con-l end-->
 		<div class="con-r">
-			<div class="notice-column">
-				<div class="tab-title-box02">
-					<ul class="tab-title float-l">
-						<li class="not-tit active">最新公告</li>
-						<li class="act-tit">热门活动</li>
-					</ul>
-					<a class="title-more float-r">+more</a>
-				</div>
-				<div class="tab-con tab-con02">
-					<ul class="last-notice thisclass">
-						<li><a><i>1</i>新华国际影城-大兴店万圣节专场优惠新华国际影城-大兴店万圣节专场优惠</a></li>
-						<li><a><i>2</i>新华国际影城-大兴店万圣节专场优惠新华国际影城-大兴店万圣节专场优惠</a></li>
-						<li><a><i>3</i>新华国际影城-大兴店万圣节专场优惠新华国际影城-大兴店万圣节专场优惠</a></li>
-						<li><a><i>4</i>新华国际影城-大兴店万圣节专场优惠新华国际影城-大兴店万圣节专场优惠</a></li>
-						<li><a><i>5</i>新华国际影城-大兴店万圣节专场优惠新华国际影城-大兴店万圣节专场优惠</a></li>
-						<li><a><i>6</i>新华国际影城-大兴店万圣节专场优惠新华国际影城-大兴店万圣节专场优惠</a></li>
-						<li class="last-li"><a><i>7</i>新华国际影城-大兴店万圣节专场优惠新华国际影城-大兴店万圣节专场优惠</a></li>
-					</ul>
-					<ul class="popular-activities">
-						<li><a><i>1</i>热门活动新华国际影城-大兴店万圣节专场优惠新华国际影城-大兴店万圣节专场优惠</a></li>
-						<li><a><i>2</i>新华国际影城-大兴店万圣节专场优惠新华国际影城-大兴店万圣节专场优惠</a></li>
-						<li><a><i>3</i>新华国际影城-大兴店万圣节专场优惠新华国际影城-大兴店万圣节专场优惠</a></li>
-						<li><a><i>4</i>新华国际影城-大兴店万圣节专场优惠新华国际影城-大兴店万圣节专场优惠</a></li>
-						<li><a><i>5</i>新华国际影城-大兴店万圣节专场优惠新华国际影城-大兴店万圣节专场优惠</a></li>
-						<li><a><i>6</i>新华国际影城-大兴店万圣节专场优惠新华国际影城-大兴店万圣节专场优惠</a></li>
-						<li class="last-li"><a><i>7</i>新华国际影城-大兴店万圣节专场优惠新华国际影城-大兴店万圣节专场优惠</a></li>
-					</ul>
-				</div>
-			</div>
-			<!--notice-column end-->
+			<#include "../notice/notice_thumb.ftl"/>
 			<div class="hot-column">
 				<div class="tab-title-box02">
 					<span class="title-blue">热映TOP排行</span>

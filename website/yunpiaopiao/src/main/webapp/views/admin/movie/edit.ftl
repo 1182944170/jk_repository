@@ -54,6 +54,15 @@
 		</div>
 	</div>
 </div>
+<div class="form-group">
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right">版本:</label>
+	<div class="col-xs-12 col-sm-9">
+		<div class="clearfix">
+		<#assign verTypes=dicSetting.getParameterMap("movie.ver") />
+		<@ace.formSingleSelect options=verTypes checkValue=(movie.ver)!-1 name="ver" listKey="key" listValue="value"/>
+		</div>
+	</div>
+</div>
 
 <div class="form-group">
 	<label class="control-label col-xs-12 col-sm-3 no-padding-right">演员列表:</label>
@@ -215,6 +224,9 @@ $(document).ready(function(){
 				required: true
 			},
 			content:{
+				required: true
+			},
+			ver:{
 				required: true
 			}
 		},

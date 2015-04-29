@@ -1,4 +1,4 @@
-package com.rpframework.module.common.act;
+package com.rpframework.module.common.act.api;
 
 import java.util.List;
 
@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.JsonObject;
+import com.rpframework.module.common.act.CommonBaseAct;
 import com.rpframework.module.common.domain.County;
 import com.rpframework.module.common.domain.Province;
 import com.rpframework.module.common.domain.City;
@@ -21,8 +22,8 @@ import com.rpframework.module.common.service.ProvinceService;
 import com.rpframework.module.common.service.CityService;
 
 @Controller
-@RequestMapping("/common/parser/country")
-public class ParserAct extends CommonBaseAct {
+@RequestMapping("/api/common/parser/country")
+public class ParserApiAct extends CommonBaseAct {
 	@Resource ProvinceService provinceService;
 	@Resource CityService cityService;
 	@Resource CountyService countyService;

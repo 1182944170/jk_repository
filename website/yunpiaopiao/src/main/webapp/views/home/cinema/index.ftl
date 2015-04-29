@@ -60,122 +60,39 @@
 			</div>
 			<!--y-city end-->
 			<div class="y-cinema">
-					<div class="cinema-box">
-						<div class="y-cinema-con cinema-current">
-							<div class="y-cinema-con-l float-l"><img src="${ctx}/resources/images//demoimg/y_cinema.jpg"></div>
-							<div class="y-cinema-con-r float-r">
-								<div class="y-cinema-tit">
-									<a href="yy_1.html" class="float-l yy_ljx">杭州百老汇影城</a>
-									<div class="tit-score float-r">
-										<span>评分：</span>
-										<span class="tit-num">7.0</span>
+					<#list pager.itemList as u>
+						<div class="cinema-box">
+							<div class="y-cinema-con cinema-current">
+								<div class="y-cinema-con-l float-l"><img src="${tagUtils.getFileFullPath(u.icon)}"></div>
+								<div class="y-cinema-con-r float-r">
+									<div class="y-cinema-tit">
+										<a href="${ctx}/cinema/${u.id}/view${suffix}" class="float-l yy_ljx">${u.name}</a>
+										<div class="tit-score float-r">
+											<span>评分：</span>
+											<span class="tit-num">${u.mark}</span>
+										</div>
 									</div>
+									<p><label>详细地址：</label>${u.address}</p>
+									<p><label>联系电话：</label>${u.contact}</p>
+									<p><label>影院特色：</label>${u.feature}</p>
+									<p><label>优势服务：</label>
+									<#if tagUtils.logic2(u.supportService,1)><i class="i01" title="支持3D"></i></#if>
+									<#if tagUtils.logic2(u.supportService,2)><i class="i02" title="有停车场"></i></#if>
+									<#if tagUtils.logic2(u.supportService,4)><i class="i03" title="儿童免费"></i></#if>
+									</p>
 								</div>
-								<p><label>详细地址：</label>杭州市江干区富春路701号万象城三层</p>
-								<p><label>联系电话：</label>0571-89705568-801</p>
-								<p><label>影院特色：</label>杭州第一家由IMAX的影院，就连爆米花都是原装进口的。口感一流，视觉享受更是一流。</p>
-								<p><label>优势服务：</label><i class="i01" title="支持3D"></i><i class="i02" title="有停车场"></i><i class="i03" title="儿童免费"></i></p>
 							</div>
 						</div>
-					</div>
-					<div class="cinema-box">
-						<div class="y-cinema-con">
-							<div class="y-cinema-con-l float-l"><img src="${ctx}/resources/images//demoimg/y_cinema.jpg"></div>
-							<div class="y-cinema-con-r float-r">
-								<div class="y-cinema-tit">
-									<a href="yy_1.html" class="float-l yy_ljx">杭州百老汇影城</a>
-									<div class="tit-pf float-r"><span>评分：</span><span class="tit-num">7.0</i></div>
-								</div>
-								<p><label>详细地址：</label>杭州市江干区富春路701号万象城三层</p>
-								<p><label>联系电话：</label>0571-89705568-801</p>
-								<p><label>影院特色：</label>杭州第一家由IMAX的影院，就连爆米花都是原装进口的。口感一流，视觉享受更是一流。</p>
-								<p><label>优势服务：</label><i class="i01" title="支持3D"></i><i class="i02" title="有停车场"></i><i class="i03" title="儿童免费"></i></p>
-							</div>
-						</div>
-					</div>
-					<div class="cinema-box">
-						<div class="y-cinema-con">
-							<div class="y-cinema-con-l float-l"><img src="${ctx}/resources/images//demoimg/y_cinema.jpg"></div>
-							<div class="y-cinema-con-r float-r">
-								<div class="y-cinema-tit">
-									<a href="yy_1.html" class="float-l yy_ljx">杭州百老汇影城</a>
-									<div class="tit-pf float-r"><span>评分：</span><span class="tit-num">7.0</i></div>
-								</div>
-								<p><label>详细地址：</label>杭州市江干区富春路701号万象城三层</p>
-								<p><label>联系电话：</label>0571-89705568-801</p>
-								<p><label>影院特色：</label>杭州第一家由IMAX的影院，就连爆米花都是原装进口的。口感一流，视觉享受更是一流。</p>
-								<p><label>优势服务：</label><i class="i01" title="支持3D"></i><i class="i02" title="有停车场"></i><i class="i03" title="儿童免费"></i></p>
-							</div>
-						</div>
-					</div>
-					<div class="cinema-box">
-						<div class="y-cinema-con">
-							<div class="y-cinema-con-l float-l"><img src="${ctx}/resources/images//demoimg/y_cinema.jpg"></div>
-							<div class="y-cinema-con-r float-r">
-								<div class="y-cinema-tit">
-									<a href="yy_1.html" class="float-l yy_ljx">杭州百老汇影城</a>
-									<div class="tit-pf float-r"><span>评分：</span><span class="tit-num">7.0</i></div>
-								</div>
-								<p><label>详细地址：</label>杭州市江干区富春路701号万象城三层</p>
-								<p><label>联系电话：</label>0571-89705568-801</p>
-								<p><label>影院特色：</label>杭州第一家由IMAX的影院，就连爆米花都是原装进口的。口感一流，视觉享受更是一流。</p>
-								<p><label>优势服务：</label><i class="i01" title="支持3D"></i><i class="i02" title="有停车场"></i><i class="i03" title="儿童免费"></i></p>
-							</div>
-						</div>
-					</div>
-					<div class="cinema-box">
-						<div class="y-cinema-con">
-							<div class="y-cinema-con-l float-l"><img src="${ctx}/resources/images//demoimg/y_cinema.jpg"></div>
-							<div class="y-cinema-con-r float-r">
-								<div class="y-cinema-tit">
-									<a href="yy_1.html" class="float-l yy_ljx">杭州百老汇影城</a>
-									<div class="tit-pf float-r"><span>评分：</span><span class="tit-num">7.0</i></div>
-								</div>
-								<p><label>详细地址：</label>杭州市江干区富春路701号万象城三层</p>
-								<p><label>联系电话：</label>0571-89705568-801</p>
-								<p><label>影院特色：</label>杭州第一家由IMAX的影院，就连爆米花都是原装进口的。口感一流，视觉享受更是一流。</p>
-								<p><label>优势服务：</label><i class="i01" title="支持3D"></i><i class="i02" title="有停车场"></i><i class="i03" title="儿童免费"></i></p>
-							</div>
-						</div>
-					</div>
-				<div class="pagination">
-					<a class="noclick">&laquo;&laquo;</a><a class="noclick">上一页</a><a href="#" class="pagination-current" title="1">1</a> <a href="#" title="2">2</a><a href="#" title="3">3</a><a href="#" title="4">4</a><a href="#" title="5">5</a><a href="#">下一页</a><a href="#">&raquo;&raquo;</a>
-				</div>
+					</#list>
+					
+				 <@h.page pager=pager action="${ctx}/cinema${suffix}" />
 				<!-- End .pagination -->
 			</div>
 			<!--y-cinema end-->
 		</div>
 		<!--con-l end-->
 		<div class="con-r">
-			<div class="notice-column">
-				<div class="tab-title-box02">
-					<ul class="tab-title float-l">
-						<li class="not-tit active">最新公告</li>
-						<li class="act-tit">热门活动</li>
-					</ul>
-					<a class="title-more float-r">+more</a>
-				</div>
-				<div class="tab-con tab-con02">
-					<ul class="last-notice thisclass">
-						<li><a><i>1</i>新华国际影城-大兴店万圣节专场优惠新华国际影城-大兴店万圣节专场优惠</a></li>
-						<li><a><i>2</i>新华国际影城-大兴店万圣节专场优惠新华国际影城-大兴店万圣节专场优惠</a></li>
-						<li><a><i>3</i>新华国际影城-大兴店万圣节专场优惠新华国际影城-大兴店万圣节专场优惠</a></li>
-						<li><a><i>4</i>新华国际影城-大兴店万圣节专场优惠新华国际影城-大兴店万圣节专场优惠</a></li>
-						<li><a><i>5</i>新华国际影城-大兴店万圣节专场优惠新华国际影城-大兴店万圣节专场优惠</a></li>
-						<li><a><i>6</i>新华国际影城-大兴店万圣节专场优惠新华国际影城-大兴店万圣节专场优惠</a></li>
-						<li class="last-li"><a><i>7</i>新华国际影城-大兴店万圣节专场优惠新华国际影城-大兴店万圣节专场优惠</a></li>
-					</ul>
-					<ul class="popular-activities">
-						<li><a><i>1</i>热门活动新华国际影城-大兴店万圣节专场优惠新华国际影城-大兴店万圣节专场优惠</a></li>
-						<li><a><i>2</i>新华国际影城-大兴店万圣节专场优惠新华国际影城-大兴店万圣节专场优惠</a></li>
-						<li><a><i>3</i>新华国际影城-大兴店万圣节专场优惠新华国际影城-大兴店万圣节专场优惠</a></li>
-						<li><a><i>4</i>新华国际影城-大兴店万圣节专场优惠新华国际影城-大兴店万圣节专场优惠</a></li>
-						<li><a><i>5</i>新华国际影城-大兴店万圣节专场优惠新华国际影城-大兴店万圣节专场优惠</a></li>
-						<li><a><i>6</i>新华国际影城-大兴店万圣节专场优惠新华国际影城-大兴店万圣节专场优惠</a></li>
-						<li class="last-li"><a><i>7</i>新华国际影城-大兴店万圣节专场优惠新华国际影城-大兴店万圣节专场优惠</a></li>
-					</ul>
-				</div>
-			</div>
+			<#include "../notice/notice_thumb.ftl"/>
 			<!--notice-column end-->
 			<div class="hot-column">
 				<div class="tab-title-box02">

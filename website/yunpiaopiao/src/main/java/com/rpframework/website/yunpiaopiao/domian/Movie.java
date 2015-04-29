@@ -30,12 +30,20 @@ public class Movie extends Domain {
 	@FieldMapperAnnotation
 	Integer lang;
 	@FieldMapperAnnotation
+	Integer ver;
+	@FieldMapperAnnotation
 	Integer time;
 	@FieldMapperAnnotation
 	String content;
 	List<MovieActor> movieActors; //主演饰演的角色表
 	List<CinemaMovie> cinemaMovies;//
 	
+	public Integer getVer() {
+		return ver;
+	}
+	public void setVer(Integer ver) {
+		this.ver = ver;
+	}
 	public List<CinemaMovie> getCinemaMovies() {
 		return cinemaMovies;
 	}

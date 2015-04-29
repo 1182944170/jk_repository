@@ -117,8 +117,8 @@ public class AdminMovieAct extends AdminAct {
 				throw new IllegalArgumentException("新增情况下，必须上传Icon!");
 			}
 		}
-		movie.setOffTime(DateUtils.parse(offString).getTime());
-		movie.setOnlineTime(DateUtils.parse(onlineString).getTime());
+		movie.setOffTime(DateUtils.parse(offString).getTime()/1000);
+		movie.setOnlineTime(DateUtils.parse(onlineString).getTime()/1000);
 		
 		List<CinemaMovie> cinemaMovies = new ArrayList<CinemaMovie>();
 		List<MovieActor> movieActors = new ArrayList<MovieActor>();

@@ -1,8 +1,7 @@
-package com.rpframework.module.common.web.directive;
+package com.rpframework.website.yunpiaopiao.web.directive;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
@@ -13,10 +12,9 @@ import org.springframework.stereotype.Component;
 import com.rpframework.core.freemarker.directive.BaseTemplateDirectiveModel;
 import com.rpframework.core.freemarker.directive.DirectiveUtils;
 import com.rpframework.core.utils.SpringUtils;
-import com.rpframework.module.common.domain.Document;
-import com.rpframework.module.common.service.DocumentService;
-import com.rpframework.module.common.service.NoticeService;
 import com.rpframework.utils.Pager;
+import com.rpframework.website.yunpiaopiao.service.CinemaService;
+import com.rpframework.website.yunpiaopiao.service.MovieService;
 
 import freemarker.core.Environment;
 import freemarker.template.ObjectWrapper;
@@ -24,12 +22,12 @@ import freemarker.template.TemplateDirectiveBody;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateModel;
 
-@Component("common")
-public class CommonTemplateDirectiveModel extends BaseTemplateDirectiveModel {
+@Component("ypp")
+public class YPPTemplateDirectiveModel extends BaseTemplateDirectiveModel {
 	final Logger logger = LoggerFactory.getLogger(getClass());
-	static final String HAS_INCLUDE_FILE = "has_include_file";
-	static final String DOCUMENT_LIST = "document_list";
-	static final String NOTICE_LIST = "notice_list";
+	static final String DO_MOVIE_PAGER = "do_movie_pager";
+	static final String DO_CINEMA_PAGER = "do_cinema_pager";
+	static final String NOTICE_LIST = "NOTICE_LIST";
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
@@ -42,26 +40,23 @@ public class CommonTemplateDirectiveModel extends BaseTemplateDirectiveModel {
 		boolean pass = true;
 		if(StringUtils.isBlank(cmd)) {
 			
-		} else if(StringUtils.equals(cmd, HAS_INCLUDE_FILE)) {
-			String name = DirectiveUtils.getString("file", params);
-			try {
-				env.getTemplateForInclusion(name, "UTF-8", true);
-			} catch (Exception e) {
-				pass = false;
-				logger.info("不存在的file文件:{}", name);
-			}
-		}  else if(StringUtils.equals(cmd, DOCUMENT_LIST)) {
-			DocumentService documentService = SpringUtils.getBean(DocumentService.class);
-			List<Document> list = documentService.queryAllByParentId(0);
-			paramWarp.put("m_list", ObjectWrapper.DEFAULT_WRAPPER.wrap(list));
-		} else if(StringUtils.equals(cmd, NOTICE_LIST)) {
+		} else if(StringUtils.equals(cmd, DO_MOVIE_PAGER)) {
 			String pagerString = DirectiveUtils.getString("pagerString", params);
 			Integer pageSize = DirectiveUtils.getInt("pageSize", params);
 			Pager pager = Pager.convertStringToPager(pagerString);
 			pager.setPageSize(pageSize);
+			MovieService movieService = SpringUtils.getBean(MovieService.class);
+			pager = movieService.getPager(pager);
 			
-			NoticeService noticeService = SpringUtils.getBean(NoticeService.class);
-			noticeService.getNoticePager(pager);
+			paramWarp.put("m_pager", ObjectWrapper.DEFAULT_WRAPPER.wrap(pager));
+		} else if(StringUtils.equals(cmd, DO_CINEMA_PAGER)) {
+			String pagerString = DirectiveUtils.getString("pagerString", params);
+			Integer pageSize = DirectiveUtils.getInt("pageSize", params);
+			Pager pager = Pager.convertStringToPager(pagerString);
+			pager.setPageSize(pageSize);
+			CinemaService cinemaService = SpringUtils.getBean(CinemaService.class);
+			pager = cinemaService.doPager(pager);
+			
 			paramWarp.put("m_pager", ObjectWrapper.DEFAULT_WRAPPER.wrap(pager));
 		}
 		

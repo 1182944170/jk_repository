@@ -29,6 +29,8 @@ public class Cinema extends Domain {
 	String content; //详细描述
 	@FieldMapperAnnotation
 	Integer isRecommend; //是否推荐
+	@FieldMapperAnnotation
+	Integer supportService; //支付服务 1-
 	
 	public Integer getId() {
 		return id;
@@ -41,6 +43,12 @@ public class Cinema extends Domain {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public Integer getSupportService() {
+		return supportService;
+	}
+	public void setSupportService(Integer supportService) {
+		this.supportService = supportService;
 	}
 	public String getAddress() {
 		return address;

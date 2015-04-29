@@ -37,7 +37,6 @@ public abstract class CacheObj extends KVObj{
 		setV(null);
 	}
 	
-	@SuppressWarnings("unchecked")
 	public <T> T getV() {
 		if(v == null) {
 			v = load();
@@ -53,7 +52,7 @@ public abstract class CacheObj extends KVObj{
 				lastExeTime = now;
 			}
 		}
-		return (T) v;
+		return (T)v;
 		
 	}
 }

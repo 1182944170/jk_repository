@@ -1,4 +1,4 @@
-package com.rpframework.module.common.act;
+package com.rpframework.module.common.act.api;
 
 import java.util.List;
 
@@ -12,13 +12,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.rpframework.module.common.act.CommonBaseAct;
 import com.rpframework.module.common.domain.Notice;
 import com.rpframework.module.common.service.NoticeService;
 import com.rpframework.utils.CollectionUtils;
 
 @Controller
-@RequestMapping("/common/notice")
-public class NoticeAct extends CommonBaseAct {
+@RequestMapping("/api/common/notice")
+public class NoticeApiAct extends CommonBaseAct {
 	@Resource NoticeService noticeService;
 	
 	@RequestMapping("list")

@@ -25,6 +25,9 @@ public class MovieService extends BaseService {
 	
 	public Pager<Movie> getPager(Pager<Movie> pager) {
 		long startTime = System.currentTimeMillis();
+		if(pager.getSearchMap().containsKey("movieState")) {
+			pager.getSearchMap().put("currTime", String.valueOf(System.currentTimeMillis() / 1000));
+		}
 		List<Movie> itemList = movieDao.doPager(this.packageMyBatisParam(pager));
 		pager.setItemList(itemList);
 		pager.setCostTime(System.currentTimeMillis() - startTime);

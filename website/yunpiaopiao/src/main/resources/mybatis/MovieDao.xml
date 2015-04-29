@@ -10,6 +10,25 @@
 	
 	<select id="doPager" resultMap="mMovie">
 		select * from movie where 1=1
+		<if test="page.searchMap.movieState != null">
+			<choose>
+	            <when test="page.searchMap.movieState == 1">
+					<![CDATA[and onlineTime < #{page.searchMap.currTime} and offTime > #{page.searchMap.currTime}]]>
+	            </when>
+	            <otherwise>
+					<![CDATA[and onlineTime > #{page.searchMap.currTime}]]>
+	            </otherwise>
+	        </choose>
+		</if>
+		
+		<if test="page.searchMap.type != null">
+			and type=#{page.searchMap.type}
+		</if>
+		
+		<if test="page.searchMap.ver != null">
+			and ver=#{page.searchMap.ver}
+		</if>
+		
 	</select>
 	
 	<update id="update" parameterType="com.rpframework.website.yunpiaopiao.domian.Movie" />

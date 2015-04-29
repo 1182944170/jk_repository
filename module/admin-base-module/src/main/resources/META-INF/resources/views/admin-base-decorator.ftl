@@ -6,7 +6,9 @@
 		<meta name="keywords" content="<sitemesh:write property='keywords'/>" />
 		<meta name="description" content="<sitemesh:write property='description'/>" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+		<link href="${ctx}/resources/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+		<link href="${ctx}/resources/favicon.ico" rel="icon" type="image/x-icon" />
+		<link href="${ctx}/resources/favicon.ico" rel="bookmark" type="image/x-icon" />
 		<!-- basic styles -->
 
 		<link href="${ctx}/resources/cssframework/ace/css/bootstrap.min.css" rel="stylesheet" />

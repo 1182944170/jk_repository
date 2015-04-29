@@ -27,8 +27,20 @@ public class TagUtils extends BaseRegistFreemarker {
 		return formatDate(timestamp, DateUtils.DEFAULT_DATE_FORMAT);
 	}
 	
+	public static boolean logic2(Integer t, Integer t2) {
+		if(t == null) return false;
+		return (t & t2) > 0;
+	}
+	
+	/**
+	 * 
+	 * 描述
+	 * @param timestamp 秒  不是毫秒
+	 * @param format
+	 * @return
+	 */
 	public static String formatDate(long timestamp, String format) {
-		return DateUtils.format(format, new Date(timestamp));
+		return DateUtils.format(format, new Date(timestamp*1000L));
 	}
 	
 	public static String getWebUrl(){

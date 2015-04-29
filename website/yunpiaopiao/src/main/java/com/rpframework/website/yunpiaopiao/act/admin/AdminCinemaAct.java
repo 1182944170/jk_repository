@@ -1,5 +1,7 @@
 package com.rpframework.website.yunpiaopiao.act.admin;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -16,6 +18,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.rpframework.core.api.FileService;
 import com.rpframework.core.exception.AdminIllegalArgumentException;
+import com.rpframework.core.utils.DictionarySettingUtils;
+import com.rpframework.core.utils.cache.KVString;
 import com.rpframework.utils.NumberUtils;
 import com.rpframework.utils.Pager;
 import com.rpframework.website.yunpiaopiao.domian.Cinema;
@@ -44,7 +48,25 @@ public class AdminCinemaAct extends AdminAct {
 		if(cinema == null) {
 			throw new AdminIllegalArgumentException("不存在的ID:" + cinemaId);
 		}
+		
+		Integer supportService = cinema.getSupportService();
+		Map<String, String> supportServiceMap = DictionarySettingUtils.getParameterMap("cinema.supportService");
+		List<KVString> supportServices = new ArrayList<KVString>();
+		List<KVString> allServices = new ArrayList<KVString>();
+		for (Map.Entry<String, String> entry : supportServiceMap.entrySet()) {
+			KVString dd = new KVString();
+			dd.k = entry.getKey();
+			dd.v = entry.getValue();
+			allServices.add(dd);
+			
+			if((NumberUtils.parseInt(entry.getKey()) & supportService) > 0) {
+				supportServices.add(dd);
+			}
+		}
+		
 		model.put("cinema", cinema);
+		model.put("supportServices", supportServices);
+		model.put("allServices", allServices);
 		return this.add(attr, model);
 	}
 	
@@ -61,7 +83,10 @@ public class AdminCinemaAct extends AdminAct {
 	}
 	
 	@RequestMapping("/dosave")
-	public String doSaveOrUpdate(@RequestParam(value="iconFile", required=false) CommonsMultipartFile iconFile, @ModelAttribute Cinema cinema, HttpSession session, HttpServletRequest request,RedirectAttributes attr){
+	public String doSaveOrUpdate(@RequestParam(value="iconFile", required=false) CommonsMultipartFile iconFile,
+			@RequestParam(value="supportServices", required=false) Integer[] supportServices,
+			@ModelAttribute Cinema cinema, HttpSession session, 
+			HttpServletRequest request,RedirectAttributes attr){
 		if(iconFile.getSize() > 0) {
 			try {
 				String relativelyPath = "resources/actor/" + NumberUtils.random(3) + iconFile.getOriginalFilename();
@@ -76,6 +101,17 @@ public class AdminCinemaAct extends AdminAct {
 			}
 		}
 		
+		
+		if(supportServices != null) {
+			int support = 0;
+			for (Integer supportServiceId : supportServices) {
+				if(NumberUtils.isValid(supportServiceId)) {
+					support += supportServiceId;
+				}
+				
+			}
+			cinema.setSupportService(support);
+		}
 		cinemaService.doSaveOrUpdate(cinema);
 		if(NumberUtils.isValid(cinema.getId())) {//update
 			setInfoMsg("更新操作成功！", attr);

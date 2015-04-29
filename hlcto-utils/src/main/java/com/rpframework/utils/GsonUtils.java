@@ -55,4 +55,9 @@ public class GsonUtils {
 	public static Double getDouble(JsonObject jsonObject, String key) {
 		return getDouble(jsonObject, key, 0D);
 	}
+	public static void main(String[] args) {
+		System.out.println(1&3);
+		System.out.println(2&3);
+		System.out.println(4&3);
+	}
 }
