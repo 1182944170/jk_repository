@@ -2,12 +2,13 @@
 <div class="footer">
 	<div class="center">
 		<div class="footer-top">
-			<span class="">云票票：</span>
-			<a class="padding-l">上海</a>|<a>北京</a>|<a>杭州</a>|<a>宁波</a>|<a>嘉兴</a>|<a>绍兴</a>|<a>湖州</a>|<a>台州</a>|<a>南京</a>|<a>无锡</a>|<a>常州</a>|<a>苏州</a>|<a>南通</a>|<a>广州</a>|<a>深圳</a>|<a>佛山</a>|<a>武汉</a>|<a>重庆</a>|<a>成都</a>|<a>天津</a>|<a>合肥</a>|
+			<span class=""><!--云票票：--></span>
+			<!--<a class="padding-l">上海</a>|<a>北京</a>|<a>杭州</a>|<a>宁波</a>|<a>嘉兴</a>|<a>绍兴</a>|<a>湖州</a>|<a>台州</a>|<a>南京</a>|<a>无锡</a>|<a>常州</a>|<a>苏州</a>|<a>南通</a>|<a>广州</a>|<a>深圳</a>|<a>佛山</a>|<a>武汉</a>|<a>重庆</a>|<a>成都</a>|<a>天津</a>|<a>合肥</a>|-->
 		</div>
 		<div class="footer-middle clearfix">
+			
 			<div class="footer-logo">
-				LOGO区域
+				<!--LOGO区域-->
 			</div>
 			<dl>
 				<dt>关于云票票</dt>
@@ -41,7 +42,7 @@
 			</dl>
 			<div class="service-phone">
 				<p>客服电话</p>
-				<h1>4000-406-506</h1>
+				<h1>0571-85358280</h1>
 			</div>
 		</div>
 		<div class="footer-bottom">
