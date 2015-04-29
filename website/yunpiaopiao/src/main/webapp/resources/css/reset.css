@@ -120,8 +120,8 @@ body .hide {display:none;}
 .footer .footer-top a{padding:0 10px;}
 .footer .footer-top .padding-l{padding-left: 0;}
 .footer .footer-middle{padding-bottom:25px;border-top:1px solid #f3f3f3;border-bottom:1px solid #d6d6d6;}
-.footer .footer-middle .footer-logo{float:left;width: 145px;height: 67px;line-height: 67px;margin:57px 104px 0 0;background: #fff;text-align: center;font-size: 18px;color: #333;}
-.footer .footer-middle dl{float: left;margin: 23px 70px 0 0;}
+.footer .footer-middle .footer-logo{float:left;width: 145px;height: 67px;line-height: 67px;margin:57px 104px 0 0;text-align: center;font-size: 18px;color: #333;}
+.footer .footer-middle dl{float: left;margin: 23px 66px 0 0;}
 .footer .footer-middle dl dt{margin-bottom: 5px;font-size: 14px;color: #444;}
 .footer .footer-middle dl dd a{display: inline-block;margin:2px 0;font-size: 12px;color: #666;}
 .footer .service-phone{float: left;padding-left:80px;margin:60px 0 35px;background: url(../images/phone.jpg) no-repeat;}
