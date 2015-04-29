@@ -24,7 +24,7 @@
                         <div class="cur">
                             <ul class="z_ul1">
                                 <li><span>登录手机：</span><p><input type="text" class="z_input4" /><em>登陆云票票的账号</em></p></li>
-                                <li><span>校验码：</span><p><input type="text" class="z_input3" /><a href="#"><img src="${ctx}/resources/images/login/huo.jpg" width="61" height="30" /></a><em>输入手机手机接收的6位纯数字</em></li>
+                                <li class="mf_li"><span>校验码：</span><p><input type="text" class="z_input3" /><input type="button" value="获取验证码" class="mf_input"><em>输入手机手机接收的6位纯数字</em></p></li>
                                 <li><span>昵称：</span><p><input type="text" class="z_input4" /><em>对其他用户显示的名称，2-12个字符</em></p></li>
                                 <li><span>登录密码：</span><p><input type="text" class="z_input4" /><em>登录云票票网的密码，6-16个字符</em></p></li>
                                 <li><span>确认密码：</span><p><input type="text" class="z_input4" /><em>请确认您的登录密码</em></p></li>

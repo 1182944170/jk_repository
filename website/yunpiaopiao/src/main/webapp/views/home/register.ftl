@@ -38,7 +38,6 @@
             </div>
             <div class="z_loginmain_right" style="height:551px;">
                 <h3>我有云票票网账号</h3>
-                
                 <a href="${ctx}/login${suffix}">立即登陆</a>
             </div>
         </form>
