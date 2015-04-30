@@ -52,21 +52,17 @@ public class AdminCinemaAct extends AdminAct {
 		Integer supportService = cinema.getSupportService();
 		Map<String, String> supportServiceMap = DictionarySettingUtils.getParameterMap("cinema.supportService");
 		List<KVString> supportServices = new ArrayList<KVString>();
-		List<KVString> allServices = new ArrayList<KVString>();
 		for (Map.Entry<String, String> entry : supportServiceMap.entrySet()) {
-			KVString dd = new KVString();
-			dd.k = entry.getKey();
-			dd.v = entry.getValue();
-			allServices.add(dd);
-			
 			if((NumberUtils.parseInt(entry.getKey()) & supportService) > 0) {
+				KVString dd = new KVString();
+				dd.k = entry.getKey();
+				dd.v = entry.getValue();
 				supportServices.add(dd);
 			}
 		}
 		
 		model.put("cinema", cinema);
 		model.put("supportServices", supportServices);
-		model.put("allServices", allServices);
 		return this.add(attr, model);
 	}
 	
@@ -79,6 +75,16 @@ public class AdminCinemaAct extends AdminAct {
 	
 	@RequestMapping("/add")
 	public String add(RedirectAttributes attr, Map<Object, Object> model){
+		Map<String, String> supportServiceMap = DictionarySettingUtils.getParameterMap("cinema.supportService");
+		List<KVString> allServices = new ArrayList<KVString>();
+		for (Map.Entry<String, String> entry : supportServiceMap.entrySet()) {
+			KVString dd = new KVString();
+			dd.k = entry.getKey();
+			dd.v = entry.getValue();
+			allServices.add(dd);
+		}
+		
+		model.put("allServices", allServices);
 		return this.doPackageURI("cinema/edit");
 	}
 	
