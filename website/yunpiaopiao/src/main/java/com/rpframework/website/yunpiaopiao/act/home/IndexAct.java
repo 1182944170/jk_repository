@@ -15,6 +15,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.rpframework.core.BaseAct;
 import com.rpframework.core.utils.MD5;
 import com.rpframework.module.common.service.SlideshowService;
+import com.rpframework.utils.AlgorithmEnum;
+import com.rpframework.utils.AlgorithmUtils;
 import com.rpframework.website.yunpiaopiao.domian.User;
 import com.rpframework.website.yunpiaopiao.service.CinemaService;
 import com.rpframework.website.yunpiaopiao.service.MovieService;
@@ -84,12 +86,11 @@ public class IndexAct extends  BaseAct{
 			User user = new User();
 			user.setEmail(email);
 			user.setNickName(nickName);
-			user.setPwd(confPwd); //密码加密
+			user.setPwd(AlgorithmUtils.encodePassword(confPwd, AlgorithmEnum.MD5)); //密码加密
 			
 			userService.insert(user);
 			
 		}else{
-			
 			this.setErrorMsg("数据错误!", attr);
 			return redirect("/register");
 		}
@@ -103,19 +104,34 @@ public class IndexAct extends  BaseAct{
 		return "/home/regPhone";
 	}
 
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
+
+	
+	
+	@RequestMapping(value = "doLogin", method = RequestMethod.POST)
+	public String doLogin() {
+		
+		/**
+		 * String password = AlgorithmUtils.encodePassword(adminUser.getPwd(), AlgorithmEnum.MD5) ;
+		if (!StringUtils.equals(password, adminUser2.getPwd())) {
+			super.setErrorMsg("密码不正确！", attr);
+			return redirect("/admin/login");
+		}
+		 * 
+		 * */
+		System.out.println("---doLogin---");
+		return "";
+	}
+
+	@RequestMapping("/login")
 	public String login() {
 		System.out.println("------doLogin---get----");
 		return "/home/login";
 	}
 
-	@RequestMapping(value = "/doLogin", method = RequestMethod.POST)
-	public String doLogin() {
-		System.out.println("---doLogin---");
-		return "";
-	}
-
-	// 注册校验
+	
+	
+	
+	// 注册校验 待实现
 	@SuppressWarnings("unused")
 	public void check(HttpServletRequest request, HttpServletResponse response) {
 

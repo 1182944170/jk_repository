@@ -15,10 +15,10 @@
         <form>
             <div class="z_loginmain_left" style="height:450px;">
                 <h3>登陆云票票网</h3>
-                <form action="${ctx}/doLogin${suffix}" method="post" name="loginForm"/>
+                <form action="${ctx}/doLogin${suffix}" method="POST" name="loginForm"/>
                 <ul>
-                	<li><span>邮箱/手机:</span><input type="text" class="z_input1" /></li>
-                    <li><span>登陆 密码:</span><input type="text" class="z_input1" /></li>
+                	<li><span>邮箱/手机:</span><input name="accout" type="text" class="z_input1" /></li>
+                    <li><span>登陆 密码:</span><input name="pwd" type="text" class="z_input1" /></li>
                     <li><span></span><input type="checkbox" checked /><label>记住密码</label></li>
                     <li><span></span><input type="submit" value="登陆云票票网" class="z_input2" /></li>
                     <!--

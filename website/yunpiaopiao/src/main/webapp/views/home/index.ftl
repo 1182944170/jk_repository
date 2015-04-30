@@ -96,33 +96,33 @@
 		<!--tab-con end-->
 		<div class="movie-y-box clearfix">
 			<dl class="movie-y">
-				<dt class="bg01">电影储蓄卡</dt>
+				<dt class="bg01">电子券</dt>
 				<dd>
-					<img src="${ctx}/resources/images/demoimg/y_img.jpg">
-					<p><label>产品名称：</label>电影储蓄卡</p>
+					<img src="${ctx}/resources/images/index_dianzi_.jpg">
+					<p><label>产品名称：</label>电子兑换券</p>
 					<p><label>类型：</label>储蓄卡</p>
 					<p><label>兑换方式：</label>在影院票台处扫码或手动购票</p>
-					<p><a>[详情点击查询]</a></p>
+					<p><a href="${ctx}/electronic${suffix}">[详情点击查询]</a></p>
 				</dd>
 			</dl>
 			<dl class="movie-y">
-				<dt class="bg02">电影储蓄卡</dt>
+				<dt class="bg02">实体券</dt>
 				<dd>
-					<img src="${ctx}/resources/images/demoimg/y_img.jpg">
-					<p><label>产品名称：</label>电影储蓄卡</p>
+					<img src="${ctx}/resources/images/index_dy_q.jpg">
+					<p><label>产品名称：</label>实体券</p>
 					<p><label>类型：</label>储蓄卡</p>
 					<p><label>兑换方式：</label>在影院票台处扫码或手动购票</p>
-					<p><a>[详情点击查询]</a></p>
+					<p><a href="${ctx}/entity${suffix}">[详情点击查询]</a></p>
 				</dd>
 			</dl>
 			<dl class="movie-y">
-				<dt class="bg03">电影储蓄卡</dt>
+				<dt class="bg03">电影卡</dt>
 				<dd>
-					<img src="${ctx}/resources/images/demoimg/y_img.jpg">
-					<p><label>产品名称：</label>电影储蓄卡</p>
+					<img src="${ctx}/resources/images/index_move_card.jpg">
+					<p><label>产品名称：</label>电影卡</p>
 					<p><label>类型：</label>储蓄卡</p>
 					<p><label>兑换方式：</label>在影院票台处扫码或手动购票</p>
-					<p><a>[详情点击查询]</a></p>
+					<p><a href="${ctx}/card${suffix}">[详情点击查询]</a></p>
 				</dd>
 			</dl>
 			<#include "notice/notice_thumb.ftl"/>
