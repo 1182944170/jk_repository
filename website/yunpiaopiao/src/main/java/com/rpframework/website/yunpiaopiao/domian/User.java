@@ -45,6 +45,7 @@ public class User extends Domain {
 	String lastLoginIp;
 	@FieldMapperAnnotation
 	String qqOpenId;
+	
 	public Integer getId() {
 		return id;
 	}

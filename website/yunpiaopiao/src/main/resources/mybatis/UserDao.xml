@@ -6,6 +6,16 @@
 		<id property="id" column="id"/>
 	</resultMap>
 	
+	
+	<select id="findUserByEmail" parameterType="String" resultMap="mUser">
+		select * from user where 1=1 and email=#{email}
+	</select>
+	
+	<select id="findUserByNickName" parameterType="String" resultMap="mUser">
+		select * from user where 1=1 and nickName=#{nickName}
+	</select>
+	
+	
 	<select id="findUserByUserName" parameterType="String" resultMap="mUser">
 		select * from user where 1=1 and userName=#{userNmae}
 	</select>

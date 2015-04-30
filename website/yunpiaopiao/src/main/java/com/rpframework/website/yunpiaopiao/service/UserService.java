@@ -32,6 +32,19 @@ public class UserService extends BaseService {
 		return userDao.findUserByUserName(userName);
 	}
 	
+	
+	
+	public User findUserByEmail(String email) {
+		return userDao.findUserByEmail(email);
+	}
+	
+	
+	public User findUserByNickName(String nickName) {
+		return userDao.findUserByNickName(nickName);
+	}
+	
+	
+	
 	public boolean updateUser(User User) {
 		return userDao.update(User);
 	}

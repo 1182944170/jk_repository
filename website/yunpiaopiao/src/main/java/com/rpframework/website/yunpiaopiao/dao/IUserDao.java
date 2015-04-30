@@ -13,4 +13,9 @@ public interface IUserDao extends IDao {
 	List<User> doPager(Map map);
 
 	User findUserByContact(String contact);
+	
+	User findUserByEmail(String email);
+	
+	User findUserByNickName(String nickName);
+	
 }

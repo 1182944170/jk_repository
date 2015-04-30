@@ -21,8 +21,10 @@
                     <li><span>登陆 密码:</span><input type="text" class="z_input1" /></li>
                     <li><span></span><input type="checkbox" checked /><label>记住密码</label></li>
                     <li><span></span><input type="submit" value="登陆云票票网" class="z_input2" /></li>
-                    <li class="z_li1"><p>使用合作网站账号登陆云票票网</p></li>
+                    <!--
+                    	<li class="z_li1"><p>使用合作网站账号登陆云票票网</p></li>
                     <li class="z_li1"><span></span><a href="#" class="z_a1">新浪微博</a><a href="#" class="z_a2">QQ</a><a href="#" class="z_a3">360</a></li>
+                		-->
                 </ul>
                 </form>
             </div>
