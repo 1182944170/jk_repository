@@ -5,10 +5,12 @@
 <div class="z_main">
 <div class="z_login">
 	<div class="z_logintitle">
+	 <a href="${ctx}">
         <dl>
-            <dt><img src="${ctx}/resources/images/login/logo.png" width="84" height="84"></dt>
+            <dt><img src="${ctx}/resources/images/login/login.jpg" width="84" height="84"></dt>
             <dd><span>云票票网</span><em>ypiaopiao.com</em></dd>
         </dl>
+        </a>
         <div class="clearfix"></div>
     </div>
     <div class="z_loginmain" style="height:499px;">

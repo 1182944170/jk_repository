@@ -25,7 +25,7 @@ Z<!--footer begin-->
 			</div>
 		</div>
 		<div class="footer-bottom">
-			<p><span>Copyright©2007-2014 Gewara.</span><span>All Rights Reserved</span><span>泸ICP备09050772号</span><span>ICP证：泸B2-20120044</span></p>
+			<p><span>Copyright©2007-2014 Gewara.</span><span>All Rights Reserved</span><span>浙ICP备14040550号-1</span></p>
 			<div class="footer-img">
 				<a><img src="${ctx}/resources/images/demoimg/footer_img01.jpg"></a>
 				<a><img src="${ctx}/resources/images/demoimg/footer_img02.jpg"></a>

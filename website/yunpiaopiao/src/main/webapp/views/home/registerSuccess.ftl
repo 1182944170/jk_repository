@@ -4,7 +4,7 @@
 <div class="z_login">
 	<div class="z_logintitle">
         <dl>
-            <dt><img src="${ctx}/resources/images//login/logo.png" width="84" height="84"></dt>
+            <dt><img src="${ctx}/resources/images/login/login.jpg" width="84" height="84"></dt>
             <dd><span>云票票网</span><em>ypiaopiao.com</em></dd>
         </dl>
         <div class="clearfix"></div>
