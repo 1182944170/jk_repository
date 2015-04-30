@@ -47,9 +47,6 @@ public class AdminBaseTemplateDirectiveModel extends BaseTemplateDirectiveModel 
 		String cmd = DirectiveUtils.getString("cmd", params);
 		Map paramWarp = new HashMap(params);
 		AdminUser adminUser = DirectiveUtils.getSessionAttrFormEnvironment(env, AdminBaseAct.SESSION_ADMIN_USER_KEY);
-		if(adminUser == null) {
-			adminUser = new AdminUser();
-		}
 		boolean pass = true;
 		if(StringUtils.isBlank(cmd)) {
 			String uri = DirectiveUtils.getString("uri", params);
@@ -64,23 +61,28 @@ public class AdminBaseTemplateDirectiveModel extends BaseTemplateDirectiveModel 
 			List<AdminMenu> list = adminMenuService.adminMenuDao.getMenuListByParentId(pId);
 			paramWarp.put("m_list", ObjectWrapper.DEFAULT_WRAPPER.wrap(list));
 		} else if(StringUtils.equals(cmd, AD_CHECK_MENU_LIMIT)) {
-			AdminMenu adminMenu = DirectiveUtils.getObject("adminMenu", params);
-			if(StringUtils.isBlank(adminMenu.getLinkUrl())) {
-				if(CollectionUtils.isEmpty(adminMenu.getChildren())) {
-					pass = false;
-				} else {
-					pass = false;
-					for (AdminMenu tempam : adminMenu.getChildren()) {
-						boolean t = roleAdminAuthResVerifyEvent.checkLimit(adminUser, tempam.getLinkUrl());
-						if(t) {
-							pass = true;
-							break;
+			if(adminUser == null) {
+				pass = false;
+			} else {
+				AdminMenu adminMenu = DirectiveUtils.getObject("adminMenu", params);
+				if(StringUtils.isBlank(adminMenu.getLinkUrl())) {
+					if(CollectionUtils.isEmpty(adminMenu.getChildren())) {
+						pass = false;
+					} else {
+						pass = false;
+						for (AdminMenu tempam : adminMenu.getChildren()) {
+							boolean t = roleAdminAuthResVerifyEvent.checkLimit(adminUser, tempam.getLinkUrl());
+							if(t) {
+								pass = true;
+								break;
+							}
 						}
 					}
+				} else {
+					pass = roleAdminAuthResVerifyEvent.checkLimit(adminUser, adminMenu.getLinkUrl());
 				}
-			} else {
-				pass = roleAdminAuthResVerifyEvent.checkLimit(adminUser, adminMenu.getLinkUrl());
 			}
+			
 			
 		} else if(StringUtils.equals(cmd, AD_ROLE_LIST)) {
 			AdminRoleService adminRoleService = SpringUtils.getBean("adminRoleService");

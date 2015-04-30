@@ -36,7 +36,7 @@ public class AdminBaseModuleEvent extends ModuleEvent {
 	public void applySiteMeshCustomConfiguration(SiteMeshFilterBuilder builder) {
 		logger.debug("AdminBaseModuleEvent>>>>>");
 		builder.addDecoratorPath("/admin/*", ADMIN_BASE_DECORATOR_PATH)
-		.addExcludedPath("/admin/login")
+		.addExcludedPath("/admin/login*")
 		.addExcludedPath("/admin/login/*");
 //		.addExcludedPath("/admin/main")
 //		.addExcludedPath("/admin/main/*");
