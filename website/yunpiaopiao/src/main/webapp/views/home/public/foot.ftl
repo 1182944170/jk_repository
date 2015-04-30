@@ -1,4 +1,4 @@
-<!--footer begin-->
+Z<!--footer begin-->
 <div class="footer">
 	<div class="center">
 		<div class="footer-top">
@@ -7,7 +7,7 @@
 		</div>
 		<div class="footer-middle clearfix">
 			<div class="footer-logo">
-				LOGO区域
+				<!--LOGO区域-->
 			</div>
 			<@common cmd="help_list_group_type">
 				<#list map?keys as key>

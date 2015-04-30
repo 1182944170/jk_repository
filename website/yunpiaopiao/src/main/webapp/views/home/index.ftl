@@ -3,13 +3,24 @@
 <!--content begin-->
 <div class="index-content">
 	<div class="banner">
-		<!--js 幻灯片效果-->
-		<@common cmd="slideshow_list" type=1>
-		<#list m_list as slideshow>
-		<!-- -->
-		<a href="${slideshow.url}"><img src="${tagUtils.getFileFullPath(slideshow.icon)}" width="100%"></a>
-		</#list>
-		</@common>
+        <div class="banner-box">
+            <div class="bd">
+                <ul>          	
+                	 <@common cmd="slideshow_list" type=1>
+					<#list m_list as slideshow>
+                    <li >
+                        <div class="m-width"><a href="${slideshow.url}"><img src="${tagUtils.getFileFullPath(slideshow.icon)}" width="100%"></a></div>
+                    </li>
+                    </#list>
+                 </@common>
+                </ul>
+            </div>
+            <div class="banner-btn">
+                <a class="prev" href="javascript:void(0);"></a>
+                <a class="next" href="javascript:void(0);"></a>
+                <div class="hd"><ul></ul></div>
+            </div>
+        </div>
 	</div>
 
 	<div class="index-column">
@@ -135,10 +146,12 @@
 								<#if m_pager.itemList?has_content>
 								<#list m_pager.itemList as u>
 									<li>
-		                         		<div class="img-box">
-		                         			<a href="${ctx}/cinema/${u.id}${suffix}"><img src="${tagUtils.getFileFullPath(u.icon)}" /></a>
-		                         		</div>
-										<span>${u.name}</span>
+										<a herf="#">
+			                         		<div class="img-box">
+			                         			<a href="${ctx}/cinema/${u.id}${suffix}"><img src="${tagUtils.getFileFullPath(u.icon)}" /></a>
+			                         		</div>
+											<span>${u.name}</span>
+										</a>
 		                         	</li>
 								</#list>
 								</#if>
@@ -149,6 +162,9 @@
     		</div>
 		</div>
 		<!--cinema-show end-->
+		<script type="text/javascript">
+		jQuery(".scroll-content").slide({titCell:".hd ul",mainCell:".scroll-pic ul",autoPage:true,effect:"left",autoPlay:true,vis:5,trigger:"click"});
+		</script>
 	</div>
 </div>
 <!--content end-->
