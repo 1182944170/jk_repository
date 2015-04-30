@@ -150,7 +150,7 @@
 						<ul class="breadcrumb">
 							<li>
 								<i class="icon-home home-icon"></i>
-								<a href="${ctx}/admin/main">Home</a>
+								<a href="${ctx}/admin/main${suffix}">Home</a>
 							</li>
 						</ul><!-- .breadcrumb -->
 
