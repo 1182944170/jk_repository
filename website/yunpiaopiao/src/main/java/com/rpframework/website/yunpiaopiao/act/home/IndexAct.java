@@ -88,6 +88,10 @@ public class IndexAct extends  BaseAct{
 			
 			userService.insert(user);
 			
+		}else{
+			
+			this.setErrorMsg("数据错误!", attr);
+			return redirect("/register");
 		}
 
 		return "/home/register";
