@@ -4,11 +4,24 @@
 <!--header begin-->
 <div class="header">
 <!--top begin-->
+<script>
+function logout(){
+	if(confirm("确定要退出吗？")){
+		window.location.href = '${ctx}/logout${suffix}';
+	}
+}
+</script>
 <div class="top clearfix">
 		<div class="center">
 			<div class="left float-l">
 				<span>欢迎访问云票票网</span>
-				<span><a href="${ctx}/login${suffix}" class="login">登陆</a>|<a href="${ctx}/register${suffix}"  class="reg">注册</a></span>
+				<span>
+				<#if session_front_user ??>
+					欢迎您:[<font color='red'>${session_front_user.nickName}</font>]&nbsp;&nbsp;|&nbsp;<a href="javascript:logout()">退出</a>
+				<#else>
+				<a href="${ctx}/login${suffix}" class="login">登陆</a>|<a href="${ctx}/register${suffix}"  class="reg">注册</a>
+				</#if>
+				</span>
 				<span class="myinfor"><a href="${ctx}/member${suffix}">我的云票票</a><i class="tri01"></i></span>
 			</div>
 			<div class="right float-r">

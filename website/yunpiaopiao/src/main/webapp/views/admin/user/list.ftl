@@ -23,9 +23,9 @@
 				<#list pager.itemList as u>
 					<tr>
 						<td><span class="green center">${u.id}</span></td>
-						<td><span class="gray center">${u.userName}</span></td>
+						<td><span class="gray center">${u.email}</span></td>
 						<td>${u.nickName}</td>
-						<td>${u.contact}</td>
+						<td>${(u.contact)!''}</td>
 						<td class="center">
 							<div class="col-xs-3">
 								<label>

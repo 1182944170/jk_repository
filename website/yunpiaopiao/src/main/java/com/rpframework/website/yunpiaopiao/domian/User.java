@@ -1,5 +1,7 @@
 package com.rpframework.website.yunpiaopiao.domian;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.rpframework.core.Domain;
 import com.rpframework.core.mybatis.plugin.annotation.FieldMapperAnnotation;
 import com.rpframework.core.mybatis.plugin.annotation.TableMapperAnnotation;
@@ -53,6 +55,7 @@ public class User extends Domain {
 		this.id = id;
 	}
 	public String getUserName() {
+		
 		return userName;
 	}
 	public void setUserName(String userName) {

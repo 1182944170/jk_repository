@@ -1,5 +1,7 @@
 package com.rpframework.website.yunpiaopiao.act.home;
 
+import java.util.Date;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,7 +26,7 @@ import com.rpframework.website.yunpiaopiao.service.UserService;
 
 @Controller
 @RequestMapping("/")
-public class IndexAct extends  BaseAct{
+public class IndexAct extends BaseAct {
 
 	@Resource
 	MovieService movieService; // 电影
@@ -62,40 +64,42 @@ public class IndexAct extends  BaseAct{
 				&& StringUtils.isNotBlank(pwd)
 				&& StringUtils.isNotBlank(confPwd)
 				&& StringUtils.isNotBlank(code)) {
-				
-			if(null != userService.findUserByEmail(email)){
+
+			if (null != userService.findUserByEmail(email)) {
 				this.setErrorMsg("邮箱已经存在了!", attr);
 				return redirect("/register");
-				
+
 			}
-			if(null != userService.findUserByNickName(nickName)){
+			if (null != userService.findUserByNickName(nickName)) {
 				this.setErrorMsg("昵称已经存在了!", attr);
 				return redirect("/register");
 			}
-			if(!StringUtils.equals(pwd, confPwd)){
+			if (!StringUtils.equals(pwd, confPwd)) {
 				this.setErrorMsg("两次密码输入不一致!", attr);
 				return redirect("/register");
 			}
-			
-			if(!StringUtils.equals(session.getAttribute("code").toString(), code)){
+
+			if (!StringUtils.equals(session.getAttribute("code").toString(),
+					code)) {
 				this.setErrorMsg("验证码错误!", attr);
 				return redirect("/register");
 			}
-			
-			//用户注册
+
+			// 用户注册
 			User user = new User();
 			user.setEmail(email);
 			user.setNickName(nickName);
-			user.setPwd(AlgorithmUtils.encodePassword(confPwd, AlgorithmEnum.MD5)); //密码加密
-			
+			user.setPwd(AlgorithmUtils.encodePassword(confPwd,
+					AlgorithmEnum.MD5)); // 密码加密
+			user.setRecordCreateTime(new Date().getTime()/1000);
 			userService.insert(user);
-			
-		}else{
+			this.setErrorMsg("注册成功!", attr);
+			return redirect("/login");
+
+		} else {
 			this.setErrorMsg("数据错误!", attr);
 			return redirect("/register");
 		}
-
-		return "/home/register";
 	}
 
 	@RequestMapping("/reghone")
@@ -104,22 +108,37 @@ public class IndexAct extends  BaseAct{
 		return "/home/regPhone";
 	}
 
-
-	
-	
 	@RequestMapping(value = "doLogin", method = RequestMethod.POST)
-	public String doLogin() {
-		
-		/**
-		 * String password = AlgorithmUtils.encodePassword(adminUser.getPwd(), AlgorithmEnum.MD5) ;
-		if (!StringUtils.equals(password, adminUser2.getPwd())) {
-			super.setErrorMsg("密码不正确！", attr);
-			return redirect("/admin/login");
+	public String doLogin(HttpServletRequest request, RedirectAttributes attr,
+			HttpSession session) {
+
+		String account = request.getParameter("accout");
+		String pwd = request.getParameter("pwd");
+
+		if (StringUtils.isNotBlank(account) && StringUtils.isNotBlank(pwd)) {
+			// 手机注册开通后 需要对手机进行验证
+			User user = userService.findUserByEmail(account);
+			if (null == user) {
+				this.setErrorMsg("该账号不存在!", attr);
+				return redirect("/login");
+			} else {
+				String _tmpPwd = AlgorithmUtils.encodePassword(pwd,
+						AlgorithmEnum.MD5);
+				if (StringUtils.equals(_tmpPwd, user.getPwd())) {
+					// 登入成功
+					session.setAttribute(SESSION_FRONT_USER, user);
+					return redirect("/member");
+				} else {
+					this.setErrorMsg("密码错误!", attr);
+					return redirect("/login");
+				}
+			}
+
 		}
-		 * 
-		 * */
-		System.out.println("---doLogin---");
-		return "";
+
+		this.setErrorMsg("请输入完整账号信息!", attr);
+		return redirect("/login");
+
 	}
 
 	@RequestMapping("/login")
@@ -127,10 +146,17 @@ public class IndexAct extends  BaseAct{
 		System.out.println("------doLogin---get----");
 		return "/home/login";
 	}
+	
+	
+	@RequestMapping("/logout")
+	public String logout(HttpServletRequest request, RedirectAttributes attr,
+			HttpSession session){
+		
+		session.removeAttribute(SESSION_USER_KEY);
+		session.invalidate();
+		return redirect("/login");
+	}
 
-	
-	
-	
 	// 注册校验 待实现
 	@SuppressWarnings("unused")
 	public void check(HttpServletRequest request, HttpServletResponse response) {

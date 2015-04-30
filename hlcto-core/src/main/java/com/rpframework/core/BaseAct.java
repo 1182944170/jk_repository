@@ -10,6 +10,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class BaseAct {
 	public static final String SESSION_ADMIN_USER_KEY = "sessionAdminUser";
 	public static final String SESSION_USER_KEY = "sessionUser";
+	public static final String SESSION_FRONT_USER = "session_front_user";
+	
 	
 	@SuppressWarnings("unchecked")
 	public <T> T getSessionAdminUser(HttpSession session){
