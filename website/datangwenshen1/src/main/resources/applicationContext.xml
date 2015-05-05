@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop   
+        http://www.springframework.org/schema/aop/spring-aop-4.0.xsd   
+        http://www.springframework.org/schema/beans   
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd   
+        http://www.springframework.org/schema/context   
+        http://www.springframework.org/schema/context/spring-context-4.0.xsd   
+        http://www.springframework.org/schema/mvc   
+        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd   
+        http://www.springframework.org/schema/tx   
+        http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+        
+	<context:component-scan base-package="com.rpframework.core" />
+	<context:component-scan base-package="com.rpframework.website.yunpiaopiao" />
+	<!-- 添加 Gson 转换器 -->
+	<mvc:annotation-driven conversion-service="conversionServiceFactoryBean">
+		<mvc:message-converters>
+			<bean class="com.rpframework.core.springmvc.converter.UTF8StringHttpMessageConverter" />
+			<bean class="org.springframework.http.converter.json.GsonHttpMessageConverter" />
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+	
+	<!-- springmvc 转换器 -->
+	<bean id="conversionServiceFactoryBean" class="org.springframework.context.support.ConversionServiceFactoryBean">
+	    <property name="converters">
+	        <set>
+	            <bean class="com.rpframework.core.springmvc.converter.PagerConverter"/>
+	        </set>
+	    </property>
+	</bean>
+	
+
+	<bean id="configurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath*:/server.properties</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="${jdbc.driverClassName}"></property>
+		<property name="url" value="${jdbc.url}"></property>
+		<property name="username" value="${jdbc.username}"></property>
+		<property name="password" value="${jdbc.password}"></property>
+		<property name="maxActive" value="${jdbc.maxActive}"></property>
+		<property name="validationQuery" value="SELECT 1"></property>
+		<property name="testOnBorrow" value="true"></property>
+		<property name="testOnReturn" value="false"></property>
+		<property name="testWhileIdle" value="true"></property>
+		<property name="maxIdle" value="${jdbc.maxIdle}"></property>
+		<property name="defaultAutoCommit" value="true" />
+		<property name="removeAbandoned" value="true" />
+		<property name="removeAbandonedTimeout" value="60" />
+		<property name="logAbandoned" value="false" />
+	</bean>
+
+	<bean id="baseSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="classpath:mybatisConfig.xml" />
+		<property name="mapperLocations">
+			<list>
+				<value>classpath*:mybatis/*.xml</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+	 <bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
+        <property name="transactionManager" ref="transactionManager"/>
+    </bean>
+
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="sqlSessionFactoryBeanName" value="baseSqlSessionFactory"/>
+		<property name="basePackage" value="com.rpframework.module.*.dao,com.rpframework.website.*.dao" />
+	</bean>
+
+	<!-- 支持上传文件 -->  
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>  
+    
+    <!-- 静态资源文件，不会被Spring MVC拦截 -->
+	<mvc:resources location="/resources/" mapping="/resources/**" />
+
+	<!-- 配置freeMarker的模板路径 -->
+	<bean id="fmXmlEscape" class="freemarker.template.utility.XmlEscape" />
+	<bean id="freemarkerConfig" class="com.rpframework.core.springmvc.MyFreeMarkerConfigurer" lazy-init="true"> <!-- 这个懒加载很重要 -->
+        <property name="templateLoaderPath" value="/views/" />
+        <property name="defaultEncoding" value="UTF-8" />
+        <property name="freemarkerVariables">
+            <map>
+                <entry key="xml_escape" value-ref="fmXmlEscape" />
+            </map>
+        </property>
+        <property name="freemarkerSettings">
+            <props>
+                <prop key="tag_syntax">auto_detect</prop>
+                <prop key="template_update_delay">0</prop>
+                <prop key="defaultEncoding">UTF-8</prop>
+                <prop key="url_escaping_charset">UTF-8</prop>
+                <prop key="locale">zh_CN</prop>
+                <prop key="boolean_format">true,false</prop>
+                <prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
+                <prop key="date_format">yyyy-MM-dd</prop>
+                <prop key="time_format">HH:mm:ss</prop>
+                <prop key="number_format">0.######</prop>
+                <prop key="whitespace_stripping">true</prop>
+                <!--空值处理<prop key="classic_compatible">true</prop> -->
+                <prop key="auto_import">ftl/hlcto-index.ftl as h,ftl/spring.ftl as spring,ftl/ace.ftl as ace</prop>
+            </props>
+        </property>
+    </bean>
+    
+    <!-- freemarker视图解析器 -->
+	<bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+		<property name="suffix" value=".ftl" />
+		<property name="contentType" value="text/html;charset=UTF-8" />
+		<property name="viewClass" value="org.springframework.web.servlet.view.freemarker.FreeMarkerView" />
+		<property name="cache" value="false" />
+		<property name="order" value="1" />
+        <property name="requestContextAttribute" value="req"/>
+		<!-- 优先级，数值越小优先级越高 -->
+	</bean>
+	
+	 <!-- <mvc:interceptors>  
+	    <mvc:interceptor>  
+	        <mvc:mapping path="/api/**"/>
+	        <mvc:exclude-mapping path="/api/login"/>
+	        <mvc:exclude-mapping path="/api/dologin"/>
+	        定义在mvc:interceptor下面的表示是对特定的请求才进行拦截的  
+	        <bean class="com.rpframework.website.xtexam.springmvc.interceptor.XTExamApiInterceptor"/>  
+	    </mvc:interceptor>  
+	</mvc:interceptors> -->
+</beans>
