@@ -157,6 +157,7 @@ public class SqlBuilder {
             }
             allFieldNull = false;
             tableSql.append(dbFieldName).append(",");
+//            tableSql.append("`").append(dbFieldName).append("`,");
             valueSql.append(formatValue(value)).append(",");
         }
         if (allFieldNull) {

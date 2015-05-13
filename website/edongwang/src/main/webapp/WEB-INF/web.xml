@@ -2,10 +2,10 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
 	http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
-
-	<display-name>Archetype Created Web Application</display-name>
-
-	<context-param>
+	
+  <display-name>Archetype Created Web Application</display-name>
+  
+  <context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
 			classpath:applicationContext.xml,
@@ -15,7 +15,7 @@
 	<!-- WebAppRootKey -->
 	<context-param>
 		<param-name>webAppRootKey</param-name>
-		<param-value>testwebsize</param-value>
+		<param-value>edongwang-WebAppRoot</param-value>
 	</context-param>
 
 	<!-- Log4J Start -->
@@ -47,6 +47,10 @@
 			<param-name>encoding</param-name>
 			<param-value>utf-8</param-value>
 		</init-param>
+		<init-param>
+			<param-name>forceEncoding</param-name>
+			<param-value>true</param-value>
+		</init-param>
 	</filter>
 	<filter-mapping>
 		<filter-name>characterEncodingFilter</filter-name>
@@ -75,6 +79,20 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 	
+	<!-- fck start -->
+	<servlet>
+		<servlet-name>fckservlet</servlet-name>
+		<servlet-class>net.fckeditor.connector.ConnectorServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>fckservlet</servlet-name>
+		<!-- Filter all resources -->
+		<url-pattern>/resources/plugins/fckeditor/editor/filemanager/connectors/*</url-pattern>
+	</servlet-mapping>
+	<!-- fck end -->
+	
 	<servlet>
 		<servlet-name>initServlet</servlet-name>
 		<servlet-class>com.rpframework.core.InitServlet</servlet-class>
@@ -97,4 +115,14 @@
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 	<!-- Spring MVC Config End -->
+	<display-name>edongwang</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+	
 </web-app>

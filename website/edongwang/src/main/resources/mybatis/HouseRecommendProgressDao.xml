@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.website.edongwang.dao.IHouseRecommendProgressDao">
+
+	<resultMap type="com.rpframework.website.edongwang.domain.HouseRecommendProgress" id="mHouseRecommendProgress" autoMapping="true">
+		<id property="id" column="id" />
+	</resultMap>
+	
+	<select id="getProgressByHouseRecommendId" parameterType="Integer" resultMap="mHouseRecommendProgress">
+		select * from e_house_recommend_progress where houseRecommendId=#{houseRecommendId}
+	</select>
+	
+	<update id="update" parameterType="com.rpframework.website.edongwang.domain.HouseRecommendProgress" />
+	<insert id="insert" parameterType="com.rpframework.website.edongwang.domain.HouseRecommendProgress" useGeneratedKeys="true" keyProperty="id"/>
+	<delete id="delete" parameterType="com.rpframework.website.edongwang.domain.HouseRecommendProgress" />
+	<select id="select" parameterType="Integer" resultMap="mHouseRecommendProgress">
+		select * from e_house_recommend_progress where id=#{id}
+	</select>
+</mapper>

@@ -163,7 +163,7 @@ B.Country = {
 				
 				for(var countyId in countys) {
 					var county = countys[countyId];
-					if(county.code = countyCode) {
+					if(county.code == countyCode) {
 						// find
 						return {province: province,
 								city: city,

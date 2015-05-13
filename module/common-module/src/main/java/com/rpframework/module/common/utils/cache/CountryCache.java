@@ -5,16 +5,19 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
+
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.rpframework.core.utils.SpringUtils;
 import com.rpframework.core.utils.cache.CacheObj;
+import com.rpframework.module.common.domain.City;
 import com.rpframework.module.common.domain.County;
 import com.rpframework.module.common.domain.Province;
-import com.rpframework.module.common.domain.City;
+import com.rpframework.module.common.service.CityService;
 import com.rpframework.module.common.service.CountyService;
 import com.rpframework.module.common.service.ProvinceService;
-import com.rpframework.module.common.service.CityService;
 import com.rpframework.utils.CollectionUtils;
 
 /**  
@@ -32,6 +35,41 @@ public class CountryCache extends CacheObj {
 	public Map<String, List<City>> cityMap = new LinkedHashMap<String, List<City>>();
 	public Map<String, List<County>> countyMap = new LinkedHashMap<String, List<County>>();
 	public JsonArray countrys = null;
+	public Gson gson = new Gson();
+	
+	public JsonObject findByCountyCode(String countyCode) {
+		for(Map.Entry<String, List<County>> entry : countyMap.entrySet()) {
+			List<County> list = entry.getValue();
+			for (County county : list) {
+				if(StringUtils.equals(county.getCode(), countyCode)) { //find
+					
+					String cityCode = county.getProvinceCode();
+					JsonObject obj = findByCityCode(cityCode);
+					obj.add("county", gson.toJsonTree(county));
+					return obj;
+				}
+			}
+		}
+		
+		return null;
+	}
+	
+	public JsonObject findByCityCode(String cityCode) {
+		for(Map.Entry<String, List<City>> entry : cityMap.entrySet()) {
+			List<City> list = entry.getValue();
+			for (City city : list) {
+				if(StringUtils.equals(city.getCode(), cityCode)) { //find
+					Province province = provinceMap.get(city.getCountryCode());
+					JsonObject obj = new JsonObject();
+					obj.add("city", gson.toJsonTree(city));
+					obj.add("province", gson.toJsonTree(province));
+					return obj;
+				}
+			}
+		}
+		
+		return null;
+	}
 	
 	public CountryCache() {
 		super(300 * 60L, k);

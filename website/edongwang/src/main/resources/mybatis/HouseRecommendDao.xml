@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.website.edongwang.dao.IHouseRecommendDao">
+
+	<resultMap type="com.rpframework.website.edongwang.domain.HouseRecommend" id="mHouseRecommend" autoMapping="true">
+		<id property="id" column="id" />
+		<result property="acceptSalesmanId" column="acceptSalesmanId" />
+		<result property="recommendUserId" column="recommendUserId" />
+		<result property="houseId" column="houseId" />
+		
+		<association property="acceptSalesman" column="acceptSalesmanId" select="com.rpframework.website.edongwang.dao.IUserDao.select" />
+		<association property="recommendUser" column="recommendUserId" select="com.rpframework.website.edongwang.dao.IUserDao.select" />
+		<association property="house" column="houseId" select="com.rpframework.website.edongwang.dao.IHouseDao.select" />
+		<collection property="progresses" column="id" select="com.rpframework.website.edongwang.dao.IHouseRecommendProgressDao.getProgressByHouseRecommendId" />
+	</resultMap>
+	
+	<select id="doPager" parameterType="map" resultMap="mHouseRecommend">
+		select * from e_house_recommend where 1=1
+		<if test="page.searchMap.state != null">
+			and state = #{page.searchMap.state} 
+		</if>
+		<if test="page.searchMap.areaCode != null">
+			and areaCode = #{page.searchMap.areaCode} 
+		</if>
+		<if test="page.searchMap.recommendUserId != null">
+			and recommendUserId = #{page.searchMap.recommendUserId} 
+		</if>
+		 order by id desc
+	</select>
+	
+	<update id="update" parameterType="com.rpframework.website.edongwang.domain.HouseRecommend" />
+	<insert id="insert" parameterType="com.rpframework.website.edongwang.domain.HouseRecommend" useGeneratedKeys="true" keyProperty="id"/>
+	<delete id="delete" parameterType="com.rpframework.website.edongwang.domain.HouseRecommend" />
+	<select id="select" parameterType="Integer" resultMap="mHouseRecommend">
+		select * from e_house_recommend where id=#{id}
+	</select>
+</mapper>

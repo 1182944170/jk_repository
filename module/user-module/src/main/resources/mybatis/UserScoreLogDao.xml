@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.module.user.dao.IUserScoreLogDao">
+
+	<resultMap type="com.rpframework.module.user.domain.UserScoreLog" id="mUserScoreLog" autoMapping="true">
+		<id property="id" column="id" />
+	</resultMap>
+
+	<select id="doPager" parameterType="map" resultMap="mUserScoreLog">
+		select * from u_score_log where 1=1
+		<if test="page.searchMap.userId != null">
+			and userId = #{page.searchMap.userId} 
+		</if>
+	</select>
+	
+	<update id="update" parameterType="com.rpframework.module.user.domain.UserScoreLog" />
+	<insert id="insert" parameterType="com.rpframework.module.user.domain.UserScoreLog" useGeneratedKeys="true" keyProperty="id"/>
+	<delete id="delete" parameterType="com.rpframework.module.user.domain.UserScoreLog" />
+	<select id="select" parameterType="Integer" resultMap="mUserScoreLog">
+		select * from u_score_log where id=#{id}
+	</select> 
+</mapper>

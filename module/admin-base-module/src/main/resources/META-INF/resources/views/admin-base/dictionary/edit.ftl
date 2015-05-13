@@ -53,7 +53,7 @@
 </div>
 
 <div class="form-group">
-	<label class="control-label col-xs-12 col-sm-3 no-padding-right">Role Group:</label>
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right">所属类型:</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 		<#assign dictionaryTypeOptions = [{"value": "list", "valueString":"list"}, {"value": "map", "valueString":"map"}]/>

@@ -12,6 +12,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Component;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.rpframework.core.freemarker.BaseRegistFreemarker;
 import com.rpframework.core.utils.cache.KVObj;
 import com.rpframework.utils.CollectionUtils;
@@ -190,5 +192,17 @@ public class DictionarySettingUtils extends BaseRegistFreemarker {
 	
 	public static void setAllConstantsList(List<KVObj> allConstantsList){
 		DictionarySettingUtils.allConstantsList = allConstantsList;
+	}
+	
+	public static JsonArray getMapJsonArrayByKey(String key){
+		Map<String, String> map = DictionarySettingUtils.getParameterMap(key);
+		JsonArray array = new JsonArray();
+		for (Map.Entry<String, String> entry : map.entrySet()) {
+			JsonObject json = new JsonObject();
+			json.addProperty("id", entry.getKey());
+			json.addProperty("value", entry.getValue());
+			array.add(json);
+		}
+		return array;
 	}
 }

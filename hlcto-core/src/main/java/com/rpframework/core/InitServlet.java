@@ -46,6 +46,9 @@ public class InitServlet extends HttpServlet {
 		}
 		
 		SUFFIX = DictionarySettingUtils.getParameterValue("baseconfig.url_suffix");//网站url的后缀
+		if(SUFFIX == null) {
+			SUFFIX = "";
+		}
 		servletContext.setAttribute("suffix", SUFFIX);
 		super.init(config);
 	}

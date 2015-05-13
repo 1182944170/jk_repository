@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.module.user.dao.IUserMoneyDao">
+
+	<resultMap type="com.rpframework.module.user.domain.UserMoney" id="mUserMoney" autoMapping="true">
+		<id property="userId" column="userId" />
+	</resultMap>
+
+	<select id="doPager" parameterType="map" resultMap="mUserMoney">
+		select * from u_money where 1=1
+		<if test="page.searchMap.userId != null">
+			and userId = #{page.searchMap.userId} 
+		</if>
+	</select>
+	
+	<update id="update" parameterType="com.rpframework.module.user.domain.UserMoney" />
+	<insert id="insert" parameterType="com.rpframework.module.user.domain.UserMoney" useGeneratedKeys="true" keyProperty="userId"/>
+	<delete id="delete" parameterType="com.rpframework.module.user.domain.UserMoney" />
+	<select id="select" parameterType="Integer" resultMap="mUserMoney">
+		select * from u_money where userId=#{userId}
+	</select> 
+</mapper>

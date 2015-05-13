@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.module.user.dao.IUserBankCardDao">
+
+	<resultMap type="com.rpframework.module.user.domain.UserBankCard" id="mUserBankCard" autoMapping="true">
+		<id property="id" column="id" />
+		<association property="cfgBankAddres" column="openAddrId" select="com.rpframework.module.user.dao.ICfgBankAddressDao.select" />
+	</resultMap>
+
+	<select id="getCardsByUserId" parameterType="Integer" resultMap="mUserBankCard">
+		select * from u_bank_card where userId=#{userId}
+	</select> 
+	
+	<update id="update" parameterType="com.rpframework.module.user.domain.UserBankCard" />
+	<insert id="insert" parameterType="com.rpframework.module.user.domain.UserBankCard" useGeneratedKeys="true" keyProperty="id"/>
+	<delete id="delete" parameterType="com.rpframework.module.user.domain.UserBankCard" />
+	<select id="select" parameterType="Integer" resultMap="mUserBankCard">
+		select * from u_bank_card where id=#{id}
+	</select> 
+</mapper>
