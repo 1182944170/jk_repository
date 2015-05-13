@@ -64,6 +64,10 @@
 						<div class="cinema-box">
 							<div class="y-cinema-con cinema-current">
 								<div class="y-cinema-con-l float-l"><img src="${tagUtils.getFileFullPath(u.icon)}"></div>
+								<style>
+									.y-cinema-con-l{ width:186px; height:168px; border:1px solid #dbdad6; padding:3px;}
+									.y-cinema-con-l img{width:186px; height:168px;}
+								</style>
 								<div class="y-cinema-con-r float-r">
 									<div class="y-cinema-tit">
 										<a href="${ctx}/cinema/${u.id}${suffix}" class="float-l yy_ljx">${u.name}</a>

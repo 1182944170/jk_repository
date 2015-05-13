@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +21,7 @@ import com.rpframework.core.api.FileService;
 import com.rpframework.core.exception.AdminIllegalArgumentException;
 import com.rpframework.utils.CollectionUtils;
 import com.rpframework.utils.DateUtils;
+import com.rpframework.utils.HtmlHelper;
 import com.rpframework.utils.NumberUtils;
 import com.rpframework.utils.Pager;
 import com.rpframework.website.yunpiaopiao.domian.Actor;
@@ -151,6 +153,10 @@ public class AdminMovieAct extends AdminAct {
 				}
 			}
 		}
+		
+		
+		movie.setContent(HtmlHelper.parseHtmltag(movie.getContent(), "pre"));
+		
 		
 		movie.setCinemaMovies(cinemaMovies);
 		movie.setMovieActors(movieActors);

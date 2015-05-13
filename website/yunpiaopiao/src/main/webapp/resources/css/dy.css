@@ -10,9 +10,9 @@
 .dyrm_l2{ width:152px; border:1px solid #dbdbdb; height:162px; background:#fff; padding:3px;}
 .dyrm_cm li:hover .dyrm_l2{border:1px solid #2084eb;}
 .dyrm_r{ width:175px; float:left; padding-left:20px;}
-.dyrm_r .p1{ width:175px; line-height:24px; font-size:16px; padding-bottom:10px;}
+.dyrm_r .p1{ width:175px; line-height:24px; font-size:16px; /*padding-bottom:10px;*/}
 .dyrm_r .p2{ width:175px; font-size:12px; line-height:20px;}
-.dyrm_r .p3{ width:80px; height:32px; margin-top:12px; }
+.dyrm_r .p3{ width:80px; height:32px; margin-top:10px; }
 .dyrm_r .p3 a{font-size:18px; line-height:32px; font-family:"微软雅黑"; color:#fff; background:url(../images/dy/an1.jpg) no-repeat left top; display:block; width:80px; height:32px; text-align:center; }
 .dy_t{padding:15px 18px 15px;background:#fff;border:1px solid #d8d8d8;}
 .dy_t1{ width:100%;  }
@@ -23,8 +23,9 @@
 .dy_t1r .a1{ background:url(../images/dy/an2.png) no-repeat top left;  background-size:100% 100%; color:#fff;}
 .dy_sys{ width:100%; height:40px; margin-top:20px;}
 .dy_sys li{ width:113px; display:block; float:left; height:38px; border:1px solid #dbdbdb; background:#fff; line-height:38px; text-align:center; font-family:"微软雅黑"; font-size:18px; color:#2084eb;}
+.dy_sys li a{ color:#2084eb;}
 .dy_sys li.p1{ background:#2084eb; border:1px solid #2084eb; color:#fff;}
-
+.dy_sys li.p1 a{color:#fff;}
 .con2,.con3{display:none;}
 
 .dy1_com{margin: 20px 0 88px;padding:10px 5px;border: 1px solid #d9d9d9;background: #fff;}

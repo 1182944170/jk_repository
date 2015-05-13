@@ -16,8 +16,8 @@
 						<th>语言</th>
 						<th>版本</th>
 						<th>时长</th>
-						<th>内容</th>
-						<th></th>
+						<th width="25%">内容</th>
+						<th>操作</th>
 					</tr>
 				</thead>
 				<tbody>
