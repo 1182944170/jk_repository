@@ -47,6 +47,18 @@
 </div>
 
 <div class="form-group">
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="ext">备注:</label>
+	<div class="col-xs-12 col-sm-9">
+		<div class="clearfix">
+			<span class="block input-icon width-80">
+				<input type="text" name="ext" id="ext" value="" class="form-control" placeholder="备注"/>
+				<i class="icon-user"></i>
+			</span>
+		</div>
+	</div>
+</div>
+
+<div class="form-group">
 	<div class="col-md-offset-3 col-md-9">
 		<button class="btn btn-info" type="submit"><i class="icon-ok bigger-110"></i>提  交</button>
 		&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;

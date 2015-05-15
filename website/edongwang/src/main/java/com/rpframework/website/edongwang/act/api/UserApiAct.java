@@ -1,6 +1,7 @@
 package com.rpframework.website.edongwang.act.api;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -12,35 +13,131 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.rpframework.core.BaseAct;
 import com.rpframework.core.api.FileService;
+import com.rpframework.core.utils.GsonUtils;
 import com.rpframework.module.common.service.SMSService;
 import com.rpframework.module.user.domain.CfgBankAddress;
 import com.rpframework.module.user.domain.UserBankCard;
+import com.rpframework.module.user.domain.UserMoney;
+import com.rpframework.module.user.domain.UserMoneyLog;
+import com.rpframework.module.user.domain.UserScore;
+import com.rpframework.module.user.domain.UserScoreLog;
+import com.rpframework.module.user.domain.UserScoreShopLog;
+import com.rpframework.module.user.domain.UserTakeCash;
 import com.rpframework.module.user.service.UserBankCardService;
+import com.rpframework.module.user.service.UserMoneyLogService;
+import com.rpframework.module.user.service.UserMoneyService;
+import com.rpframework.module.user.service.UserScoreLogService;
+import com.rpframework.module.user.service.UserScoreService;
+import com.rpframework.module.user.service.UserScoreShopLogService;
+import com.rpframework.module.user.service.UserTakeCashService;
 import com.rpframework.utils.AlgorithmEnum;
 import com.rpframework.utils.AlgorithmUtils;
 import com.rpframework.utils.CollectionUtils;
 import com.rpframework.utils.NumberUtils;
+import com.rpframework.utils.Pager;
 import com.rpframework.website.edongwang.domain.House;
+import com.rpframework.website.edongwang.domain.LeaveMessage;
 import com.rpframework.website.edongwang.domain.User;
 import com.rpframework.website.edongwang.domain.UserSalesman;
 import com.rpframework.website.edongwang.exception.APICodeException;
+import com.rpframework.website.edongwang.service.LeaveMessageService;
 import com.rpframework.website.edongwang.service.UserSalesmanService;
 import com.rpframework.website.edongwang.service.UserService;
 
 @Controller
 @RequestMapping("/api/user")
 public class UserApiAct extends BaseAct {
-	
+	Gson gson = new Gson();
 	@Resource UserService userService;
 	@Resource FileService fileService;
 	@Resource SMSService smsService;
 	@Resource UserSalesmanService userSalesmanService;
 	@Resource UserBankCardService userBankCardService;
+	@Resource LeaveMessageService leaveMessageService;
+	@Resource UserScoreShopLogService userScoreShopLogService;
+	@Resource UserScoreLogService userScoreLogService;
+	@Resource UserScoreService userScoreService;
+	@Resource UserMoneyLogService userMoneyLogService;
+	@Resource UserTakeCashService userTakeCashService;
+	@Resource UserMoneyService userMoneyService;
+	
+	@RequestMapping
+	public @ResponseBody JsonElement execute(HttpSession session, HttpServletRequest request){
+		User user = getSessionUser(session);
+		JsonObject json = new JsonObject();
+		json.addProperty("id", user.getId());
+		json.addProperty("contact", user.getContact());
+		json.addProperty("sex", user.getSex());
+		json.addProperty("realName", user.getRealName());
+		json.addProperty("headImg", user.getHeadImg());
+		json.addProperty("countyCode", user.getCountyCode());
+		
+		int salesmanState = 0;
+		if(user.getIsSalesman() != 1) {//
+			if(user.getUserSalesman() == null) {
+			} else {
+				if(user.getUserSalesman().getState() == -1) {
+					salesmanState = -1;
+				} else {
+					salesmanState = 2;
+				}
+			}
+		} else {
+			salesmanState = 1;
+			
+			JsonObject salesmanJson = new JsonObject();
+			JsonObject houseJson = new JsonObject();
+			salesmanJson.add("house", houseJson);
+			json.add("salesman", salesmanJson);
+			salesmanJson.addProperty("credentialsImg", user.getUserSalesman().getCredentialsImg());
+			salesmanJson.addProperty("recordCreateTime", user.getUserSalesman().getRecordCreateTime());
+			
+			houseJson.addProperty("id", user.getUserSalesman().getHouse().getId());
+			houseJson.addProperty("name", user.getUserSalesman().getHouse().getName());
+		}
+		
+		json.addProperty("salesmanState", salesmanState);
+		
+		List<UserBankCard> cards = userBankCardService.getCardsByUserId(user.getId());
+		if(CollectionUtils.isNotEmpty(cards)) {
+			UserBankCard userBankCard = cards.get(0);
+			json.add("userBankCard", packageUserBankCard(userBankCard));
+		}
+		return json;
+	}
+	
+	private JsonObject packageUserBankCard(UserBankCard userBankCard) {
+		JsonObject uBankCardJson = new JsonObject();
+		uBankCardJson.addProperty("id", userBankCard.getId());
+		uBankCardJson.addProperty("account", userBankCard.getAccount());
+		uBankCardJson.addProperty("name", userBankCard.getName());
+		uBankCardJson.addProperty("cfgBankAddressId", userBankCard.getCfgBankAddres().getId());
+		
+		return uBankCardJson;
+	}
+	
+	@RequestMapping("/leave_msg")
+	public @ResponseBody JsonElement changeHeadImg(@RequestParam String message, HttpSession session, HttpServletRequest request){
+		User user = getSessionUser(session);
+		LeaveMessage leaveMessage = new LeaveMessage();
+		leaveMessage.setMessage(message);
+		leaveMessage.setRecordCreateTime(System.currentTimeMillis() / 1000);
+		leaveMessage.setUserId(user.getId());
+		boolean flag = leaveMessageService.insert(leaveMessage);
+		
+		JsonObject json = new JsonObject();
+		json.addProperty("succ", flag);
+		return json;
+	}
 	
 	@RequestMapping("/change_head_img")
 	public @ResponseBody JsonElement changeHeadImg(@RequestParam(value="headImgFile", required=false) CommonsMultipartFile headImgFile, HttpSession session, HttpServletRequest request){
@@ -170,6 +267,159 @@ public class UserApiAct extends BaseAct {
 		boolean flag = userBankCardService.insert(userBankCard);
 		JsonObject json = new JsonObject();
 		json.addProperty("succ", flag);
+		return json;
+	}
+	
+	@RequestMapping("/apply_take")
+	public @ResponseBody JsonElement applyTake(
+			@RequestParam Double money,
+			@RequestParam Integer bankCardId,
+			@RequestParam(value="remark", required=false) String remark,
+			HttpSession session, HttpServletRequest request) {
+		
+		User user = getSessionUser(session);
+		boolean flag = userTakeCashService.applyTakeCash(user.getId(), money, bankCardId, remark);
+		
+		JsonObject json = new JsonObject();
+		json.addProperty("succ", flag);
+		return json;
+	}
+	
+	@RequestMapping("user_money")
+	public @ResponseBody JsonElement getUserMoney(HttpSession session, HttpServletRequest request) {
+		User user = getSessionUser(session);
+		UserMoney userMoney = userMoneyService.getUserMoney(user.getId());
+		return gson.toJsonTree(userMoney);
+	}
+	
+	@RequestMapping("/score_shop_log")
+	public  @ResponseBody JsonElement scoreShopLog(@RequestParam(value = "pager", required = false) Pager<UserScoreShopLog> pager,HttpSession session, Map<Object, Object> model, RedirectAttributes attr) {
+		User user = getSessionUser(session);
+		if (pager == null) {
+			pager = new Pager<UserScoreShopLog>();
+		}
+		pager.getSearchMap().put("userId", String.valueOf(user.getId()));
+		pager = userScoreShopLogService.getPager(pager);
+		
+		JsonObject json = new JsonObject();
+		json.addProperty("totalPages", pager.getTotalPages());
+		json.addProperty("currentPage", pager.getCurrentPage());
+		json.addProperty("totalCount", pager.getTotalCount());
+		List<UserScoreShopLog> list = pager.getItemList();
+		JsonArray array = new JsonArray();
+		json.add("arrays", array);
+		for (UserScoreShopLog userScoreShopLog : list) {
+			JsonObject log = new JsonObject();
+			JsonObject scoreShop = new JsonObject();
+			log.add("scoreShop", scoreShop);
+			log.addProperty("id", userScoreShopLog.getId());
+			log.addProperty("sendShopState", userScoreShopLog.getSendShopState());
+			log.addProperty("recordCreateTime", userScoreShopLog.getRecordCreateTime());
+			
+			scoreShop.addProperty("name", userScoreShopLog.getScoreShop().getName());
+			scoreShop.addProperty("type", userScoreShopLog.getScoreShop().getType());
+			scoreShop.addProperty("id", userScoreShopLog.getScoreShop().getId());
+			scoreShop.addProperty("successMsg", userScoreShopLog.getScoreShop().getSuccessMsg());
+			array.add(log);
+		}
+		return json;
+	}
+	
+	@RequestMapping("/score_log")
+	public  @ResponseBody JsonElement scoreLog(@RequestParam(value = "pager", required = false) Pager<UserScoreLog> pager,HttpSession session, Map<Object, Object> model, RedirectAttributes attr) {
+		User user = getSessionUser(session);
+		if (pager == null) {
+			pager = new Pager<UserScoreLog>();
+		}
+		
+		UserScore userScore = userScoreService.getUserScore(user.getId());
+		pager.getSearchMap().put("userId", String.valueOf(user.getId()));
+		pager = userScoreLogService.getPager(pager);
+		
+		JsonObject json = new JsonObject();
+		json.addProperty("currScore", userScore.getScore());
+		json.addProperty("totalPages", pager.getTotalPages());
+		json.addProperty("currentPage", pager.getCurrentPage());
+		json.addProperty("totalCount", pager.getTotalCount());
+		List<UserScoreLog> list = pager.getItemList();
+		JsonArray array = new JsonArray();
+		json.add("arrays", array);
+		for (UserScoreLog userScoreLog : list) {
+			JsonObject log = new JsonObject();
+			log.addProperty("id", userScoreLog.getId());
+			log.addProperty("score", userScoreLog.getScore());
+			log.addProperty("type", userScoreLog.getType());
+			log.addProperty("remark", userScoreLog.getRemark());
+			log.addProperty("recordCreateTime", userScoreLog.getRecordCreateTime());
+			
+			array.add(log);
+		}
+		return json;
+	}
+	
+	@RequestMapping("/money_log")
+	public  @ResponseBody JsonElement moneyLog(@RequestParam(value = "pager", required = false) Pager<UserMoneyLog> pager,HttpSession session, Map<Object, Object> model, RedirectAttributes attr) {
+		User user = getSessionUser(session);
+		if (pager == null) {
+			pager = new Pager<UserMoneyLog>();
+		}
+		
+		pager.getSearchMap().put("userId", String.valueOf(user.getId()));
+		pager = userMoneyLogService.getPager(pager);
+		
+		JsonObject json = new JsonObject();
+		json.addProperty("totalPages", pager.getTotalPages());
+		json.addProperty("currentPage", pager.getCurrentPage());
+		json.addProperty("totalCount", pager.getTotalCount());
+		List<UserMoneyLog> list = pager.getItemList();
+		JsonArray array = new JsonArray();
+		json.add("arrays", array);
+		for (UserMoneyLog userMoneyLog : list) {
+			JsonObject log = new JsonObject();
+			String remark = userMoneyLog.getRemark();
+			if(StringUtils.isNotBlank(userMoneyLog.getExt())) {
+				JsonObject jsonObject = new JsonParser().parse(userMoneyLog.getExt()).getAsJsonObject();
+				remark = GsonUtils.getString(jsonObject, "remark") + "-" + remark;
+			}
+			log.addProperty("id", userMoneyLog.getId());
+			log.addProperty("money", userMoneyLog.getMoney());
+			log.addProperty("type", userMoneyLog.getType());
+			log.addProperty("remark", remark);
+			log.addProperty("recordCreateTime", userMoneyLog.getRecordCreateTime());
+			
+			array.add(log);
+		}
+		return json;
+	}
+	
+	@RequestMapping("/take_cash_log")
+	public  @ResponseBody JsonElement takeCashLog(@RequestParam(value = "pager", required = false) Pager<UserTakeCash> pager,HttpSession session, Map<Object, Object> model, RedirectAttributes attr) {
+		User user = getSessionUser(session);
+		if (pager == null) {
+			pager = new Pager<UserTakeCash>();
+		}
+		
+		pager.getSearchMap().put("userId", String.valueOf(user.getId()));
+		pager = userTakeCashService.getPager(pager);
+		
+		JsonObject json = new JsonObject();
+		json.addProperty("totalPages", pager.getTotalPages());
+		json.addProperty("currentPage", pager.getCurrentPage());
+		json.addProperty("totalCount", pager.getTotalCount());
+		List<UserTakeCash> list = pager.getItemList();
+		JsonArray array = new JsonArray();
+		json.add("arrays", array);
+		for (UserTakeCash userTakeCash : list) {
+			JsonObject log = new JsonObject();
+			log.addProperty("id", userTakeCash.getId());
+			log.addProperty("money", userTakeCash.getMoney());
+			log.addProperty("state", userTakeCash.getState());
+			log.addProperty("remark", userTakeCash.getRemark());
+			log.addProperty("recordCreateTime", userTakeCash.getRecordCreateTime());
+			log.addProperty("recordCreateTime", userTakeCash.getRecordCreateTime());
+			log.add("userBankCard", packageUserBankCard(userTakeCash.getUserBankCard()));
+			array.add(log);
+		}
 		return json;
 	}
 }

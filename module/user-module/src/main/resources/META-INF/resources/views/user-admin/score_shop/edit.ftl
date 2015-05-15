@@ -53,6 +53,18 @@
 </div>
 
 <div class="form-group">
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="successMsg">兑换成功提示语:</label>
+	<div class="col-xs-12 col-sm-9">
+		<div class="clearfix">
+			<span class="block input-icon width-90">
+				<input type="text" name="successMsg" id="successMsg" value="${(scoreShop.successMsg)!''}" class="form-control" placeholder="兑换成功提示语"/>
+				<i class="icon-user"></i>
+			</span>
+		</div>
+	</div>
+</div>
+
+<div class="form-group">
 	<label class="control-label col-xs-12 col-sm-3 no-padding-right">商品类型:</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">

@@ -34,7 +34,7 @@
 						<td>name:${u.name} concact:${u.concact} 省区: ${commonTag.getCountyPath(u.areaCode)} address: ${u.address}</td>
 						<td>
 						<#if u.sendShopState == 0>
-							<span class="label label-sm label-success arrowed">未处理</span>
+							<span class="label label-sm label-warning arrowed">未处理</span>
 						<#elseif u.sendShopState == 1>
 							<span class="label label-sm label-success arrowed">处理成功</span>
 						<#else>

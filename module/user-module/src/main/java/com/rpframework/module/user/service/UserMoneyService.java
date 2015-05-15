@@ -26,7 +26,16 @@ public class UserMoneyService extends BaseService {
 		return pager;
 	}
 	
-	public boolean operateMoney(Integer userId, double money, KVObj kvObj) {
+	public boolean costMoney(Integer userId, double money, KVObj kvObj, String ext) {
+		Assert.isTrue(money >= 0, "扣除的金额必须大于0");
+		return operateMoney(userId, - money, kvObj, ext);
+	}
+	
+	public boolean addMoney(Integer userId, double money, KVObj kvObj, String ext) {
+		Assert.isTrue(money >= 0, "增加的金额必须大于0");
+		return operateMoney(userId, money, kvObj, ext);
+	}
+	public boolean operateMoney(Integer userId, double money, KVObj kvObj, String ext) {
 		UserMoney userMoney = getUserMoney(userId);
 		boolean succ = true;
 		if(money > 0) {
@@ -44,7 +53,7 @@ public class UserMoneyService extends BaseService {
 			userMoney.setRecordModifyTime(System.currentTimeMillis() / 1000);
 			boolean b = update(userMoney);
 			Assert.isTrue(b, "update operateMoney fail.");
-			userMoneyLogService.addLog(userId, money, userMoney, kvObj);
+			userMoneyLogService.addLog(userId, money, userMoney, kvObj, ext);
 		}
 		return succ;
 	}

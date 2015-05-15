@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.gson.Gson;
@@ -30,13 +31,13 @@ import com.rpframework.website.edongwang.service.HouseService;
 
 @Controller
 @RequestMapping("/api/house")
-public class HouseApiAct extends BaseAct {
+public  @ResponseBody class HouseApiAct extends BaseAct {
 	Gson gson = new Gson();
 	@Resource HouseService houseService;
 	@Resource HouseRecommendService houseRecommendService;
 	
 	@RequestMapping("/list")
-	public JsonElement list(@RequestParam(value = "pager", required = false) Pager<House> pager,Map<Object, Object> model, RedirectAttributes attr) {
+	public  @ResponseBody JsonElement list(@RequestParam(value = "pager", required = false) Pager<House> pager,Map<Object, Object> model, RedirectAttributes attr) {
 		if (pager == null) {
 			pager = new Pager<House>();
 		}
@@ -44,6 +45,7 @@ public class HouseApiAct extends BaseAct {
 		
 		JsonObject json = new JsonObject();
 		json.addProperty("totalPages", pager.getTotalPages());
+		json.addProperty("currentPage", pager.getCurrentPage());
 		json.addProperty("totalCount", pager.getTotalCount());
 		List<House> list = pager.getItemList();
 		JsonArray array = new JsonArray();
@@ -55,7 +57,7 @@ public class HouseApiAct extends BaseAct {
 	}
 	
 	@RequestMapping("/{houseId}/recommend")
-	public JsonElement list(@PathVariable Integer houseId,
+	public @ResponseBody JsonElement recommend(@PathVariable Integer houseId,
 			HttpServletRequest request,
 			HttpSession session,
 			Map<Object, Object> model, RedirectAttributes attr) {
@@ -81,7 +83,6 @@ public class HouseApiAct extends BaseAct {
 				||NumberUtils.isNotValid(surfaceType)
 				||NumberUtils.isNotValid(totalPriceType)
 				||NumberUtils.isNotValid(firstHouseId)
-				||NumberUtils.isNotValid(secondHouseId)
 				) {
 			throw new APICodeException(-1, "参数异常");
 		}
@@ -100,9 +101,12 @@ public class HouseApiAct extends BaseAct {
 		hr.setRecommendUserId(user.getId());
 		boolean flag = houseRecommendService.insert(hr);
 		
-		//新增另外一个
-		hr.setId(null);
-		hr.setHouseId(secondHouseId);
+		if(NumberUtils.isValid(secondHouseId)) {
+			//新增另外一个
+			hr.setId(null);
+			hr.setHouseId(secondHouseId);
+			flag = houseRecommendService.insert(hr);
+		}
 		
 		JsonObject json = new JsonObject();
 		json.addProperty("succ", flag);

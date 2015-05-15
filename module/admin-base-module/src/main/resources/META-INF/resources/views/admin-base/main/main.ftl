@@ -18,8 +18,8 @@
 
 	欢迎使用
 	<strong class="green">
-		后台管理系统.
-		<small></small>
+		${(dicSetting.getParameterValue("admin.name"))!"Admin"} 
+		<small>后台管理系统.</small>
 	</strong>
 </div>
 <script>

@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 
 /**
@@ -54,7 +55,55 @@ public class DateUtils {
 	   return getDateFormat(YYYY_MM_DD_HH_MM_SS).parse(s).getTime();
 	}
 	
+	public static Date getTodayStartDate() {
+		Calendar currentDate = new GregorianCalendar();   
+		  
+		currentDate.set(Calendar.HOUR_OF_DAY, 0);  
+		currentDate.set(Calendar.MINUTE, 0);  
+		currentDate.set(Calendar.SECOND, 0);  
+		currentDate.set(Calendar.MILLISECOND, 0);
+		return currentDate.getTime();
+	}
 	
+	public static Date getTodayEndDate() {
+		Calendar currentDate = new GregorianCalendar();   
+		  
+		currentDate.set(Calendar.HOUR_OF_DAY, 24);  
+		currentDate.set(Calendar.MINUTE, 0);  
+		currentDate.set(Calendar.SECOND, 0);
+		currentDate.set(Calendar.MILLISECOND, 0);
+		return currentDate.getTime();
+	}
+	
+	
+	public static Date getWeekStartDate() {
+		Calendar cal = Calendar.getInstance();
+		cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONDAY), cal.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
+		cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+		return  cal.getTime();
+	}
+	
+	public static Date getWeekEndDate() {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(getWeekStartDate());
+		cal.add(Calendar.DAY_OF_WEEK, 7);
+		return cal.getTime();
+	}
+	
+	public static Date getMonthStartDate() {
+		Calendar cal = Calendar.getInstance();
+		cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONDAY), cal.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
+		cal.set(Calendar.DAY_OF_MONTH, cal.getActualMinimum(Calendar.DAY_OF_MONTH));
+		return  cal.getTime();
+	}
+	
+	public static Date getMonthEndDate() {
+		Calendar cal = Calendar.getInstance();
+		cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONDAY), cal.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
+		cal.set(Calendar.DAY_OF_MONTH, cal.getActualMaximum(Calendar.DAY_OF_MONTH));
+		cal.set(Calendar.HOUR_OF_DAY, 24);
+		return cal.getTime();
+	}
 	
 	/**
 	 * 验证是不是有效的日期

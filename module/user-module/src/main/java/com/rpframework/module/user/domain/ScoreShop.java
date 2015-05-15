@@ -21,6 +21,8 @@ public class ScoreShop extends Domain {
 	@FieldMapperAnnotation
 	String remark;
 	@FieldMapperAnnotation
+	String successMsg;
+	@FieldMapperAnnotation
 	Integer stockNumber;
 	@FieldMapperAnnotation
 	Integer score;
@@ -42,6 +44,13 @@ public class ScoreShop extends Domain {
 	}
 	public void setScore(Integer score) {
 		this.score = score;
+	}
+	
+	public String getSuccessMsg() {
+		return successMsg;
+	}
+	public void setSuccessMsg(String successMsg) {
+		this.successMsg = successMsg;
 	}
 	public String getName() {
 		return name;

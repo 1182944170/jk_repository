@@ -12,6 +12,8 @@
 		<if test="page.searchMap.userId != null">
 			and userId = #{page.searchMap.userId} 
 		</if>
+		
+		order by id desc
 	</select>
 	
 	<update id="update" parameterType="com.rpframework.module.user.domain.UserScoreLog" />

@@ -28,6 +28,14 @@ public class UserScoreShopLog extends Domain {
 	@FieldMapperAnnotation
 	Long recordCreateTime;
 	
+	ScoreShop scoreShop;
+	
+	public ScoreShop getScoreShop() {
+		return scoreShop;
+	}
+	public void setScoreShop(ScoreShop scoreShop) {
+		this.scoreShop = scoreShop;
+	}
 	public Integer getId() {
 		return id;
 	}

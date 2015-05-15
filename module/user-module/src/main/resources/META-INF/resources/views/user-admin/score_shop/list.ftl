@@ -38,7 +38,7 @@
 							<#if u.stockNumber == -1>
 								不限制
 							<#else>
-								${stockNumber}
+								${u.stockNumber}
 							</#if>
 						</td>
 						<td>${u.salesNumber}</td>

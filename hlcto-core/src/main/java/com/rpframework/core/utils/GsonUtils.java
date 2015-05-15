@@ -1,9 +1,12 @@
-package com.rpframework.utils;
+package com.rpframework.core.utils;
+
+import org.springframework.stereotype.Component;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-
-public class GsonUtils {
+import com.rpframework.core.freemarker.BaseRegistFreemarker;
+@Component("gsonUtils")
+public class GsonUtils extends BaseRegistFreemarker {
 	public static long getLong(JsonObject jsonObject, String key, Long defaultValue) {
 		JsonElement jsonElement = jsonObject.get(key);
 		if(jsonElement == null) {

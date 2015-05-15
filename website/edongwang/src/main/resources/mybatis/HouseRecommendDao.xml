@@ -26,6 +26,9 @@
 		<if test="page.searchMap.recommendUserId != null">
 			and recommendUserId = #{page.searchMap.recommendUserId} 
 		</if>
+		<if test="page.searchMap.acceptSalesmanId != null">
+			and acceptSalesmanId = #{page.searchMap.acceptSalesmanId} 
+		</if>
 		 order by id desc
 	</select>
 	

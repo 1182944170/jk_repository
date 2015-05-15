@@ -9,6 +9,7 @@
 	
 	<select id="doPager" parameterType="map" resultMap="mHouse">
 		select * from e_house where 1=1
+		order by recordCreateTime desc
 	</select>
 	
 	<update id="update" parameterType="com.rpframework.website.edongwang.domain.House" />

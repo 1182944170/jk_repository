@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.gson.Gson;
@@ -33,8 +34,8 @@ public class CfgApiAct extends BaseAct {
 	 * @param attr
 	 * @return
 	 */
-	@RequestMapping("/surfaceTypes")
-	public JsonElement surfaceTypes(Map<Object, Object> model, RedirectAttributes attr) {
+	@RequestMapping("/surface_types")
+	public @ResponseBody JsonElement surfaceTypes(Map<Object, Object> model, RedirectAttributes attr) {
 		return DictionarySettingUtils.getMapJsonArrayByKey("house.surfaceType");
 	}
 
@@ -44,8 +45,8 @@ public class CfgApiAct extends BaseAct {
 	 * @param attr
 	 * @return
 	 */
-	@RequestMapping("/propertyTypes")
-	public JsonElement propertyTypes(Map<Object, Object> model, RedirectAttributes attr) {
+	@RequestMapping("/property_types")
+	public @ResponseBody JsonElement propertyTypes(Map<Object, Object> model, RedirectAttributes attr) {
 		return DictionarySettingUtils.getMapJsonArrayByKey("house.propertyType");
 	}
 	
@@ -55,13 +56,13 @@ public class CfgApiAct extends BaseAct {
 	 * @param attr
 	 * @return
 	 */
-	@RequestMapping("/totalPriceTypes")
-	public JsonElement totalPriceTypes(Map<Object, Object> model, RedirectAttributes attr) {
+	@RequestMapping("/total_price_types")
+	public @ResponseBody JsonElement totalPriceTypes(Map<Object, Object> model, RedirectAttributes attr) {
 		return DictionarySettingUtils.getMapJsonArrayByKey("house.totalPriceType");
 	}
 	
 	@RequestMapping("/bank_list")
-	public JsonElement bankList(Map<Object, Object> model, RedirectAttributes attr) {
+	public @ResponseBody JsonElement bankList(Map<Object, Object> model, RedirectAttributes attr) {
 		List<CfgBank> list = cfgBankService.queryAllEffective();
 		JsonArray array = new JsonArray();
 		for (CfgBank cfgBank : list) {
@@ -74,7 +75,7 @@ public class CfgApiAct extends BaseAct {
 	}
 	
 	@RequestMapping("/bank_address_list")
-	public JsonElement bakAddressList(Map<Object, Object> model, RedirectAttributes attr) {
+	public @ResponseBody JsonElement bakAddressList(Map<Object, Object> model, RedirectAttributes attr) {
 		List<CfgBankAddress> list = cfgBankAddressService.queruAllEffective();
 		JsonArray array = new JsonArray();
 		

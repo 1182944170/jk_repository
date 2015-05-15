@@ -26,14 +26,24 @@ public class UserScoreService extends BaseService {
 		return pager;
 	}
 	
-	public boolean operateScore(Integer userId, Integer score, KVObj kvObj) {
+	public boolean costScore(Integer userId, Integer score, KVObj kvObj, String ext) {
+		Assert.isTrue(score >= 0, "扣除的积分必须大于0");
+		return operateScore(userId, - score, kvObj, ext);
+	}
+	
+	public boolean addScore(Integer userId, Integer score, KVObj kvObj, String ext) {
+		Assert.isTrue(score >= 0, "增加的积分必须大于0");
+		return operateScore(userId, score, kvObj, ext);
+	}
+	
+	private boolean operateScore(Integer userId, Integer score, KVObj kvObj, String ext) {
 		UserScore userScore = getUserScore(userId);
 		boolean succ = true;
 		if(score > 0) {
 			userScore.setScore(userScore.getScore() + score);
 		} else {
 			if(checkCanCostScore(userId, score)) {
-				
+				userScore.setScore(userScore.getScore() + score);
 			} else {
 				succ = false;
 			}
@@ -44,7 +54,7 @@ public class UserScoreService extends BaseService {
 			boolean b = update(userScore);
 			Assert.isTrue(b, "update operateScore fail.");
 			
-			userScoreLogService.addLog(userId, score, kvObj);
+			userScoreLogService.addLog(userId, score, kvObj, ext);
 		}
 		return succ;
 	}

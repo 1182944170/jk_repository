@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.google.gson.JsonObject;
 import com.rpframework.core.utils.DictionarySettingUtils;
 import com.rpframework.core.utils.cache.KVObj;
 import com.rpframework.module.user.act.UserModuleBaseAct;
@@ -42,9 +43,11 @@ public class AdminUserMoneyAct extends UserModuleBaseAct{
 	}
 	
 	@RequestMapping("/{userId}/dotransfer")
-	public String doTransfer(@ModelAttribute UserMoney userMoney, @RequestParam String userMoneyKVObj, Map<Object, Object> model,RedirectAttributes attr){
+	public String doTransfer(@ModelAttribute UserMoney userMoney, @RequestParam(value="ext", required=false) String ext, @RequestParam String userMoneyKVObj, Map<Object, Object> model,RedirectAttributes attr){
 		KVObj kvObj = new KVObj(userMoneyKVObj, DictionarySettingUtils.getParameterValue("userMoney.kvObj." + userMoneyKVObj));
-		userMoneyService.operateMoney(userMoney.getUserId(), userMoney.getMoney(), kvObj);
+		JsonObject json = new JsonObject();
+		json.addProperty("remark", ext);
+		userMoneyService.operateMoney(userMoney.getUserId(), userMoney.getMoney(), kvObj, json.toString());
 		setInfoMsg("操作成功!", attr);
 		return redirect("/admin/user_money/list");
 	}

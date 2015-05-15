@@ -26,6 +26,15 @@ public class UserMoneyLog extends Domain {
 	Long recordCreateTime;
 	@FieldMapperAnnotation
 	String remark;
+	@FieldMapperAnnotation
+	String ext;
+	
+	public String getExt() {
+		return ext;
+	}
+	public void setExt(String ext) {
+		this.ext = ext;
+	}
 	public Integer getId() {
 		return id;
 	}

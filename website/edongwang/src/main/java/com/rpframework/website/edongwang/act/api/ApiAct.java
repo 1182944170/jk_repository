@@ -97,10 +97,10 @@ public class ApiAct extends BaseAct {
 		}
 		
 		//TODO:test 不验证
-//		if(smsService.checkVerifyCode(EConstants.ChannelType.SEND_SMS_REGIST_CHANNEL_TYPE, contact, verifyCode)) {
-//			throw new APICodeException(-4, "验证码不正确!");
-//		}
-//		smsService.setVerifyCodeVaild(EConstants.ChannelType.SEND_SMS_REGIST_CHANNEL_TYPE, contact);
+		if(smsService.checkVerifyCode(EConstants.ChannelType.SEND_SMS_REGIST_CHANNEL_TYPE, contact, verifyCode)) {
+			throw new APICodeException(-4, "验证码不正确!");
+		}
+		smsService.setVerifyCodeVaild(EConstants.ChannelType.SEND_SMS_REGIST_CHANNEL_TYPE, contact);
 		User user = userService.findUserByContact(contact);
 		if(user != null) {
 			throw new APICodeException(-2, "存在的手机号!");

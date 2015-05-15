@@ -4,9 +4,9 @@ import org.springframework.stereotype.Component;
 
 import com.google.gson.JsonObject;
 import com.rpframework.core.freemarker.BaseRegistFreemarker;
+import com.rpframework.core.utils.GsonUtils;
 import com.rpframework.core.utils.cache.CacheUtils;
 import com.rpframework.module.common.utils.cache.CountryCache;
-import com.rpframework.utils.GsonUtils;
 
 @Component("commonTag")
 public class CommonTag extends BaseRegistFreemarker {

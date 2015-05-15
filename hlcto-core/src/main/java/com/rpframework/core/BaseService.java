@@ -1,6 +1,7 @@
 package com.rpframework.core;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,8 +27,10 @@ public class BaseService implements IService {
 			try {
 				Field[] declaredFields = this.getClass().getDeclaredFields();
 				for (Field field : declaredFields) {
-					if(field.get(this) instanceof IDao) {
-						this.dao = (IDao) field.get(this);
+					if(Modifier.isPublic(field.getModifiers()) || Modifier.isProtected(field.getModifiers())) { //按照约定 Service的Dao 是public的 或者 protected
+						if(field.get(this) instanceof IDao) {
+							this.dao = (IDao) field.get(this);
+						}
 					}
 				}
 				

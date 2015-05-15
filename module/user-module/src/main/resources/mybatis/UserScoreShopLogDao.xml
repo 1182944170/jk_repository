@@ -5,6 +5,8 @@
 
 	<resultMap type="com.rpframework.module.user.domain.UserScoreShopLog" id="mUserScoreShopLog" autoMapping="true">
 		<id property="id" column="id" />
+		<result property="scoreShopId" column="scoreShopId"/>
+		<association property="scoreShop" column="scoreShopId" select="com.rpframework.module.user.dao.IScoreShopDao.select"/>
 	</resultMap>
 
 	<select id="doPager" parameterType="map" resultMap="mUserScoreShopLog">
@@ -14,6 +16,14 @@
 		</if>
 		<if test="page.searchMap.scoreShopId != null">
 			and scoreShopId = #{page.searchMap.scoreShopId} 
+		</if>
+		
+		<if test="page.searchMap.startTime != null">
+			<![CDATA[and recordCreateTime >= #{page.searchMap.startTime}]]>
+		</if>
+		
+		<if test="page.searchMap.endTime != null">
+			<![CDATA[and recordCreateTime < #{page.searchMap.endTime}]]>
 		</if>
 		
 		order by id desc

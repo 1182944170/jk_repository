@@ -21,6 +21,8 @@ public class UserScoreLog extends Domain {
 	@FieldMapperAnnotation
 	String remark;
 	@FieldMapperAnnotation
+	String ext;
+	@FieldMapperAnnotation
 	Long recordCreateTime;
 	
 	public Integer getId() {
@@ -40,6 +42,13 @@ public class UserScoreLog extends Domain {
 	}
 	public void setScore(Integer score) {
 		this.score = score;
+	}
+	
+	public String getExt() {
+		return ext;
+	}
+	public void setExt(String ext) {
+		this.ext = ext;
 	}
 	public Integer getType() {
 		return type;

@@ -42,13 +42,13 @@
 	</div>
 </div>
 
-<#if sendShopState.state==0>
+<#if userScoreShopLog.sendShopState==0>
 	<div class="form-group">
 		<label class="control-label col-xs-12 col-sm-3 no-padding-right">状态:</label>
 		<div class="col-xs-12 col-sm-9">
 			<div class="clearfix">
 			<#assign _stateOptions = [{"value": 0, "valueString":"未处理","labClass":"blue","inputClass":"ace"}, {"value": 1, "valueString":"处理成功","labClass":"red","inputClass":"ace"}, {"value": -1, "valueString":"处理失败","labClass":"red","inputClass":"ace"}]/>
-			<@ace.radioGroup _stateOptions=takeCashStateOptions checkValue=(userScoreShopLog.state)!-1 name="state" isWrap=false/>
+			<@ace.radioGroup options=_stateOptions checkValue=(userScoreShopLog.sendShopState)!-1 name="sendShopState" isWrap=false/>
 			</div>
 		</div>
 	</div>
@@ -71,7 +71,7 @@
 	</div>
 </#if>
 
-<#if userScoreShopLog.state==0>
+<#if userScoreShopLog.sendShopState==0>
 <div class="form-group">
 	<div class="col-md-offset-3 col-md-9">
 		<button class="btn btn-info" type="submit"><i class="icon-ok bigger-110"></i>提  交</button>

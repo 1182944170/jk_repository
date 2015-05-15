@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
 import com.rpframework.core.BaseService;
@@ -25,7 +26,10 @@ public class UserMoneyLogService extends BaseService {
 		return pager;
 	}
 
-	public boolean addLog(Integer userId, double money, UserMoney userMoney, KVObj kvObj) {
+	public boolean addLog(Integer userId, double money, UserMoney userMoney, KVObj kvObj, String ext) {
+		if(StringUtils.isBlank(ext)) {
+			ext = "{}";
+		}
 		UserMoneyLog userMoneyLog = new UserMoneyLog();
 		userMoneyLog.setRecordCreateTime(System.currentTimeMillis() / 1000);
 		userMoneyLog.setRemark(String.valueOf(kvObj.v));
@@ -34,6 +38,7 @@ public class UserMoneyLogService extends BaseService {
 		userMoneyLog.setUsedMoney(userMoney.getUsedMoney());
 		userMoneyLog.setMoney(money);
 		userMoneyLog.setUserId(userId);
+		userMoneyLog.setExt(ext);
 		return insert(userMoneyLog);
 	}
 }

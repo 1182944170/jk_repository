@@ -6,6 +6,7 @@ import com.rpframework.core.Domain;
 import com.rpframework.core.mybatis.plugin.annotation.FieldMapperAnnotation;
 import com.rpframework.core.mybatis.plugin.annotation.TableMapperAnnotation;
 import com.rpframework.core.mybatis.plugin.annotation.UniqueKeyType;
+import com.rpframework.utils.CollectionUtils;
 
 /**
  * loupan
@@ -69,8 +70,27 @@ public class HouseRecommend extends Domain{
 	User recommendUser;
 	List<HouseRecommendProgress> progresses;
 	
+	public HouseRecommendProgress getProgress(Integer progressType) {
+		if(CollectionUtils.isNotEmpty(progresses)) {
+			for (HouseRecommendProgress houseRecommendProgress : progresses) {
+				if(houseRecommendProgress.getType() == progressType) {
+					return houseRecommendProgress;
+				}
+			}
+		}
+		
+		return null;
+	}
 	public boolean checkNextProgressIsVaild(Integer progressType) {
-		return this.progresses.size() + 1 == progressType;
+		boolean b = this.progresses.size() + 1 == progressType;
+		if(b && CollectionUtils.isNotEmpty(progresses)) {//验证上一个步骤的有效性
+			HouseRecommendProgress progress = this.progresses.get(progresses.size() - 1);
+			b = progress.getState() == 1;
+			
+			if(!b) {//上一次步骤不是完成状态
+			}
+		}
+		return b;
 	}
 	public House getHouse() {
 		return house;

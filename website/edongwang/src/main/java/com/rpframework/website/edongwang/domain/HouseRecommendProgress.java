@@ -1,5 +1,7 @@
 package com.rpframework.website.edongwang.domain;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.rpframework.core.Domain;
 import com.rpframework.core.mybatis.plugin.annotation.FieldMapperAnnotation;
 import com.rpframework.core.mybatis.plugin.annotation.TableMapperAnnotation;
@@ -37,6 +39,9 @@ public class HouseRecommendProgress extends Domain {
 	@FieldMapperAnnotation
 	Long recordCreateTime;
 	
+	public JsonObject getExtJson() {
+		return new JsonParser().parse(getExt()).getAsJsonObject();
+	}
 	public Integer getId() {
 		return id;
 	}

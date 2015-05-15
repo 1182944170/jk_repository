@@ -7,6 +7,11 @@
 
 	<select id="doPager" resultMap="mHelp">
 		select * from help where 1=1
+		
+		<if test="page.searchMap.type != null">
+			and type = #{page.searchMap.type} 
+		</if>
+		order by type,sortIndex
 	</select>
 	
 	<select id="getHelpByaliasesTitle" parameterType="String" resultMap="mHelp">
