@@ -419,7 +419,6 @@ public class UserApiAct extends BaseAct {
 			log.addProperty("state", userTakeCash.getState());
 			log.addProperty("remark", userTakeCash.getRemark());
 			log.addProperty("recordCreateTime", userTakeCash.getRecordCreateTime());
-			log.addProperty("recordCreateTime", userTakeCash.getRecordCreateTime());
 			log.add("userBankCard", packageUserBankCard(userTakeCash.getUserBankCard()));
 			array.add(log);
 		}
