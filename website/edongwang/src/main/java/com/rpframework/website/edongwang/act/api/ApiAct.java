@@ -29,8 +29,8 @@ public class ApiAct extends BaseAct {
 	@Resource SMSService smsService;
 	
 	@RequestMapping("/login")
-	public @ResponseBody JsonElement login(@RequestParam(required=false) String contact, @RequestParam(required=false) String pwd, HttpSession session, HttpServletRequest request){
-		if(StringUtils.isBlank(contact) || StringUtils.isBlank(pwd)) {
+	public @ResponseBody JsonElement login(@RequestParam(required=false) String contact, @RequestParam(required=false) String password, HttpSession session, HttpServletRequest request){
+		if(StringUtils.isBlank(contact) || StringUtils.isBlank(password)) {
 			throw new APICodeException(-5, "非法参数!");
 		}
 		
@@ -39,7 +39,7 @@ public class ApiAct extends BaseAct {
 			throw new APICodeException(-2, "用户名不存在!");
 		}
 		
-		String password = AlgorithmUtils.encodePassword(pwd, AlgorithmEnum.MD5) ;
+		password = AlgorithmUtils.encodePassword(password, AlgorithmEnum.MD5) ;
 		if (!StringUtils.equals(password, user.getPassword())) {
 			throw new APICodeException(-3, "密码错误!");
 		}

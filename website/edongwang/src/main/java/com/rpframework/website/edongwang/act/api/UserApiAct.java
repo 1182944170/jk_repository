@@ -70,7 +70,7 @@ public class UserApiAct extends BaseAct {
 	@Resource UserTakeCashService userTakeCashService;
 	@Resource UserMoneyService userMoneyService;
 	
-	@RequestMapping
+	@RequestMapping("userdata")
 	public @ResponseBody JsonElement execute(HttpSession session, HttpServletRequest request){
 		User user = getSessionUser(session);
 		JsonObject json = new JsonObject();
@@ -112,6 +112,9 @@ public class UserApiAct extends BaseAct {
 			UserBankCard userBankCard = cards.get(0);
 			json.add("userBankCard", packageUserBankCard(userBankCard));
 		}
+		
+		UserMoney userMoney = userMoneyService.getUserMoney(user.getId());
+		json.addProperty("userMoney", gson.toJson(userMoney));
 		return json;
 	}
 	
@@ -190,7 +193,7 @@ public class UserApiAct extends BaseAct {
 		return json;
 	}
 	
-	@RequestMapping("/change_pwssaord")
+	@RequestMapping("/change_password")
 	public @ResponseBody JsonElement changePassword(@RequestParam String oldPassword, @RequestParam(required=false) String newPassword, HttpSession session, HttpServletRequest request){
 		User user = getSessionUser(session);
 		
