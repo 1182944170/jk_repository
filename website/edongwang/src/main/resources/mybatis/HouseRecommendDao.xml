@@ -23,6 +23,9 @@
 		<if test="page.searchMap.areaCode != null">
 			and areaCode = #{page.searchMap.areaCode} 
 		</if>
+		<if test="page.searchMap.houseId != null">
+			and houseId = #{page.searchMap.houseId} 
+		</if>
 		<if test="page.searchMap.recommendUserId != null">
 			and recommendUserId = #{page.searchMap.recommendUserId} 
 		</if>

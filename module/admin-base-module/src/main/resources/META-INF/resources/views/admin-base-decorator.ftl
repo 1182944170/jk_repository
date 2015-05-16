@@ -229,4 +229,14 @@
 			</a>
 		</div><!-- /.main-container -->
 </body>
+<script>
+$(document).ready(function(){
+	$('[data-toggle="tooltip"]').tooltip();
+	$('.date-picker').datepicker({autoclose:true}).next().on(ace.click_event, function(){
+		$(this).prev().focus();
+	});
+	$(".chosen-select").chosen(); 
+});
+</script>
+
 </html>

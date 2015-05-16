@@ -1,6 +1,7 @@
 package com.rpframework.module.user.service;
 
 import java.util.List;
+import java.util.Random;
 
 import javax.annotation.Resource;
 
@@ -14,7 +15,9 @@ import com.rpframework.core.api.FileService;
 import com.rpframework.core.utils.cache.KVObj;
 import com.rpframework.module.user.dao.IScoreShopDao;
 import com.rpframework.module.user.domain.ScoreShop;
+import com.rpframework.module.user.domain.UserScoreShopLog;
 import com.rpframework.module.user.utils.UserModuleConstants;
+import com.rpframework.utils.CollectionUtils;
 import com.rpframework.utils.DateUtils;
 import com.rpframework.utils.NumberUtils;
 import com.rpframework.utils.Pager;
@@ -115,5 +118,35 @@ public class ScoreShopService extends BaseService {
 		scoreShop.setSalesNumber(scoreShop.getSalesNumber() + 1);
 		update(scoreShop);
 		return flag;
+	}
+
+	public void doLottery(Integer scoreShopId) {
+		ScoreShop scoreShop = select(scoreShopId);
+		Assert.notNull(scoreShop, "不存在的ID:" + scoreShopId);
+		long nowTime = System.currentTimeMillis() / 1000;
+		if(scoreShop.getState() != 1|| scoreShop.getType() != 2 || scoreShop.getEndTime() > nowTime) {
+			throw new IllegalArgumentException("该商品错误的状态或者时间未结束!");
+		}
+		List<UserScoreShopLog> list = scoreShopLogService.getListByScoreShopId(scoreShopId);
+		if(CollectionUtils.isEmpty(list)) {
+			throw new IllegalArgumentException("并没有该商品的购买记录!");
+		}
+		
+		for (UserScoreShopLog userScoreShopLog : list) {
+			if(userScoreShopLog.getSendShopState() == 1 || userScoreShopLog.getSendShopState() == 2) {//该抽奖物品已经处理过了
+				throw new IllegalArgumentException("该商品已经抽奖过了，请勿重复抽奖!");
+			}
+		}
+		int index = new Random().nextInt(list.size());
+		UserScoreShopLog hit = list.get(index);
+		for (UserScoreShopLog userScoreShopLog : list) {
+			if(userScoreShopLog == hit) { //中奖用户
+				userScoreShopLog.setSendShopState(2);//2-为等待中奖用户发物品状态
+			} else {//未中奖
+				userScoreShopLog.setSendShopState(-1); //设置为失败
+			}
+			
+			scoreShopLogService.update(userScoreShopLog);
+		}
 	}
 }

@@ -10,6 +10,12 @@
 	<button class="btn btn-minier btn-success" type="submit"><i class="icon-search"></i>搜  索</button>
 </form>
 <div class="hr hr-5"></div>
+<#if scoreShop??>
+	<#if scoreShop.state == 1 && scoreShop.type==2>
+	<a href="${ctx}/admin/score_shop/${scoreShop.id}/dolottery"><i class="icon-zoom-in"></i><span class="label label-warning arrowed-in arrowed-in arrowed-right">为该抽奖商品抽奖</span></a>
+	<div class="hr hr-5"></div>
+	</#if>
+</#if>
 <div class="row">
 	<div class="col-xs-12">
 		<div class="table-responsive">
@@ -37,6 +43,8 @@
 							<span class="label label-sm label-warning arrowed">未处理</span>
 						<#elseif u.sendShopState == 1>
 							<span class="label label-sm label-success arrowed">处理成功</span>
+						<#elseif u.sendShopState == 2>
+							<span class="label label-sm label-success arrowed">以中奖待处理</span>
 						<#else>
 							<span class="label label-sm label-warning arrowed">处理失败</span>
 						</#if>
@@ -72,7 +80,7 @@
 		</div><!-- /.table-responsive -->
 		
 		<div class="hr hr-18 dotted hr-double"></div>
-		<@h.page pager=pager action="${ctx}/admin/user_score_log/list" />
+		<@h.page pager=pager action="${ctx}/admin/user_score_shop_log/list" />
 	</div><!-- /span -->
 </div><!-- /row -->
 

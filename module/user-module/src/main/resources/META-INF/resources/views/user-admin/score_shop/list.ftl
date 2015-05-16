@@ -56,7 +56,11 @@
 						<td>
 						<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
 							<a class="green" href="${ctx}/admin/score_shop/${u.id}/edit${suffix}" alt="编辑">
-								<i class="icon-pencil bigger-130"></i>
+								<i class="icon-pencil bigger-130"></i>编辑
+							</a>
+							
+							<a class="green" href="${ctx}/admin/user_score_shop_log/list${suffix}?pager=1_scoreShopId--${u.id}" alt="编辑">
+								<i class="icon-user bigger-130"></i>查看兑换
 							</a>
 						</div>
 

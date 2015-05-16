@@ -1,47 +1,24 @@
-<title><#if userSalesman??>编辑<#else>新增</#if>申请业务员信息</title>
+<title><#if cfgScore??>编辑<#else>新增</#if>积分等级配置</title>
 <div class="page-header">
 	<h1>
-		<#if userSalesman??>编辑<#else>新增</#if>申请业务员信息
+		<#if cfgScore??>编辑<#else>新增</#if>积分等级配置
 		<small>
 			<i class="icon-double-angle-right"></i>
 		</small>
 	</h1>
 </div>
 
-<form class="form-horizontal" role="form" id="validation-form" method="POST" action="${ctx}/admin/usersalesman/dosave${suffix}">
-<#if userSalesman??>
-	<input type="hidden" name="userId" value="${userSalesman.userId}"/>
-	<input type="hidden" name="house.id" value="${userSalesman.house.id}"/>
-	<input type="hidden" name="credentialsImg" value="${userSalesman.credentialsImg}"/>
+<form class="form-horizontal" role="form" id="validation-form" method="POST" action="${ctx}/admin/common/cfg_score/dosave${suffix}">
+<#if cfgScore??>
 </#if>
 <fieldset>
 
 <div class="form-group">
-	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="title">申请业务员图片:</label>
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="level">等级:</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<span class="block input-icon width-40">
-				<img src="${tagUtils.getFileFullPath(userSalesman.credentialsImg)}" />
-			</span>
-		</div>
-	</div>
-</div>
-
-<div class="form-group">
-	<label class="control-label col-xs-12 col-sm-3 no-padding-right">是否是该楼盘的负责人:</label>
-	<div class="col-xs-12 col-sm-9">
-		<div class="clearfix">
-		<@ace.radioGroup options=ace.commonStateOptionsYN checkValue=(userSalesman.isLeader)!-1 name="isLeader" isWrap=true/>
-		</div>
-	</div>
-</div>
-
-<div class="form-group">
-	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="houseName">楼盘名字:</label>
-	<div class="col-xs-12 col-sm-9">
-		<div class="clearfix">
-			<span class="block input-icon width-40">
-				<input type="text" name="houseName" id="houseName" value="${(userSalesman.house.name)!''}" class="form-control" placeholder="楼盘名字"/>
+				<input type="text" name="level" id="level" value="${(cfgScore.level)!''}" class="form-control" placeholder="等级"/>
 				<i class="icon-user"></i>
 			</span>
 		</div>
@@ -49,10 +26,25 @@
 </div>
 
 <div class="form-group">
-	<label class="control-label col-xs-12 col-sm-3 no-padding-right">状态:</label>
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="score">等级所需积分:</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
-		<@ace.radioGroup options=ace.commonStateOptions checkValue=(userSalesman.state)!-1 name="state" isWrap=true/>
+			<span class="block input-icon width-40">
+				<input type="text" name="score" id="score" value="${(cfgScore.score)!''}" class="form-control" placeholder="等级所需积分"/>
+				<i class="icon-user"></i>
+			</span>
+		</div>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">等级称呼:</label>
+	<div class="col-xs-12 col-sm-9">
+		<div class="clearfix">
+			<span class="block input-icon width-40">
+				<input type="text" name="name" id="name" value="${(cfgScore.name)!''}" class="form-control" placeholder="等级称呼"/>
+				<i class="icon-user"></i>
+			</span>
 		</div>
 	</div>
 </div>
@@ -76,16 +68,24 @@
 </#if>
 
 <script>
-$(userSalesman).ready(function(){
-	RP.addBreadcrumb([{name:"题库"}, {name:"<#if userSalesman??>编辑<#else>新增</#if>申请业务员信息",  active: true}]);
+$(document).ready(function(){
+	RP.addBreadcrumb([{name:"题库"}, {name:"<#if cfgScore??>编辑<#else>新增</#if>积分等级配置",  active: true}]);
 	
 	$('#validation-form').validate({
 		errorElement: 'div',
 		errorClass: 'help-block',
 		focusInvalid: true,
 		rules: {
-			state: {
+			name: {
 				required: true
+			},
+			level: {
+				required: true,
+				number:true
+			},
+			score: {
+				required: true,
+				number:true
 			}
 		},
 	

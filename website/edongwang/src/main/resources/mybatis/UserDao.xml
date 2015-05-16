@@ -9,9 +9,12 @@
 	</resultMap>
 	
 	<select id="doPager" parameterType="map" resultMap="mUser">
-		select * from e_user where 1=1
+		select * from user where 1=1
 		<if test="page.searchMap.state != null">
 			and state = #{page.searchMap.state} 
+		</if>
+		<if test="page.searchMap.id != null">
+			and id = #{page.searchMap.id} 
 		</if>
 		 order by id
 	</select>
@@ -20,9 +23,9 @@
 	<insert id="insert" parameterType="com.rpframework.website.edongwang.domain.User" useGeneratedKeys="true" keyProperty="id"/>
 	<delete id="delete" parameterType="com.rpframework.website.edongwang.domain.User" />
 	<select id="select" parameterType="Integer" resultMap="mUser">
-		select * from e_user where id=#{id}
+		select * from user where id=#{id}
 	</select>
 	<select id="findUserByContact" parameterType="String" resultMap="mUser">
-		select * from e_user where contact=#{contact}
+		select * from user where contact=#{contact}
 	</select>
 </mapper>

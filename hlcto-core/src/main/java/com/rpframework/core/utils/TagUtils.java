@@ -16,6 +16,9 @@ import com.rpframework.utils.FileUtils;
 
 @Component("tagUtils")
 public class TagUtils extends BaseRegistFreemarker {
+	public static Object getNull() {
+		return null;
+	}
 	public static String getDomain(HttpServletRequest request) {
 		String d = request.getScheme() + "://" + request.getServerName();
 		if(request.getServerPort() != 80) {

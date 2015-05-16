@@ -1,33 +1,28 @@
-<title>用户积分列表</title>
-<form class="form-horizontal" role="form" id="validation-form" method="POST" action="${ctx}/admin/user_score/list" onsubmit="return fromSearch(this)">
-	<input type="hidden" name="pager" value="1_"/>
-	<label>用户ID:</label>
-	<input type="text" name="userId" value="${(pager.searchMap.userId)!''}" placeholder="用户ID"/>
-	<button class="btn btn-minier btn-success" type="submit"><i class="icon-search"></i>搜  索</button>
-</form>
-<div class="hr hr-5"></div>
+<title>积分等级配置列表</title>
 <div class="row">
 	<div class="col-xs-12">
 		<div class="table-responsive">
 			<table id="sample-table-1" class="table table-striped table-bordered table-hover">
 				<thead>
 					<tr>
-						<th>userId</th>
-						<th>积分</th>
-						<th>已使用积分</th>
-						<th>总积分</th>
+						<th>等级</th>
+						<th>所需积分</th>
+						<th>称号</th>
 						<th></th>
 					</tr>
 				</thead>
 				<tbody>
-				<#list pager.itemList as u>
+				<#list list as u>
 					<tr>
-						<td><span class="green center">${u.userId}</span></td>
+						<td><span class="green center">${u.level}</span></td>
 						<td>${u.score}</td>
-						<td>${u.usedScore}</td>
-						<td>${u.score + u.usedScore}</td>
+						<td>${u.name}</td>
+
 						<td>
 						<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
+							<a class="green" href="${ctx}/admin/common/cfg_score/${u.level}/edit${suffix}" alt="编辑">
+								<i class="icon-pencil bigger-130"></i>
+							</a>
 						</div>
 
 						<div class="visible-xs visible-sm hidden-md hidden-lg">
@@ -36,6 +31,13 @@
 									<i class="icon-caret-down icon-only bigger-120"></i>
 								</button>
 								<ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
+									<li>
+										<a href="${ctx}/admin/common/cfg_score/${u.level}/edit${suffix}" class="tooltip-success" data-rel="tooltip" title="" data-original-title="编辑">
+											<span class="green">
+												<i class="icon-edit bigger-120"></i>
+											</span>
+										</a>
+									</li>
 								</ul>
 							</div>
 						</div>
@@ -47,7 +49,6 @@
 		</div><!-- /.table-responsive -->
 		
 		<div class="hr hr-18 dotted hr-double"></div>
-		<@h.page pager=pager action="${ctx}/admin/user_score/list" />
 	</div><!-- /span -->
 </div><!-- /row -->
 
@@ -67,14 +68,9 @@
 	</h4>
 </#if>
 <script>
-function fromSearch(f){
-	if(f.userId.value) {
-		f.pager.value += "$$userId--" + f.userId.value;
-	}
-	return true;
-}
 $(document).ready(function(){
-	RP.addBreadcrumb([{name:"用户积分列表", active: true}]);
+	RP.addBreadcrumb([{name:"基础配置"}, {name:"积分等级配置列表", active: true}]);
+	$("#breadcrumbs ul").append('&nbsp;&nbsp;&nbsp;&nbsp;<a href="${ctx}/admin/common/cfg_score/add"><i class="icon-zoom-in"></i><span class="label label-warning arrowed-in arrowed-in arrowed-right">新增积分等级配置</span></a>');
 });
 </script>
 

@@ -9,6 +9,12 @@
 	
 	<select id="doPager" parameterType="map" resultMap="mHouse">
 		select * from e_house where 1=1
+		<if test="page.searchMap.state != null">
+			and state = #{page.searchMap.state} 
+		</if>
+		<if test="page.searchMap.queryVaildData != null">
+			and state>=0
+		</if>
 		order by recordCreateTime desc
 	</select>
 	

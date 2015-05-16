@@ -42,12 +42,12 @@
 	</div>
 </div>
 
-<#if userScoreShopLog.sendShopState==0>
+<#if userScoreShopLog.sendShopState==0 || userScoreShopLog.sendShopState==2>
 	<div class="form-group">
 		<label class="control-label col-xs-12 col-sm-3 no-padding-right">状态:</label>
 		<div class="col-xs-12 col-sm-9">
 			<div class="clearfix">
-			<#assign _stateOptions = [{"value": 0, "valueString":"未处理","labClass":"blue","inputClass":"ace"}, {"value": 1, "valueString":"处理成功","labClass":"red","inputClass":"ace"}, {"value": -1, "valueString":"处理失败","labClass":"red","inputClass":"ace"}]/>
+			<#assign _stateOptions = [{"value": 1, "valueString":"处理成功","labClass":"red","inputClass":"ace"}, {"value": -1, "valueString":"处理失败","labClass":"red","inputClass":"ace"}]/>
 			<@ace.radioGroup options=_stateOptions checkValue=(userScoreShopLog.sendShopState)!-1 name="sendShopState" isWrap=false/>
 			</div>
 		</div>
@@ -62,6 +62,8 @@
 							<span class="label label-sm label-success arrowed">未处理</span>
 						<#elseif userScoreShopLog.sendShopState == 1>
 							<span class="label label-sm label-success arrowed">处理成功</span>
+						<#elseif userScoreShopLog.sendShopState == 2>
+							<span class="label label-sm label-success arrowed">已中奖待处理</span>
 						<#else>
 							<span class="label label-sm label-warning arrowed">处理失败</span>
 						</#if>
@@ -71,7 +73,7 @@
 	</div>
 </#if>
 
-<#if userScoreShopLog.sendShopState==0>
+<#if userScoreShopLog.sendShopState==0 || userScoreShopLog.sendShopState==2>
 <div class="form-group">
 	<div class="col-md-offset-3 col-md-9">
 		<button class="btn btn-info" type="submit"><i class="icon-ok bigger-110"></i>提  交</button>

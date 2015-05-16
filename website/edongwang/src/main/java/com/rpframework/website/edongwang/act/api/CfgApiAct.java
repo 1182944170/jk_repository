@@ -18,8 +18,10 @@ import com.rpframework.core.BaseAct;
 import com.rpframework.core.utils.DictionarySettingUtils;
 import com.rpframework.module.user.domain.CfgBank;
 import com.rpframework.module.user.domain.CfgBankAddress;
+import com.rpframework.module.user.domain.CfgScore;
 import com.rpframework.module.user.service.CfgBankAddressService;
 import com.rpframework.module.user.service.CfgBankService;
+import com.rpframework.module.user.service.CfgScoreService;
 
 @Controller
 @RequestMapping("/api/cfg")
@@ -27,6 +29,7 @@ public class CfgApiAct extends BaseAct {
 	Gson gson = new Gson();
 	@Resource CfgBankAddressService cfgBankAddressService;
 	@Resource CfgBankService cfgBankService;
+	@Resource CfgScoreService cfgScoreService;
 	
 	/**
 	 * 面积类型 
@@ -70,6 +73,16 @@ public class CfgApiAct extends BaseAct {
 			json.addProperty("id", cfgBank.getId());
 			json.addProperty("name", cfgBank.getName());
 			array.add(json);
+		}
+		return array;
+	}
+	
+	@RequestMapping("/cfg_scores")
+	public @ResponseBody JsonElement cfgScores(Map<Object, Object> model, RedirectAttributes attr) {
+		List<CfgScore> list = cfgScoreService.queryAll();
+		JsonArray array = new JsonArray();
+		for (CfgScore cfgScore : list) {
+			array.add(gson.toJsonTree(cfgScore));
 		}
 		return array;
 	}

@@ -43,7 +43,15 @@
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<span class="block input-icon width-80">
-				${userTakeCash.userBankCard.name}-${userTakeCash.userBankCard.account}[${userTakeCash.userBankCard.cfgBankAddres.address}-${commonTag.getCountyPath(userTakeCash.userBankCard.cfgBankAddres.countyCode)}-${userTakeCash.userBankCard.cfgBankAddres.cfgBank.name}]
+				${userTakeCash.userBankCard.name}-${userTakeCash.userBankCard.account}
+				[
+				<#if userTakeCash.userBankCard.cfgBankAddress??>
+					${userTakeCash.userBankCard.cfgBankAddress.address}-${commonTag.getCountyPath(userTakeCash.userBankCard.cfgBankAddress.countyCode)}-${userTakeCash.userBankCard.cfgBankAddress.cfgBank.name}
+				<#else>
+					${userTakeCash.userBankCard.address}-${userTakeCash.userBankCard.cfgBank.name}
+				</#if>
+				
+				]
 			</span>
 		</div>
 	</div>
@@ -65,7 +73,7 @@
 	<label class="control-label col-xs-12 col-sm-3 no-padding-right">状态:</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
-		<#assign takeCashStateOptions = [{"value": 0, "valueString":"未处理","labClass":"blue","inputClass":"ace"}, {"value": 1, "valueString":"处理成功","labClass":"red","inputClass":"ace"}, {"value": -1, "valueString":"处理失败","labClass":"red","inputClass":"ace"}]/>
+		<#assign takeCashStateOptions = [{"value": 1, "valueString":"处理成功","labClass":"red","inputClass":"ace"}, {"value": -1, "valueString":"处理失败","labClass":"red","inputClass":"ace"}]/>
 		<@ace.radioGroup options=takeCashStateOptions checkValue=(userTakeCash.state)!-1 name="state" isWrap=false/>
 		</div>
 	</div>

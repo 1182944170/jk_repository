@@ -28,7 +28,16 @@
 						<td><span class="green center">${u.id}</span></td>
 						<td>${u.userId}</td>
 						<td>${u.money}</td>
-						<td>${u.userBankCard.name}-${u.userBankCard.account}[${u.userBankCard.cfgBankAddres.address}-${commonTag.getCountyPath(u.userBankCard.cfgBankAddres.countyCode)}-${u.userBankCard.cfgBankAddres.cfgBank.name}]</td>
+						<td>${u.userBankCard.name}-${u.userBankCard.account}
+						[
+						<#if u.userBankCard.cfgBankAddress??>
+							${u.userBankCard.cfgBankAddress.address}-${commonTag.getCountyPath(u.userBankCard.cfgBankAddress.countyCode)}-${u.userBankCard.cfgBankAddress.cfgBank.name}
+						<#else>
+							${u.userBankCard.address}-${u.userBankCard.cfgBank.name}
+						</#if>
+						]
+						
+						</td>
 						<td>${u.remark}</td>
 						<td>
 						<#if u.state == 0>

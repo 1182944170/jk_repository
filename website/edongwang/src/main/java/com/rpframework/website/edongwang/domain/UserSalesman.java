@@ -19,13 +19,22 @@ public class UserSalesman extends Domain {
 	String credentialsImg; //证卷名称
 	@FieldMapperAnnotation(dbFieldName="houseId", fieldType=FieldType.Object)
 	House house; //楼盘ID
-	
+	@FieldMapperAnnotation
+	Integer isLeader;
 	@FieldMapperAnnotation
 	Integer state;
 	@FieldMapperAnnotation
 	Long recordCreateTime;
 	@FieldMapperAnnotation
 	Long recordModifyTime;
+
+	public Integer getIsLeader() {
+		return isLeader;
+	}
+
+	public void setIsLeader(Integer isLeader) {
+		this.isLeader = isLeader;
+	}
 
 	public Integer getUserId() {
 		return userId;

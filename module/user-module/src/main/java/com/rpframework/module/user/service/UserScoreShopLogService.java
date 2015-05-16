@@ -84,7 +84,7 @@ public class UserScoreShopLogService extends BaseService {
 	public boolean deal(Integer userScoreShopLogId, Integer sendShopState) {
 		UserScoreShopLog userScoreShopLogDB = select(userScoreShopLogId);
 		Assert.notNull(userScoreShopLogDB);
-		if(userScoreShopLogDB.getSendShopState() == 0) {
+		if(userScoreShopLogDB.getSendShopState() == 0 || userScoreShopLogDB.getSendShopState() == 2) {
 			userScoreShopLogDB.setSendShopState(sendShopState);
 			return update(userScoreShopLogDB);
 		} 
@@ -111,5 +111,13 @@ public class UserScoreShopLogService extends BaseService {
 		
 		insert(log);
 		resetUserScoreShopLogs(userId);
+	}
+
+	public List<UserScoreShopLog> getListByScoreShopId(Integer scoreShopId) {
+		Pager<UserScoreShopLog> pager = new Pager<UserScoreShopLog>();
+		pager.getSearchMap().put("scoreShopId", String.valueOf(scoreShopId));
+		pager.setPageSize(Integer.MAX_VALUE);
+		getPager(pager);
+		return pager.getItemList();
 	}
 }

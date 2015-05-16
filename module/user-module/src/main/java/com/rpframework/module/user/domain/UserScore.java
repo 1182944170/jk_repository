@@ -15,6 +15,8 @@ public class UserScore extends Domain {
 	@FieldMapperAnnotation
 	Integer score;
 	@FieldMapperAnnotation
+	Integer usedScore;
+	@FieldMapperAnnotation
 	Long recordCreateTime;
 	@FieldMapperAnnotation
 	Long recordModifyTime;
@@ -41,5 +43,11 @@ public class UserScore extends Domain {
 	}
 	public void setRecordModifyTime(Long recordModifyTime) {
 		this.recordModifyTime = recordModifyTime;
+	}
+	public Integer getUsedScore() {
+		return usedScore;
+	}
+	public void setUsedScore(Integer usedScore) {
+		this.usedScore = usedScore;
 	}
 }

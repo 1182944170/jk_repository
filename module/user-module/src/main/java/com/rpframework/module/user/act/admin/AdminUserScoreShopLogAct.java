@@ -15,20 +15,30 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.rpframework.module.user.act.UserModuleBaseAct;
+import com.rpframework.module.user.domain.ScoreShop;
 import com.rpframework.module.user.domain.UserScoreShopLog;
+import com.rpframework.module.user.service.ScoreShopService;
 import com.rpframework.module.user.service.UserScoreShopLogService;
+import com.rpframework.utils.NumberUtils;
 import com.rpframework.utils.Pager;
 
 @Controller
 @RequestMapping("/admin/user_score_shop_log")
 public class AdminUserScoreShopLogAct extends UserModuleBaseAct{
 	@Resource UserScoreShopLogService userScoreShopLogService;
+	@Resource ScoreShopService scoreShopService;
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@RequestMapping("/list")
 	public String list(@RequestParam(value="pager", required=false) Pager pager, Map<Object, Object> model, RedirectAttributes attr){
 		if(pager == null) {
 			pager = new Pager();
+		}
+		
+		if(pager.getSearchMap().containsKey("scoreShopId")) {
+			int scoreShopId = NumberUtils.parseInt(pager.getSearchMap().get("scoreShopId").toString());
+			ScoreShop scoreShop = scoreShopService.select(scoreShopId);
+			model.put("scoreShop", scoreShop);
 		}
 		pager = userScoreShopLogService.getPager(pager);
 		model.put("pager", pager);

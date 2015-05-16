@@ -42,6 +42,7 @@ public  @ResponseBody class HouseApiAct extends BaseAct {
 			pager = new Pager<House>();
 		}
 		pager = houseService.getPager(pager);
+		pager.getSearchMap().put("queryVaildData", "1");
 		
 		JsonObject json = new JsonObject();
 		json.addProperty("totalPages", pager.getTotalPages());

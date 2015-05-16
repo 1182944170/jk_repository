@@ -36,9 +36,10 @@ public class UserTakeCashService extends BaseService {
 			userTakeCashDB.setVerifyUId(userTakeCash.getVerifyUId());
 			userTakeCashDB.setVerifyRemark(userTakeCash.getVerifyRemark());
 			userTakeCashDB.setRecordModifyTime(System.currentTimeMillis() / 1000);
+			
+			//释放冻结金额
+			userMoneyService.unFreezeMoney(userId, userTakeCashDB.getMoney());
 			if(userTakeCash.getState() == 1) { //如果是成功处理的话 则扣除冻结的金额
-				//释放冻结金额 并扣除
-				userMoneyService.unFreezeMoney(userId, userTakeCashDB.getMoney());
 				userMoneyService.costMoney(userId, userTakeCashDB.getMoney(), kvObj, null);
 			}
 			

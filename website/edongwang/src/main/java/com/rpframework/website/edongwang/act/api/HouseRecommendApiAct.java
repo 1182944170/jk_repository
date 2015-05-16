@@ -82,26 +82,38 @@ public  @ResponseBody class HouseRecommendApiAct extends BaseAct {
 		return json;
 	}
 	/***
-	 * 单子的第三部，成交
+	 * 单子的第三部，成交 之业务员提交成功，这时候 如果 state＝1的话，则等待负责人填写确认
 	 */
-	@RequestMapping("/{houseRecommendId}/deal")
-	public  @ResponseBody JsonElement deal(@PathVariable Integer houseRecommendId,
+	@RequestMapping("/{houseRecommendId}/deal_stage1")
+	public  @ResponseBody JsonElement deal_stage1(@PathVariable Integer houseRecommendId,
 			@RequestParam Integer state,
 			@RequestParam Long dealTime, 
 			@RequestParam Double surface, 
 			@RequestParam Double price, 
-			@RequestParam Double commissionPrice,
 			HttpSession session, Map<Object, Object> model, RedirectAttributes attr) {
 		User user = getSessionUser(session);
 		
-		boolean flag = houseRecommendService.deal(user.getId(),
-				houseRecommendId, state, dealTime, surface, price,
-				commissionPrice);
+		boolean flag = houseRecommendService.deal_stage1(user.getId(),
+				houseRecommendId, state, dealTime, surface, price);
 		
 		JsonObject json = new JsonObject();
 		json.addProperty("succ", flag);
 		return json;
 	}
+	
+	@RequestMapping("/{houseRecommendId}/deal_stage2")
+	public  @ResponseBody JsonElement deal_stage2(@PathVariable Integer houseRecommendId,
+			@RequestParam Double recommendPrice, 
+			@RequestParam Double commissionPrice,
+			HttpSession session, Map<Object, Object> model, RedirectAttributes attr) {
+		User user = getSessionUser(session);
+		boolean flag = houseRecommendService.deal_stage2(user.getId(), houseRecommendId,  recommendPrice, commissionPrice);
+		
+		JsonObject json = new JsonObject();
+		json.addProperty("succ", flag);
+		return json;
+	}
+	
 	/***
 	 * 单子的第四部，完结
 	 */
@@ -119,7 +131,7 @@ public  @ResponseBody class HouseRecommendApiAct extends BaseAct {
 	}*/
 	
 	/**
-	 * 抢单列表针对业务员来说的
+	 * 抢单列表针对二级会员来说的
 	 * @param pager
 	 * @param session
 	 * @param model
@@ -131,9 +143,9 @@ public  @ResponseBody class HouseRecommendApiAct extends BaseAct {
 		User user = getSessionUser(session);
 		if(user.getIsSalesman() != 0) {//
 			if(user.getUserSalesman() == null) {
-				throw new APICodeException(-1, "你不是业务员，无权查看该API.");
+				throw new APICodeException(-1, "你不是二级会员，无权查看该API.");
 			} else {
-				throw new APICodeException(-2, "你申请的业务员的状态为非通过状态.");
+				throw new APICodeException(-2, "你申请的二级会员的状态为非通过状态.");
 			}
 		}
 		
@@ -184,6 +196,14 @@ public  @ResponseBody class HouseRecommendApiAct extends BaseAct {
 			}
 		}
 		
+		if(houseRecommend.getAcceptSalesman() != null) {
+			JsonObject acceptUser = new JsonObject();
+			hrJson.add("acceptUser", acceptUser);
+			
+			acceptUser.addProperty("id", houseRecommend.getAcceptSalesman().getId());
+			acceptUser.addProperty("realName", houseRecommend.getAcceptSalesman().getRealName());
+		}
+		
 		return hrJson;
 	}
 	
@@ -191,7 +211,7 @@ public  @ResponseBody class HouseRecommendApiAct extends BaseAct {
 	public  @ResponseBody JsonElement myRecommends(@RequestParam(value = "pager", required = false) Pager<HouseRecommend> pager,HttpSession session, Map<Object, Object> model, RedirectAttributes attr) {
 		User user = getSessionUser(session);
 		if(user.getIsSalesman() == 1) {//
-			throw new APICodeException(-1, "业务员没有推荐");
+			throw new APICodeException(-1, "二级会员没有推荐");
 		}
 		
 		if (pager == null) {
@@ -217,11 +237,21 @@ public  @ResponseBody class HouseRecommendApiAct extends BaseAct {
 		}
 		return json;
 	}
+	
+	/**
+	 * 
+	 * 我的抢单
+	 * @param pager
+	 * @param session
+	 * @param model
+	 * @param attr
+	 * @return
+	 */
 	@RequestMapping("/mygrabs")
 	public  @ResponseBody JsonElement myGrabs(@RequestParam(value = "pager", required = false) Pager<HouseRecommend> pager,HttpSession session, Map<Object, Object> model, RedirectAttributes attr) {
 		User user = getSessionUser(session);
 		if(user.getIsSalesman() != 1) {//
-			throw new APICodeException(-1, "你没有查看业务员的api权限");
+			throw new APICodeException(-1, "你没有查看二级会员的api权限");
 		}
 		
 		if (pager == null) {
@@ -229,6 +259,50 @@ public  @ResponseBody class HouseRecommendApiAct extends BaseAct {
 		}
 		
 		pager.getSearchMap().put("acceptSalesmanId", String.valueOf(user.getId()));//只搜索本区域的
+		pager = houseRecommendService.getPager(pager);
+		
+		JsonObject json = new JsonObject();
+		json.addProperty("totalPages", pager.getTotalPages());
+		json.addProperty("currentPage", pager.getCurrentPage());
+		json.addProperty("totalCount", pager.getTotalCount());
+		
+		List<HouseRecommend> list = pager.getItemList();
+		JsonArray array = new JsonArray();
+		json.add("arrays", array);
+		for (HouseRecommend houseRecommend : list) {
+			JsonObject hrJson = packageHouseRecommend(houseRecommend);
+			
+			hrJson.add("house", gson.toJsonTree(houseRecommend.getHouse()));
+			array.add(hrJson );
+		}
+		return json;
+	}
+	
+	/**
+	 * 
+	 * 如果是该楼盘的负责人，则可以看到该楼盘的所有的抢单
+	 * @param pager
+	 * @param session
+	 * @param model
+	 * @param attr
+	 * @return
+	 */
+	@RequestMapping("/grabs")
+	public  @ResponseBody JsonElement grabs(@RequestParam(value = "pager", required = false) Pager<HouseRecommend> pager,HttpSession session, Map<Object, Object> model, RedirectAttributes attr) {
+		User user = getSessionUser(session);
+		if(user.getIsSalesman() != 1) {//
+			throw new APICodeException(-1, "你没有查看二级会员的api权限");
+		}
+		
+		if(user.getUserSalesman().getIsLeader() != 1) {
+			throw new APICodeException(-1, "二级会员该楼盘的负责人的api权限");
+		}
+		
+		if (pager == null) {
+			pager = new Pager<HouseRecommend>();
+		}
+		
+		pager.getSearchMap().put("houseId", String.valueOf(user.getUserSalesman().getHouse().getId()));
 		pager = houseRecommendService.getPager(pager);
 		
 		JsonObject json = new JsonObject();

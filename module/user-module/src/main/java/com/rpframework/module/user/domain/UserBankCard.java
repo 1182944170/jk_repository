@@ -20,9 +20,14 @@ public class UserBankCard extends Domain {
 	@FieldMapperAnnotation
 	String name;
 	@FieldMapperAnnotation(dbFieldName="openAddrId", fieldType=FieldType.Object)
-	CfgBankAddress cfgBankAddres;
+	CfgBankAddress cfgBankAddress;
+	@FieldMapperAnnotation(dbFieldName="bankId", fieldType=FieldType.Object) //cfgBankAddres 跟 cfgBank、address 是互斥的，兼容俩种情况
+	CfgBank cfgBank;
+	@FieldMapperAnnotation
+	String address;
 	@FieldMapperAnnotation
 	Integer state;
+	
 	
 	public Integer getId() {
 		return id;
@@ -48,11 +53,23 @@ public class UserBankCard extends Domain {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public CfgBankAddress getCfgBankAddres() {
-		return cfgBankAddres;
+	public CfgBankAddress getCfgBankAddress() {
+		return cfgBankAddress;
 	}
-	public void setCfgBankAddres(CfgBankAddress cfgBankAddres) {
-		this.cfgBankAddres = cfgBankAddres;
+	public void setCfgBankAddress(CfgBankAddress cfgBankAddress) {
+		this.cfgBankAddress = cfgBankAddress;
+	}
+	public CfgBank getCfgBank() {
+		return cfgBank;
+	}
+	public void setCfgBank(CfgBank cfgBank) {
+		this.cfgBank = cfgBank;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
 	}
 	public Integer getState() {
 		return state;

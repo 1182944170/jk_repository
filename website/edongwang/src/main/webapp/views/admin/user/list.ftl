@@ -1,4 +1,11 @@
 <title>用户列表</title>
+<form class="form-horizontal" role="form" id="validation-form" method="POST" action="${ctx}/admin/user/list" onsubmit="return fromSearch(this)">
+	<input type="hidden" name="pager" value="1_"/>
+	<label>用户ID:</label>
+	<input type="text" name="id" value="${(pager.searchMap.id)!''}" placeholder="用户ID"/>
+	<button class="btn btn-minier btn-success" type="submit"><i class="icon-search"></i>搜  索</button>
+</form>
+<div class="hr hr-5"></div>
 <div class="row">
 	<div class="col-xs-12">
 		<div class="table-responsive">
@@ -10,7 +17,7 @@
 						<th>性别</th>
 						<th>手机号</th>
 						<th>状态</th>
-						<th>是否业务员</th>
+						<th>身份</th>
 						<th>注册时间</th>
 						<th>操作</th>
 					</tr>
@@ -37,22 +44,21 @@
 								<#if m.userSalesman.state==0>
 									<span class="label label-sm label-warning arrowed arrowed-righ">申请业务员中...</span>
 								<#elseif m.userSalesman.state==-1>
-									<span class="label label-sm label-warning arrowed arrowed-righ">申请业务员失败</span>
+									<span class="label label-sm label-warning arrowed arrowed-righ">申请二级会员失败</span>
 								</#if>
 								[<a href="${ctx}/admin/usersalesman/${m.userSalesman.userId}/edit${suffix}">查看申请信息</a>]
 							<#else>
-								普通会员
+								一级会员
 							</#if>
 						<#else>
-							<span class="text-warning bigger-110 orange">业务员</span>
+							<span class="text-warning bigger-110 orange">
+							二级会员[所在楼盘:${m.userSalesman.house.name}<#if m.userSalesman.isLeader==1>-该楼盘的负责人</#if>]
+							</span>
 						</#if>
 						</td>
 						<td>${tagUtils.formatDate(m.recordCreateTime)}</td>
 						<td>
 						<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
-							<a class="green" href="${ctx}/admin/user/${m.id}/edit" alt="Edit">
-								<i class="icon-pencil bigger-130"></i>
-							</a>
 
 						</div>
 
@@ -63,11 +69,6 @@
 								</button>
 								<ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
 									<li>
-										<a href="${ctx}/admin/adminuser/${m.id}/edit" class="tooltip-success" data-rel="tooltip" title="修改" data-original-title="Edit">
-											<span class="green">
-												<i class="icon-edit bigger-120"></i>
-											</span>
-										</a>
 									</li>
 								</ul>
 							</div>
@@ -100,6 +101,13 @@
 	</h4>
 </#if>
 <script>
+function fromSearch(f){
+	if(f.id.value) {
+		f.pager.value += "$$id--" + f.id.value;
+	}
+	return true;
+}
+
 function doUserState(checkbox, uid) {
 	var href = ctx + "/admin/user/" + uid;
 	if(checkbox.checked) {

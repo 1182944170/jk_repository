@@ -42,6 +42,8 @@ public class UserScoreShopApiAct extends BaseAct {
 		if (pager == null) {
 			pager = new Pager<ScoreShop>();
 		}
+		
+		pager.getSearchMap().put("checkVaildTime", String.valueOf(System.currentTimeMillis() / 1000));
 		pager = scoreShopService.getPager(pager);
 		
 		JsonObject json = new JsonObject();

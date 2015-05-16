@@ -13,6 +13,10 @@
 			and state = #{page.searchMap.state} 
 		</if>
 		
+		<if test="page.searchMap.checkVaildTime != null">
+			<![CDATA[and startTime <= #{page.searchMap.checkVaildTime} and endTime > #{page.searchMap.checkVaildTime}]]>
+		</if>
+		
 		order by id desc
 	</select>
 	

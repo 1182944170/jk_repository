@@ -20,7 +20,7 @@
 						<th>ID</th>
 						<th>客户信息</th>
 						<th>用户需求</th>
-						<th>楼盘</th>
+						<th width=100><i class="icon-time bigger-110 hidden-480"></i>楼盘</th>
 						<th>推荐者信息</th>
 						<th>业务员信息</th>
 						<th>进度</th>
@@ -34,8 +34,8 @@
 					<tr>
 						<td><span class="green center">${u.id}</span></td>
 						<td>
-						 name:${u.customerName} <br/>
-						 contact:${u.contact}
+						 客户名:${u.customerName} <br/>
+						 电话:${u.contact}
 						</td>
 						<td>
 						 类型:${dicSetting.getParameterValue("house.propertyType." + u.propertyType)} <br/>
@@ -44,43 +44,82 @@
 						 区域:${commonTag.getCountyPath(u.areaCode)} <br/>
 						 信息:${u.customerInfo}
 						</td>
-						<td>${u.house.name}</td>
-						<td>userId:${u.recommendUser.id}<br/>T:${u.recommendUser.contact} <br/>姓名: ${u.recommendUser.realName}</td>
+						<td class="hidden-480">${u.house.name}</td>
+						<td>推荐ID:${u.recommendUser.id}<br/>tel:${u.recommendUser.contact} <br/>姓名: ${u.recommendUser.realName}</td>
 						
 						<td><#if u.state==1>
 							该推荐未被接单
 						<#else>
-							userId:${u.acceptSalesman.id}<br/>T:${u.acceptSalesman.contact} <br/>姓名: ${u.acceptSalesman.realName}
+							受理ID:${u.acceptSalesman.id}<br/>tel:${u.acceptSalesman.contact} <br/>姓名: ${u.acceptSalesman.realName}
 						</#if></td>
 						<td>
+						<#assign hasWaitLeader=0 />
 						<#if u.state==1>
 							无
 						<#else>
-							<#if u.progresses?has_content>
-								<#list u.progresses as progress>
-									<#if progress.type==1>
-										有效性:<#if progress.state==1><span class="label label-sm label-success arrowed">有效</span><#else><span class="label label-sm label-warning arrowed">无效</span></#if>,
-										星级:${gsonUtils.getInt(progress.extJson, "infoStar")},意向:${gsonUtils.getInt(progress.extJson, "intentStar")}, 备注:${gsonUtils.getString(progress.extJson, "remark")}
-									<#elseif progress.type==2>
-										回访:<#if progress.state==1><span class="label label-sm label-success arrowed">有效</span><#else><span class="label label-sm label-warning arrowed">无效</span></#if>,
-										备注:${gsonUtils.getString(progress.extJson, "remark")}
-									<#elseif progress.type==3>
-										成交:<#if progress.state==1><span class="label label-sm label-success arrowed">有效</span><#else><span class="label label-sm label-warning arrowed">无效</span></#if>,
-										成交时间:${tagUtils.formatDate(gsonUtils.getLong(progress.extJson, "dealTime") )},
-										面积:${gsonUtils.getDouble(progress.extJson, "surface")},
-										价格:${gsonUtils.getDouble(progress.extJson, "price")},
-										佣金价格:${gsonUtils.getDouble(progress.extJson, "commissionPrice")}
-									<#elseif progress.type==4>
-										完结:<#if progress.state==1><span class="label label-sm label-success arrowed">有效</span><#else><span class="label label-sm label-warning arrowed">无效</span></#if>
-									<#else>
+							<ul class="wizard-steps">
+								<#assign hasValue=false />
+								<#if u.progresses?has_content && u.progresses?size gt 0>
+									<#assign hasValue=true />
+								</#if>
+								<li data-target="#step1" <#if hasValue && u.progresses[0].state==1>class="active"</#if>>
+									<span class="step" data-toggle="tooltip" data-placement="top" data-original-title="
+									<#if hasValue>
+											星级:${gsonUtils.getInt(u.progresses[0].extJson, "infoStar")},意向:${gsonUtils.getInt(u.progresses[0].extJson, "intentStar")}, 备注:${gsonUtils.getString(u.progresses[0].extJson, "remark")},处理时间:${tagUtils.formatDate(u.progresses[0].recordCreateTime)}
 									</#if>
-										处理时间:${tagUtils.formatDate(progress.recordCreateTime)}
-									<br/>
-								</#list>
-							<#else>
-								已被接单，但无进度
-							</#if>
-						</#if></td>
+									">1</span>
+									<span class="title">有效性</span>
+								</li>
+								
+								<#assign hasValue=false />
+								<#if u.progresses?has_content && u.progresses?size gt 1>
+									<#assign hasValue=true />
+								</#if>
+								<li data-target="#step2" <#if hasValue && u.progresses[1].state==1>class="active"</#if>>
+									<span class="step" data-toggle="tooltip" data-placement="top" data-original-title="
+									<#if hasValue>
+										备注:${gsonUtils.getString(u.progresses[1].extJson, "remark")},处理时间:${tagUtils.formatDate(u.progresses[1].recordCreateTime)}
+									</#if>
+									">2</span>
+									<span class="title">回访</span>
+								</li>
+								
+								<#assign hasValue=false />
+								<#if u.progresses?has_content && u.progresses?size gt 2>
+									<#assign hasValue=true />
+								</#if>
+								<li data-target="#step3" <#if hasValue && u.progresses[2].state==1>class="active"<#elseif hasValue && u.progresses[2].state==2>class="active"</#if>>
+									<span class="step" data-toggle="tooltip" data-placement="top"  <#if hasValue && u.progresses[2].state==2>style="border-color:#C47952"</#if> data-original-title="
+									<#if hasValue>
+											<#if u.progresses[2].state==1><#elseif u.progresses[2].state==2><#assign hasWaitLeader=1 />等待负责人确认<#else></#if>
+											成交时间:${tagUtils.formatDate(gsonUtils.getLong(u.progresses[2].extJson, "dealTime") )},
+											面积:${gsonUtils.getDouble(u.progresses[2].extJson, "surface")},
+											价格:${gsonUtils.getDouble(u.progresses[2].extJson, "price")},
+											推荐奖励:${gsonUtils.getDouble(u.progresses[2].extJson, "recommendPrice")},
+											成交奖励:${gsonUtils.getDouble(u.progresses[2].extJson, "commissionPrice")},
+											处理时间:${tagUtils.formatDate(u.progresses[2].recordCreateTime)}
+									</#if>
+									">3</span>
+									<span class="title">成交</span>
+								</li>
+								
+								<#assign hasValue=false />
+								<#if u.progresses?has_content && u.progresses?size gt 3>
+									<#assign hasValue=true />
+								</#if>
+								<li data-target="#step4" <#if hasValue && u.progresses[3].state==1>class="active"</#if>>
+									<span class="step" data-toggle="tooltip" data-placement="top"  <#if progress?? && progress.state==1><#elseif progress?? && progress.state==2>style="border-color:#C47952"</#if> data-original-title="
+									<#if hasValue>
+										完结:处理时间:${tagUtils.formatDate(u.progresses[3].recordCreateTime)}
+									</#if>
+									">4</span>
+									<span class="title">有效性</span>
+								</li>
+							</ul>
+						</#if>
+						
+							
+						</td>
 						<td>${tagUtils.formatDate(u.recordCreateTime)}</td>
 						<td><#if u.state==1>
 							<span class="label label-sm label-warning arrowed">该推荐未被接单</span>
@@ -91,7 +130,7 @@
 						</#if></td>
 						<td>
 						<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
-							<#if u.state==2 && u.progresses?has_content && u.progresses?size == 3>
+							<#if u.state==2 && u.progresses?has_content && hasWaitLeader == 0&& u.progresses?size == 3>
 								<a class="green" href="${ctx}/admin/house_recommend/${u.id}/over?state=1" alt="Edit">
 									<i class="icon-pencil bigger-130"></i> 完结
 								</a>
@@ -147,7 +186,7 @@ function fromSearch(f){
 	return true;
 }
 
-$(document).ready(function(){
+$(document).ready(function(){ 
 	RP.addBreadcrumb([{name:"楼盘推荐管理"}, {name:"楼盘推荐列表", linkUrl:"${ctx}/admin/house/list", active: true}]);
 });
 </script>

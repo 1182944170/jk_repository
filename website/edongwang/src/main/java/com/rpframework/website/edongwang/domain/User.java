@@ -5,7 +5,7 @@ import com.rpframework.core.mybatis.plugin.annotation.FieldMapperAnnotation;
 import com.rpframework.core.mybatis.plugin.annotation.TableMapperAnnotation;
 import com.rpframework.core.mybatis.plugin.annotation.UniqueKeyType;
 
-@TableMapperAnnotation(tableName = "e_user", uniqueKeyType = UniqueKeyType.Single, uniqueKey = "id") 
+@TableMapperAnnotation(tableName = "user", uniqueKeyType = UniqueKeyType.Single, uniqueKey = "id") 
 public class User extends Domain {
 	
 	/**描述*/  

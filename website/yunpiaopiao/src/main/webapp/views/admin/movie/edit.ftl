@@ -188,12 +188,6 @@ $(document).ready(function(){
 		thumbnail:false
 	});
 	
-	$('.date-picker').datepicker({autoclose:true}).next().on(ace.click_event, function(){
-		$(this).prev().focus();
-	});
-				
-	$(".chosen-select").chosen(); 
-	
 	$('#validation-form').validate({
 		errorElement: 'div',
 		errorClass: 'help-block',

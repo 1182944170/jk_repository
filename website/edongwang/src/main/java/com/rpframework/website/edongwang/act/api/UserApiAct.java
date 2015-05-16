@@ -24,6 +24,7 @@ import com.rpframework.core.BaseAct;
 import com.rpframework.core.api.FileService;
 import com.rpframework.core.utils.GsonUtils;
 import com.rpframework.module.common.service.SMSService;
+import com.rpframework.module.user.domain.CfgBank;
 import com.rpframework.module.user.domain.CfgBankAddress;
 import com.rpframework.module.user.domain.UserBankCard;
 import com.rpframework.module.user.domain.UserMoney;
@@ -123,7 +124,8 @@ public class UserApiAct extends BaseAct {
 		uBankCardJson.addProperty("id", userBankCard.getId());
 		uBankCardJson.addProperty("account", userBankCard.getAccount());
 		uBankCardJson.addProperty("name", userBankCard.getName());
-		uBankCardJson.addProperty("cfgBankAddressId", userBankCard.getCfgBankAddres().getId());
+		uBankCardJson.addProperty("bankId", userBankCard.getCfgBank().getId());
+		uBankCardJson.addProperty("address", userBankCard.getAddress());
 		
 		return uBankCardJson;
 	}
@@ -247,7 +249,9 @@ public class UserApiAct extends BaseAct {
 	}
 	
 	@RequestMapping("/bind_bank_card")
-	public @ResponseBody JsonElement bindBankCard(@RequestParam Integer bankAddressId,
+	public @ResponseBody JsonElement bindBankCard(
+			@RequestParam Integer bankId,
+			@RequestParam String address,
 			@RequestParam String account,
 			@RequestParam String name,
 			HttpSession session, HttpServletRequest request) {
@@ -258,12 +262,14 @@ public class UserApiAct extends BaseAct {
 			throw new APICodeException(-1, "已经有绑定银行卡数据!");
 		}
 		UserBankCard userBankCard = new UserBankCard();
-		CfgBankAddress cfgBankAddres = new CfgBankAddress();
+		CfgBank cfgBank = new CfgBank();
 		
 		userBankCard.setAccount(account);
-		cfgBankAddres.setId(bankAddressId);
-		userBankCard.setCfgBankAddres(cfgBankAddres );
+		cfgBank.setId(bankId);
+		userBankCard.setCfgBank(cfgBank);
+		userBankCard.setCfgBankAddress(new CfgBankAddress());
 		userBankCard.setName(name);
+		userBankCard.setAddress(address);
 		userBankCard.setState(1);
 		userBankCard.setUserId(user.getId());
 		

@@ -7,4 +7,7 @@ import com.rpframework.website.edongwang.domain.HouseRecommendProgress;
 
 public interface IHouseRecommendProgressDao extends IDao {
 	List<HouseRecommendProgress> getProgressByHouseRecommendId(Integer houseRecommendId);
+
+	HouseRecommendProgress getProgressByRecommendIdAndType(
+			Integer houseRecommendId, int type);
 }

@@ -44,6 +44,7 @@ public class UserScoreService extends BaseService {
 		} else {
 			if(checkCanCostScore(userId, score)) {
 				userScore.setScore(userScore.getScore() + score);
+				userScore.setUsedScore(userScore.getUsedScore() + Math.abs(score));
 			} else {
 				succ = false;
 			}

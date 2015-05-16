@@ -33,7 +33,7 @@ public class House extends Domain{
 	Integer surfaceType; //面积
 	
 	@FieldMapperAnnotation
-	Double totalPrice; //总价
+	Double avgPrice; //总价
 	
 	@FieldMapperAnnotation
 	Double recommendPrice ; //推荐奖励
@@ -125,12 +125,12 @@ public class House extends Domain{
 		this.surfaceType = surfaceType;
 	}
 
-	public Double getTotalPrice() {
-		return totalPrice;
+	public Double getAvgPrice() {
+		return avgPrice;
 	}
 
-	public void setTotalPrice(Double totalPrice) {
-		this.totalPrice = totalPrice;
+	public void setAvgPrice(Double avgPrice) {
+		this.avgPrice = avgPrice;
 	}
 
 	public Double getRecommendPrice() {

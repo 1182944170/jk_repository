@@ -73,11 +73,11 @@
 </div>
 
 <div class="form-group">
-	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="totalPrice">总价:</label>
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="avgPrice">均价:</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<span class="block input-icon width-40">
-				<input type="text" name="totalPrice" id="totalPrice" value="${(house.totalPrice)!''}" class="form-control" placeholder="总价"/>
+				<input type="text" name="avgPrice" id="avgPrice" value="${(house.avgPrice)!''}" class="form-control" placeholder="均价"/>
 				<i class="icon-user"></i>
 			</span>
 			
@@ -91,11 +91,11 @@
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<span class="block input-icon width-40">
-				<input type="text" name="recommendPrice" id="recommendPrice" value="${(house.recommendPrice)!''}" class="form-control" placeholder="推荐奖励"/>
+				<input type="text" name="recommendPrice" id="recommendPrice" value="${(house.recommendPrice)!'0'}" class="form-control" placeholder="推荐奖励"/>
 				<i class="icon-user"></i>
 			</span>
 			
-			<small>* 单位 (元)</small>
+			<small>* 单位 (元) 暂无的情况下写 0</small>
 		</div>
 	</div>
 </div>
@@ -193,7 +193,8 @@
 	<label class="control-label col-xs-12 col-sm-3 no-padding-right">状态:</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
-		<@ace.radioGroup options=ace.commonStateOptions checkValue=(house.state)!-1 name="state" isWrap=false/>
+		<#assign commonStateOptions = [{"value": 1, "valueString":"启用","labClass":"blue","inputClass":"ace"}, {"value": 0, "valueString":"即将上线","labClass":"red","inputClass":"ace"}, {"value": -1, "valueString":"删除状态","labClass":"red","inputClass":"ace"}]/>
+		<@ace.radioGroup options=commonStateOptions checkValue=(house.state)!-1 name="state" isWrap=false/>
 		</div>
 	</div>
 </div>
