@@ -16,6 +16,9 @@ import org.apache.commons.logging.LogFactory;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonPrimitive;
 import com.sun.crypto.provider.SunJCE;
 
 /**
@@ -171,5 +174,9 @@ public class AlgorithmUtils {
     public static void main(String[] args) {
     	System.out.println(new Date().getTime());
 		System.out.println(encodePassword("111111", AlgorithmEnum.MD5));
+		
+		JsonArray arr = new JsonParser().parse("['dddd','gggg']").getAsJsonArray();
+		arr.add(new JsonPrimitive("hhhh"));
+		System.out.println(arr.toString());
 	}
 }

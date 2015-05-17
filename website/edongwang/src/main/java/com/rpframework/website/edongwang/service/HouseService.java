@@ -10,6 +10,7 @@ import org.springframework.util.Assert;
 
 import com.rpframework.core.BaseService;
 import com.rpframework.core.api.FileService;
+import com.rpframework.utils.CollectionUtils;
 import com.rpframework.utils.NumberUtils;
 import com.rpframework.utils.Pager;
 import com.rpframework.website.edongwang.dao.IHouseDao;
@@ -37,19 +38,49 @@ public class HouseService extends BaseService {
 		if(NumberUtils.isValid(house.getId())) {
 			House houseDB = select(house.getId());
 			Assert.notNull(houseDB, "update cannot find id:" + house.getId());
-			
-			//icon不同，需要删除
-			if(StringUtils.isBlank(house.getHouseImg())) {
-				house.setHouseImg(houseDB.getHouseImg());
-			} else if(!StringUtils.equals(houseDB.getHouseImg(), house.getHouseImg())) {
-				try {
-					fileService.deleteFile(house.getHouseImg());
-				} catch (Exception e) {
-					logger.warn("文件删除失败:" + e.getLocalizedMessage());
+			if(!StringUtils.equals(houseDB.getHouseImgArray(), house.getHouseImgArray())) {
+				List<String> houseImgArrayList = house.getHouseImgArrayList();
+				List<String> houseImgArrayListDB = houseDB.getHouseImgArrayList();
+				for (String houseImgDB : houseImgArrayListDB) {
+					boolean isFind = false;
+					for (String houseImg : houseImgArrayList) {
+						if(StringUtils.equals(houseImg, houseImgDB)) {
+							isFind = true; break;
+						}
+					}
+					
+					if(!isFind) { //删除
+						try {
+							fileService.deleteFile(houseImgDB);
+						} catch (Exception e) {
+							logger.warn("文件删除失败:" + e.getLocalizedMessage());
+						}
+					}
 				}
 			}
 			
-			//icon不同，需要删除
+			if(!StringUtils.equals(houseDB.getHouseTypeImgArray(), house.getHouseTypeImgArray())) {
+				List<String> houseTypeImgArrayList = house.getHouseTypeImgArrayList();
+				List<String> houseTypeImgArrayListDB = houseDB.getHouseTypeImgArrayList();
+				for (String houseImgDB : houseTypeImgArrayListDB) {
+					boolean isFind = false;
+					for (String houseImg : houseTypeImgArrayList) {
+						if(StringUtils.equals(houseImg, houseImgDB)) {
+							isFind = true; break;
+						}
+					}
+					
+					if(!isFind) { //删除
+						try {
+							fileService.deleteFile(houseImgDB);
+						} catch (Exception e) {
+							logger.warn("文件删除失败:" + e.getLocalizedMessage());
+						}
+					}
+				}
+			}
+			
+			/*//icon不同，需要删除
 			if(StringUtils.isBlank(house.getHouseTypeImg())) {
 				house.setHouseTypeImg(houseDB.getHouseTypeImg());
 			} else if(!StringUtils.equals(houseDB.getHouseTypeImg(), house.getHouseTypeImg())) {
@@ -58,10 +89,13 @@ public class HouseService extends BaseService {
 				} catch (Exception e) {
 					logger.warn("文件删除失败:" + e.getLocalizedMessage());
 				}
-			}
+			}*/
 			
 			return update(house);
 		} else {
+			if(StringUtils.isBlank(house.getHouseImgArray()) || CollectionUtils.isEmpty(house.getHouseImgArrayList())|| CollectionUtils.isEmpty(house.getHouseTypeImgArrayList())) {
+				throw new IllegalArgumentException("新增时需要上传户型图或主图!");
+			}
 			house.setRecordCreateTime(System.currentTimeMillis() / 1000);
 			return insert(house);
 		}

@@ -16,7 +16,7 @@
 	<select id="doPager" parameterType="map" resultMap="xtUser">
 		select * from xt_user where 1=1
 		<if test="page.searchMap.userNmae != null">
-			and userNmae like '%#{page.searchMap.userNmae}%'
+			and userName like '%#{page.searchMap.userName}%'
 		</if>
 		 order by id
 	</select>

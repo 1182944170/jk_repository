@@ -1,8 +1,8 @@
 <title>提现列表</title>
 <form class="form-horizontal" role="form" id="validation-form" method="POST" action="${ctx}/admin/user_take_cash/list" onsubmit="return fromSearch(this)">
 	<input type="hidden" name="pager" value="1_"/>
-	<label>用户ID:</label>
-	<input type="text" name="userId" value="${(pager.searchMap.userId)!''}" placeholder="用户ID"/>
+	<label>用户姓名:</label>
+	<input type="text" name="realName" value="${(pager.searchMap.realName)!''}" placeholder="用户姓名"/>
 	<button class="btn btn-minier btn-success" type="submit"><i class="icon-search"></i>搜  索</button>
 </form>
 <div class="hr hr-5"></div>
@@ -13,7 +13,7 @@
 				<thead>
 					<tr>
 						<th>Id</th>
-						<th>用户ID</th>
+						<th>用户ID/用户姓名</th>
 						<th>提现金额</th>
 						<th>银行/开户行</th>
 						<th>备注</th>
@@ -26,7 +26,7 @@
 				<#list pager.itemList as u>
 					<tr>
 						<td><span class="green center">${u.id}</span></td>
-						<td>${u.userId}</td>
+						<td>${u.userId}/${u.user.realName}</td>
 						<td>${u.money}</td>
 						<td>${u.userBankCard.name}-${u.userBankCard.account}
 						[
@@ -101,8 +101,8 @@
 </#if>
 <script>
 function fromSearch(f){
-	if(f.userId.value) {
-		f.pager.value += "$$userId--" + f.userId.value;
+	if(f.realName.value) {
+		f.pager.value += "$$realName--" + f.realName.value;
 	}
 	return true;
 }

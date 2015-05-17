@@ -232,7 +232,7 @@
 					<a data-toggle="dropdown" href="#" class="dropdown-toggle">
 						<img class="nav-user-photo" src="${ctx}/resources/cssframework/ace/avatars/user.jpg" alt="Jason's Photo" />
 						<span class="user-info">
-							<small>Welcome</small>
+							<small>欢迎登陆</small>
 							<div class="center">${(sessionAdminUser.userName)!''} &nbsp;[${(sessionAdminUser.adminRole.name)!''}] </div>
 						</span>
 
@@ -240,7 +240,7 @@
 					</a>
 
 					<ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
-						<li>
+						<!--<li>
 							<a href="${ctx}/admin/adminuser/settings${suffix}">
 								<i class="icon-cog"></i>
 								Settings
@@ -252,7 +252,7 @@
 								<i class="icon-user"></i>
 								Profile
 							</a>
-						</li>
+						</li>-->
 
 						<li class="divider"></li>
 

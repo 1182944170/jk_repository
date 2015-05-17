@@ -5,25 +5,39 @@
 
 	<resultMap type="com.rpframework.module.user.domain.UserScoreShopLog" id="mUserScoreShopLog" autoMapping="true">
 		<id property="id" column="id" />
+		<result property="userId" column="userId"/>
 		<result property="scoreShopId" column="scoreShopId"/>
 		<association property="scoreShop" column="scoreShopId" select="com.rpframework.module.user.dao.IScoreShopDao.select"/>
+		<association property="user" column="userId" javaType="com.rpframework.core.vo.BaseUserVO" autoMapping="true" />
 	</resultMap>
 
 	<select id="doPager" parameterType="map" resultMap="mUserScoreShopLog">
-		select * from u_score_shop_log where 1=1
+		select m.*,
+			u.userName,
+			u.realName,
+			u.contact,
+			u.sex
+		from u_score_shop_log m
+			left outer join user u on u.id = m.userId
+		where 1=1
+		
 		<if test="page.searchMap.userId != null">
-			and userId = #{page.searchMap.userId} 
+			and m.userId = #{page.searchMap.userId} 
 		</if>
+		<if test="page.searchMap.realName != null">
+			and u.realName like "%"#{page.searchMap.realName}"%" 
+		</if>
+		
 		<if test="page.searchMap.scoreShopId != null">
-			and scoreShopId = #{page.searchMap.scoreShopId} 
+			and m.scoreShopId = #{page.searchMap.scoreShopId} 
 		</if>
 		
 		<if test="page.searchMap.startTime != null">
-			<![CDATA[and recordCreateTime >= #{page.searchMap.startTime}]]>
+			<![CDATA[and m.recordCreateTime >= #{page.searchMap.startTime}]]>
 		</if>
 		
 		<if test="page.searchMap.endTime != null">
-			<![CDATA[and recordCreateTime < #{page.searchMap.endTime}]]>
+			<![CDATA[and m.recordCreateTime < #{page.searchMap.endTime}]]>
 		</if>
 		
 		order by id desc
@@ -33,6 +47,13 @@
 	<insert id="insert" parameterType="com.rpframework.module.user.domain.UserScoreShopLog" useGeneratedKeys="true" keyProperty="userId"/>
 	<delete id="delete" parameterType="com.rpframework.module.user.domain.UserScoreShopLog" />
 	<select id="select" parameterType="Integer" resultMap="mUserScoreShopLog">
-		select * from u_score_shop_log where id=#{id}
+		select m.*,
+			u.userName,
+			u.realName,
+			u.contact,
+			u.sex
+		from u_score_shop_log m
+			left outer join user u on u.id = m.userId
+		where m.id=#{id}
 	</select> 
 </mapper>

@@ -5,19 +5,39 @@
 
 	<resultMap type="com.rpframework.module.user.domain.UserScore" id="mUserScore" autoMapping="true">
 		<id property="userId" column="userId" />
+		<association property="user" column="userId" javaType="com.rpframework.core.vo.BaseUserVO" autoMapping="true" />
 	</resultMap>
 
 	<select id="doPager" parameterType="map" resultMap="mUserScore">
-		select * from u_score where 1=1
+		select m.*,
+			u.userName,
+			u.realName,
+			u.contact,
+			u.sex
+		from u_score m
+			left outer join user u on u.id = m.userId
+		where 1=1
+		
 		<if test="page.searchMap.userId != null">
-			and userId = #{page.searchMap.userId} 
+			and m.userId = #{page.searchMap.userId} 
 		</if>
+		<if test="page.searchMap.realName != null">
+			and u.realName like "%"#{page.searchMap.realName}"%" 
+		</if>
+		 order by id desc
 	</select>
 	
 	<update id="update" parameterType="com.rpframework.module.user.domain.UserScore" />
 	<insert id="insert" parameterType="com.rpframework.module.user.domain.UserScore" useGeneratedKeys="true" keyProperty="userId"/>
 	<delete id="delete" parameterType="com.rpframework.module.user.domain.UserScore" />
 	<select id="select" parameterType="Integer" resultMap="mUserScore">
-		select * from u_score where userId=#{userId}
+		select m.*,
+			u.userName,
+			u.realName,
+			u.contact,
+			u.sex
+		from u_score m
+			left outer join user u on u.id = m.userId
+		where m.userId=#{userId}
 	</select> 
 </mapper>

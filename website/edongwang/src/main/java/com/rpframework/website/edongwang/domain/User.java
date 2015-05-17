@@ -16,6 +16,8 @@ public class User extends Domain {
 	
 	@FieldMapperAnnotation
 	String contact; //手机号码
+	@FieldMapperAnnotation
+	String userName; //手机号码
 	
 	@FieldMapperAnnotation
 	String password;  //密码
@@ -109,6 +111,14 @@ public class User extends Domain {
 
 	public String getContact() {
 		return contact;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public void setContact(String contact) {

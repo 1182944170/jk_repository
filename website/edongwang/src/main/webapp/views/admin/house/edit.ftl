@@ -11,8 +11,8 @@
 <form class="form-horizontal" role="form" id="validation-form" method="POST" action="${ctx}/admin/house/dosave${suffix}" enctype="multipart/form-data">
 <#if house??>
 	<input type="hidden" name="id" value="${house.id}"/>
-	<input type="hidden" name="houseImg" value="${house.houseImg}"/>
-	<input type="hidden" name="houseTypeImg" value="${house.houseTypeImg}"/>
+	<input type="hidden" name="houseImgArray" value='${house.houseImgArray}'/>
+	<input type="hidden" name="houseTypeImgArray" value='${house.houseTypeImgArray}'/>
 	<input type="hidden" name="recordCreateTime" value="${house.recordCreateTime}"/>
 </#if>
 	<input type="hidden" name="areaCode" value=""/>
@@ -113,6 +113,19 @@
 		</div>
 	</div>
 </div>
+<div class="form-group">
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="commissionString">佣金:</label>
+	<div class="col-xs-12 col-sm-9">
+		<div class="clearfix">
+			<span class="block input-icon width-40">
+				<input type="text" name="commissionString" id="commissionString" value="${(house.commissionString)!''}" class="form-control" placeholder="佣金"/>
+				<i class="icon-user"></i>
+			</span>
+			
+			<small>* 单位 (元) 或者 百分比</small>
+		</div>
+	</div>
+</div>
 
 
 
@@ -146,12 +159,30 @@
 <div class="form-group">
 	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="houseImgIconFile">楼盘主图:</label>
 	<div class="col-xs-12 col-sm-9">
-		<div class="clearfix">
-			<div class="ace-file-input width-40">
+		<div class="ace-file-input width-50" style="height:220px;">
+			<#assign fileCount=5 />
+			<#if house?? && house.houseImgArrayList?has_content>
+				<#list house.houseImgArrayList as f>
+					<div class="widget-box">
+						<div class="widget-header">
+							<h4><img src="${tagUtils.getFileFullPath(f)}" width=60 /></h4>
+							<span class="widget-toolbar">
+								<a href="javascript:RP.MultipleFile.commonDel('a_delHouseImg_${f_index}', '${f}', 'houseImgArray','houseImgIconFile', true)" id="a_delHouseImg_${f_index}">
+									<i class="icon-remove"></i>
+								</a>
+							</span>
+						</div>
+					</div>
+					<#assign fileCount=fileCount-1 />
+				</#list>
+			</#if>
+			<#if fileCount gt 0>
+			<#list 0..fileCount-1 as i>
 				<input type="file" name="houseImgIconFile" id="houseImgIconFile">
-			</div>
-			<small>* 已经存在的icon如果不修改则不需要填写</small>
+			</#list>
+			</#if>
 		</div>
+		<small>* 主图最多上传 5 张</small>
 	</div>
 </div>
 
@@ -159,10 +190,30 @@
 	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="houseTypeImgIconFile">户型图:</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
-			<div class="ace-file-input width-40">
-				<input type="file" name="houseTypeImgIconFile" id="houseTypeImgIconFile">
+			<div class="ace-file-input width-50" style="height:220px;">
+				<#assign fileCount=5 />
+				<#if house?? && house.houseTypeImgArrayList?has_content>
+					<#list house.houseTypeImgArrayList as f>
+						<div class="widget-box">
+							<div class="widget-header">
+								<h4><img src="${tagUtils.getFileFullPath(f)}" width=60 /></h4>
+								<span class="widget-toolbar">
+									<a href="javascript:RP.MultipleFile.commonDel('a_delHouseTypeImg_${f_index}', '${f}', 'houseTypeImgArray','houseTypeImgIconFile', true)" id="a_delHouseTypeImg_${f_index}">
+										<i class="icon-remove"></i>
+									</a>
+								</span>
+							</div>
+						</div>
+						<#assign fileCount=fileCount-1 />
+					</#list>
+				</#if>
+				<#if fileCount gt 0>
+				<#list 0..fileCount-1 as i>
+					<input type="file" name="houseTypeImgIconFile" id="houseTypeImgIconFile">
+				</#list>
+				</#if>
 			</div>
-			<small>* 已经存在的icon如果不修改则不需要填写</small>
+			<small>* 户型图最多上传 5 张</small>
 		</div>
 	</div>
 </div>
@@ -194,7 +245,7 @@
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 		<#assign commonStateOptions = [{"value": 1, "valueString":"启用","labClass":"blue","inputClass":"ace"}, {"value": 0, "valueString":"即将上线","labClass":"red","inputClass":"ace"}, {"value": -1, "valueString":"删除状态","labClass":"red","inputClass":"ace"}]/>
-		<@ace.radioGroup options=commonStateOptions checkValue=(house.state)!-1 name="state" isWrap=false/>
+		<@ace.radioGroup options=commonStateOptions checkValue=(house.state)!-2 name="state" isWrap=false/>
 		</div>
 	</div>
 </div>
@@ -222,7 +273,7 @@ var country = Object.create(B.Country);
 $(document).ready(function(){
 	RP.addBreadcrumb([{name:"基础"}, {name:"<#if house??>编辑<#else>新增</#if>楼盘",  active: true}]);
 	country.regist4Select(${(house.areaCode)!-1},"provinceSelect","citySelect","countySelect");
-	$('#houseImgIconFile').ace_file_input({
+	$('[id=houseImgIconFile]').ace_file_input({
 		no_file:'没有选择图片 ...',
 		btn_choose:'选择图片',
 		btn_change:'重新选择图片',
@@ -231,7 +282,7 @@ $(document).ready(function(){
 		thumbnail:false
 	});
 	
-	$('#houseTypeImgIconFile').ace_file_input({
+	$('[id=houseTypeImgIconFile]').ace_file_input({
 		no_file:'没有选择图片 ...',
 		btn_choose:'选择图片',
 		btn_change:'重新选择图片',
@@ -239,12 +290,6 @@ $(document).ready(function(){
 		onchange:null,
 		thumbnail:false
 	});
-	
-	$('.date-picker').datepicker({autoclose:true}).next().on(ace.click_event, function(){
-		$(this).prev().focus();
-	});
-				
-	$(".chosen-select").chosen(); 
 	
 	$('#validation-form').validate({
 		errorElement: 'div',
@@ -252,6 +297,9 @@ $(document).ready(function(){
 		focusInvalid: true,
 		rules: {
 			name: {
+				required: true
+			},
+			commissionString: {
 				required: true
 			},
 			propertyType: {

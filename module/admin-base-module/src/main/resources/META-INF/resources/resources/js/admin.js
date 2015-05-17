@@ -1,5 +1,43 @@
 var RP = RP || {}
-
+RP.MultipleFile = {
+	commonDel:function(aId, imgValue, formImgValueName, addFileName, isArray){
+		$("#" + aId).closest(".widget-box").hide();
+		var formImgValueObj = $("[name='"+formImgValueName+"']");
+		var succ = false;
+		if(isArray) {
+			try{
+				var valueArray = JSON.parse(formImgValueObj.val());
+				for(var idx in valueArray) {
+					if(valueArray[idx] == imgValue) {
+						succ = true;
+						valueArray.splice(idx, 1);
+						//delete valueArray[idx];
+					}
+				}
+				
+				formImgValueObj.val(JSON.stringify(valueArray));
+			} catch(e){
+				throw e;
+			}
+			
+		} else {
+			formImgValueObj.val("");
+			succ = true;
+		}
+		
+		if(succ) {
+			/**$("#" + addFileName).closest(".ace-file-input").append('<input type="file" name="'+addFileName+'" id="'+addFileName+'" />');
+			$('[id='+addFileName+']').ace_file_input({
+				no_file:'没有选择图片 ...',
+				btn_choose:'选择图片',
+				btn_change:'重新选择图片',
+				droppable:false,
+				onchange:null,
+				thumbnail:false
+			});*/
+		}
+	}	
+}
 RP.Form = {
 		invalidHandler: function (event, validator) { //display error alert on form submit   
 			

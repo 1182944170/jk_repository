@@ -16,21 +16,41 @@
 	</resultMap>
 	
 	<select id="doPager" parameterType="map" resultMap="mHouseRecommend">
-		select * from e_house_recommend where 1=1
+		select m.* 
+		
+		from e_house_recommend m
+		
+		<if test="page.searchMap.recommendUserRealName != null">
+			left outer join user u on u.id=m.recommendUserId
+		</if>
+		
+		<if test="page.searchMap.acceptSalesmanRealName != null">
+			left outer join user u2 on u2.id=m.acceptSalesmanId 
+		</if>
+		
+		where 1=1
 		<if test="page.searchMap.state != null">
-			and state = #{page.searchMap.state} 
+			and m.state = #{page.searchMap.state} 
 		</if>
 		<if test="page.searchMap.areaCode != null">
-			and areaCode = #{page.searchMap.areaCode} 
+			and m.areaCode = #{page.searchMap.areaCode} 
 		</if>
 		<if test="page.searchMap.houseId != null">
-			and houseId = #{page.searchMap.houseId} 
+			and m.houseId = #{page.searchMap.houseId} 
 		</if>
 		<if test="page.searchMap.recommendUserId != null">
-			and recommendUserId = #{page.searchMap.recommendUserId} 
+			and m.recommendUserId = #{page.searchMap.recommendUserId} 
 		</if>
 		<if test="page.searchMap.acceptSalesmanId != null">
-			and acceptSalesmanId = #{page.searchMap.acceptSalesmanId} 
+			and m.acceptSalesmanId = #{page.searchMap.acceptSalesmanId} 
+		</if>
+		
+		<if test="page.searchMap.recommendUserRealName != null">
+			and u.realName like "%"#{page.searchMap.recommendUserRealName}"%" 
+		</if>
+		
+		<if test="page.searchMap.acceptSalesmanRealName != null">
+			and u2.realName like "%"#{page.searchMap.acceptSalesmanRealName}"%" 
 		</if>
 		 order by id desc
 	</select>

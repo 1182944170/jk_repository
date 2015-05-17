@@ -4,6 +4,7 @@ import com.rpframework.core.Domain;
 import com.rpframework.core.mybatis.plugin.annotation.FieldMapperAnnotation;
 import com.rpframework.core.mybatis.plugin.annotation.TableMapperAnnotation;
 import com.rpframework.core.mybatis.plugin.annotation.UniqueKeyType;
+import com.rpframework.core.vo.BaseUserVO;
 
 @TableMapperAnnotation(tableName = "u_score_shop_log", uniqueKeyType = UniqueKeyType.Single, uniqueKey = "id")
 public class UserScoreShopLog extends Domain {
@@ -29,7 +30,14 @@ public class UserScoreShopLog extends Domain {
 	Long recordCreateTime;
 	
 	ScoreShop scoreShop;
+	BaseUserVO user;
 	
+	public BaseUserVO getUser() {
+		return user;
+	}
+	public void setUser(BaseUserVO user) {
+		this.user = user;
+	}
 	public ScoreShop getScoreShop() {
 		return scoreShop;
 	}

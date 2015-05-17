@@ -1,5 +1,13 @@
 package com.rpframework.website.edongwang.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.lang.StringUtils;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.rpframework.core.Domain;
 import com.rpframework.core.mybatis.plugin.annotation.FieldMapperAnnotation;
 import com.rpframework.core.mybatis.plugin.annotation.TableMapperAnnotation;
@@ -28,6 +36,8 @@ public class House extends Domain{
 	
 	@FieldMapperAnnotation
 	String address ; //详细地址
+	@FieldMapperAnnotation
+	String commissionString ; //详细地址
 	
 	@FieldMapperAnnotation
 	Integer surfaceType; //面积
@@ -42,7 +52,7 @@ public class House extends Domain{
 	Double bargainPrice; // 成交奖励
 	
 	@FieldMapperAnnotation
-	String houseImg ; //楼盘主图
+	String houseImgArray ; //楼盘主图
 	
 	@FieldMapperAnnotation
 	String flowIntro ; //推荐流程及奖励说明
@@ -51,7 +61,7 @@ public class House extends Domain{
 	String intro; //楼盘简介
 	
 	@FieldMapperAnnotation
-	String houseTypeImg ; //户型图
+	String houseTypeImgArray ; //户型图
 	
 	@FieldMapperAnnotation
 	Long protocolBeginTime ; //协议开始时间
@@ -64,6 +74,42 @@ public class House extends Domain{
 	
 	@FieldMapperAnnotation
 	Integer state;
+
+	public List<String> getHouseImgArrayList(){
+		if(StringUtils.isBlank(houseImgArray)) {
+			return null;
+		}
+		JsonArray array = new JsonParser().parse(houseImgArray).getAsJsonArray();
+		List<String> list = new ArrayList<String>();
+		
+		for (JsonElement je : array) {
+			list.add(je.getAsString());
+		}
+		
+		return list;
+	}
+	
+	public List<String> getHouseTypeImgArrayList(){
+		if(StringUtils.isBlank(houseImgArray)) {
+			return null;
+		}
+		JsonArray array = new JsonParser().parse(houseTypeImgArray).getAsJsonArray();
+		List<String> list = new ArrayList<String>();
+		
+		for (JsonElement je : array) {
+			list.add(je.getAsString());
+		}
+		
+		return list;
+	}
+	
+	public String getCommissionString() {
+		return commissionString;
+	}
+
+	public void setCommissionString(String commissionString) {
+		this.commissionString = commissionString;
+	}
 
 	public Integer getId() {
 		return id;
@@ -149,12 +195,20 @@ public class House extends Domain{
 		this.bargainPrice = bargainPrice;
 	}
 
-	public String getHouseImg() {
-		return houseImg;
+	public String getHouseImgArray() {
+		return houseImgArray;
 	}
 
-	public void setHouseImg(String houseImg) {
-		this.houseImg = houseImg;
+	public void setHouseImgArray(String houseImgArray) {
+		this.houseImgArray = houseImgArray;
+	}
+
+	public String getHouseTypeImgArray() {
+		return houseTypeImgArray;
+	}
+
+	public void setHouseTypeImgArray(String houseTypeImgArray) {
+		this.houseTypeImgArray = houseTypeImgArray;
 	}
 
 	public String getFlowIntro() {
@@ -173,13 +227,6 @@ public class House extends Domain{
 		this.intro = intro;
 	}
 
-	public String getHouseTypeImg() {
-		return houseTypeImg;
-	}
-
-	public void setHouseTypeImg(String houseTypeImg) {
-		this.houseTypeImg = houseTypeImg;
-	}
 
 	public Long getProtocolBeginTime() {
 		return protocolBeginTime;

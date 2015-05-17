@@ -179,6 +179,7 @@ public class UserApiAct extends BaseAct {
 	public @ResponseBody JsonElement changeRealName(@RequestParam String realName,  HttpSession session, HttpServletRequest request){
 		User user = getSessionUser(session);
 		user.setRealName(realName);
+		user.setUserName(realName);
 		userService.update(user);
 		JsonObject json = new JsonObject();
 		json.addProperty("succ", true);

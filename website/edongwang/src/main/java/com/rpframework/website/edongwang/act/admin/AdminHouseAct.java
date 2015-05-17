@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,7 +16,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonPrimitive;
 import com.rpframework.core.api.FileService;
+import com.rpframework.utils.CollectionUtils;
 import com.rpframework.utils.DateUtils;
 import com.rpframework.utils.NumberUtils;
 import com.rpframework.utils.Pager;
@@ -53,32 +60,60 @@ public class AdminHouseAct extends AdminAct{
 	}
 
 	@RequestMapping("/dosave")
-	public String doSaveOrUpdate(@RequestParam(value="houseImgIconFile", required=false) CommonsMultipartFile houseImgIconFile,
-			@RequestParam(value="houseTypeImgIconFile", required=false) CommonsMultipartFile houseTypeImgIconFile,
+	public String doSaveOrUpdate(@RequestParam(value="houseImgIconFile", required=false) CommonsMultipartFile[] houseImgIconFile,
+			@RequestParam(value="houseTypeImgIconFile", required=false) CommonsMultipartFile[] houseTypeImgIconFile,
 			@RequestParam(value="protocolBeginTimeString") String protocolBeginTimeString,
 			@RequestParam(value="protocolEndTimeString") String protocolEndTimeString,
 			@ModelAttribute House house, 
 			HttpSession session, HttpServletRequest request,RedirectAttributes attr){
 		
-		if(houseImgIconFile.getSize() > 0) {
-			try {
-				String relativelyPath = "resources/house/" + NumberUtils.random(3) + houseImgIconFile.getOriginalFilename();
-				fileService.saveFile(houseImgIconFile.getInputStream(), relativelyPath);
-				house.setHouseImg(relativelyPath);
-			} catch (Exception e) {
-				throw new IllegalArgumentException("文件上传失败，原因:" + e.getLocalizedMessage());
+		if(CollectionUtils.isNotEmpty(houseImgIconFile)) {
+			JsonArray houseImg = null;
+			if(StringUtils.isNotBlank(house.getHouseImgArray())) {
+				houseImg = new JsonParser().parse(house.getHouseImgArray()).getAsJsonArray();
+			} else {
+				houseImg = new JsonArray();
 			}
-		} else {
-			if(house == null || NumberUtils.isNotValid(house.getId())) {
-				throw new IllegalArgumentException("新增情况下，楼盘图必须上传Icon!");
+			for (CommonsMultipartFile commonsMultipartFile : houseImgIconFile) {
+				if(commonsMultipartFile.getSize() <= 0) continue;
+				try {
+					String relativelyPath = "resources/house/" + house.getName() + "_" + (NumberUtils.random(5)) +"_" + commonsMultipartFile.getOriginalFilename();
+					fileService.saveFile(commonsMultipartFile.getInputStream(), relativelyPath);
+					houseImg.add(new JsonPrimitive(relativelyPath));
+				} catch (Exception e) {
+					throw new IllegalArgumentException("文件上传失败，原因:" + e.getLocalizedMessage());
+				}
 			}
+			
+			house.setHouseImgArray(houseImg.toString());
 		}
 		
-		if(houseTypeImgIconFile.getSize() > 0) {
+		if(CollectionUtils.isNotEmpty(houseTypeImgIconFile)) {
+			JsonArray houseImg = null;
+			if(StringUtils.isNotBlank(house.getHouseTypeImgArray())) {
+				houseImg = new JsonParser().parse(house.getHouseTypeImgArray()).getAsJsonArray();
+			} else {
+				houseImg = new JsonArray();
+			}
+			for (CommonsMultipartFile commonsMultipartFile : houseTypeImgIconFile) {
+				if(commonsMultipartFile.getSize() <= 0) continue;
+				try {
+					String relativelyPath = "resources/house/" + house.getName() + "_" + (NumberUtils.random(5)) +"_" + commonsMultipartFile.getOriginalFilename();
+					fileService.saveFile(commonsMultipartFile.getInputStream(), relativelyPath);
+					houseImg.add(new JsonPrimitive(relativelyPath));
+				} catch (Exception e) {
+					throw new IllegalArgumentException("文件上传失败，原因:" + e.getLocalizedMessage());
+				}
+			}
+			
+			house.setHouseTypeImgArray(houseImg.toString());
+		}
+		
+		/*if(houseTypeImgIconFile.getSize() > 0) {
 			try {
 				String relativelyPath = "resources/housetype/" + NumberUtils.random(3) + houseTypeImgIconFile.getOriginalFilename();
 				fileService.saveFile(houseTypeImgIconFile.getInputStream(), relativelyPath);
-				house.setHouseTypeImg(relativelyPath);
+//				house.setHouseTypeImg(relativelyPath);
 			} catch (Exception e) {
 				throw new IllegalArgumentException("文件上传失败，原因:" + e.getLocalizedMessage());
 			}
@@ -86,7 +121,7 @@ public class AdminHouseAct extends AdminAct{
 			if(house == null || NumberUtils.isNotValid(house.getId())) {
 				throw new IllegalArgumentException("新增情况下，户型图必须上传Icon!");
 			}
-		}
+		}*/
 		
 		house.setProtocolBeginTime(DateUtils.parse(protocolBeginTimeString).getTime()/1000);
 		house.setProtocolEndTime(DateUtils.parse(protocolEndTimeString).getTime()/1000);

@@ -5,14 +5,28 @@
 
 	<resultMap type="com.rpframework.module.user.domain.UserTakeCash" id="mUserTakeCash" autoMapping="true">
 		<id property="id" column="id" />
+		<result property="userId" column="userId"/>
 		<result property="userBankCardId" column="userBankCardId" />
 		<association property="userBankCard" column="userBankCardId" select="com.rpframework.module.user.dao.IUserBankCardDao.select" />
+		<association property="user" column="userId" javaType="com.rpframework.core.vo.BaseUserVO" autoMapping="true" />
 	</resultMap>
 
 	<select id="doPager" parameterType="map" resultMap="mUserTakeCash">
-		select * from u_take_cash where 1=1
+		
+		select m.*,
+			u.userName,
+			u.realName,
+			u.contact,
+			u.sex
+		from u_take_cash m
+			left outer join user u on u.id = m.userId
+		where 1=1
+		
 		<if test="page.searchMap.userId != null">
-			and userId = #{page.searchMap.userId} 
+			and m.userId = #{page.searchMap.userId} 
+		</if>
+		<if test="page.searchMap.realName != null">
+			and u.realName like "%"#{page.searchMap.realName}"%" 
 		</if>
 		 order by id desc
 	</select>
@@ -21,6 +35,13 @@
 	<insert id="insert" parameterType="com.rpframework.module.user.domain.UserScore" useGeneratedKeys="true" keyProperty="userId"/>
 	<delete id="delete" parameterType="com.rpframework.module.user.domain.UserScore" />
 	<select id="select" parameterType="Integer" resultMap="mUserTakeCash">
-		select * from u_take_cash where id=#{id}
+		select m.*,
+			u.userName,
+			u.realName,
+			u.contact,
+			u.sex
+		from u_take_cash m
+			left outer join user u on u.id = m.userId
+		m.id=#{id}
 	</select> 
 </mapper>

@@ -3,6 +3,9 @@
 	<input type="hidden" name="pager" value="1_"/>
 	<label>用户ID:</label>
 	<input type="text" name="id" value="${(pager.searchMap.id)!''}" placeholder="用户ID"/>
+	
+	<label>用户名:</label>
+	<input type="text" name="realName" value="${(pager.searchMap.realName)!''}" placeholder="用户名"/>
 	<button class="btn btn-minier btn-success" type="submit"><i class="icon-search"></i>搜  索</button>
 </form>
 <div class="hr hr-5"></div>
@@ -104,6 +107,9 @@
 function fromSearch(f){
 	if(f.id.value) {
 		f.pager.value += "$$id--" + f.id.value;
+	}
+	if(f.realName.value) {
+		f.pager.value += "$$realName--" + f.realName.value;
 	}
 	return true;
 }

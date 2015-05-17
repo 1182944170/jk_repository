@@ -1,8 +1,8 @@
 <title>用户积分商城日志列表</title>
 <form class="form-horizontal" role="form" id="validation-form" method="POST" action="${ctx}/admin/user_score_shop_log/list" onsubmit="return fromSearch(this)">
 	<input type="hidden" name="pager" value="1_"/>
-	<label>用户ID:</label>
-	<input type="text" name="userId" value="${(pager.searchMap.userId)!''}" placeholder="用户ID"/>
+	<label>用户姓名:</label>
+	<input type="text" name="realName" value="${(pager.searchMap.realName)!''}" placeholder="用户姓名"/>
 	
 	<label>商品ID:</label>
 	<input type="text" name="scoreShopId" value="${(pager.searchMap.scoreShopId)!''}" placeholder="商品ID"/>
@@ -23,7 +23,7 @@
 				<thead>
 					<tr>
 						<th>ID</th>
-						<th>userId</th>
+						<th>用户ID/用户姓名</th>
 						<th>商品ID</th>
 						<th>用户信息</th>
 						<th>发货状态</th>
@@ -101,8 +101,8 @@
 </#if>
 <script>
 function fromSearch(f){
-	if(f.userId.value) {
-		f.pager.value += "$$userId--" + f.userId.value;
+	if(f.realName.value) {
+		f.pager.value += "$$realName--" + f.realName.value;
 	}
 	if(f.scoreShopId.value) {
 		f.pager.value += "$$scoreShopId--" + f.scoreShopId.value;

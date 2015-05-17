@@ -10,7 +10,6 @@
 		<link href="${ctx}/resources/favicon.ico" rel="icon" type="image/x-icon" />
 		<link href="${ctx}/resources/favicon.ico" rel="bookmark" type="image/x-icon" />
 		<!-- basic styles -->
-
 		<link href="${ctx}/resources/cssframework/ace/css/bootstrap.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="${ctx}/resources/cssframework/ace/css/font-awesome.min.css" />
 
@@ -19,17 +18,15 @@
 		<![endif]-->
 
 		<!-- page specific plugin styles -->
-
 		<link rel="stylesheet" href="${ctx}/resources/cssframework/ace/css/jquery-ui-1.10.3.custom.min.css" />
 		<link rel="stylesheet" href="${ctx}/resources/cssframework/ace/css/chosen.css" />
 		<link rel="stylesheet" href="${ctx}/resources/cssframework/ace/css/datepicker.css" />
 		<link rel="stylesheet" href="${ctx}/resources/cssframework/ace/css/bootstrap-timepicker.css" />
 		<link rel="stylesheet" href="${ctx}/resources/cssframework/ace/css/daterangepicker.css" />
 		<link rel="stylesheet" href="${ctx}/resources/cssframework/ace/css/colorpicker.css" />
+		<link rel="stylesheet" href="${ctx}/resources/cssframework/ace/css/select2.css" />
 		
-
 		<!-- fonts -->
-
 		<link rel="stylesheet" href="${ctx}/resources/cssframework/ace/css/open_Sans.css" />
 
 		<!-- ace styles -->
@@ -65,18 +62,6 @@
 		<script src="${ctx}/resources/cssframework/ace/js/jquery-1.10.2.min.js"></script>
 		<![endif]-->
 
-		<!--[if !IE]> -->
-		<script type="text/javascript">
-			window.jQuery || document.write("<script src='${ctx}/resources/cssframework/ace/js/jquery-2.0.3.min.js'>"+"<"+"/script>");
-		</script>
-		<!-- <![endif]-->
-
-		<!--[if IE]>
-		<script type="text/javascript">
-		 window.jQuery || document.write("<script src='${ctx}/resources/cssframework/ace/js/jquery-1.10.2.min.js'>"+"<"+"/script>");
-		</script>
-		<![endif]-->
-
 		<script type="text/javascript">
 			if("ontouchend" in document) document.write("<script src='${ctx}/resources/cssframework/ace/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
 			ctx = '${ctx}';
@@ -84,6 +69,11 @@
 		<script src="${ctx}/resources/cssframework/ace/js/bootstrap.min.js"></script>
 		<script src="${ctx}/resources/cssframework/ace/js/typeahead-bs2.min.js"></script>
 
+		<!-- page specific plugin scripts -->
+
+		<!--[if lte IE 8]>
+		  <script src="${ctx}/resources/cssframework/ace/js/excanvas.min.js"></script>
+		<![endif]-->
 		<script src="${ctx}/resources/cssframework/ace/js/fuelux/fuelux.wizard.min.js"></script>
 		<script src="${ctx}/resources/cssframework/ace/js/jquery.validate.min.js"></script>
 		<script src="${ctx}/resources/cssframework/ace/js/additional-methods.min.js"></script>
@@ -150,10 +140,11 @@
 						<ul class="breadcrumb">
 							<li>
 								<i class="icon-home home-icon"></i>
-								<a href="${ctx}/admin/main${suffix}">Home</a>
+								<a href="${ctx}/admin/main${suffix}">后台首页</a>
 							</li>
 						</ul><!-- .breadcrumb -->
-
+						
+						<!--
 						<div class="nav-search" id="nav-search">
 							<form class="form-search">
 								<span class="input-icon">
@@ -161,7 +152,7 @@
 									<i class="icon-search nav-search-icon"></i>
 								</span>
 							</form>
-						</div><!-- #nav-search -->
+						</div>--><!-- #nav-search -->
 					</div>
 
 					<div class="page-content">

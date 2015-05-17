@@ -4,7 +4,7 @@
 		控制台
 		<small>
 			<i class="icon-double-angle-right"></i>
-			 查看
+			 后台首页
 		</small>
 	</h1>
 </div>

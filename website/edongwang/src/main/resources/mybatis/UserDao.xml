@@ -16,6 +16,9 @@
 		<if test="page.searchMap.id != null">
 			and id = #{page.searchMap.id} 
 		</if>
+		<if test="page.searchMap.realName != null">
+			and realName like "%"#{page.searchMap.realName}"%"
+		</if>
 		 order by id
 	</select>
 	

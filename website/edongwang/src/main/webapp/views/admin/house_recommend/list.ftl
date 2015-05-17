@@ -1,11 +1,11 @@
 <title>楼盘推荐列表</title>
 <form class="form-horizontal" role="form" id="validation-form" method="POST" action="${ctx}/admin/house_recommend/list" onsubmit="return fromSearch(this)">
 	<input type="hidden" name="pager" value="1_"/>
-	<label>推荐用户ID:</label>
-	<input type="text" name="recommendUserId" value="${(pager.searchMap.recommendUserId)!''}" placeholder="推荐用户ID"/>
+	<label>推荐用户名:</label>
+	<input type="text" name="recommendUserRealName" value="${(pager.searchMap.recommendUserRealName)!''}" placeholder="推荐用户名"/>
 	
-	<label>接单用户ID:</label>
-	<input type="text" name="acceptSalesmanId" value="${(pager.searchMap.acceptSalesmanId)!''}" placeholder="接单用户"/>
+	<label>受理用户名:</label>
+	<input type="text" name="acceptSalesmanRealName" value="${(pager.searchMap.acceptSalesmanRealName)!''}" placeholder="受理用户名"/>
 	
 	<button class="btn btn-minier btn-success" type="submit"><i class="icon-search"></i>搜  索</button>
 </form>
@@ -21,8 +21,8 @@
 						<th>客户信息</th>
 						<th>用户需求</th>
 						<th width=100><i class="icon-time bigger-110 hidden-480"></i>楼盘</th>
-						<th>推荐者信息</th>
-						<th>业务员信息</th>
+						<th>推荐人信息</th>
+						<th>接单人信息</th>
 						<th>进度</th>
 						<th>创建时间</th>
 						<th>状态</th>
@@ -62,33 +62,33 @@
 								<#if u.progresses?has_content && u.progresses?size gt 0>
 									<#assign hasValue=true />
 								</#if>
-								<li data-target="#step1" <#if hasValue && u.progresses[0].state==1>class="active"</#if>>
+								<li data-target="#step1" <#if hasValue && u.progresses[0].state==1>class="complete"</#if>>
 									<span class="step" data-toggle="tooltip" data-placement="top" data-original-title="
 									<#if hasValue>
 											星级:${gsonUtils.getInt(u.progresses[0].extJson, "infoStar")},意向:${gsonUtils.getInt(u.progresses[0].extJson, "intentStar")}, 备注:${gsonUtils.getString(u.progresses[0].extJson, "remark")},处理时间:${tagUtils.formatDate(u.progresses[0].recordCreateTime)}
 									</#if>
 									">1</span>
-									<span class="title">有效性</span>
+									<span class="title"><small>有效性</small></span>
 								</li>
 								
 								<#assign hasValue=false />
 								<#if u.progresses?has_content && u.progresses?size gt 1>
 									<#assign hasValue=true />
 								</#if>
-								<li data-target="#step2" <#if hasValue && u.progresses[1].state==1>class="active"</#if>>
+								<li data-target="#step2" <#if hasValue && u.progresses[1].state==1>class="complete"</#if>>
 									<span class="step" data-toggle="tooltip" data-placement="top" data-original-title="
 									<#if hasValue>
 										备注:${gsonUtils.getString(u.progresses[1].extJson, "remark")},处理时间:${tagUtils.formatDate(u.progresses[1].recordCreateTime)}
 									</#if>
 									">2</span>
-									<span class="title">回访</span>
+									<span class="title"><small>回访</small></span>
 								</li>
 								
 								<#assign hasValue=false />
 								<#if u.progresses?has_content && u.progresses?size gt 2>
 									<#assign hasValue=true />
 								</#if>
-								<li data-target="#step3" <#if hasValue && u.progresses[2].state==1>class="active"<#elseif hasValue && u.progresses[2].state==2>class="active"</#if>>
+								<li data-target="#step3" <#if hasValue && u.progresses[2].state==1>class="complete"<#elseif hasValue && u.progresses[2].state==2>class="active"</#if>>
 									<span class="step" data-toggle="tooltip" data-placement="top"  <#if hasValue && u.progresses[2].state==2>style="border-color:#C47952"</#if> data-original-title="
 									<#if hasValue>
 											<#if u.progresses[2].state==1><#elseif u.progresses[2].state==2><#assign hasWaitLeader=1 />等待负责人确认<#else></#if>
@@ -100,20 +100,20 @@
 											处理时间:${tagUtils.formatDate(u.progresses[2].recordCreateTime)}
 									</#if>
 									">3</span>
-									<span class="title">成交</span>
+									<span class="title"><small>成交</small></span>
 								</li>
 								
 								<#assign hasValue=false />
 								<#if u.progresses?has_content && u.progresses?size gt 3>
 									<#assign hasValue=true />
 								</#if>
-								<li data-target="#step4" <#if hasValue && u.progresses[3].state==1>class="active"</#if>>
+								<li data-target="#step4" <#if hasValue && u.progresses[3].state==1>class="complete"</#if>>
 									<span class="step" data-toggle="tooltip" data-placement="top"  <#if progress?? && progress.state==1><#elseif progress?? && progress.state==2>style="border-color:#C47952"</#if> data-original-title="
 									<#if hasValue>
 										完结:处理时间:${tagUtils.formatDate(u.progresses[3].recordCreateTime)}
 									</#if>
 									">4</span>
-									<span class="title">有效性</span>
+									<span class="title"><small>完结</small></span>
 								</li>
 							</ul>
 						</#if>
@@ -177,11 +177,11 @@
 </#if>
 <script>
 function fromSearch(f){
-	if(f.recommendUserId.value) {
-		f.pager.value += "$$recommendUserId--" + f.recommendUserId.value;
+	if(f.recommendUserRealName.value) {
+		f.pager.value += "$$recommendUserRealName--" + f.recommendUserRealName.value;
 	}
-	if(f.acceptSalesmanId.value) {
-		f.pager.value += "$$acceptSalesmanId--" + f.acceptSalesmanId.value;
+	if(f.acceptSalesmanRealName.value) {
+		f.pager.value += "$$acceptSalesmanRealName--" + f.acceptSalesmanRealName.value;
 	}
 	return true;
 }

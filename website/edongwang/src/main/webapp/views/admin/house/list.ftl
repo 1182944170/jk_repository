@@ -13,6 +13,7 @@
 						<th>均价</th>
 						<th>推荐奖励</th>
 						<th>成交奖励</th>
+						<th>佣金</th>
 						<th>协议时间</th>
 						<th>创建时间</th>
 						<th>状态</th>
@@ -30,6 +31,7 @@
 						<td>${u.avgPrice}</td>
 						<td>${u.recommendPrice}</td>
 						<td>${u.bargainPrice}</td>
+						<td>${u.commissionString}</td>
 						<td>${tagUtils.formatDate(u.protocolBeginTime)}~${tagUtils.formatDate(u.protocolEndTime)}</td>
 						<td>${tagUtils.formatDate(u.recordCreateTime)}</td>
 						<td>
@@ -94,6 +96,7 @@
 <script>
 $(document).ready(function(){
 	RP.addBreadcrumb([{name:"楼盘管理"}, {name:"楼盘列表", linkUrl:"${ctx}/admin/house/list", active: true}]);
+	$("#breadcrumbs ul").append('&nbsp;&nbsp;&nbsp;&nbsp;<a href="${ctx}/admin/house/add"><i class="icon-zoom-in"></i><span class="label label-warning arrowed-in arrowed-in arrowed-right">新增楼盘</span></a>');
 });
 </script>
 
