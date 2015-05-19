@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import com.rpframework.core.BaseService;
 import com.rpframework.core.api.FileService;
@@ -39,14 +40,10 @@ public class MovieService extends BaseService {
 				|| StringUtils.isBlank(movie.getContent())) {
 			throw new IllegalArgumentException();
 		}
-		
 		boolean flag = true;
 		if(NumberUtils.isValid(movie.getId())) {
 			Movie movieDB = movieDao.select(movie.getId());
-			if(movieDB == null) {
-				throw new IllegalArgumentException("update bot exits Id:" + movie.getId());
-			}
-			
+			Assert.notNull(movieDB, "update bot exits Id:" + movie.getId());
 			//icon不同，需要删除
 			if(!StringUtils.equals(movieDB.getIcon(), movie.getIcon())) {
 				try {

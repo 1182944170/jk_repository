@@ -1,0 +1,1 @@
+style2-index.ftl

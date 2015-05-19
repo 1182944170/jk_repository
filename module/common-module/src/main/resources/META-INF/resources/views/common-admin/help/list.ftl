@@ -1,12 +1,4 @@
 <title>帮助列表</title>
-<form class="form-horizontal" role="form" id="validation-form" method="GET" action="${ctx}/admin/common/help/list${suffix}" onsubmit="return fromSearch(this)">
-	<input type="hidden" name="pager" value="1_"/>
-	<label>选择分类:</label>
-	<select class="width-10" name="provinceSelect" id="provinceSelect"></select>
-	<select class="width-10" name="citySelect" id="citySelect"></select>
-	<select class="width-10" name="countySelect" id="countySelect"></select>
-	<button class="btn btn-minier btn-success" type="submit"><i class="icon-search"></i>搜  索</button>
-</form>
 
 <div class="row">
 	<div class="col-xs-12">
@@ -100,10 +92,8 @@
 	</h4>
 </#if>
 <script>
-var country = Object.create(B.Country);
 $(document).ready(function(){
 	RP.addBreadcrumb([{name:"基础配置"}, {name:"帮助列表", active: true}]);
-	country.regist4Select(-1,"provinceSelect","citySelect","countySelect");
 	$("#breadcrumbs ul").append('&nbsp;&nbsp;&nbsp;&nbsp;<a href="${ctx}/admin/common/help/add"><i class="icon-zoom-in"></i><span class="label label-warning arrowed-in arrowed-in arrowed-right">新增帮助</span></a>');
 });
 </script>
