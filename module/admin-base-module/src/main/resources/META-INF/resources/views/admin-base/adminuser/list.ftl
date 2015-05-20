@@ -6,9 +6,9 @@
 				<thead>
 					<tr>
 						<th>ID</th>
-						<th>用户名</th>
+						<th>公司人员姓名</th>
+						<th>手机号</th>
 						<th>角色名称</th>
-						<th>电话</th>
 						<th><i class="icon-time bigger-110 hidden-480"></i> 状态</th>
 						<th></th>
 					</tr>
@@ -18,8 +18,8 @@
 					<tr>
 						<td><span class="green center">${u.id}</span></td>
 						<td><span class="gray center">${u.userName}</span></td>
-						<td>${u.adminRole.name}</td>
 						<td>${u.contact}</td>
+						<td>${u.adminRole.name}</td>
 						<td class="hidden-480">
 							<#if u.state == 1>
 								<span class="label label-sm label-success arrowed">正常状态</span>
@@ -93,7 +93,8 @@
 </#if>
 <script>
 $(document).ready(function(){
-	RP.addBreadcrumb([{name:"后台基础配置"}, {name:"用户列表", linkUrl:"${ctx}/admin/adminuser/list${suffix}", active: true}]);
+	RP.addBreadcrumb([{name:"后台基础配置"}, {name:"公司人员列表", linkUrl:"${ctx}/admin/adminuser/list${suffix}", active: true}]);
+	$("#breadcrumbs ul").append('&nbsp;&nbsp;&nbsp;&nbsp;<a href="${ctx}/admin/adminuser/add"><i class="icon-zoom-in"></i><span class="label label-warning arrowed-in arrowed-in arrowed-right">新增公司人员</span></a>');
 });
 </script>
 

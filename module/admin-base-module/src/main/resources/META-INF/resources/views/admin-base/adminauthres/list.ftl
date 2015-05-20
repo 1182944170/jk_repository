@@ -54,6 +54,7 @@
 <script>
 $(document).ready(function(){
 	RP.addBreadcrumb([{name:"资源映射配置"}, {name:"资源映射列表", linkUrl:"${ctx}/admin/adminauthres/list${suffix}", active: true}]);
+	$("#breadcrumbs ul").append('&nbsp;&nbsp;&nbsp;&nbsp;<a href="${ctx}/admin/adminauthres/add${suffix}"><i class="icon-zoom-in"></i><span class="label label-warning arrowed-in arrowed-in arrowed-right">新增资源</span></a>');
 });
 </script>
 

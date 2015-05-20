@@ -9,6 +9,7 @@ import java.net.URLConnection;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,29 +23,27 @@ public abstract class SMSAbstractSendChannel2Event implements ISMSEvent {
 	protected String password = "fh478037";
 	protected String sp_code = "106901278011021";
 	
-	public abstract void initForSet();
-	
 	@Override
 	public int getChannelSend() {
 		return 2;
 	}
 
 	
-	public boolean sendSms(String mobiles, String content) throws IOException {
+	public String sendSms(String mobiles, String content) throws IOException {
 		return sendSms(mobiles, content, sp_code, 0);
 	}
 
-	public boolean sendSms(String mobiles, String content, long task_id)
+	public String sendSms(String mobiles, String content, long task_id)
 			throws IOException {
 		return sendSms(mobiles, content, sp_code, task_id);
 	}
 
-	public boolean sendSms(String mobiles, String content, String sp_code)
+	public String sendSms(String mobiles, String content, String sp_code)
 			throws IOException {
 		return sendSms(mobiles, content, sp_code, 0);
 	}
 
-	public boolean sendSms(String mobiles, String content, String sp_code,
+	public String sendSms(String mobiles, String content, String sp_code,
 			long task_id) throws IOException {
 		String urlencContent = URLEncoder.encode(content,"utf-8");
         String sign=MD5.sign(urlencContent, password, "utf-8");
@@ -73,17 +72,25 @@ public abstract class SMSAbstractSendChannel2Event implements ISMSEvent {
 		in.close();
 		logger.info("接收数据=" + URLDecoder.decode(resXml,"utf-8"));
 		
-		return true;
+		return resXml;
 	}
 	
 	@Override
-	public boolean sendSMS(String phone, String content) {
+	public String sendSMS(String phone, String content) {
 		try {
 			return sendSms(phone, content);
 		} catch (IOException e) {
 			e.printStackTrace();
-			return false;
+			return "";
 		}
 	}
 
+	@Override
+	public boolean checkSucc(String result) {
+		if(StringUtils.isBlank(result)) {
+			return false;
+		}
+		
+		return true;
+	}
 }

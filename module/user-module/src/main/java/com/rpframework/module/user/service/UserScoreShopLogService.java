@@ -85,6 +85,7 @@ public class UserScoreShopLogService extends BaseService {
 		UserScoreShopLog userScoreShopLogDB = select(userScoreShopLogId);
 		Assert.notNull(userScoreShopLogDB);
 		if(userScoreShopLogDB.getSendShopState() == 0 || userScoreShopLogDB.getSendShopState() == 2) {
+			userScoreShopLogDB.setRecordModifyTime(System.currentTimeMillis() / 1000);
 			userScoreShopLogDB.setSendShopState(sendShopState);
 			return update(userScoreShopLogDB);
 		} 

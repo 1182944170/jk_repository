@@ -48,10 +48,10 @@
 							<div class="center">
 								<h1>
 									<i class="icon-leaf green"></i>
-									<span class="red">Ace</span>
-									<span class="white">Application</span>
+									<span class="red">${(dicSetting.getParameterValue("admin.name"))!"Admin"}</span>
+									<span class="white">后台</span>
 								</h1>
-								<h4 class="blue">&copy; Company Name</h4>
+								<h4 class="blue">&copy; ${(dicSetting.getParameterValue("admin.companyName"))!"Company Name"}</h4>
 							</div>
 
 							<div class="space-6"></div>
@@ -62,7 +62,7 @@
 										<div class="widget-main">
 											<h4 class="header blue lighter bigger">
 												<i class="icon-coffee green"></i>
-												Please Enter Your Account.
+												请输入你的账号.
 											</h4>
 
 											<div class="space-6"></div>
@@ -70,12 +70,12 @@
 											<form name="validation-form" id="validation-form" class="form-horizontal" action="${ctx}/admin/dologin${suffix}" method="post">
 												<fieldset>
 												<div class="form-group">
-													<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="userName">Username:</label>
+													<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="userName">用户名:</label>
 
 													<div class="col-xs-12 col-sm-9">
 														<div class="clearfix">
 															<span class="block input-icon input-icon-right">
-																<input type="text" name="userName" id="userName" value="${(adminUser.userName)!''}" class="form-control" placeholder="Username"/>
+																<input type="text" name="userName" id="userName" value="${(adminUser.userName)!''}" class="form-control" placeholder="后台用户名"/>
 																<i class="icon-user"></i>
 															</span>
 														</div>
@@ -84,12 +84,12 @@
 
 
 												<div class="form-group">
-													<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="pwd">Password:</label>
+													<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="pwd">密 码:</label>
 
 													<div class="col-xs-12 col-sm-9">
 														<div class="clearfix">
 															<span class="block input-icon input-icon-right">
-																<input type="password" name="pwd" id="pwd" class="form-control" placeholder="Password" />
+																<input type="password" name="pwd" id="pwd" class="form-control" placeholder="密 码" />
 																<i class="icon-lock"></i>
 															</span>
 														</div>
@@ -100,7 +100,7 @@
 												<div class="clearfix">
 													<button type="submit" class="width-100 pull-right btn btn-sm btn-primary">
 														<i class="icon-key"></i>
-														Login
+														登 陆
 													</button>
 												</div>
 

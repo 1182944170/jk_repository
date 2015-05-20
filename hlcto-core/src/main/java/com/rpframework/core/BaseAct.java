@@ -4,6 +4,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -40,8 +41,11 @@ public class BaseAct {
 		return new ModelAndView(redirect(uri));
 	}
 	
-	public String redirect(String uri){
-		return "redirect:" + uri + InitServlet.SUFFIX;
+	public String redirect(String uri) {
+		if(StringUtils.indexOf(uri, InitServlet.SUFFIX) == -1) {
+			return "redirect:" + uri + InitServlet.SUFFIX;
+		}
+		return "redirect:" + uri;
 	}
 	
 	public ModelAndView forward2(String uri) {
@@ -49,7 +53,11 @@ public class BaseAct {
 	}
 	
 	public String forward(String uri){
-		return "forward:" + uri + InitServlet.SUFFIX;
+		if(StringUtils.indexOf(uri, InitServlet.SUFFIX) == -1) {
+			return "forward:" + uri + InitServlet.SUFFIX;
+		}
+		
+		return "forward:" + uri;
 	}
 
 	public String getErrorMsg() {

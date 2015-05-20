@@ -8,4 +8,5 @@ import com.rpframework.website.edongwang.domain.HouseRecommend;
 
 public interface IHouseRecommendDao extends IDao {
 	List<HouseRecommend> doPager(Map<?, ?> map);
+	List<HouseRecommend> doOverPager(Map<?, ?> map);
 }

@@ -9,17 +9,32 @@
 	</resultMap>
 	
 	<select id="doPager" parameterType="map" resultMap="mUser">
-		select * from user where 1=1
+		select u.* from user u
+		<if test="page.searchMap.houseName != null">
+			left outer join e_user_salesman ss on ss.userId=u.id
+			left outer join e_house m on m.id=ss.houseId
+		</if>
+		
+		where 1=1
+			
 		<if test="page.searchMap.state != null">
-			and state = #{page.searchMap.state} 
+			and u.state = #{page.searchMap.state} 
 		</if>
 		<if test="page.searchMap.id != null">
-			and id = #{page.searchMap.id} 
+			and u.id = #{page.searchMap.id} 
+		</if>
+		<if test="page.searchMap.isSalesman != null">
+			and u.isSalesman = #{page.searchMap.isSalesman} 
 		</if>
 		<if test="page.searchMap.realName != null">
-			and realName like "%"#{page.searchMap.realName}"%"
+			and u.realName like "%"#{page.searchMap.realName}"%"
 		</if>
-		 order by id
+		
+		<if test="page.searchMap.houseName != null">
+			and m.name like "%"#{page.searchMap.houseName}"%" 
+		</if>
+			
+		 order by u.id
 	</select>
 	
 	<update id="update" parameterType="com.rpframework.website.edongwang.domain.User" />

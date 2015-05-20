@@ -56,7 +56,7 @@
 
 <#macro formSingleSelect options checkValue name="_formSingleSelectDefaultName_" listKey="id" listValue="value" attributes="">
     <select id="${name}" name="${name}" ${attributes}>
-    	<option value <@checkSelected checkValue "-1"/> >--please chooice--</option>
+    	<option value <@checkSelected checkValue "-1"/> >--请选择--</option>
     	
     	<#if options?is_hash>
             <#list options?keys as value>
@@ -72,7 +72,7 @@
 </#macro>
 <#macro formMultiSelect options checkValues name="_formMultiSelectDefaultName_" listKey="id" listValue="value" attributes="">
     <select id="${name}" name="${name}" multiple="multiple" ${attributes} class="chosen-select">
-    	<option value <#if !checkValues?has_content>selected="selected"</#if> >--please chooice--</option>
+    	<option value <#if !checkValues?has_content>selected="selected"</#if> >--请选择--</option>
     	<#if options?is_hash>
             <#list options?keys as value>
              <option value="${value?html}" <@checkMultiSelected checkValues value listKey listValue/> >${options[value]?html}</option>

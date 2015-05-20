@@ -230,7 +230,7 @@
 
 				<li class="light-blue">
 					<a data-toggle="dropdown" href="#" class="dropdown-toggle">
-						<img class="nav-user-photo" src="${ctx}/resources/cssframework/ace/avatars/user.jpg" alt="Jason's Photo" />
+						<img class="nav-user-photo" src="${ctx}/resources/cssframework/ace/avatars/user.jpg" />
 						<span class="user-info">
 							<small>欢迎登陆</small>
 							<div class="center">${(sessionAdminUser.userName)!''} &nbsp;[${(sessionAdminUser.adminRole.name)!''}] </div>

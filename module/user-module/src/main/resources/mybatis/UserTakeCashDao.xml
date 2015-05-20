@@ -42,6 +42,7 @@
 			u.sex
 		from u_take_cash m
 			left outer join user u on u.id = m.userId
+		where	
 		m.id=#{id}
 	</select> 
 </mapper>

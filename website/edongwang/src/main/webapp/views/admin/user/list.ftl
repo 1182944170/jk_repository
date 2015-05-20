@@ -4,8 +4,8 @@
 	<label>用户ID:</label>
 	<input type="text" name="id" value="${(pager.searchMap.id)!''}" placeholder="用户ID"/>
 	
-	<label>用户名:</label>
-	<input type="text" name="realName" value="${(pager.searchMap.realName)!''}" placeholder="用户名"/>
+	<label>会员姓名:</label>
+	<input type="text" name="realName" value="${(pager.searchMap.realName)!''}" placeholder="会员姓名"/>
 	<button class="btn btn-minier btn-success" type="submit"><i class="icon-search"></i>搜  索</button>
 </form>
 <div class="hr hr-5"></div>
@@ -16,7 +16,7 @@
 				<thead>
 					<tr>
 						<th>ID</th>
-						<th>真实姓名</th>
+						<th>会员姓名</th>
 						<th>性别</th>
 						<th>手机号</th>
 						<th>状态</th>
@@ -45,7 +45,7 @@
 						<#if m.isSalesman == 0 >
 							<#if m.userSalesman??>
 								<#if m.userSalesman.state==0>
-									<span class="label label-sm label-warning arrowed arrowed-righ">申请业务员中...</span>
+									<span class="label label-sm label-warning arrowed arrowed-righ">申请二级会员中...</span>
 								<#elseif m.userSalesman.state==-1>
 									<span class="label label-sm label-warning arrowed arrowed-righ">申请二级会员失败</span>
 								</#if>
@@ -62,7 +62,9 @@
 						<td>${tagUtils.formatDate(m.recordCreateTime)}</td>
 						<td>
 						<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
-
+							<a class="green" href="${ctx}/admin/user/${m.id}/detail" alt="Detail">
+								<i class="icon-pencil bigger-130"></i>查 看
+							</a>
 						</div>
 
 						<div class="visible-xs visible-sm hidden-md hidden-lg">
@@ -72,6 +74,11 @@
 								</button>
 								<ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
 									<li>
+										<a href="${ctx}/admin/user/${m.id}/detail" class="tooltip-success" data-rel="tooltip" title="查看" data-original-title="Detail">
+											<span class="green">
+												<i class="icon-edit bigger-120"></i>
+											</span>
+										</a>
 									</li>
 								</ul>
 							</div>

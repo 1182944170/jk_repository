@@ -51,7 +51,7 @@ public class AdminScoreShopAct extends UserModuleBaseAct {
 	public String dolottery(@PathVariable Integer scoreShopId, Map<Object, Object> model,RedirectAttributes attr){
 		scoreShopService.doLottery(scoreShopId);
 		setInfoMsg("操作成功!", attr);
-		return redirect("/admin/user_score_shop_log");
+		return redirect("/admin/user_score_shop_log/list");
 	}
 	
 	

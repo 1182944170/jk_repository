@@ -8,14 +8,15 @@
 						<th>ID</th>
 						<th>招聘名称</th>
 						<th>工作地区</th>
-						<th>描述</th>
+						<th>工作岗位</th>
+						<th>岗位人数</th>
 						<th>年龄要求</th>
 						<th>经验要求</th>
 						<th>学历要求</th>
 						<th>职位性质</th>
 						<th>职位月薪</th>
 						<th>联系电话</th>
-						<th>公司介绍</th>
+						<th>佣金提点</th>
 						<th>操作</th>
 					</tr>
 				</thead>
@@ -26,13 +27,14 @@
 						<td>${u.name}</td>
 						<td>${u.workAddress}</td>
 						<td>${u.remark}</td>
+						<td>${u.countString}</td>
 						<td>${dicSetting.getParameterValue("job.ageType." + u.ageType)}</td>
 						<td>${dicSetting.getParameterValue("job.expType." + u.expType)}</td>
 						<td>${dicSetting.getParameterValue("job.eduType." + u.eduType)}</td>
 						<td>${dicSetting.getParameterValue("job.jobType." + u.jobType)}</td>
-						<td>${dicSetting.getParameterValue("job.moneyType." + u.moneyType)}</td>
+						<td>${u.money}</td>
 						<td>${u.contact}</td>
-						<td>${tagUtils.formatDate(u.recordCreateTime)}</td>
+						<td>${u.commissionPercent}</td>
 						<td>
 						<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
 							<a class="green" href="${ctx}/admin/job/${u.id}/edit" alt="Edit">

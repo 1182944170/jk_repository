@@ -17,8 +17,6 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
 import com.rpframework.core.api.FileService;
@@ -41,6 +39,8 @@ public class AdminHouseAct extends AdminAct{
 		if (pager == null) {
 			pager = new Pager();
 		}
+		
+		pager.setPageSize(50);
 		pager = houseService.getPager(pager);
 		model.put("pager", pager);
 		return doPackageURI("house/list");

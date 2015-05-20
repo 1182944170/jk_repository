@@ -28,10 +28,18 @@ public class UserScoreShopLog extends Domain {
 	Integer sendShopState;
 	@FieldMapperAnnotation
 	Long recordCreateTime;
+	@FieldMapperAnnotation
+	Long recordModifyTime;
 	
 	ScoreShop scoreShop;
 	BaseUserVO user;
 	
+	public Long getRecordModifyTime() {
+		return recordModifyTime;
+	}
+	public void setRecordModifyTime(Long recordModifyTime) {
+		this.recordModifyTime = recordModifyTime;
+	}
 	public BaseUserVO getUser() {
 		return user;
 	}

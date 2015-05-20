@@ -29,6 +29,9 @@ public class House extends Domain{
 	String name; //楼盘名称
 	
 	@FieldMapperAnnotation
+	String houseTag; //楼盘名称
+	
+	@FieldMapperAnnotation
 	Integer propertyType; //物业类型
 	
 	@FieldMapperAnnotation
@@ -45,6 +48,14 @@ public class House extends Domain{
 	@FieldMapperAnnotation
 	Double avgPrice; //总价
 	
+	public String getHouseTag() {
+		return houseTag;
+	}
+
+	public void setHouseTag(String houseTag) {
+		this.houseTag = houseTag;
+	}
+
 	@FieldMapperAnnotation
 	Double recommendPrice ; //推荐奖励
 	
@@ -74,6 +85,7 @@ public class House extends Domain{
 	
 	@FieldMapperAnnotation
 	Integer state;
+
 
 	public List<String> getHouseImgArrayList(){
 		if(StringUtils.isBlank(houseImgArray)) {

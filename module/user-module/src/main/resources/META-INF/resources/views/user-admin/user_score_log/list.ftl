@@ -1,8 +1,8 @@
 <title>用户积分日志列表</title>
 <form class="form-horizontal" role="form" id="validation-form" method="POST" action="${ctx}/admin/user_score_log/list" onsubmit="return fromSearch(this)">
 	<input type="hidden" name="pager" value="1_"/>
-	<label>用户姓名:</label>
-	<input type="text" name="realName" value="${(pager.searchMap.realName)!''}" placeholder="用户姓名"/>
+	<label>会员姓名:</label>
+	<input type="text" name="realName" value="${(pager.searchMap.realName)!''}" placeholder="会员姓名"/>
 	<button class="btn btn-minier btn-success" type="submit"><i class="icon-search"></i>搜  索</button>
 </form>
 <div class="hr hr-5"></div>
@@ -13,36 +13,20 @@
 				<thead>
 					<tr>
 						<th>ID</th>
-						<th>用户ID/用户姓名</th>
+						<th>会员ID/会员姓名</th>
 						<th>积分</th>
 						<th>类型/备注</th>
 						<th>时间</th>
-						<th></th>
 					</tr>
 				</thead>
 				<tbody>
 				<#list pager.itemList as u>
 					<tr>
 						<td><span class="green center">${u.id}</span></td>
-						<td>${u.userId}/${u.user.realName}</td>
+						<td>${u.userId}/${u.user.realName}/${u.user.contact}</td>
 						<td>${u.score}</td>
 						<td>${u.type}/${u.remark}</td>
 						<td>${tagUtils.formatDate(u.recordCreateTime)}</td>
-
-						<td>
-						<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
-						</div>
-
-						<div class="visible-xs visible-sm hidden-md hidden-lg">
-							<div class="inline position-relative">
-								<button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown">
-									<i class="icon-caret-down icon-only bigger-120"></i>
-								</button>
-								<ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
-								</ul>
-							</div>
-						</div>
-						</td>
 					</tr>
 				</#list>
 				</tbody>

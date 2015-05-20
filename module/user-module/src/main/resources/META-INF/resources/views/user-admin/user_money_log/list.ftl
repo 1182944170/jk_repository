@@ -1,8 +1,8 @@
 <title>用户金额日志列表</title>
 <form class="form-horizontal" role="form" id="validation-form" method="POST" action="${ctx}/admin/user_money_log/list" onsubmit="return fromSearch(this)">
 	<input type="hidden" name="pager" value="1_"/>
-	<label>用户姓名:</label>
-	<input type="text" name="realName" value="${(pager.searchMap.realName)!''}" placeholder="用户姓名"/>
+	<label>会员姓名:</label>
+	<input type="text" name="realName" value="${(pager.searchMap.realName)!''}" placeholder="会员姓名"/>
 	<button class="btn btn-minier btn-success" type="submit"><i class="icon-search"></i>搜  索</button>
 </form>
 <div class="hr hr-5"></div>
@@ -13,7 +13,7 @@
 				<thead>
 					<tr>
 						<th>Id</th>
-						<th>用户ID/用户姓名</th>
+						<th>会员ID/会员姓名</th>
 						<th>金额</th>
 						<th>总使用金额</th>
 						<th>当前余额</th>
@@ -27,7 +27,7 @@
 				<#list pager.itemList as u>
 					<tr>
 						<td><span class="green center">${u.id}</span></td>
-						<td>${u.userId}/${u.user.realName}</td>
+						<td>${u.userId}/${u.user.realName}/${u.user.contact}</td>
 						<td>${u.money}</td>
 						<td>${u.usedMoney}</td>
 						<td>${u.currMoney}</td>

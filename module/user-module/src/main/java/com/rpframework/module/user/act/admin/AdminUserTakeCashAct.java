@@ -47,10 +47,15 @@ public class AdminUserTakeCashAct extends UserModuleBaseAct{
 	}
 	
 	@RequestMapping("/dosave")
-	public String doSaveOrUpdate(@ModelAttribute UserTakeCash userTakeCash,@RequestParam String userMoneyKVObj, HttpSession session, HttpServletRequest request,RedirectAttributes attr){
+	public String doSaveOrUpdate(@ModelAttribute UserTakeCash userTakeCash,@RequestParam(value="userMoneyKVObj", required=false) String userMoneyKVObj, HttpSession session, HttpServletRequest request,RedirectAttributes attr){
+		KVObj kvObj = null;
+		if(userMoneyKVObj == null) {
+			kvObj = new KVObj("1000", "提现");
+		} else {
+			kvObj = new KVObj(userMoneyKVObj, DictionarySettingUtils.getParameterValue("userMoney.kvObj." + userMoneyKVObj));
+		}
 		AdminUser adminUser = getSessionAdminUser(session);
 		userTakeCash.setVerifyUId(adminUser.getId());
-		KVObj kvObj = new KVObj(userMoneyKVObj, DictionarySettingUtils.getParameterValue("userMoney.kvObj." + userMoneyKVObj));
 		userTakeCashService.doDealTakeCash(userTakeCash, kvObj);
 		setInfoMsg("操作成功！", attr);
 		return redirect("list");

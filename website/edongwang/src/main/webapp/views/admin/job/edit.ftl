@@ -16,22 +16,33 @@
 <fieldset>
 
 <div class="form-group">
-	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">招聘名字:</label>
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">招聘公司:</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<span class="block input-icon width-40">
-				<input type="text" name="name" id="name" value="${(job.name)!''}" class="form-control" placeholder="招聘名字"/>
+				<input type="text" name="name" id="name" value="${(job.name)!''}" class="form-control" placeholder="招聘公司"/>
 				<i class="icon-user"></i>
 			</span>
 		</div>
 	</div>
 </div>
 <div class="form-group">
-	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="remark">招聘备注:</label>
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="remark">招聘岗位:</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<span class="block input-icon width-40">
-				<input type="text" name="remark" id="remark" value="${(job.remark)!''}" class="form-control" placeholder="招聘备注"/>
+				<input type="text" name="remark" id="remark" value="${(job.remark)!''}" class="form-control" placeholder="招聘岗位"/>
+				<i class="icon-user"></i>
+			</span>
+		</div>
+	</div>
+</div>
+<div class="form-group">
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="countString">岗位人数:</label>
+	<div class="col-xs-12 col-sm-9">
+		<div class="clearfix">
+			<span class="block input-icon width-40">
+				<input type="text" name="countString" id="countString" value="${(job.countString)!''}" class="form-control" placeholder="岗位人数"/>
 				<i class="icon-user"></i>
 			</span>
 		</div>
@@ -80,13 +91,26 @@
 	<label class="control-label col-xs-12 col-sm-3 no-padding-right">职位月薪:</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
-		<#assign propertyTypes=dicSetting.getParameterMap("job.moneyType") />
-		<@ace.formSingleSelect options=propertyTypes checkValue=(job.moneyType)!-1 name="moneyType" listKey="key" listValue="value"/>
+			<span class="block input-icon width-40">
+				<input type="text" name="money" id="money" value="${(job.money)!''}" class="form-control" placeholder="职位月薪"/>
+				<i class="icon-user"></i>
+			</span>
 		</div>
 	</div>
 </div>
 <div class="form-group">
-	<label class="control-label col-xs-12 col-sm-3 no-padding-right">工作性质:</label>
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right">佣金提点:</label>
+	<div class="col-xs-12 col-sm-9">
+		<div class="clearfix">
+			<span class="block input-icon width-40">
+				<input type="text" name="commissionPercent" id="commissionPercent" value="${(job.commissionPercent)!''}" class="form-control" placeholder="佣金提点"/>
+				<i class="icon-user"></i>
+			</span>
+		</div>
+	</div>
+</div>
+<div class="form-group">
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right">职位性质:</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 		<#assign propertyTypes=dicSetting.getParameterMap("job.jobType") />
@@ -96,7 +120,7 @@
 </div>
 
 <div class="form-group">
-	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="contact">联系电话:</label>
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="contact">联系电话/联系人:</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<span class="block input-icon width-40">
@@ -165,13 +189,19 @@ $(document).ready(function(){
 			jobType: {
 				required: true
 			},
-			moneyType:{
+			money:{
+				required: true
+			},
+			commissionPercent:{
 				required: true
 			},
 			contact:{
 				required: true
 			},
 			comRemark:{
+				required: true
+			},
+			countString:{
 				required: true
 			}
 		},

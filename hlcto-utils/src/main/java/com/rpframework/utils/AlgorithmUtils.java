@@ -10,6 +10,7 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESedeKeySpec;
 import javax.crypto.spec.IvParameterSpec;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -178,5 +179,9 @@ public class AlgorithmUtils {
 		JsonArray arr = new JsonParser().parse("['dddd','gggg']").getAsJsonArray();
 		arr.add(new JsonPrimitive("hhhh"));
 		System.out.println(arr.toString());
+		
+		String uri = "ddd/ddd.html";
+		
+		System.out.println(StringUtils.substring(uri,0, StringUtils.indexOf(uri, ".")) );
 	}
 }

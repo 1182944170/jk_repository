@@ -6,6 +6,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -22,14 +23,12 @@ import org.slf4j.LoggerFactory;
 import com.rpframework.module.common.event.ISMSEvent;
 
 public abstract class SMSAbstractSendChannel1Event implements ISMSEvent {
-	final Logger logger = LoggerFactory.getLogger(getClass());
+	protected final Logger logger = LoggerFactory.getLogger(getClass());
 	protected String charset = "UTF-8";
 	protected String serverIP = "222.73.117.158";
 	protected String serverPort = "80";
-	protected String accout = "jiekou-cs-01";
-	protected String pswd = "Tch147200";
-	
-	public abstract void initForSet();
+	protected String accout = "jiekou-zcs-03";
+	protected String pswd = "Tch147369";
 	
 	@Override
 	public int getChannelSend() {
@@ -37,9 +36,9 @@ public abstract class SMSAbstractSendChannel1Event implements ISMSEvent {
 	}
 
 	@Override
-	public boolean sendSMS(String phone, String content) {
+	public String sendSMS(String phone, String content) {
 		/**
-		 * http://222.73.117.158/msg/HttpSendSM?account=111111&pswd=123456
+		 * http://222.73.117.158/msg/HttpBatchSendSM?account=111111&pswd=123456
 		 * &mobile=18900000000,13800138000&msg=test&needstatus=true&product=99999
 		 */
 		HttpClient client = HttpClients.createDefault();
@@ -58,7 +57,7 @@ public abstract class SMSAbstractSendChannel1Event implements ISMSEvent {
 		}
 		
 		String param = URLEncodedUtils.format(params,charset);
-		String url = "http://"+serverIP+":"+serverPort+"/msg/HttpSendSM?" + param;
+		String url = "http://"+serverIP+":"+serverPort+"/msg/HttpBatchSendSM?" + param;
 		
 		logger.info(url);
 		HttpPost post = new HttpPost(url);
@@ -69,27 +68,28 @@ public abstract class SMSAbstractSendChannel1Event implements ISMSEvent {
 			HttpEntity entity = response.getEntity();
 			String result = EntityUtils.toString(entity, charset);
 			logger.info("result:"+result);
-			
-			return true;
+			return result;
 		} catch (ClientProtocolException e1) {
 			e1.printStackTrace();
-			return false;
+			return "";
 		} catch (IOException e1) {
 			e1.printStackTrace();
-			return false;
+			return "";
 		}
 	}
-	
-	public static void main(String[] args) {
-		SMSAbstractSendChannel1Event s = new SMSAbstractSendChannel1Event() {
-			
-			@Override
-			public void initForSet() {
-				
-			}
-		};
+
+	@Override
+	public boolean checkSucc(String result) {
+		if(StringUtils.isBlank(result)) {
+			return false;
+		}
 		
-		s.sendSMS("15390891113", "TEST....");
+		String[] split = StringUtils.split(result, ",");
+		if(split.length < 2) {
+			return false;
+		}
+		
+		return StringUtils.indexOf(split[1], "0") == 0;//0开头
 	}
 
 }

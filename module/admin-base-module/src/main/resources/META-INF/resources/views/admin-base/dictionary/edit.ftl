@@ -11,7 +11,7 @@
 <form class="form-horizontal" role="form" id="validation-form" method="POST" action="${ctx}/admin/dictionary/dosave${suffix}">
 <fieldset>
 <div class="form-group">
-	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="variable">variable:</label>
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="variable">变量名:</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<span class="block input-icon width-40">
@@ -23,7 +23,7 @@
 </div>
 
 <div class="form-group">
-	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="value">Value:</label>
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="value">值:</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<span class="block input-icon width-40">
@@ -67,7 +67,7 @@
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<span class="block input-icon width-40">
-			<input type="text" name="sortIndex" id="sortIndex" value="${(dictionary.sortIndex)!''}" class="form-control" placeholder="SortIndex"/>
+			<input type="text" name="sortIndex" id="sortIndex" value="${(dictionary.sortIndex)!''}" class="form-control" placeholder="排序"/>
 			<i class="icon-phone"></i>
 			</span>
 		</div>
@@ -77,12 +77,12 @@
 <div class="col-md-offset-3 col-md-9">
 	<button class="btn btn-info" type="submit">
 		<i class="icon-ok bigger-110"></i>
-		Submit
+		提 交
 	</button>
 	&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
 	<button class="btn" type="reset">
 		<i class="icon-undo bigger-110"></i>
-		Reset
+		重 置
 	</button>
 </div>
 </fieldset>

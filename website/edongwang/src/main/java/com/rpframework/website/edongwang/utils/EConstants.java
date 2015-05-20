@@ -5,18 +5,22 @@ import com.rpframework.core.utils.cache.KVObj;
 public final class EConstants {
 	
 	public static final class ScoreChannel {
-		public final static KVObj DEAL = new KVObj("1", "成交积分");//score.deal
-		public final static KVObj RECOMMEND_STAR = new KVObj("2", "推荐积分+评价每星级积分");
-		public final static KVObj GRAB = new KVObj("3", "抢单积分");
-		public final static KVObj FINISH_PROFILE = new KVObj("4", "完善个人信息积分");
-		public final static KVObj SHARE = new KVObj("5", "分享积分");
-		public final static KVObj COMMENT = new KVObj("6", "评价信息积分");
+		public final static KVObj DEAL_RECOMMEND = new KVObj("1", "推荐成交积分");//score.deal
+		public final static KVObj DEAL_JD = new KVObj("2", "接单成交积分");//score.deal
+		public final static KVObj RECOMMEND_STAR = new KVObj("3", "推荐积分");//?
+		
+		public final static KVObj GRAB = new KVObj("4", "抢单积分");
+		public final static KVObj FINISH_PROFILE = new KVObj("5", "完善个人信息积分");//FIMXE 二级业务员
+		public final static KVObj COMMENT = new KVObj("6", "评价积分");
 		public final static KVObj BUY_SCORE_SHOP = new KVObj("7", "购买积分商品");
 		
-		public final static String 	USERSCORE_VALUECFG_FINISHPROFILE = "userScore.valueCfg.finishProfile";
+		public final static String 	USERSCORE_VALUECFG_HOUSEDEAL_RECOMMEND = "userScore.valueCfg.houseDealRecommend";
+		public final static String 	USERSCORE_VALUECFG_HOUSEDEAL_JD = "userScore.valueCfg.houseDealJD";
+		
 		public final static String 	USERSCORE_VALUECFG_GRABRECOMMEND = "userScore.valueCfg.grabRecommend";
-		public final static String 	USERSCORE_VALUECFG_HOUSEDEAL = "userScore.valueCfg.houseDeal";
+		public final static String 	USERSCORE_VALUECFG_FINISHPROFILE = "userScore.valueCfg.finishProfile";
 		public final static String 	USERSCORE_VALUECFG_RECOMMEND = "userScore.valueCfg.recommend";
+		public final static String 	USERSCORE_VALUECFG_PJJF = "userScore.valueCfg.pjjf";
 	}
 	
 	public static final class API {

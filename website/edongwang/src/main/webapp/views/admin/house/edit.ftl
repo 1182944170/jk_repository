@@ -29,6 +29,20 @@
 		</div>
 	</div>
 </div>
+
+<div class="form-group">
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="houseTag">楼盘标签:</label>
+	<div class="col-xs-12 col-sm-9">
+		<div class="clearfix">
+			<span class="block input-icon width-40">
+				<input type="text" name="houseTag" id="houseTag" value="${(house.houseTag)!''}" class="form-control" placeholder="楼盘标签"/>
+				<i class="icon-user"></i>
+			</span>
+			<small>* 非必填</samll>
+		</div>
+	</div>
+</div>
+
 <div class="form-group">
 	<label class="control-label col-xs-12 col-sm-3 no-padding-right">类别:</label>
 	<div class="col-xs-12 col-sm-9">
@@ -122,7 +136,7 @@
 				<i class="icon-user"></i>
 			</span>
 			
-			<small>* 单位 (元) 或者 百分比</small>
+			<small>* 元或百分比</small>
 		</div>
 	</div>
 </div>

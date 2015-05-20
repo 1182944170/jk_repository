@@ -7,17 +7,18 @@
 					<tr>
 						<th>序号</th>
 						<th>楼盘名称</th>
+						<th width=50>标签</th>
 						<th>物业类型</th>
-						<th>区域/地址</th>
+						<th width=165>区域/地址</th>
 						<th>面积</th>
 						<th>均价</th>
 						<th>推荐奖励</th>
 						<th>成交奖励</th>
-						<th>佣金</th>
+						<th width=50>佣金</th>
 						<th>协议时间</th>
 						<th>创建时间</th>
 						<th>状态</th>
-						<th>操作</th>
+						<th width=70>操作</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -25,14 +26,15 @@
 					<tr>
 						<td><span class="green center">${u.id}</span></td>
 						<td>${u.name}</td>
+						<td>${(u.houseTag)!""}</td>
 						<td>${dicSetting.getParameterValue("house.propertyType." + u.propertyType)}</td>
-						<td>${commonTag.getCountyPath(u.areaCode)}[ ${u.address} ]</td>
+						<td>${commonTag.getCountyPath(u.areaCode)}[ ${tagUtils.cutString(u.address,12)} ]</td>
 						<td>${dicSetting.getParameterValue("house.surfaceType." + u.surfaceType)}</td>
-						<td>${u.avgPrice}</td>
-						<td>${u.recommendPrice}</td>
-						<td>${u.bargainPrice}</td>
+						<td>${u.avgPrice}元</td>
+						<td>${u.recommendPrice}元</td>
+						<td>${u.bargainPrice}元</td>
 						<td>${u.commissionString}</td>
-						<td>${tagUtils.formatDate(u.protocolBeginTime)}~${tagUtils.formatDate(u.protocolEndTime)}</td>
+						<td>${tagUtils.formatDate(u.protocolBeginTime, "yyyy-MM-dd")}~${tagUtils.formatDate(u.protocolEndTime, "yyyy-MM-dd")}</td>
 						<td>${tagUtils.formatDate(u.recordCreateTime)}</td>
 						<td>
 							<#if u.state == 1>
@@ -47,6 +49,10 @@
 						<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
 							<a class="green" href="${ctx}/admin/house/${u.id}/edit" alt="Edit">
 								<i class="icon-pencil bigger-130"></i>
+							</a>
+							
+							<a class="green" href="${ctx}/admin/house_recommend/list${suffix}?pager=1_houseId--${u.id}" alt="查看推荐列表">
+								<i class="icon-pencil bigger-130"></i> 推荐
 							</a>
 						</div>
 

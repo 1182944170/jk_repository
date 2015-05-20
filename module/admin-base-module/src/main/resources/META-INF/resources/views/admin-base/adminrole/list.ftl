@@ -97,6 +97,7 @@
 <script>
 $(document).ready(function(){
 	RP.addBreadcrumb([{name:"后台基础配置"}, {name:"角色列表", linkUrl:"${ctx}/admin/adminrole/list", active: true}]);
+	$("#breadcrumbs ul").append('&nbsp;&nbsp;&nbsp;&nbsp;<a href="${ctx}/admin/adminrole/add"><i class="icon-zoom-in"></i><span class="label label-warning arrowed-in arrowed-in arrowed-right">新增角色</span></a>');
 });
 </script>
 

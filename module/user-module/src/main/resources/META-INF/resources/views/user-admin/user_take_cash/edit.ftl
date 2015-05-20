@@ -81,16 +81,6 @@
 
 <#if userTakeCash.state==0>
 	<div class="form-group">
-		<label class="control-label col-xs-12 col-sm-3 no-padding-right">选择处理金额类型:</label>
-		<div class="col-xs-12 col-sm-9">
-			<div class="clearfix">
-			<#assign userMoneyKVObjs=dicSetting.getParameterMap("userMoney.kvObj") />
-			<@ace.formSingleSelect options=userMoneyKVObjs checkValue=-1 name="userMoneyKVObj" listKey="key" listValue="value"/>
-			</div>
-		</div>
-	</div>
-
-	<div class="form-group">
 		<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="verifyRemark">处理备注:</label>
 		<div class="col-xs-12 col-sm-9">
 			<div class="clearfix">

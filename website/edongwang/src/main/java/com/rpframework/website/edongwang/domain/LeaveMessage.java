@@ -24,6 +24,15 @@ public class LeaveMessage extends Domain{
 	String message; //物业类型
 	@FieldMapperAnnotation
 	Long recordCreateTime; //创建时间
+	
+	User user;
+	
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
 	public Integer getId() {
 		return id;
 	}

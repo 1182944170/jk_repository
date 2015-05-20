@@ -4,6 +4,7 @@ import com.rpframework.core.event.IBaseEvent;
 
 public interface ISMSEvent extends IBaseEvent {
 	
+	void initForSet();
 	/**
 	 * 获取发送的渠道编号
 	 * @return
@@ -16,5 +17,6 @@ public interface ISMSEvent extends IBaseEvent {
 	 * @param content
 	 * @return
 	 */
-	boolean sendSMS(String phone, String content);
+	String sendSMS(String phone, String content);
+	boolean checkSucc(String result);
 }

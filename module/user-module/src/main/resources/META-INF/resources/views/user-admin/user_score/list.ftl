@@ -1,8 +1,8 @@
 <title>用户积分列表</title>
 <form class="form-horizontal" role="form" id="validation-form" method="POST" action="${ctx}/admin/user_score/list" onsubmit="return fromSearch(this)">
 	<input type="hidden" name="pager" value="1_"/>
-	<label>用户姓名:</label>
-	<input type="text" name="realName" value="${(pager.searchMap.realName)!''}" placeholder="用户姓名"/>
+	<label>会员姓名:</label>
+	<input type="text" name="realName" value="${(pager.searchMap.realName)!''}" placeholder="会员姓名"/>
 	<button class="btn btn-minier btn-success" type="submit"><i class="icon-search"></i>搜  索</button>
 </form>
 <div class="hr hr-5"></div>
@@ -12,34 +12,19 @@
 			<table id="sample-table-1" class="table table-striped table-bordered table-hover">
 				<thead>
 					<tr>
-						<th>用户ID/用户姓名</th>
-						<th>积分</th>
-						<th>已使用积分</th>
+						<th>会员ID/会员姓名</th>
 						<th>总积分</th>
-						<th></th>
+						<th>剩余积分</th>
+						<th>已使用积分</th>
 					</tr>
 				</thead>
 				<tbody>
 				<#list pager.itemList as u>
 					<tr>
-						<td><span class="green center">${u.userId}/${u.user.realName}</span></td>
+						<td><span class="green center">${u.userId}/${u.user.realName}/${u.user.contact}</span></td>
+						<td>${u.score + u.usedScore}</td>
 						<td>${u.score}</td>
 						<td>${u.usedScore}</td>
-						<td>${u.score + u.usedScore}</td>
-						<td>
-						<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
-						</div>
-
-						<div class="visible-xs visible-sm hidden-md hidden-lg">
-							<div class="inline position-relative">
-								<button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown">
-									<i class="icon-caret-down icon-only bigger-120"></i>
-								</button>
-								<ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
-								</ul>
-							</div>
-						</div>
-						</td>
 					</tr>
 				</#list>
 				</tbody>

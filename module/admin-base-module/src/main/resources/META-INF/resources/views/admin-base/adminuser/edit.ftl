@@ -13,11 +13,11 @@
 <fieldset>
 
 <div class="form-group">
-	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="userName">Username:</label>
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="userName">公司人员姓名:</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<span class="block input-icon width-40">
-				<input type="text" name="userName" id="userName" value="${(adminUser.userName)!''}" <#if adminUser??> readonly </#if> class="form-control" placeholder="Username"/>
+				<input type="text" name="userName" id="userName" value="${(adminUser.userName)!''}" <#if adminUser??> readonly </#if> class="form-control" placeholder="公司人员姓名"/>
 				<i class="icon-user"></i>
 			</span>
 		</div>
@@ -29,11 +29,11 @@
 <#else>
 
 	<div class="form-group">
-		<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="pwd">Password:</label>
+		<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="pwd">密码:</label>
 		<div class="col-xs-12 col-sm-9">
 			<div class="clearfix">
 				<span class="block input-icon width-40">
-					<input type="password" name="pwd" id="pwd" class="form-control" placeholder="Password"/>
+					<input type="password" name="pwd" id="pwd" class="form-control" placeholder="密码"/>
 					<i class="icon-lock"></i>
 				</span>
 			</div>
@@ -41,11 +41,11 @@
 	</div>
 	
 	<div class="form-group">
-		<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="confirmPwd">Confirm Password:</label>
+		<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="confirmPwd">确认密码:</label>
 		<div class="col-xs-12 col-sm-9">
 			<div class="clearfix">
 				<span class="block input-icon width-40">
-				<input type="password" name="confirmPwd" id="confirmPwd" class="form-control" placeholder="Confirm Password"/>
+				<input type="password" name="confirmPwd" id="confirmPwd" class="form-control" placeholder="确认密码"/>
 				<i class="icon-lock"></i>
 				</span>
 			</div>
@@ -54,7 +54,7 @@
 </#if>
 
 <div class="form-group">
-	<label class="control-label col-xs-12 col-sm-3 no-padding-right">State:</label>
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right">状态:</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 		<@ace.radioGroup options=ace.commonStateOptions checkValue=(adminUser.state)!-1 name="state" isWrap=true/>
@@ -63,7 +63,7 @@
 </div>
 
 <div class="form-group">
-	<label class="control-label col-xs-12 col-sm-3 no-padding-right">Role Group:</label>
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right">所属角色组:</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 		<@admin_perm cmd="ad_role_list">
@@ -74,11 +74,11 @@
 </div>
 
 <div class="form-group">
-	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="contact">Contact:</label>
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="contact">电话:</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<span class="block input-icon width-40">
-			<input type="text" name="contact" id="contact" value="${(adminUser.contact)!''}" class="form-control" placeholder="Contact"/>
+			<input type="text" name="contact" id="contact" value="${(adminUser.contact)!''}" class="form-control" placeholder="电话"/>
 			<i class="icon-phone"></i>
 			</span>
 		</div>
@@ -86,11 +86,11 @@
 </div>
 
 <div class="form-group">
-	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="email">Email:</label>
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="email">邮箱:</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<span class="block input-icon width-40">
-			<input type="text" name="email" id="email" value="${(adminUser.email)!''}" class="form-control" placeholder="Email"/>
+			<input type="text" name="email" id="email" value="${(adminUser.email)!''}" class="form-control" placeholder="邮箱"/>
 			<i class="icon-key"></i>
 			</span>
 		</div>
@@ -100,12 +100,12 @@
 <div class="col-md-offset-3 col-md-9">
 	<button class="btn btn-info" type="submit">
 		<i class="icon-ok bigger-110"></i>
-		Submit
+		提 交
 	</button>
 	&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
 	<button class="btn" type="reset">
 		<i class="icon-undo bigger-110"></i>
-		Reset
+		重 置
 	</button>
 </div>
 </div>

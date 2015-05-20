@@ -38,6 +38,14 @@ public class HouseRecommendService extends BaseService {
 		return pager;
 	}
 
+	public Pager<HouseRecommend> getOverPager(Pager<HouseRecommend> pager) {
+		long startTime = System.currentTimeMillis();
+		List<HouseRecommend> itemList = recommendDao.doOverPager(this.packageMyBatisParam(pager));
+		pager.setItemList(itemList);
+		pager.setCostTime(System.currentTimeMillis() - startTime);
+		return pager;
+	}
+	
 	/**
 	 * 抢单
 	 * @param userId
@@ -59,6 +67,15 @@ public class HouseRecommendService extends BaseService {
 			throw new APICodeException(-3, "只有业务员才能抢单.");
 		}
 		
+		
+		JsonObject scoreExtJson = new JsonObject();
+		Integer grabRecommendScore = NumberUtils.parseInt(DictionarySettingUtils.getParameterValue(EConstants.ScoreChannel.USERSCORE_VALUECFG_GRABRECOMMEND), 0);
+		scoreExtJson.addProperty("houseRecommendId", houseRecommend.getId());
+		scoreExtJson.addProperty("houseId", houseRecommend.getHouseId());
+		scoreExtJson.addProperty("houseName", houseRecommend.getHouse().getName());
+		//抢单积分给 业务员的
+		userScoreService.addScore(houseRecommend.getAcceptSalesmanId(), grabRecommendScore, EConstants.ScoreChannel.GRAB, scoreExtJson.toString());
+		
 		houseRecommend.setState(EConstants.Recommend.STATE_DEALING);
 		houseRecommend.setAcceptSalesmanId(userId);
 		houseRecommend.setAcceptTime(System.currentTimeMillis() / 1000);
@@ -75,10 +92,10 @@ public class HouseRecommendService extends BaseService {
 	 * @param intentStar 意向星级
 	 * @return
 	 */
-	public boolean valid(Integer userId, Integer houseRecommendId, Integer state, Integer infoStar, Integer intentStar, String remark) {
+	public boolean valid(Integer userId, Integer houseRecommendId, Integer state, Integer intentStar, String remark) {
 		HouseRecommend houseRecommend = select(houseRecommendId);
 		User user = userService.select(userId);
-		if(houseRecommend == null || user == null || !userId.equals(houseRecommend.getAcceptSalesmanId())) {
+		if(houseRecommend == null || user == null) {
 			throw new APICodeException(-1, "无效参数.");
 		}
 		
@@ -90,11 +107,16 @@ public class HouseRecommendService extends BaseService {
 			throw new APICodeException(-3, "只有业务员才能回访.");
 		}
 		
+		if(userId.equals(houseRecommend.getAcceptSalesmanId()) 
+				|| (user.getUserSalesman().getIsLeader() == 1 && houseRecommend.getHouseId().equals(user.getUserSalesman().getHouse().getId()))) {
+		} else {
+			throw new APICodeException(-5, "你无权操作!");
+		}
+		
 		if(!houseRecommend.checkNextProgressIsVaild(EConstants.Progress.P1)) {
 			throw new APICodeException(-4, "进度流不正确.");
 		}
 		JsonObject json = new JsonObject();
-		json.addProperty("infoStar", infoStar);
 		json.addProperty("intentStar", intentStar);
 		json.addProperty("remark", remark);
 		
@@ -108,15 +130,23 @@ public class HouseRecommendService extends BaseService {
 		if(state == 0) {//在进度中间有一环节无效，则该推荐状态为完结状态
 			houseRecommend.setState(EConstants.Recommend.STATE_OVER);
 			update(houseRecommend);
+		} else if(state == 1 && intentStar >= 2) {
+			JsonObject scoreExtJson = new JsonObject();
+			scoreExtJson.addProperty("houseRecommendId", houseRecommend.getId());
+			scoreExtJson.addProperty("houseId", houseRecommend.getHouseId());
+			scoreExtJson.addProperty("houseName", houseRecommend.getHouse().getName());
+			
+			Integer recommendScore = NumberUtils.parseInt(DictionarySettingUtils.getParameterValue(EConstants.ScoreChannel.USERSCORE_VALUECFG_RECOMMEND), 0);
+			userScoreService.addScore(houseRecommend.getRecommendUserId(), recommendScore, EConstants.ScoreChannel.RECOMMEND_STAR, scoreExtJson.toString());
 		}
 		
 		return houseRecommendProgressService.insert(hrp);
 	}
 
-	public boolean visit(Integer userId, Integer houseRecommendId, Integer state, String remark) {
+	public boolean visit(Integer userId, Integer houseRecommendId, String remark) {
 		HouseRecommend houseRecommend = select(houseRecommendId);
 		User user = userService.select(userId);
-		if(houseRecommend == null || user == null || !userId.equals(houseRecommend.getAcceptSalesmanId())) {
+		if(houseRecommend == null || user == null) {
 			throw new APICodeException(-1, "无效参数.");
 		}
 		
@@ -128,6 +158,12 @@ public class HouseRecommendService extends BaseService {
 			throw new APICodeException(-3, "只有业务员才能回访.");
 		}
 		
+		if(userId.equals(houseRecommend.getAcceptSalesmanId()) 
+				|| (user.getUserSalesman().getIsLeader() == 1 && houseRecommend.getHouseId().equals(user.getUserSalesman().getHouse().getId()))) {
+		} else {
+			throw new APICodeException(-5, "你无权操作!");
+		}
+		
 		if(!houseRecommend.checkNextProgressIsVaild(EConstants.Progress.P2)) {
 			throw new APICodeException(-4, "进度流不正确.");
 		}
@@ -137,14 +173,14 @@ public class HouseRecommendService extends BaseService {
 		HouseRecommendProgress hrp = new HouseRecommendProgress();
 		hrp.setHouseRecommendId(houseRecommendId);
 		hrp.setRecordCreateTime(System.currentTimeMillis() /1000);
-		hrp.setState(state);
+		hrp.setState(1);
 		hrp.setType(EConstants.Progress.P2);
 		hrp.setExt(json.toString());
 		
-		if(state == 0) {//在进度中间有一环节无效，则该推荐状态为完结状态
+		/*if(state == 0) {//在进度中间有一环节无效，则该推荐状态为完结状态
 			houseRecommend.setState(EConstants.Recommend.STATE_OVER);
 			update(houseRecommend);
-		}
+		}*/
 		
 		return houseRecommendProgressService.insert(hrp);
 	}
@@ -159,7 +195,7 @@ public class HouseRecommendService extends BaseService {
 	 * @param surface
 	 * @return
 	 */
-	public boolean deal_stage2(Integer userId, Integer houseRecommendId, Double recommendPrice,
+	/*public boolean deal_stage2(Integer userId, Integer houseRecommendId, Double recommendPrice,
 			Double commissionPrice) {
 		HouseRecommend houseRecommend = select(houseRecommendId);
 		User user = userService.select(userId);
@@ -196,9 +232,9 @@ public class HouseRecommendService extends BaseService {
 		hrp.setExt(json.toString());
 		
 		return houseRecommendProgressService.update(hrp);
-	}
+	}*/
 	
-	public boolean deal_stage1(Integer userId, Integer houseRecommendId, Integer state, Long dealTime, Double surface,Double price) {
+	public boolean deal(Integer userId, Integer houseRecommendId, Long dealTime, Double surface,Double price) {
 		HouseRecommend houseRecommend = select(houseRecommendId);
 		User user = userService.select(userId);
 		if(houseRecommend == null || user == null || !userId.equals(houseRecommend.getAcceptSalesmanId())) {
@@ -213,6 +249,12 @@ public class HouseRecommendService extends BaseService {
 			throw new APICodeException(-3, "只有业务员才能成交.");
 		}
 		
+		if(userId.equals(houseRecommend.getAcceptSalesmanId()) 
+				|| (user.getUserSalesman().getIsLeader() == 1 && houseRecommend.getHouseId().equals(user.getUserSalesman().getHouse().getId()))) {
+		} else {
+			throw new APICodeException(-5, "你无权操作!");
+		}
+		
 		if(!houseRecommend.checkNextProgressIsVaild(EConstants.Progress.P3)) {
 			throw new APICodeException(-4, "进度流不正确.");
 		}
@@ -224,31 +266,26 @@ public class HouseRecommendService extends BaseService {
 		HouseRecommendProgress hrp = new HouseRecommendProgress();
 		hrp.setHouseRecommendId(houseRecommendId);
 		hrp.setRecordCreateTime(System.currentTimeMillis() /1000);
-		hrp.setState(state == 1?  2 : 0);//2为等待负责人确认状态
+		hrp.setState(1);
 		hrp.setType(EConstants.Progress.P3);
 		hrp.setExt(json.toString());
 		
-		if(state == 0) {//在进度中间有一环节无效，则该推荐状态为完结状态
+		/*if(state == 0) {//在进度中间有一环节无效，则该推荐状态为完结状态
 			houseRecommend.setState(EConstants.Recommend.STATE_OVER);
 			update(houseRecommend);
-		}
+		}*/
 		
 		return houseRecommendProgressService.insert(hrp);
 	}
 	
-	public boolean over(Integer userId, Integer houseRecommendId, Integer state) {
+	public boolean over(Integer houseRecommendId) {
 		HouseRecommend houseRecommend = select(houseRecommendId);
-		User user = userService.select(userId);
-		if(houseRecommend == null || user == null || !userId.equals(houseRecommend.getAcceptSalesmanId())) {
+		if(houseRecommend == null) {
 			throw new APICodeException(-1, "无效参数.");
 		}
 		
 		if(houseRecommend.getState() != EConstants.Recommend.STATE_DEALING) {
 			throw new APICodeException(-2, "无效的状态.");
-		}
-		
-		if(user.getIsSalesman() != 1) {
-			throw new APICodeException(-3, "只有业务员才能结佣.");
 		}
 		
 		if(!houseRecommend.checkNextProgressIsVaild(EConstants.Progress.P_OVER)) {
@@ -259,7 +296,7 @@ public class HouseRecommendService extends BaseService {
 		HouseRecommendProgress hrp = new HouseRecommendProgress();
 		hrp.setHouseRecommendId(houseRecommendId);
 		hrp.setRecordCreateTime(System.currentTimeMillis() /1000);
-		hrp.setState(state);
+		hrp.setState(1);
 		hrp.setType(EConstants.Progress.P_OVER);
 		hrp.setExt(json.toString());
 		
@@ -269,31 +306,30 @@ public class HouseRecommendService extends BaseService {
 		if(flag) {
 			flag = houseRecommendProgressService.insert(hrp);
 			
-			if(state == 1) {
-				//成交积分 和推荐积分 是后台 结佣后 才增加 增加积分
-				Integer dealScore = NumberUtils.parseInt(DictionarySettingUtils.getParameterValue(EConstants.ScoreChannel.USERSCORE_VALUECFG_HOUSEDEAL), 0);
-				Integer recommendScore = NumberUtils.parseInt(DictionarySettingUtils.getParameterValue(EConstants.ScoreChannel.USERSCORE_VALUECFG_RECOMMEND), 0);
-				Integer grabRecommendScore = NumberUtils.parseInt(DictionarySettingUtils.getParameterValue(EConstants.ScoreChannel.USERSCORE_VALUECFG_GRABRECOMMEND), 0);
-				
-				JsonObject scoreExtJson = new JsonObject();
-				scoreExtJson.addProperty("houseRecommendId", houseRecommend.getId());
-				scoreExtJson.addProperty("houseId", houseRecommend.getHouseId());
-				scoreExtJson.addProperty("houseName", houseRecommend.getHouse().getName());
-				
-				//成交积分给 推荐者的
-				userScoreService.addScore(houseRecommend.getRecommendUserId(), dealScore, EConstants.ScoreChannel.DEAL, scoreExtJson.toString());
-				HouseRecommendProgress progress = houseRecommend.getProgress(EConstants.Progress.P1);
-				Assert.notNull(progress, "完结状态下找不到进度type ：" + EConstants.Progress.P1 + ":houseRecommendId:" + houseRecommendId);
-				JsonObject jsonObject = new JsonParser().parse(progress.getExt()).getAsJsonObject();
-				int infoStar = GsonUtils.getInt(jsonObject, "infoStar");
+			//成交积分 和推荐积分 是后台 结佣后 才增加 增加积分
+			Integer dealScoreRecommend = NumberUtils.parseInt(DictionarySettingUtils.getParameterValue(EConstants.ScoreChannel.USERSCORE_VALUECFG_HOUSEDEAL_RECOMMEND), 0);
+			Integer dealScoreJD = NumberUtils.parseInt(DictionarySettingUtils.getParameterValue(EConstants.ScoreChannel.USERSCORE_VALUECFG_HOUSEDEAL_JD), 0);
+			
+			JsonObject scoreExtJson = new JsonObject();
+			scoreExtJson.addProperty("houseRecommendId", houseRecommend.getId());
+			scoreExtJson.addProperty("houseId", houseRecommend.getHouseId());
+			scoreExtJson.addProperty("houseName", houseRecommend.getHouse().getName());
+			
+			//成交积分给 推荐者的
+			userScoreService.addScore(houseRecommend.getRecommendUserId(), dealScoreRecommend, EConstants.ScoreChannel.DEAL_RECOMMEND, scoreExtJson.toString());
+			userScoreService.addScore(houseRecommend.getAcceptSalesmanId(), dealScoreJD, EConstants.ScoreChannel.DEAL_JD, scoreExtJson.toString());
+			HouseRecommendProgress progress = houseRecommend.getProgress(EConstants.Progress.P1);
+			Assert.notNull(progress, "完结状态下找不到进度type ：" + EConstants.Progress.P1 + ":houseRecommendId:" + houseRecommendId);
+			JsonObject jsonObject = new JsonParser().parse(progress.getExt()).getAsJsonObject();
+			int infoStar = GsonUtils.getInt(jsonObject, "infoStar");
+			if(infoStar >= 2) {
 				//推荐积分也是给 推荐者的
 				//基础上 + 星级 * 10
-				recommendScore += infoStar * 10;
 				
-				userScoreService.addScore(houseRecommend.getRecommendUserId(), recommendScore, EConstants.ScoreChannel.RECOMMEND_STAR, scoreExtJson.toString());
-				//抢单积分给 业务员的
-				userScoreService.addScore(houseRecommend.getAcceptSalesmanId(), grabRecommendScore, EConstants.ScoreChannel.GRAB, scoreExtJson.toString());
+				Integer pjjf = NumberUtils.parseInt(DictionarySettingUtils.getParameterValue(EConstants.ScoreChannel.USERSCORE_VALUECFG_PJJF), 0);
+				userScoreService.addScore(houseRecommend.getRecommendUserId(), pjjf, EConstants.ScoreChannel.COMMENT, scoreExtJson.toString());
 			}
+				
 		}
 		return flag;
 	}

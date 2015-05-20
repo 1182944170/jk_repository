@@ -1,8 +1,8 @@
-<title>用户积分商城日志列表</title>
+<title>积分商城日志列表</title>
 <form class="form-horizontal" role="form" id="validation-form" method="POST" action="${ctx}/admin/user_score_shop_log/list" onsubmit="return fromSearch(this)">
 	<input type="hidden" name="pager" value="1_"/>
-	<label>用户姓名:</label>
-	<input type="text" name="realName" value="${(pager.searchMap.realName)!''}" placeholder="用户姓名"/>
+	<label>会员姓名:</label>
+	<input type="text" name="realName" value="${(pager.searchMap.realName)!''}" placeholder="会员姓名"/>
 	
 	<label>商品ID:</label>
 	<input type="text" name="scoreShopId" value="${(pager.searchMap.scoreShopId)!''}" placeholder="商品ID"/>
@@ -23,11 +23,11 @@
 				<thead>
 					<tr>
 						<th>ID</th>
-						<th>用户ID/用户姓名</th>
-						<th>商品ID</th>
-						<th>用户信息</th>
+						<th>会员ID/会员姓名</th>
+						<th>商品ID/名称</th>
 						<th>发货状态</th>
-						<th>时间</th>
+						<th>兑换时间</th>
+						<th>处理时间</th>
 						<th></th>
 					</tr>
 				</thead>
@@ -35,26 +35,43 @@
 				<#list pager.itemList as u>
 					<tr>
 						<td><span class="green center">${u.id}</span></td>
-						<td>${u.userId}</td>
-						<td>${u.scoreShopId}</td>
-						<td>name:${u.name} concact:${u.concact} 省区: ${commonTag.getCountyPath(u.areaCode)} address: ${u.address}</td>
+						<td>${u.userId}/${u.user.realName}/${u.user.contact}</td>
+						<td>${u.scoreShopId}/${tagUtils.cutString(u.scoreShop.name, 10)}</td>
 						<td>
 						<#if u.sendShopState == 0>
 							<span class="label label-sm label-warning arrowed">未处理</span>
 						<#elseif u.sendShopState == 1>
-							<span class="label label-sm label-success arrowed">处理成功</span>
+							<#if u.scoreShop.type == 2>
+								<span class="label label-sm label-success arrowed">已经中奖</span>
+							<#else>
+								<span class="label label-sm label-success arrowed">兑换成功</span>
+							</#if>
 						<#elseif u.sendShopState == 2>
 							<span class="label label-sm label-success arrowed">以中奖待处理</span>
 						<#else>
-							<span class="label label-sm label-warning arrowed">处理失败</span>
+							<#if u.scoreShop.type == 2>
+								<span class="label label-sm label-warning arrowed">未中奖</span>
+							<#else>
+								<span class="label label-sm label-warning arrowed">兑换失败</span>
+							</#if>
 						</#if>
 						</td>
 						<td>${tagUtils.formatDate(u.recordCreateTime)}</td>
-					
+						<td>
+						<#if u.sendShopState == 0>
+							未处理
+						<#else>
+							${tagUtils.formatDate(u.recordModifyTime)}
+						</#if></td>
+						
 						<td>
 						<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
 							<a class="green" href="${ctx}/admin/user_score_shop_log/${u.id}/edit${suffix}" alt="编辑">
 								<i class="icon-pencil bigger-130"></i>
+							</a>
+							
+							<a class="green" href="${ctx}/admin/user/${u.userId}/detail${suffix}" alt="查看会员信息">
+								<i class="icon-pencil bigger-130"></i> 查看会员信息
 							</a>
 						</div>
 

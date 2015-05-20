@@ -109,6 +109,7 @@
 $(document).ready(function(){
 	RP.addBreadcrumb([{name:"后台基础配置"}, {name:"字典列表", linkUrl:"${ctx}/admin/dictionary/list${suffix}", active: true}]);
 	$("#breadcrumbs ul").append('&nbsp;&nbsp;&nbsp;&nbsp;<a href="${ctx}/admin/dictionary/sync${suffix}"><span class="label label-warning arrowed-in arrowed-in arrowed-right">同步字典</span></a>');
+	$("#breadcrumbs ul").append('&nbsp;&nbsp;&nbsp;&nbsp;<a href="${ctx}/admin/dictionary/add"${suffix}><i class="icon-zoom-in"></i><span class="label label-warning arrowed-in arrowed-in arrowed-right">新增字典</span></a>');
 });
 </script>
 

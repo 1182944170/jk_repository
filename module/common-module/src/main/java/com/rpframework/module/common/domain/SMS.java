@@ -38,11 +38,20 @@ public class SMS extends Domain {
 	@FieldMapperAnnotation
 	String content;
 	@FieldMapperAnnotation
+	String responseText;
+	@FieldMapperAnnotation
 	Long expirationTime;
 	@FieldMapperAnnotation
 	Long recordCreateTime;
 	@FieldMapperAnnotation
 	Long verifyTime;
+	
+	public String getResponseText() {
+		return responseText;
+	}
+	public void setResponseText(String responseText) {
+		this.responseText = responseText;
+	}
 	public Long getVerifyTime() {
 		return verifyTime;
 	}

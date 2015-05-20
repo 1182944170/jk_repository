@@ -56,8 +56,6 @@ public  @ResponseBody class JobApiAct extends BaseAct {
 		jsonObject.addProperty("expTypeString", DictionarySettingUtils.getParameterValue("job.expType." + job.getExpType()));
 		jsonObject.addProperty("eduTypeString", DictionarySettingUtils.getParameterValue("job.eduType." + job.getEduType()));
 		jsonObject.addProperty("jobTypeString", DictionarySettingUtils.getParameterValue("job.jobType." + job.getJobType()));
-		jsonObject.addProperty("moneyTypeString", DictionarySettingUtils.getParameterValue("job.moneyType." + job.getMoneyType()));
-		
 		return jsonObject;
 	}
 	@RequestMapping("{jobId}")

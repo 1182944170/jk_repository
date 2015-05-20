@@ -17,7 +17,7 @@
 <fieldset>
 
 <div class="form-group">
-	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="title">申请业务员图片:</label>
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="title">申请人名片:</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<span class="block input-icon width-40">

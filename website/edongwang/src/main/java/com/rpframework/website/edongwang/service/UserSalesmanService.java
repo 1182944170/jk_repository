@@ -6,17 +6,22 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import com.google.gson.JsonObject;
 import com.rpframework.core.BaseService;
+import com.rpframework.core.utils.DictionarySettingUtils;
+import com.rpframework.module.user.service.UserScoreService;
 import com.rpframework.utils.NumberUtils;
 import com.rpframework.website.edongwang.dao.IUserSalesmanDao;
 import com.rpframework.website.edongwang.domain.User;
 import com.rpframework.website.edongwang.domain.UserSalesman;
+import com.rpframework.website.edongwang.utils.EConstants;
 
 @Service
 public class UserSalesmanService extends BaseService {
 	
 	@Resource public IUserSalesmanDao userSalesmanDao;
 	@Resource UserService userService;
+	@Resource UserScoreService userScoreService;
 	
 	public UserSalesman getUserSalesmanByUserId(Integer userId) {
 		return select(userId);
@@ -41,6 +46,12 @@ public class UserSalesmanService extends BaseService {
 				if(user.getIsSalesman() != 1) {
 					user.setIsSalesman(1);
 					boolean flag = userService.update(user);
+					
+					JsonObject scoreExtJson = new JsonObject();
+					Integer finishProfileScore = NumberUtils.parseInt(DictionarySettingUtils.getParameterValue(EConstants.ScoreChannel.USERSCORE_VALUECFG_FINISHPROFILE), 0);
+					//抢单积分给 业务员的
+					userScoreService.addScore(userSalesman.getUserId(), finishProfileScore, EConstants.ScoreChannel.FINISH_PROFILE, scoreExtJson.toString());
+				
 					Assert.isTrue(flag);
 				}
 			}

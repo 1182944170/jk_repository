@@ -36,13 +36,36 @@ public class Job extends Domain{
 	@FieldMapperAnnotation
 	Integer jobType;
 	@FieldMapperAnnotation
-	Integer moneyType;
+	String money;
 	@FieldMapperAnnotation
 	String contact;
+	@FieldMapperAnnotation
+	String countString;
+	@FieldMapperAnnotation
+	String commissionPercent;
 	@FieldMapperAnnotation
 	String comRemark;
 	@FieldMapperAnnotation
 	Long recordCreateTime;
+	
+	public String getCountString() {
+		return countString;
+	}
+	public void setCountString(String countString) {
+		this.countString = countString;
+	}
+	public String getMoney() {
+		return money;
+	}
+	public void setMoney(String money) {
+		this.money = money;
+	}
+	public String getCommissionPercent() {
+		return commissionPercent;
+	}
+	public void setCommissionPercent(String commissionPercent) {
+		this.commissionPercent = commissionPercent;
+	}
 	public Integer getId() {
 		return id;
 	}
@@ -90,12 +113,6 @@ public class Job extends Domain{
 	}
 	public void setJobType(Integer jobType) {
 		this.jobType = jobType;
-	}
-	public Integer getMoneyType() {
-		return moneyType;
-	}
-	public void setMoneyType(Integer moneyType) {
-		this.moneyType = moneyType;
 	}
 	public String getContact() {
 		return contact;

@@ -25,14 +25,15 @@ public class SMSService extends BaseService {
 		}
 		
 		ISMSEvent smsEvent = beans.values().iterator().next();
-		boolean b = smsEvent.sendSMS(phone, content);
+		String responseText = smsEvent.sendSMS(phone, content);
 		SMS sms = new SMS();
 		sms.setChannelSend(smsEvent.getChannelSend());
 		sms.setChannelType(channelType);
 		sms.setContent(content);
 		sms.setExpirationTime(expirationTime);
 		sms.setPhone(phone);
-		sms.setSendState(b ? 1 : 0);
+		sms.setResponseText(responseText);
+		sms.setSendState(smsEvent.checkSucc(responseText) ? 1 : 0);
 		sms.setState(SMS.SMS_STATE_UNVERIFY);
 		sms.setVerifyCode(verifyCode);
 		sms.setRecordCreateTime(System.currentTimeMillis() / 1000);

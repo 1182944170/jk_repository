@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Component;
 
 import com.google.gson.JsonElement;
@@ -18,6 +19,18 @@ import com.rpframework.utils.FileUtils;
 public class TagUtils extends BaseRegistFreemarker {
 	public static Object getNull() {
 		return null;
+	}
+	
+	public static String cutString(String s, int len) {
+		if(StringUtils.isBlank(s)) {
+			return s;
+		}
+		
+		if(s.length() <= len) {
+			return s;
+		}
+		
+		return StringUtils.substring(s, 0, len) + "...";
 	}
 	public static String getDomain(HttpServletRequest request) {
 		String d = request.getScheme() + "://" + request.getServerName();

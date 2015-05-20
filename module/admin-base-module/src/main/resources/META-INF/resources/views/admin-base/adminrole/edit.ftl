@@ -12,11 +12,11 @@
 <input type="hidden" name="roleAdminAuthResArrString"/>
 <fieldset>
 <div class="form-group">
-	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="userName">Role Name:</label>
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="userName">角色名称:</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<span class="block input-icon width-40">
-				<input type="text" name="name" id="name" value="${(adminRole.name)!''}" class="form-control" placeholder="Role Name"/>
+				<input type="text" name="name" id="name" value="${(adminRole.name)!''}" class="form-control" placeholder="角色名称"/>
 				<i class="icon-user"></i>
 			</span>
 		</div>
@@ -24,11 +24,11 @@
 </div>
 
 <div class="form-group">
-	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="userName">Description:</label>
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="description">描述:</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<span class="block input-icon width-40">
-				<input type="text" name="description" id="description" value="${(adminRole.description)!''}" class="form-control" placeholder="Description"/>
+				<input type="text" name="description" id="description" value="${(adminRole.description)!''}" class="form-control" placeholder="描述"/>
 				<i class="icon-edit"></i>
 			</span>
 		</div>
@@ -41,7 +41,7 @@
 </#if>
 
 <div class="form-group">
-	<label class="control-label col-xs-12 col-sm-3 no-padding-right">State:</label>
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right">状态:</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 		<@ace.radioGroup options=ace.commonStateOptions checkValue=(adminRole.state)!-1 name="state" isWrap=true/>
@@ -50,16 +50,16 @@
 </div>
 
 <div class="form-group">
-	<label class="control-label col-xs-12 col-sm-3 no-padding-right">Is Super Limit:</label>
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right">是否具备全部权限:</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
-		<@ace.radioGroup options=ace.commonOptions checkValue=(adminRole.isSuper)!-1 name="isSuper" isWrap=true/>
+		<@ace.radioGroup options=ace.commonStateOptionsYN checkValue=(adminRole.isSuper)!-1 name="isSuper" isWrap=true/>
 		</div>
 	</div>
 </div>
 
 <div class="form-group">
-	<label class="control-label col-xs-12 col-sm-3 no-padding-right">Chooice Limit:</label>
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right">选择权限:</label>
 	<div class="col-xs-12 col-sm-9">
 		<@admin_perm cmd="ad_parent_adminauthres_list">
 		<div class="clearfix">
@@ -87,12 +87,12 @@
 <div class="col-md-offset-3 col-md-9">
 	<button class="btn btn-info" type="submit">
 		<i class="icon-ok bigger-110"></i>
-		Submit
+		提 交
 	</button>
 	&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
 	<button class="btn" type="reset">
 		<i class="icon-undo bigger-110"></i>
-		Reset
+		重 置
 	</button>
 </div>
 </fieldset>

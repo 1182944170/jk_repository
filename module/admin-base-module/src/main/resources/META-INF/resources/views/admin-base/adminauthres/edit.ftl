@@ -66,12 +66,12 @@
 <div class="col-md-offset-3 col-md-9">
 	<button class="btn btn-info" type="submit">
 		<i class="icon-ok bigger-110"></i>
-		Submit
+		提 交
 	</button>
 	&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
 	<button class="btn" type="reset">
 		<i class="icon-undo bigger-110"></i>
-		Reset
+		重 置
 	</button>
 </div>
 </fieldset>

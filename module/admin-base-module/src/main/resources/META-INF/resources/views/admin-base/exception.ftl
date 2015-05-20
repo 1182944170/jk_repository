@@ -1,2 +1,2 @@
-<title>错误提示</title>
-<h2 class="red">错误：${ex.message}</h2>
+<title>提示</title>
+<h2 class="red">${ex.message}</h2>

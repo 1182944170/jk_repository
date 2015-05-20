@@ -50,6 +50,9 @@ public class RoleAdminAuthResVerifyEvent {
 	}
 
 	public boolean checkRoleLimit(AdminRole adminRole, String uri) {
+		if(StringUtils.indexOf(uri, ".") > -1) {
+			uri = StringUtils.substring(uri,0, StringUtils.indexOf(uri, "."));
+		}
 		AdminRole role = adminRole;
 		//看看是否具备所有权限
 		if(role != null && role.getIsSuper() == 1) {

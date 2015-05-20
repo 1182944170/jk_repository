@@ -15,6 +15,15 @@
 		<collection property="progresses" column="id" select="com.rpframework.website.edongwang.dao.IHouseRecommendProgressDao.getProgressByHouseRecommendId" />
 	</resultMap>
 	
+	<select id="doOverPager" parameterType="map" resultMap="mHouseRecommend">
+		select u2.* from (
+			select u.*, count(1) pCount from e_house_recommend u
+				left join e_house_recommend_progress m on m.houseRecommendId=u.id
+				group by u.id
+				order by u.state) as u2 
+		where u2.pCount>2
+	</select>
+	
 	<select id="doPager" parameterType="map" resultMap="mHouseRecommend">
 		select m.* 
 		
@@ -52,7 +61,13 @@
 		<if test="page.searchMap.acceptSalesmanRealName != null">
 			and u2.realName like "%"#{page.searchMap.acceptSalesmanRealName}"%" 
 		</if>
-		 order by id desc
+		
+		<if test="page.searchMap.order != null">
+			 order by #{page.searchMap.order}
+		</if>
+		<if test="page.searchMap.order == null">
+			 order by id desc
+		</if>
 	</select>
 	
 	<update id="update" parameterType="com.rpframework.website.edongwang.domain.HouseRecommend" />
