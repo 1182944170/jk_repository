@@ -38,6 +38,7 @@ public class CommonTemplateDirectiveModel extends BaseTemplateDirectiveModel {
 	static final String NOTICE_LIST = "notice_list";
 	static final String SLIDESHOW_LIST = "slideshow_list";
 	static final String HELP_LIST_GROUP_TYPE = "help_list_group_type";
+	static final String HELP_BY_ALIASES_TITLE = "help_by_aliasesTitle";
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
@@ -85,6 +86,11 @@ public class CommonTemplateDirectiveModel extends BaseTemplateDirectiveModel {
 				mm.put(String.valueOf(entry.getKey()), ss);
 			}
 			paramWarp.put("map", mm);
+		} else if(StringUtils.equals(cmd, HELP_BY_ALIASES_TITLE)) {
+			String aliasesTitle = DirectiveUtils.getString("aliasesTitle", params);
+			HelpSevice helpService = SpringUtils.getBean(HelpSevice.class);
+			Help help = helpService.getHelpByaliasesTitle(aliasesTitle);
+			paramWarp.put("help", ObjectWrapper.DEFAULT_WRAPPER.wrap(help));
 		}
 		
 		Map origWarp = DirectiveUtils.addParamsToVariable(env, paramWarp);
