@@ -21,7 +21,7 @@
 		order by id,type
 	</select>
 	
-	<select id="getTypesBySource" resultMap="Integer">
+	<select id="getTypesBySource" parameterType="Integer">
 		select type from picture where source=#{source} group by type
 	</select>
 
