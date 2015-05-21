@@ -1,4 +1,4 @@
-package com.rpframework.website.datangwenshenweb.directive;
+package com.rpframework.website.datangwenshen.web.directive;
 
 import java.io.IOException;
 import java.util.HashMap;
