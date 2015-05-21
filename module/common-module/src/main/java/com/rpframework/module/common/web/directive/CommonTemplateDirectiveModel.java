@@ -15,6 +15,7 @@ import com.rpframework.core.freemarker.directive.DirectiveUtils;
 import com.rpframework.core.utils.SpringUtils;
 import com.rpframework.module.common.domain.Document;
 import com.rpframework.module.common.domain.Help;
+import com.rpframework.module.common.domain.Notice;
 import com.rpframework.module.common.domain.Slideshow;
 import com.rpframework.module.common.service.DocumentService;
 import com.rpframework.module.common.service.HelpSevice;
@@ -36,6 +37,7 @@ public class CommonTemplateDirectiveModel extends BaseTemplateDirectiveModel {
 	static final String HAS_INCLUDE_FILE = "has_include_file";
 	static final String DOCUMENT_LIST = "document_list";
 	static final String NOTICE_LIST = "notice_list";
+	static final String NOTICE_BY_ID = "notice_by_id";
 	static final String SLIDESHOW_LIST = "slideshow_list";
 	static final String HELP_LIST_GROUP_TYPE = "help_list_group_type";
 	static final String HELP_BY_ALIASES_TITLE = "help_by_aliasesTitle";
@@ -60,15 +62,18 @@ public class CommonTemplateDirectiveModel extends BaseTemplateDirectiveModel {
 				logger.info("不存在的file文件:{}", name);
 			}
 		} else if(StringUtils.equals(cmd, DOCUMENT_LIST)) {
+			
 			DocumentService documentService = SpringUtils.getBean(DocumentService.class);
 			List<Document> list = documentService.queryAllByParentId(0);
 			paramWarp.put("m_list", ObjectWrapper.DEFAULT_WRAPPER.wrap(list));
 		} else if(StringUtils.equals(cmd, SLIDESHOW_LIST)) {
+			
 			Integer type = DirectiveUtils.getInt("type", params);
 			SlideshowService slideshowService = SpringUtils.getBean(SlideshowService.class);
 			List<Slideshow> list = slideshowService.queryEffectiveSlideshow(type);
 			paramWarp.put("m_list", ObjectWrapper.DEFAULT_WRAPPER.wrap(list));
 		} else if(StringUtils.equals(cmd, NOTICE_LIST)) {
+			
 			String pagerString = DirectiveUtils.getString("pagerString", params);
 			Integer pageSize = DirectiveUtils.getInt("pageSize", params);
 			Pager pager = Pager.convertStringToPager(pagerString);
@@ -78,6 +83,7 @@ public class CommonTemplateDirectiveModel extends BaseTemplateDirectiveModel {
 			noticeService.getNoticePager(pager);
 			paramWarp.put("m_pager", ObjectWrapper.DEFAULT_WRAPPER.wrap(pager));
 		} else if(StringUtils.equals(cmd, HELP_LIST_GROUP_TYPE)) {
+			
 			HelpSevice helpService = SpringUtils.getBean(HelpSevice.class);
 			Map<Integer, List<Help>> map = helpService.getHelpGroupByType();
 			SimpleHash mm = new SimpleHash();
@@ -87,10 +93,17 @@ public class CommonTemplateDirectiveModel extends BaseTemplateDirectiveModel {
 			}
 			paramWarp.put("map", mm);
 		} else if(StringUtils.equals(cmd, HELP_BY_ALIASES_TITLE)) {
+			
 			String aliasesTitle = DirectiveUtils.getString("aliasesTitle", params);
 			HelpSevice helpService = SpringUtils.getBean(HelpSevice.class);
 			Help help = helpService.getHelpByaliasesTitle(aliasesTitle);
 			paramWarp.put("help", ObjectWrapper.DEFAULT_WRAPPER.wrap(help));
+		} else if(StringUtils.equals(cmd, NOTICE_BY_ID)) {
+			
+			Integer noticeId = DirectiveUtils.getInt("id", params);
+			NoticeService noticeService = SpringUtils.getBean(NoticeService.class);
+			Notice notice = noticeService.select(noticeId);
+			paramWarp.put("notice", ObjectWrapper.DEFAULT_WRAPPER.wrap(notice));
 		}
 		
 		Map origWarp = DirectiveUtils.addParamsToVariable(env, paramWarp);

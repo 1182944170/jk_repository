@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.website.datangwenshen.dao.IPictureDao">
+
+
+	<resultMap type="com.rpframework.website.datangwenshen.domain.Picture" id="mPicture" autoMapping="true">
+		<id property="id" column="id" />
+	</resultMap>		
+
+	<select id="doPager" resultMap="mPicture">
+		select * from picture where 1=1
+		
+		<if test="page.searchMap.type != null">
+			and type = #{page.searchMap.type} 
+		</if>
+		
+		<if test="page.searchMap.source != null">
+			and source = #{page.searchMap.source} 
+		</if>
+		order by id,type
+	</select>
+
+	<update id="update" parameterType="com.rpframework.website.datangwenshen.domain.Picture" />
+	<insert id="insert" parameterType="com.rpframework.website.datangwenshen.domain.Picture" useGeneratedKeys="true" keyProperty="id"/>
+	<delete id="delete" parameterType="com.rpframework.website.datangwenshen.domain.Picture" />
+	<select id="select" parameterType="Integer" resultMap="mPicture">
+		select * from picture where id=#{id}
+	</select>
+</mapper>
