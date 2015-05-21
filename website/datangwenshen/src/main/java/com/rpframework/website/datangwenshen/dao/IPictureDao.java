@@ -11,4 +11,6 @@ public interface IPictureDao extends IDao{
 	
 	@SuppressWarnings("rawtypes")
 	List<Picture> doPager(Map picture);
+
+	List<Integer> getTypesBySource(Integer source);
 }

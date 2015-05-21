@@ -20,6 +20,10 @@
 		</if>
 		order by id,type
 	</select>
+	
+	<select id="getTypesBySource" resultMap="Integer">
+		select type from picture where source=#{source} group by type
+	</select>
 
 	<update id="update" parameterType="com.rpframework.website.datangwenshen.domain.Picture" />
 	<insert id="insert" parameterType="com.rpframework.website.datangwenshen.domain.Picture" useGeneratedKeys="true" keyProperty="id"/>

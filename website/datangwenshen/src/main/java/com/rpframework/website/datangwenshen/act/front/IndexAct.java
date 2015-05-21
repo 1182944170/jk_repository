@@ -67,20 +67,21 @@ public class IndexAct extends BaseAct {
 	@SuppressWarnings("rawtypes")
 	@RequestMapping("work")
 	public String work(@RequestParam(value = "pager", required = false) Pager pager,Map<Object, Object> model) {
-		this.doSearchPicuter(pager, DTWSConstants.Picuter.TYPE_WORK, model);
+		this.doSearchPicuter(pager, DTWSConstants.Picuter.SOURCE_WORK, model);
 		return "/" + daTangWenShenConfig.STYLE + "/picuter/list";
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	private void doSearchPicuter(Pager pager, int type,Map<Object, Object> model) {
+	private void doSearchPicuter(Pager pager, int source,Map<Object, Object> model) {
 		if(pager == null) {
 			pager = new Pager();
 		}
-		pager.getSearchMap().put("type", String.valueOf(type));
+		pager.getSearchMap().put("source", String.valueOf(source));
 		pictureService.getPager(pager);
 		
 		model.put("pager", pager);
-		model.put("type", type);
+		model.put("types", pictureService.getTypesBySource(source));
+		model.put("source", source);
 	}
 	@RequestMapping("work/{id}/detail")
 	public String workDetail(@PathVariable Integer id,Map<Object, Object> model) {
@@ -93,7 +94,7 @@ public class IndexAct extends BaseAct {
 	@SuppressWarnings("rawtypes")
 	@RequestMapping("material")
 	public String material(@RequestParam(value = "pager", required = false) Pager pager,Map<Object, Object> model) {
-		this.doSearchPicuter(pager, DTWSConstants.Picuter.TYPE_MATERIAL, model);
+		this.doSearchPicuter(pager, DTWSConstants.Picuter.SOURCE_MATERIAL, model);
 		return "/" + daTangWenShenConfig.STYLE + "/picuter/list";
 	}
 	
@@ -108,7 +109,7 @@ public class IndexAct extends BaseAct {
 	@SuppressWarnings("rawtypes")
 	@RequestMapping("piercing")
 	public String piercing(@RequestParam(value = "pager", required = false) Pager pager,Map<Object, Object> model) {
-		this.doSearchPicuter(pager, DTWSConstants.Picuter.TYPE_PIERCING, model);
+		this.doSearchPicuter(pager, DTWSConstants.Picuter.SOURCE_PIERCING, model);
 		return "/" + daTangWenShenConfig.STYLE + "/picuter/list";
 	}
 	

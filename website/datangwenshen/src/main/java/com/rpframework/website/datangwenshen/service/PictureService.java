@@ -14,6 +14,10 @@ public class PictureService extends BaseService{
 
 	public @Resource IPictureDao pictureDao;
 	
+	public List<Integer> getTypesBySource(Integer source) {
+		return pictureDao.getTypesBySource(source);
+	}
+	
 	public Pager<Picture> getPager(Pager<Picture> pager) {
 		long startTime = System.currentTimeMillis();
 		List<Picture> list = pictureDao.doPager(this.packageMyBatisParam(pager));
