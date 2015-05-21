@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
-<mapper namespace="com.rpframework.module.user.dao.ICfgBankAddressDao">
+<mapper namespace="com.rpframework.module.common.dao.ICfgBankAddressDao">
 
-	<resultMap type="com.rpframework.module.user.domain.CfgBankAddress" id="mCfgBankAddress" autoMapping="true">
+	<resultMap type="com.rpframework.module.common.domain.CfgBankAddress" id="mCfgBankAddress" autoMapping="true">
 		<id property="id" column="id" />
 		<association property="cfgBank" column="bankId" select="com.rpframework.module.user.dao.ICfgBankDao.select" />
 	</resultMap>
@@ -12,9 +12,9 @@
 		select * from cfg_bank_address where 1=1
 	</select>
 	
-	<update id="update" parameterType="com.rpframework.module.user.domain.CfgBankAddress" />
-	<insert id="insert" parameterType="com.rpframework.module.user.domain.CfgBankAddress" useGeneratedKeys="true" keyProperty="id"/>
-	<delete id="delete" parameterType="com.rpframework.module.user.domain.CfgBankAddress" />
+	<update id="update" parameterType="com.rpframework.module.common.domain.CfgBankAddress" />
+	<insert id="insert" parameterType="com.rpframework.module.common.domain.CfgBankAddress" useGeneratedKeys="true" keyProperty="id"/>
+	<delete id="delete" parameterType="com.rpframework.module.common.domain.CfgBankAddress" />
 	<select id="select" parameterType="Integer" resultMap="mCfgBankAddress">
 		select * from cfg_bank_address where id=#{id}
 	</select> 

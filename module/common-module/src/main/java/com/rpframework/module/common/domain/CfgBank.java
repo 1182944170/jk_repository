@@ -1,4 +1,4 @@
-package com.rpframework.module.user.domain;
+package com.rpframework.module.common.domain;
 
 import com.rpframework.core.Domain;
 import com.rpframework.core.mybatis.plugin.annotation.FieldMapperAnnotation;

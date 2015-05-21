@@ -5,6 +5,8 @@ import com.rpframework.core.mybatis.plugin.annotation.FieldMapperAnnotation;
 import com.rpframework.core.mybatis.plugin.annotation.FieldType;
 import com.rpframework.core.mybatis.plugin.annotation.TableMapperAnnotation;
 import com.rpframework.core.mybatis.plugin.annotation.UniqueKeyType;
+import com.rpframework.module.common.domain.CfgBank;
+import com.rpframework.module.common.domain.CfgBankAddress;
 
 @TableMapperAnnotation(tableName = "u_bank_card", uniqueKeyType = UniqueKeyType.Single, uniqueKey = "id")
 public class UserBankCard extends Domain {

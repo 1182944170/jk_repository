@@ -12,40 +12,40 @@
 			<table id="sample-table-1" class="table table-striped table-bordered table-hover">
 				<thead>
 					<tr>
-						<th>ID</th>
-						<th>名称</th>
-						<th>图片</th>
-						<th>类型</th>
-						<th>积分</th>
-						<th>库存</th>
-						<th>已销售</th>
-						<th>规则</th>
-						<th>时间</th>
-						<th>创建时间</th>
-						<th>状态</th>
-						<th></th>
+						<th class="center">ID</th>
+						<th class="center">名称</th>
+						<th class="center">图片</th>
+						<th class="center">类型</th>
+						<th class="center">积分</th>
+						<th class="center">库存</th>
+						<th class="center">已销售</th>
+						<th class="center" width=50>规则</th>
+						<th class="center">时间</th>
+						<th class="center">创建时间</th>
+						<th class="center">状态</th>
+						<th class="center"></th>
 					</tr>
 				</thead>
 				<tbody>
 				<#list pager.itemList as u>
 					<tr>
-						<td><span class="green center">${u.id}</span></td>
-						<td>${u.name}</td>
-						<td><img src="${tagUtils.getFileFullPath(u.img)}" width=100 /></td>
-						<td>${dicSetting.getParameterValue("scoreShop.type." + u.type)}</td>
-						<td>${u.score}</td>
-						<td>
+						<td class="center"><span class="green center">${u.id}</span></td>
+						<td class="center">${u.name}</td>
+						<td class="center"><img src="${tagUtils.getFileFullPath(u.img)}" width=60 /></td>
+						<td class="center">${dicSetting.getParameterValue("scoreShop.type." + u.type)}</td>
+						<td class="center">${u.score}</td>
+						<td class="center">
 							<#if u.stockNumber == -1>
 								不限制
 							<#else>
 								${u.stockNumber}
 							</#if>
 						</td>
-						<td>${u.salesNumber}</td>
-						<td>${dicSetting.getParameterValue("scoreShop.rule." + u.rule)}</td>
-						<td>${tagUtils.formatDate(u.startTime)} ~ ${tagUtils.formatDate(u.endTime)}</td>
-						<td>${tagUtils.formatDate(u.recordCreateTime)}</td>
-						<td>
+						<td class="center">${u.salesNumber}</td>
+						<td class="center">${dicSetting.getParameterValue("scoreShop.rule." + u.rule)}</td>
+						<td class="center">${tagUtils.formatDate(u.startTime)} ~ ${tagUtils.formatDate(u.endTime)}</td>
+						<td class="center">${tagUtils.formatDate(u.recordCreateTime)}</td>
+						<td class="center">
 						<#if u.state == 0>
 							<span class="label label-sm label-warning arrowed">禁用状态</span>
 						<#elseif u.state == 1>
@@ -53,7 +53,7 @@
 						<#else>
 						</#if>
 						</td>
-						<td>
+						<td class="center">
 						<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
 							<a class="green" href="${ctx}/admin/score_shop/${u.id}/edit${suffix}" alt="编辑">
 								<i class="icon-pencil bigger-130"></i>编辑

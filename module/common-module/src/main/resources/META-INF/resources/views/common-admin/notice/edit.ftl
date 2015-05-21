@@ -64,7 +64,7 @@
 </#if>
 
 <script>
-$(notice).ready(function(){
+$(document).ready(function(){
 	RP.addBreadcrumb([{name:"题库"}, {name:"<#if notice??>编辑<#else>新增</#if>通知",  active: true}]);
 	
 	$('#validation-form').validate({

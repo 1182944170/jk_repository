@@ -1,10 +1,10 @@
-package com.rpframework.module.user.dao;
+package com.rpframework.module.common.dao;
 
 import java.util.List;
 import java.util.Map;
 
 import com.rpframework.core.IDao;
-import com.rpframework.module.user.domain.CfgBankAddress;
+import com.rpframework.module.common.domain.CfgBankAddress;
 
 public interface ICfgBankAddressDao extends IDao {
 

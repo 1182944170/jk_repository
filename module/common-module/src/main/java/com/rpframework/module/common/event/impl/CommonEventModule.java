@@ -26,7 +26,7 @@ public class CommonEventModule extends ModuleEvent {
 	final Logger logger = LoggerFactory.getLogger(getClass());
 	@Override
 	public void applySiteMeshCustomConfiguration(SiteMeshFilterBuilder builder) {
-		
+		builder.addExcludedPath("/resources/*");
 	}
 	
 	@Override

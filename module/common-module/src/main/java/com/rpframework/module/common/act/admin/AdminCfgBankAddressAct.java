@@ -1,4 +1,4 @@
-package com.rpframework.module.user.act.admin;
+package com.rpframework.module.common.act.admin;
 
 import java.util.List;
 import java.util.Map;
@@ -15,17 +15,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.rpframework.module.user.act.UserModuleBaseAct;
-import com.rpframework.module.user.domain.CfgBank;
-import com.rpframework.module.user.domain.CfgBankAddress;
-import com.rpframework.module.user.service.CfgBankAddressService;
-import com.rpframework.module.user.service.CfgBankService;
+import com.rpframework.module.common.act.CommonBaseAct;
+import com.rpframework.module.common.domain.CfgBank;
+import com.rpframework.module.common.domain.CfgBankAddress;
+import com.rpframework.module.common.service.CfgBankAddressService;
+import com.rpframework.module.common.service.CfgBankService;
 import com.rpframework.utils.NumberUtils;
 import com.rpframework.utils.Pager;
 
 @Controller
 @RequestMapping("/admin/common/bank_address")
-public class AdminCfgBankAddressAct extends UserModuleBaseAct{
+public class AdminCfgBankAddressAct extends CommonBaseAct {
 	@Resource CfgBankAddressService cfgBankAddressService;
 	@Resource CfgBankService cfgBankService;
 	

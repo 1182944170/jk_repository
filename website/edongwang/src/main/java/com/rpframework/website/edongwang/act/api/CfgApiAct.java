@@ -16,11 +16,11 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.rpframework.core.BaseAct;
 import com.rpframework.core.utils.DictionarySettingUtils;
-import com.rpframework.module.user.domain.CfgBank;
-import com.rpframework.module.user.domain.CfgBankAddress;
+import com.rpframework.module.common.domain.CfgBank;
+import com.rpframework.module.common.domain.CfgBankAddress;
+import com.rpframework.module.common.service.CfgBankAddressService;
+import com.rpframework.module.common.service.CfgBankService;
 import com.rpframework.module.user.domain.CfgScore;
-import com.rpframework.module.user.service.CfgBankAddressService;
-import com.rpframework.module.user.service.CfgBankService;
 import com.rpframework.module.user.service.CfgScoreService;
 
 @Controller

@@ -1,4 +1,4 @@
-package com.rpframework.module.user.service;
+package com.rpframework.module.common.service;
 
 import java.util.List;
 
@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import com.rpframework.core.BaseService;
-import com.rpframework.module.user.dao.ICfgBankDao;
-import com.rpframework.module.user.domain.CfgBank;
+import com.rpframework.module.common.dao.ICfgBankDao;
+import com.rpframework.module.common.domain.CfgBank;
 import com.rpframework.utils.NumberUtils;
 import com.rpframework.utils.Pager;
 
