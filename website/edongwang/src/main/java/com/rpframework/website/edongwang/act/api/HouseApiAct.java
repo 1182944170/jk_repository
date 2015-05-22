@@ -19,7 +19,9 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import com.rpframework.core.BaseAct;
+import com.rpframework.core.utils.TagUtils;
 import com.rpframework.utils.NumberUtils;
 import com.rpframework.utils.Pager;
 import com.rpframework.website.edongwang.domain.House;
@@ -37,12 +39,23 @@ public  @ResponseBody class HouseApiAct extends BaseAct {
 	@Resource HouseRecommendService houseRecommendService;
 	
 	@RequestMapping("/list")
-	public  @ResponseBody JsonElement list(@RequestParam(value = "pager", required = false) Pager<House> pager,Map<Object, Object> model, RedirectAttributes attr) {
+	public  @ResponseBody JsonElement list(@RequestParam(value = "pager", required = false) Pager<House> pager,HttpServletRequest request,Map<Object, Object> model, RedirectAttributes attr) {
 		if (pager == null) {
 			pager = new Pager<House>();
 		}
-		pager = houseService.getPager(pager);
 		pager.getSearchMap().put("queryVaildData", "1");
+		String areaCode = request.getParameter("areaCode");
+		String keyword = request.getParameter("keyword");
+		if(StringUtils.isNotBlank(areaCode)) {
+			pager.getSearchMap().put("areaCode", areaCode);
+		}
+		
+		if(StringUtils.isNotBlank(areaCode)) {
+			pager.getSearchMap().put("houseName", keyword);
+		}
+		
+		pager = houseService.getPager(pager);
+		
 		
 		JsonObject json = new JsonObject();
 		json.addProperty("totalPages", pager.getTotalPages());
@@ -52,7 +65,22 @@ public  @ResponseBody class HouseApiAct extends BaseAct {
 		JsonArray array = new JsonArray();
 		json.add("arrays", array);
 		for (House house : list) {
-			array.add(gson.toJsonTree(house));
+			JsonObject jsonObj = gson.toJsonTree(house).getAsJsonObject();
+			List<String> houseImgArrayList = house.getHouseImgArrayList();
+			JsonArray houseImgArray = new JsonArray();
+			for (String s : houseImgArrayList) {
+				houseImgArray.add(new JsonPrimitive(TagUtils.getFileFullPath(s)));
+			}
+			jsonObj.add("houseImgArray", houseImgArray);
+			
+			List<String> houseTypeImgArrayList = house.getHouseTypeImgArrayList();
+			JsonArray houseTypeImgArray = new JsonArray();
+			for (String s : houseTypeImgArrayList) {
+				houseTypeImgArray.add(new JsonPrimitive(TagUtils.getFileFullPath(s)));
+			}
+			jsonObj.add("houseTypeImgArray", houseImgArray);
+			
+			array.add(jsonObj);
 		}
 		return json;
 	}

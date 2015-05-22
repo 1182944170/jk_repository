@@ -4,11 +4,15 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.helpers.MessageFormatter;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import com.rpframework.core.BaseService;
+import com.rpframework.core.utils.DictionarySettingUtils;
 import com.rpframework.core.utils.cache.KVObj;
+import com.rpframework.module.common.service.SMSService;
 import com.rpframework.module.user.dao.IUserTakeCashDao;
 import com.rpframework.module.user.domain.UserTakeCash;
 import com.rpframework.utils.Pager;
@@ -17,6 +21,7 @@ import com.rpframework.utils.Pager;
 public class UserTakeCashService extends BaseService {
 	public @Resource IUserTakeCashDao takeCashDao;
 	@Resource UserMoneyService userMoneyService;
+	@Resource SMSService smsService;
 	
 	public Pager<UserTakeCash> getPager(Pager<UserTakeCash> pager) {
 		long startTime = System.currentTimeMillis();
@@ -39,9 +44,24 @@ public class UserTakeCashService extends BaseService {
 			
 			//释放冻结金额
 			userMoneyService.unFreezeMoney(userId, userTakeCashDB.getMoney());
+			String sendContent = "";
 			if(userTakeCash.getState() == 1) { //如果是成功处理的话 则扣除冻结的金额
 				userMoneyService.costMoney(userId, userTakeCashDB.getMoney(), kvObj, null);
+				
+				sendContent = DictionarySettingUtils.getParameterValue("sendsms.takeCash.success");
+				if(StringUtils.isBlank(sendContent)) {
+					sendContent =  "取现成功，金额:{}.";
+				}
+				
+				sendContent = MessageFormatter.format(sendContent, userTakeCash.getMoney());
+			} else {
+				sendContent = DictionarySettingUtils.getParameterValue("sendsms.takeCash.fail");
+				if(StringUtils.isBlank(sendContent)) {
+					sendContent =  "取现失败.";
+				}
 			}
+			
+			smsService.sendSMS(1000, userTakeCashDB.getUser().getContact(), "", sendContent);
 			
 			return update(userTakeCashDB);
 		} else {//

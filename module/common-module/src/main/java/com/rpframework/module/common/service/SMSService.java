@@ -21,7 +21,8 @@ public class SMSService extends BaseService {
 	public boolean sendSMS(int channelType, String phone, String verifyCode, String content, long expirationTime) {
 		Map<String, ISMSEvent> beans = SpringUtils.getApplicationContext().getBeansOfType(ISMSEvent.class);
 		if(CollectionUtils.isEmpty(beans)) {
-			throw new RuntimeException("未找到发送短信的实现!");
+			logger.warn("未找到发送短信的实现!");
+			return false;
 		}
 		
 		ISMSEvent smsEvent = beans.values().iterator().next();

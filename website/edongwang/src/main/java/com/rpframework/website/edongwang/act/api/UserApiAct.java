@@ -23,6 +23,7 @@ import com.google.gson.JsonParser;
 import com.rpframework.core.BaseAct;
 import com.rpframework.core.api.FileService;
 import com.rpframework.core.utils.GsonUtils;
+import com.rpframework.core.utils.TagUtils;
 import com.rpframework.module.common.domain.CfgBank;
 import com.rpframework.module.common.domain.CfgBankAddress;
 import com.rpframework.module.common.service.SMSService;
@@ -79,7 +80,7 @@ public class UserApiAct extends BaseAct {
 		json.addProperty("contact", user.getContact());
 		json.addProperty("sex", user.getSex());
 		json.addProperty("realName", user.getRealName());
-		json.addProperty("headImg", user.getHeadImg());
+		json.addProperty("headImg", TagUtils.getFileFullPath(user.getHeadImg()));
 		json.addProperty("countyCode", user.getCountyCode());
 		
 		int salesmanState = 0;

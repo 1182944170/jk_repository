@@ -11,8 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.rpframework.core.BaseAct;
 import com.rpframework.core.utils.SpringUtils;
 import com.rpframework.core.utils.TokenUtils;
-import com.rpframework.website.edongwang.domain.User;
-import com.rpframework.website.edongwang.service.UserService;
+import com.rpframework.website.edongwang.exception.NoLoginException;
 import com.rpframework.website.edongwang.utils.EConfig;
 
 public class EDongWangApiInterceptor implements HandlerInterceptor {
@@ -30,10 +29,10 @@ public class EDongWangApiInterceptor implements HandlerInterceptor {
 		Object user = request.getSession().getAttribute(BaseAct.SESSION_USER_KEY);
 		if(user == null) {
 			//TODO:for test
-			UserService xtUserService = SpringUtils.getBean(UserService.class);
-			User xtUser = xtUserService.findUserByContact("13568689898");
-			request.getSession().setAttribute(BaseAct.SESSION_USER_KEY, xtUser);
-//			throw new NoLoginException();
+//			UserService xtUserService = SpringUtils.getBean(UserService.class);
+//			User xtUser = xtUserService.findUserByContact("13568689898");
+//			request.getSession().setAttribute(BaseAct.SESSION_USER_KEY, xtUser);
+			throw new NoLoginException();
 		}
 		
 //		Cookie cookies[] = request.getCookies();

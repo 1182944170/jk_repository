@@ -5,8 +5,8 @@
 
 	<resultMap type="com.rpframework.module.user.domain.UserBankCard" id="mUserBankCard" autoMapping="true">
 		<id property="id" column="id" />
-		<association property="cfgBankAddress" column="openAddrId" select="com.rpframework.module.user.dao.ICfgBankAddressDao.select" />
-		<association property="cfgBank" column="bankId" select="com.rpframework.module.user.dao.ICfgBankDao.select" />
+		<association property="cfgBankAddress" column="openAddrId" select="com.rpframework.module.common.dao.ICfgBankAddressDao.select" />
+		<association property="cfgBank" column="bankId" select="com.rpframework.module.common.dao.ICfgBankDao.select" />
 	</resultMap>
 
 	<select id="getCardsByUserId" parameterType="Integer" resultMap="mUserBankCard">

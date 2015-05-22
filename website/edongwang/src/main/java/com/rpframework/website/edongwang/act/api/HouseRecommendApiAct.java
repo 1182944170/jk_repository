@@ -17,9 +17,12 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import com.rpframework.core.BaseAct;
+import com.rpframework.core.utils.TagUtils;
 import com.rpframework.utils.CollectionUtils;
 import com.rpframework.utils.Pager;
+import com.rpframework.website.edongwang.domain.House;
 import com.rpframework.website.edongwang.domain.HouseRecommend;
 import com.rpframework.website.edongwang.domain.HouseRecommendProgress;
 import com.rpframework.website.edongwang.domain.User;
@@ -125,7 +128,7 @@ public  @ResponseBody class HouseRecommendApiAct extends BaseAct {
 	@RequestMapping("/grab_list")
 	public  @ResponseBody JsonElement list(@RequestParam(value = "pager", required = false) Pager<HouseRecommend> pager,HttpSession session, Map<Object, Object> model, RedirectAttributes attr) {
 		User user = getSessionUser(session);
-		if(user.getIsSalesman() != 0) {//
+		if(user.getIsSalesman() == 0) {//
 			if(user.getUserSalesman() == null) {
 				throw new APICodeException(-1, "你不是二级会员，无权查看该API.");
 			} else {
@@ -136,6 +139,8 @@ public  @ResponseBody class HouseRecommendApiAct extends BaseAct {
 		if (pager == null) {
 			pager = new Pager<HouseRecommend>();
 		}
+		
+		
 		pager.getSearchMap().put("order", "state,recordCreateTime desc");
 		pager.getSearchMap().put("houseId", String.valueOf(user.getUserSalesman().getHouse().getId()));//只搜索本区域的
 		pager = houseRecommendService.getPager(pager);
@@ -195,6 +200,23 @@ public  @ResponseBody class HouseRecommendApiAct extends BaseAct {
 		hrJson.addProperty("totalPriceType", houseRecommend.getTotalPriceType());
 		hrJson.addProperty("state", houseRecommend.getState());//1 -未抢
 		
+		House house = houseRecommend.getHouse();
+		JsonObject houseJson = gson.toJsonTree(house).getAsJsonObject();
+		List<String> houseImgArrayList = house.getHouseImgArrayList();
+		JsonArray houseImgArray = new JsonArray();
+		for (String s : houseImgArrayList) {
+			houseImgArray.add(new JsonPrimitive(TagUtils.getFileFullPath(s)));
+		}
+		houseJson.add("houseImgArray", houseImgArray);
+		
+		List<String> houseTypeImgArrayList = house.getHouseTypeImgArrayList();
+		JsonArray houseTypeImgArray = new JsonArray();
+		for (String s : houseTypeImgArrayList) {
+			houseTypeImgArray.add(new JsonPrimitive(TagUtils.getFileFullPath(s)));
+		}
+		houseJson.add("houseTypeImgArray", houseImgArray);
+		hrJson.add("house", houseJson);
+		
 		if(isDealPro && houseRecommend.getState() != EConstants.Recommend.STATE_OPEN) { //进度信息
 			List<HouseRecommendProgress> progresses = houseRecommend.getProgresses();
 			JsonArray progressArray = new JsonArray();
@@ -226,7 +248,7 @@ public  @ResponseBody class HouseRecommendApiAct extends BaseAct {
 	public  @ResponseBody JsonElement myRecommends(@RequestParam(value = "pager", required = false) Pager<HouseRecommend> pager,HttpSession session, Map<Object, Object> model, RedirectAttributes attr) {
 		User user = getSessionUser(session);
 		if(user.getIsSalesman() == 1) {//
-			throw new APICodeException(-1, "二级会员没有推荐");
+			throw new APICodeException(-1, "二级会员没有我的推荐");
 		}
 		
 		if (pager == null) {
@@ -247,8 +269,24 @@ public  @ResponseBody class HouseRecommendApiAct extends BaseAct {
 		for (HouseRecommend houseRecommend : list) {
 			JsonObject hrJson = packageHouseRecommend(houseRecommend, true);
 			
-			hrJson.add("house", gson.toJsonTree(houseRecommend.getHouse()));
-			array.add(hrJson );
+			House house = houseRecommend.getHouse();
+			JsonObject houseJson = gson.toJsonTree(house).getAsJsonObject();
+			List<String> houseImgArrayList = house.getHouseImgArrayList();
+			JsonArray houseImgArray = new JsonArray();
+			for (String s : houseImgArrayList) {
+				houseImgArray.add(new JsonPrimitive(TagUtils.getFileFullPath(s)));
+			}
+			houseJson.add("houseImgArray", houseImgArray);
+			
+			List<String> houseTypeImgArrayList = house.getHouseTypeImgArrayList();
+			JsonArray houseTypeImgArray = new JsonArray();
+			for (String s : houseTypeImgArrayList) {
+				houseTypeImgArray.add(new JsonPrimitive(TagUtils.getFileFullPath(s)));
+			}
+			houseJson.add("houseTypeImgArray", houseImgArray);
+			
+			hrJson.add("house", houseJson);
+			array.add(hrJson);
 		}
 		return json;
 	}

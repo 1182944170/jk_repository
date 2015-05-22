@@ -88,12 +88,16 @@ public class NumberUtils {
 	}
 	
 	public static void main(String[] args) {
-		System.out.println(random(6));
+		System.out.println(random(1));
 	}
 	public static Number random(int c){
 		Random r = new Random(); 
-		int rannum = (int) (r.nextDouble() * Math.pow(10, c + 1)); //获取随机数
-		return rannum ;
+		double nextDouble = r.nextDouble();
+		while(nextDouble < 0.1) {
+			nextDouble = r.nextDouble();
+		}
+		
+		return  (int) (nextDouble * Math.pow(10, c));
 	}
 	public static double setDecimal(double d, int len) {
 		double rate = Math.pow(10, len);

@@ -125,6 +125,7 @@ public class TagUtils extends BaseRegistFreemarker {
 	}
 	
 	public static String getFileFullPath(String absPath) {
-		return FileUtils.splicePaths(getWebUrl(), absPath);
+		String url = FileUtils.splicePaths(getWebUrl(), absPath);
+		return StringUtils.replace(url, "\\", "/");
 	}
 }

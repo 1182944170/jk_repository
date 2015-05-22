@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.helpers.MessageFormatter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.rpframework.core.BaseAct;
+import com.rpframework.core.utils.DictionarySettingUtils;
 import com.rpframework.module.common.service.SMSService;
 import com.rpframework.utils.AlgorithmEnum;
 import com.rpframework.utils.AlgorithmUtils;
@@ -68,10 +70,14 @@ public class ApiAct extends BaseAct {
 		}
 		
 		String verifyCode = String.valueOf(NumberUtils.random(6));
-		String content = "本次注册验证码:" + verifyCode + "，请牢记";
+		String sendContent = DictionarySettingUtils.getParameterValue("sendsms.regist");
+		if(StringUtils.isBlank(sendContent)) {
+			sendContent =  "本次注册验证码:{}，请牢记";
+		}
+		sendContent = MessageFormatter.format(sendContent, verifyCode);
 		
-		boolean flag = smsService.sendSMS(EConstants.ChannelType.SEND_SMS_REGIST_CHANNEL_TYPE, contact, verifyCode, content);
-		if(flag) {
+		boolean flag = smsService.sendSMS(EConstants.ChannelType.SEND_SMS_REGIST_CHANNEL_TYPE, contact, verifyCode, sendContent);
+		if(!flag) {
 			throw new APICodeException(-2, "短信发送失败!");
 		}
 		JsonObject json = new JsonObject();
@@ -96,7 +102,6 @@ public class ApiAct extends BaseAct {
 			throw new APICodeException(-1, "非法参数!");
 		}
 		
-		//TODO:test 不验证
 		if(smsService.checkVerifyCode(EConstants.ChannelType.SEND_SMS_REGIST_CHANNEL_TYPE, contact, verifyCode)) {
 			throw new APICodeException(-4, "验证码不正确!");
 		}

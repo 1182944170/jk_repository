@@ -66,14 +66,20 @@
 								<#if u.progresses?has_content && u.progresses?size gt 0>
 									<#assign hasValue=true />
 								</#if>
+								
+								<li data-target="#step1" <#if hasValue && u.progresses[0].state==1><#else>class="complete"</#if>>
+									<span class="step">1</span>
+									<span class="title"><small>无效</small></span>
+								</li>
+								
+								
 								<li data-target="#step1" <#if hasValue && u.progresses[0].state==1>class="complete"</#if>>
-									<input name="form-field-radio${u_index}" type="radio" <#if hasValue && u.progresses[0].state==1>checked="checked"<#else>disabled=""</#if>/>
 									<span class="step" data-toggle="tooltip" data-placement="top" data-original-title="
 									<#if hasValue>
 										意向:${intents[gsonUtils.getInt(u.progresses[0].extJson, "intentStar")]}, 备注:${gsonUtils.getString(u.progresses[0].extJson, "remark")},处理时间:${tagUtils.formatDate(u.progresses[0].recordCreateTime)}
 									</#if>
-									">1</span>
-									<span class="title"><small><#if hasValue>有效<#else>无效</#if></small></span>
+									">2</span>
+									<span class="title"><small>有效</small></span>
 								</li>
 								
 								<#assign hasValue=false />
@@ -85,7 +91,7 @@
 									<#if hasValue>
 										备注:${gsonUtils.getString(u.progresses[1].extJson, "remark")},处理时间:${tagUtils.formatDate(u.progresses[1].recordCreateTime)}
 									</#if>
-									">2</span>
+									">3</span>
 									<span class="title"><small>回访</small></span>
 								</li>
 								
@@ -102,7 +108,7 @@
 											价格:${gsonUtils.getDouble(u.progresses[2].extJson, "price")},
 											处理时间:${tagUtils.formatDate(u.progresses[2].recordCreateTime)}
 									</#if>
-									">3</span>
+									">4</span>
 									<span class="title"><small>成交</small></span>
 								</li>
 								
@@ -115,7 +121,7 @@
 									<#if hasValue>
 										完结:处理时间:${tagUtils.formatDate(u.progresses[3].recordCreateTime)}
 									</#if>
-									">4</span>
+									">5</span>
 									<span class="title"><small>完结</small></span>
 								</li>
 							</ul>

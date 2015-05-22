@@ -16,10 +16,10 @@ import com.rpframework.module.common.domain.Notice;
 import com.rpframework.module.common.service.NoticeService;
 import com.rpframework.utils.Pager;
 import com.rpframework.website.datangwenshen.domain.Message;
+import com.rpframework.website.datangwenshen.domain.Picture;
 import com.rpframework.website.datangwenshen.service.MessageService;
 import com.rpframework.website.datangwenshen.service.PictureService;
 import com.rpframework.website.datangwenshen.utils.DTWSConstants;
-import com.rpframework.website.datangwenshen.utils.DTWSConstants.Picuter;
 import com.rpframework.website.datangwenshen.utils.DaTangWenShenConfig;
 
 @Controller
@@ -83,42 +83,43 @@ public class IndexAct extends BaseAct {
 		model.put("types", pictureService.getTypesBySource(source));
 		model.put("source", source);
 	}
+	
 	@RequestMapping("work/{id}/detail")
 	public String workDetail(@PathVariable Integer id,Map<Object, Object> model) {
-		Picuter picuter = pictureService.select(id);
-		Assert.notNull(picuter, "找不到作品ID:" + id);
-		model.put("picuter", picuter);
-		return "/" + daTangWenShenConfig.STYLE + "/picuter/detail";
+		Picture picture = pictureService.select(id);
+		Assert.notNull(picture, "找不到作品ID:" + id);
+		model.put("picture", picture);
+		return "/" + daTangWenShenConfig.STYLE + "/picture/detail";
 	}
 	
 	@SuppressWarnings("rawtypes")
 	@RequestMapping("material")
 	public String material(@RequestParam(value = "pager", required = false) Pager pager,Map<Object, Object> model) {
 		this.doSearchPicuter(pager, DTWSConstants.Picuter.SOURCE_MATERIAL, model);
-		return "/" + daTangWenShenConfig.STYLE + "/picuter/list";
+		return "/" + daTangWenShenConfig.STYLE + "/picture/list";
 	}
 	
 	@RequestMapping("material/{id}/detail")
 	public String materialDetail(@PathVariable Integer id,Map<Object, Object> model) {
-		Picuter picuter = pictureService.select(id);
-		Assert.notNull(picuter, "找不到作品ID:" + id);
-		model.put("picuter", picuter);
-		return "/" + daTangWenShenConfig.STYLE + "/picuter/detail";
+		Picture picture = pictureService.select(id);
+		Assert.notNull(picture, "找不到作品ID:" + id);
+		model.put("picture", picture);
+		return "/" + daTangWenShenConfig.STYLE + "/picture/detail";
 	}
 	
 	@SuppressWarnings("rawtypes")
 	@RequestMapping("piercing")
 	public String piercing(@RequestParam(value = "pager", required = false) Pager pager,Map<Object, Object> model) {
 		this.doSearchPicuter(pager, DTWSConstants.Picuter.SOURCE_PIERCING, model);
-		return "/" + daTangWenShenConfig.STYLE + "/picuter/list";
+		return "/" + daTangWenShenConfig.STYLE + "/picture/list";
 	}
 	
 	@RequestMapping("piercing/{id}/detail")
 	public String piercingDetail(@PathVariable Integer id,Map<Object, Object> model) {
-		Picuter picuter = pictureService.select(id);
-		Assert.notNull(picuter, "找不到作品ID:" + id);
-		model.put("picuter", picuter);
-		return "/" + daTangWenShenConfig.STYLE + "/picuter/detail";
+		Picture picture = pictureService.select(id);
+		Assert.notNull(picture, "找不到作品ID:" + id);
+		model.put("picture", picture);
+		return "/" + daTangWenShenConfig.STYLE + "/picture/detail";
 	}
 	
 	//============作品相关 end==================

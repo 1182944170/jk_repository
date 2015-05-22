@@ -15,6 +15,14 @@
 		<if test="page.searchMap.queryVaildData != null">
 			and state>=0
 		</if>
+		
+		<if test="page.searchMap.areaCode != null">
+			and areaCode = #{page.searchMap.areaCode}
+		</if>
+		
+		<if test="page.searchMap.houseName != null">
+			and name like "%"#{page.searchMap.houseName}"%"
+		</if>
 		order by recordCreateTime desc
 	</select>
 	
