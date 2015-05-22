@@ -68,7 +68,7 @@ public class IndexAct extends BaseAct {
 	@RequestMapping("work")
 	public String work(@RequestParam(value = "pager", required = false) Pager pager,Map<Object, Object> model) {
 		this.doSearchPicuter(pager, DTWSConstants.Picuter.SOURCE_WORK, model);
-		return "/" + daTangWenShenConfig.STYLE + "/picuter/list";
+		return "/" + daTangWenShenConfig.STYLE + "/picture/list";
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
