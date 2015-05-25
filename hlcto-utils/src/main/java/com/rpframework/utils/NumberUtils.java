@@ -97,7 +97,9 @@ public class NumberUtils {
 			nextDouble = r.nextDouble();
 		}
 		
-		return  (int) (nextDouble * Math.pow(10, c));
+		double pow = Math.pow(10, c);
+		int rannum = (int) (nextDouble * pow); //获取随机数
+		return rannum ;
 	}
 	public static double setDecimal(double d, int len) {
 		double rate = Math.pow(10, len);
