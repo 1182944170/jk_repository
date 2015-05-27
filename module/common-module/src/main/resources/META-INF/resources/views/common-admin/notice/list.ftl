@@ -1,4 +1,5 @@
-<title>通知列表</title>
+<#assign noticeListTitle=(dicSetting.getParameterValue("notice.listTitle"))!"通知列表" />
+<title>${noticeListTitle}</title>
 <div class="row">
 	<div class="col-xs-12">
 		<div class="table-responsive">
@@ -88,7 +89,7 @@
 </#if>
 <script>
 $(document).ready(function(){
-	RP.addBreadcrumb([{name:"基础配置"}, {name:"通知列表", active: true}]);
+	RP.addBreadcrumb([{name:"基础配置"}, {name:"${noticeListTitle}", active: true}]);
 	$("#breadcrumbs ul").append('&nbsp;&nbsp;&nbsp;&nbsp;<a href="${ctx}/admin/common/notice/add"><i class="icon-zoom-in"></i><span class="label label-warning arrowed-in arrowed-in arrowed-right">新增通知</span></a>');
 });
 </script>

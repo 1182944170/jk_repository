@@ -37,28 +37,14 @@
 	<bean id="configurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
 			<list>
-				<value>classpath*:/server.properties</value>
 				<value>classpath*:/edongwang-config.properties</value>
 			</list>
 		</property>
 	</bean>
 	
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-		<property name="driverClassName" value="${jdbc.driverClassName}"></property>
-		<property name="url" value="${jdbc.url}"></property>
-		<property name="username" value="${jdbc.username}"></property>
-		<property name="password" value="${jdbc.password}"></property>
-		<property name="maxActive" value="${jdbc.maxActive}"></property>
-		<property name="validationQuery" value="SELECT 1"></property>
-		<property name="testOnBorrow" value="true"></property>
-		<property name="testOnReturn" value="false"></property>
-		<property name="testWhileIdle" value="true"></property>
-		<property name="maxIdle" value="${jdbc.maxIdle}"></property>
-		<property name="defaultAutoCommit" value="true" />
-		<property name="removeAbandoned" value="true" />
-		<property name="removeAbandonedTimeout" value="60" />
-		<property name="logAbandoned" value="false" />
-	</bean>
+	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+         <property name="jndiName" value="java:comp/env/jdbc/edongwang"></property>
+    </bean>
 
 	<bean id="baseSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
@@ -133,6 +119,8 @@
 	    <mvc:interceptor>  
 	        <mvc:mapping path="/api/**"/>
 	        <mvc:exclude-mapping path="/api/login"/>
+	        <mvc:exclude-mapping path="/api/common/**"/>
+	        <mvc:exclude-mapping path="/api/cfg/**"/>
 	        <mvc:exclude-mapping path="/api/regist"/>
 	        <mvc:exclude-mapping path="/api/dologin"/>
 	        <!-- 定义在mvc:interceptor下面的表示是对特定的请求才进行拦截的 -->  

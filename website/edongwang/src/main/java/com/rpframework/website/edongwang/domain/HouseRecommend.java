@@ -201,4 +201,17 @@ public class HouseRecommend extends Domain{
 	public void setProgresses(List<HouseRecommendProgress> progresses) {
 		this.progresses = progresses;
 	}
+	
+	public int getProgressState() {
+		int ret = 1;
+		if(CollectionUtils.isNotEmpty(progresses)) {
+			for (HouseRecommendProgress p : progresses) {
+				if(p.getState() == 0) {//只要有一个进度无效，进度状态视为无效
+					ret = 0;
+					break;
+				}
+			}
+		}
+		return ret;
+	}
 }

@@ -1,4 +1,4 @@
-package com.rpframework;
+package com.rpframework.utils;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

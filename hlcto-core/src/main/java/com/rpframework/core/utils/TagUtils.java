@@ -119,12 +119,18 @@ public class TagUtils extends BaseRegistFreemarker {
 		return getDouble(jsonObject, key, 0D);
 	}
 	
-	public static String getWebUrl(){
+	public static String getWebUrl() {
 		FileService fileService = SpringUtils.getBean(FileService.class);
 		return fileService.getWebUrl();
 	}
 	
 	public static String getFileFullPath(String absPath) {
+		if(StringUtils.isBlank(absPath)) {
+			return absPath;
+		}
+		if(StringUtils.indexOf(absPath, "http") >= 0) {
+			return absPath;
+		}
 		String url = FileUtils.splicePaths(getWebUrl(), absPath);
 		return StringUtils.replace(url, "\\", "/");
 	}

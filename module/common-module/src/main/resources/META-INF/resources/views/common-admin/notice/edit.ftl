@@ -1,7 +1,8 @@
-<title><#if notice??>编辑<#else>新增</#if>通知</title>
+<#assign noticeEditTitle=(dicSetting.getParameterValue("notice.editTitle"))!"通知" />
+<title><#if notice??>编辑<#else>新增</#if>${noticeEditTitle}</title>
 <div class="page-header">
 	<h1>
-		<#if notice??>编辑<#else>新增</#if>通知
+		<#if notice??>编辑<#else>新增</#if>${noticeEditTitle}
 		<small>
 			<i class="icon-double-angle-right"></i>
 		</small>
@@ -15,11 +16,11 @@
 <fieldset>
 
 <div class="form-group">
-	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="title">通知标题:</label>
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="title">${noticeEditTitle}标题:</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<span class="block input-icon width-40">
-				<input type="text" name="title" id="title" value="${(notice.title)!''}" class="form-control" placeholder="通知标题"/>
+				<input type="text" name="title" id="title" value="${(notice.title)!''}" class="form-control" placeholder="${noticeEditTitle}标题"/>
 				<i class="icon-user"></i>
 			</span>
 		</div>
@@ -34,6 +35,9 @@
 		    	${fck_body}
 		    </@fck>
 		</div>
+		<small>
+			${(dicSetting.getParameterValue("notice.field.content.tip"))!""}
+		</small>
 	</div>
 </div>
 
@@ -65,7 +69,7 @@
 
 <script>
 $(document).ready(function(){
-	RP.addBreadcrumb([{name:"题库"}, {name:"<#if notice??>编辑<#else>新增</#if>通知",  active: true}]);
+	RP.addBreadcrumb([{name:"<#if notice??>编辑<#else>新增</#if>${noticeEditTitle}",  active: true}]);
 	
 	$('#validation-form').validate({
 		errorElement: 'div',
@@ -85,13 +89,13 @@ $(document).ready(function(){
 	
 		messages: {
 			title: {
-				required: "请输入通知标题."
+				required: "请输入${noticeEditTitle}标题."
 			},
 			content: {
-				required: "请输入通知内容."
+				required: "请输入${noticeEditTitle}内容."
 			},
 			state: {
-				required: "请选择通知状态."
+				required: "请选择${noticeEditTitle}状态."
 			}
 		},
 	

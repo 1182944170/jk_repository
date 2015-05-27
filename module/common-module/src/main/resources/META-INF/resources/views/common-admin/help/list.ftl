@@ -1,5 +1,6 @@
-<title>帮助列表</title>
-
+<#assign helpListTitle=(dicSetting.getParameterValue("help.listTitle"))!"帮助列表" />
+<title>${helpListTitle}</title>
+<#assign helpMap=dicSetting.getParameterMap("help.type") />
 <div class="row">
 	<div class="col-xs-12">
 		<div class="table-responsive">
@@ -7,7 +8,9 @@
 				<thead>
 					<tr>
 						<th>ID</th>
-						<th>类型</th>
+						<#if helpMap?has_content && helpMap?size gt 1>
+							<th>类型</th>
+						</#if>
 						<th>标题</th>
 						<th>别名</th>
 						<th>排序</th>
@@ -19,7 +22,9 @@
 				<#list pager.itemList as u>
 					<tr>
 						<td><span class="green center">${u.id}</span></td>
-						<td>${dicSetting.getParameterValue("help.type." + u.type)}</td>
+						<#if helpMap?has_content && helpMap?size gt 1>
+							<td>${dicSetting.getParameterValue("help.type." + u.type)}</td>
+						</#if>
 						<td>${u.title}</td>
 						<td>${u.aliasesTitle}</td>
 						<td>${u.sortIndex}</td>
@@ -93,7 +98,7 @@
 </#if>
 <script>
 $(document).ready(function(){
-	RP.addBreadcrumb([{name:"基础配置"}, {name:"帮助列表", active: true}]);
+	RP.addBreadcrumb([{name:"${helpListTitle}", active: true}]);
 	$("#breadcrumbs ul").append('&nbsp;&nbsp;&nbsp;&nbsp;<a href="${ctx}/admin/common/help/add"><i class="icon-zoom-in"></i><span class="label label-warning arrowed-in arrowed-in arrowed-right">新增帮助</span></a>');
 });
 </script>

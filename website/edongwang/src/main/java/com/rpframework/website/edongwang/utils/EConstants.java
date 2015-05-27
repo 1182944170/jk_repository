@@ -3,7 +3,7 @@ package com.rpframework.website.edongwang.utils;
 import com.rpframework.core.utils.cache.KVObj;
 
 public final class EConstants {
-	
+	public final static String COOKIE_LOGIN_ENCRYPT_KEY = "loginEncrypt";
 	public static final class ScoreChannel {
 		public final static KVObj DEAL_RECOMMEND = new KVObj("1", "推荐成交积分");//score.deal
 		public final static KVObj DEAL_JD = new KVObj("2", "接单成交积分");//score.deal

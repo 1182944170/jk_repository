@@ -1,7 +1,9 @@
 package com.rpframework.website.edongwang.act.api;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
@@ -15,6 +17,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.rpframework.core.BaseAct;
 import com.rpframework.core.utils.DictionarySettingUtils;
+import com.rpframework.core.utils.SpringUtils;
 import com.rpframework.module.common.service.SMSService;
 import com.rpframework.utils.AlgorithmEnum;
 import com.rpframework.utils.AlgorithmUtils;
@@ -22,6 +25,7 @@ import com.rpframework.utils.NumberUtils;
 import com.rpframework.website.edongwang.domain.User;
 import com.rpframework.website.edongwang.exception.APICodeException;
 import com.rpframework.website.edongwang.service.UserService;
+import com.rpframework.website.edongwang.utils.EConfig;
 import com.rpframework.website.edongwang.utils.EConstants;
 
 @Controller
@@ -31,7 +35,7 @@ public class ApiAct extends BaseAct {
 	@Resource SMSService smsService;
 	
 	@RequestMapping("/login")
-	public @ResponseBody JsonElement login(@RequestParam(required=false) String contact, @RequestParam(required=false) String password, HttpSession session, HttpServletRequest request){
+	public @ResponseBody JsonElement login(@RequestParam(required=false) String contact, @RequestParam(required=false) String password, HttpSession session, HttpServletRequest request, HttpServletResponse response){
 		if(StringUtils.isBlank(contact) || StringUtils.isBlank(password)) {
 			throw new APICodeException(-5, "非法参数!");
 		}
@@ -50,13 +54,19 @@ public class ApiAct extends BaseAct {
 			throw new APICodeException(-4, "您的帐户不是启用状态！");
 		}
 		
-		user.setLastLoginIp(user.getLoginIp()) ;
-		user.setLoginIp(request.getRemoteAddr());
-		user.setLastLoginTime(user.getLoginTime());
-		user.setLoginTime(System.currentTimeMillis()/1000);
-		userService.update(user);
+		userService.doLoginRecord(user, request);
 		
 		session.setAttribute(SESSION_USER_KEY, user);
+		//用户Id + 加密tokenKey + 加密时间 加密成一条密钥存在cookie里，在 EDongWangApi 连接器里坐未登录的情况下是否自动登陆
+		EConfig examConfig = SpringUtils.getBean(EConfig.class);
+		JsonObject tokenJson = new JsonObject();
+		tokenJson.addProperty("id", user.getId());
+		tokenJson.addProperty("ct", System.currentTimeMillis()/1000);
+		tokenJson.addProperty("tk", examConfig.tokenkey);
+		
+		String loginEncrypt = AlgorithmUtils.enBase64(tokenJson.toString());
+		Cookie cookie = new Cookie(EConstants.COOKIE_LOGIN_ENCRYPT_KEY, loginEncrypt);
+		response.addCookie(cookie);
 		
 		JsonObject json = new JsonObject();
 		json.addProperty("succ", true);
@@ -119,7 +129,7 @@ public class ApiAct extends BaseAct {
 		user.setHeadImg("");
 		user.setIsSalesman(0);
 		user.setPassword(password);
-		user.setRealName("");
+		user.setRealName(contact);
 		user.setSex(1);
 		user.setState(1);
 		user.setRecordCreateTime(System.currentTimeMillis() / 1000);
@@ -135,6 +145,10 @@ public class ApiAct extends BaseAct {
 	@RequestMapping("/logout")
 	public @ResponseBody JsonElement logout(HttpSession session, HttpServletRequest request){
 		session.removeAttribute(SESSION_USER_KEY);
+		Cookie[] cookies = request.getCookies();//clear all cookie
+		for (Cookie cookie : cookies) {
+			cookie.setMaxAge(0);
+		}
 		JsonObject json = new JsonObject();
 		json.addProperty("succ", true);
 		return json;

@@ -261,6 +261,15 @@ public class DateUtils {
 	    return calendar.getTime();
 	}
     
+    //月数操作
+    public static Date monthAdd(int months, Date date) {
+	    Calendar calendar = Calendar.getInstance();
+	    calendar.setTime(date);
+	    int m = calendar.get(Calendar.MONTH);
+	    calendar.set(Calendar.MONTH, m + months );
+	    return calendar.getTime();
+	}
+    
 	public static Date minAdd(int mins) {
 		Calendar calendar = Calendar.getInstance();
 		int day = calendar.get(12);

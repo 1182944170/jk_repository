@@ -5,7 +5,7 @@
 
 	<resultMap type="com.rpframework.module.common.domain.CfgBankAddress" id="mCfgBankAddress" autoMapping="true">
 		<id property="id" column="id" />
-		<association property="cfgBank" column="bankId" select="com.rpframework.module.user.dao.ICfgBankDao.select" />
+		<association property="cfgBank" column="bankId" select="com.rpframework.module.common.dao.ICfgBankDao.select" />
 	</resultMap>
 
 	<select id="doPager" parameterType="map" resultMap="mCfgBankAddress">

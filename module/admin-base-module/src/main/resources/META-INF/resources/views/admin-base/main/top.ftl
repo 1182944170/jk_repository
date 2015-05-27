@@ -5,7 +5,7 @@
 
 	<div class="navbar-container" id="navbar-container">
 		<div class="navbar-header pull-left">
-			<a href="#" class="navbar-brand">
+			<a href="${ctx}/admin" class="navbar-brand">
 				<small>
 					<i class="icon-leaf"></i>
 					${(dicSetting.getParameterValue("admin.name"))!"Admin"} 后台管理系统

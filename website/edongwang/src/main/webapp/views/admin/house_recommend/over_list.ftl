@@ -29,10 +29,10 @@
 						</td>
 						<td> ${u.acceptSalesman.realName} ${u.acceptSalesman.contact} </br>
 						<#if userBankCards[u_index]??>
-							开户信息:银行名：${userBankCards[u_index].cfgBank.name} 
-							账号：${userBankCards[u_index].account}  </br>
+							银行名称：${userBankCards[u_index].cfgBank.name} 
 							账户名：${userBankCards[u_index].name} 
-							开户地址：${userBankCards[u_index].address}
+							账号：${userBankCards[u_index].account}  </br>
+							开户行：${userBankCards[u_index].address}
 						</#if>
 						</td>
 						<td> ${u.house.name}</td>
@@ -49,7 +49,7 @@
 						<td>
 						<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
 							<#if u.state==2 && u.progresses?has_content && u.progresses?size == 3>
-								<a class="green" href="${ctx}/admin/house_recommend/${u.id}/over" alt="完结">
+								<a class="green" href="${ctx}/admin/house_recommend/${u.id}/over${suffix}" onclick="if(!confirm('确认完结么?')){return false;}" alt="完结">
 									<i class="icon-pencil bigger-130"></i> 完结
 								</a>
 							</#if>

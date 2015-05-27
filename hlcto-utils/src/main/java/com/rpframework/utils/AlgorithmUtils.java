@@ -18,6 +18,7 @@ import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
 import com.sun.crypto.provider.SunJCE;
@@ -183,5 +184,12 @@ public class AlgorithmUtils {
 		String uri = "ddd/ddd.html";
 		
 		System.out.println(StringUtils.substring(uri,0, StringUtils.indexOf(uri, ".")) );
+		
+		JsonObject json = new JsonObject();
+		json.addProperty("contact", "15390891113");
+		json.addProperty("time", System.currentTimeMillis());
+		String enBase64 = enBase64(json.toString());
+		System.out.println(enBase64);
+		System.out.println(deBase64(enBase64));
 	}
 }

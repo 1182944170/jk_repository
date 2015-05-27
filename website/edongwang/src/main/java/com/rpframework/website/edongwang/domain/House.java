@@ -27,6 +27,8 @@ public class House extends Domain{
 	
 	@FieldMapperAnnotation
 	String name; //楼盘名称
+	@FieldMapperAnnotation
+	String protocol; //楼盘名称
 	
 	@FieldMapperAnnotation
 	String houseTag; //楼盘名称
@@ -86,6 +88,13 @@ public class House extends Domain{
 	@FieldMapperAnnotation
 	Integer state;
 
+	public String getProtocol() {
+		return protocol;
+	}
+
+	public void setProtocol(String protocol) {
+		this.protocol = protocol;
+	}
 
 	public List<String> getHouseImgArrayList(){
 		if(StringUtils.isBlank(houseImgArray)) {

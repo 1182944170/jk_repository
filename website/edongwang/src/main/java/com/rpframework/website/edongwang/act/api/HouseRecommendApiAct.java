@@ -40,7 +40,7 @@ public  @ResponseBody class HouseRecommendApiAct extends BaseAct {
 	 * 抢单
 	 */
 	@RequestMapping("/{houseRecommendId}/grab")
-	public  @ResponseBody JsonElement grab(@PathVariable Integer houseRecommendId,
+	public @ResponseBody JsonElement grab(@PathVariable Integer houseRecommendId,
 			HttpSession session, Map<Object, Object> model, RedirectAttributes attr) {
 		User user = getSessionUser(session);
 		boolean flag = houseRecommendService.grab(user.getId(), houseRecommendId);
@@ -51,27 +51,41 @@ public  @ResponseBody class HouseRecommendApiAct extends BaseAct {
 	}
 	
 	/**
+	 * 终止订单
+	 */
+	@RequestMapping("/{houseRecommendId}/stop")
+	public  @ResponseBody JsonElement stop(@PathVariable Integer houseRecommendId,
+			@RequestParam(value = "remark", required = false) String remark,
+			HttpSession session, Map<Object, Object> model, RedirectAttributes attr) {
+		User user = getSessionUser(session);
+		boolean flag = houseRecommendService.stop(user.getId(), houseRecommendId, remark);
+		JsonObject json = new JsonObject();
+		json.addProperty("succ", flag);
+		return json;
+	}
+	
+	/**
 	 * 单子的第一步，验证有效性
 	 */
 	@RequestMapping("/{houseRecommendId}/valid")
 	public  @ResponseBody JsonElement valid(@PathVariable Integer houseRecommendId,
-			@RequestParam Integer state,
 			@RequestParam Integer intentStar,
 			@RequestParam(value = "remark", required = false) String remark,
 			HttpSession session, Map<Object, Object> model, RedirectAttributes attr) {
 		User user = getSessionUser(session);
 		
-		boolean flag = houseRecommendService.valid(user.getId(), houseRecommendId, state, intentStar, remark);
+		boolean flag = houseRecommendService.valid(user.getId(), houseRecommendId, intentStar, remark);
 		
 		JsonObject json = new JsonObject();
 		json.addProperty("succ", flag);
 		return json;
 	}
+	
 	/***
 	 * 单子的第二部，回访
 	 */
 	@RequestMapping("/{houseRecommendId}/visit")
-	public  @ResponseBody JsonElement visit(@PathVariable Integer houseRecommendId,
+	public @ResponseBody JsonElement visit(@PathVariable Integer houseRecommendId,
 			@RequestParam(value = "remark", required = false) String remark,
 			HttpSession session, Map<Object, Object> model, RedirectAttributes attr) {
 		User user = getSessionUser(session);
@@ -82,6 +96,7 @@ public  @ResponseBody class HouseRecommendApiAct extends BaseAct {
 		json.addProperty("succ", flag);
 		return json;
 	}
+	
 	/***
 	 * 单子的第三部，成交 之业务员提交成功，这时候 如果 state＝1的话，则等待负责人填写确认
 	 */
@@ -100,22 +115,6 @@ public  @ResponseBody class HouseRecommendApiAct extends BaseAct {
 		json.addProperty("succ", flag);
 		return json;
 	}
-	
-	/***
-	 * 单子的第四部，完结
-	 */
-	/*@RequestMapping("/{houseRecommendId}/over")
-	public  @ResponseBody JsonElement over(@PathVariable Integer houseRecommendId,
-			@RequestParam Integer state,
-			HttpSession session, Map<Object, Object> model, RedirectAttributes attr) {
-		User user = getSessionUser(session);
-		
-		boolean flag = houseRecommendService.over(user.getId(), houseRecommendId, state);
-		
-		JsonObject json = new JsonObject();
-		json.addProperty("succ", flag);
-		return json;
-	}*/
 	
 	/**
 	 * 抢单列表针对二级会员来说的
@@ -173,8 +172,40 @@ public  @ResponseBody class HouseRecommendApiAct extends BaseAct {
 			pager = new Pager<HouseRecommend>();
 		}
 		
-		pager = houseRecommendService.getPager(pager);
 		pager.getSearchMap().put("order", "state,recordCreateTime desc");
+		pager = houseRecommendService.getPager(pager);
+		
+		JsonObject json = new JsonObject();
+		json.addProperty("totalPages", pager.getTotalPages());
+		json.addProperty("currentPage", pager.getCurrentPage());
+		json.addProperty("totalCount", pager.getTotalCount());
+		
+		List<HouseRecommend> list = pager.getItemList();
+		JsonArray array = new JsonArray();
+		json.add("arrays", array);
+		for (HouseRecommend houseRecommend : list) {
+			array.add(packageHouseRecommend(houseRecommend, false));
+		}
+		return json;
+	}
+	
+	/**
+	 * 抢单列表针对二级会员来说的
+	 * @param pager
+	 * @param session
+	 * @param model
+	 * @param attr
+	 * @return
+	 */
+	@RequestMapping("/all_grabed")
+	public  @ResponseBody JsonElement allGrabed(@RequestParam(value = "pager", required = false) Pager<HouseRecommend> pager,HttpSession session, Map<Object, Object> model, RedirectAttributes attr) {
+		if (pager == null) {
+			pager = new Pager<HouseRecommend>();
+		}
+		
+		pager.getSearchMap().put("order", "state,recordCreateTime desc");
+		pager.getSearchMap().put("state", "2");
+		pager = houseRecommendService.getPager(pager);
 		
 		JsonObject json = new JsonObject();
 		json.addProperty("totalPages", pager.getTotalPages());
@@ -217,8 +248,9 @@ public  @ResponseBody class HouseRecommendApiAct extends BaseAct {
 		houseJson.add("houseTypeImgArray", houseImgArray);
 		hrJson.add("house", houseJson);
 		
-		if(isDealPro && houseRecommend.getState() != EConstants.Recommend.STATE_OPEN) { //进度信息
-			List<HouseRecommendProgress> progresses = houseRecommend.getProgresses();
+		List<HouseRecommendProgress> progresses = houseRecommend.getProgresses();
+		
+		if(houseRecommend.getState() != EConstants.Recommend.STATE_OPEN) { //进度信息 //isDealPro && 
 			JsonArray progressArray = new JsonArray();
 			hrJson.add("progress", progressArray);
 			if(CollectionUtils.isNotEmpty(progresses)) {
@@ -232,6 +264,9 @@ public  @ResponseBody class HouseRecommendApiAct extends BaseAct {
 				}
 			}
 		}
+		
+		
+		hrJson.addProperty("progressState", houseRecommend.getProgressState());
 		
 		if(houseRecommend.getAcceptSalesman() != null) {
 			JsonObject acceptUser = new JsonObject();

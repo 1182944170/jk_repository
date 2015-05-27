@@ -67,7 +67,7 @@
 									<#assign hasValue=true />
 								</#if>
 								
-								<li data-target="#step1" <#if hasValue && u.progresses[0].state==1><#else>class="complete"</#if>>
+								<li data-target="#step1" <#if u.progressState == 0>class="complete"</#if>>
 									<span class="step">1</span>
 									<span class="title"><small>无效</small></span>
 								</li>
@@ -89,7 +89,7 @@
 								<li data-target="#step2" <#if hasValue && u.progresses[1].state==1>class="complete"</#if>>
 									<span class="step" data-toggle="tooltip" data-placement="top" data-original-title="
 									<#if hasValue>
-										备注:${gsonUtils.getString(u.progresses[1].extJson, "remark")},处理时间:${tagUtils.formatDate(u.progresses[1].recordCreateTime)}
+										备注:${(gsonUtils.getString(u.progresses[1].extJson, "remark"))!""},处理时间:${tagUtils.formatDate(u.progresses[1].recordCreateTime)}
 									</#if>
 									">3</span>
 									<span class="title"><small>回访</small></span>

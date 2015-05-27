@@ -18,7 +18,7 @@
 	<select id="doOverPager" parameterType="map" resultMap="mHouseRecommend">
 		select u2.* from (
 			select u.*, count(1) pCount from e_house_recommend u
-				left join e_house_recommend_progress m on m.houseRecommendId=u.id
+				left join e_house_recommend_progress m on m.houseRecommendId=u.id and m.state=1
 				group by u.id
 				order by u.state) as u2 
 		where u2.pCount>2

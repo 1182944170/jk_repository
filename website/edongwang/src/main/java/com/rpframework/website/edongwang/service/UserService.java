@@ -3,6 +3,7 @@ package com.rpframework.website.edongwang.service;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
 
@@ -27,6 +28,15 @@ public class UserService extends BaseService {
 
 	public User findUserByContact(String contact) {
 		return userDao.findUserByContact(contact);
+	}
+
+	public boolean doLoginRecord(User user, HttpServletRequest request) {
+		user.setLastLoginIp(user.getLoginIp()) ;
+		user.setLoginIp(request.getRemoteAddr());
+		user.setLastLoginTime(user.getLoginTime());
+		user.setLoginTime(System.currentTimeMillis()/1000);
+		
+		return update(user);
 	}
 
 }
