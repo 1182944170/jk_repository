@@ -12,7 +12,7 @@
 <#if picture??>
 	<input type="hidden" name="id" value="${picture.id}"/>
 	<input type="hidden" name="source" value="${picture.source}"/>
-	<input type="hidden" name="address" value="${picture.address}"/>
+	<input type="hidden" name="address" value="${picture.address}" maxlength="252"/>
 <#else>
 	<input type="hidden" name="source" value="${source}"/>
 </#if>
@@ -23,7 +23,7 @@
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<span class="block input-icon width-40">
-				<input type="text" name="name" id="name" value="${(picture.name)!''}" class="form-control" placeholder="图片名称"/>
+				<input type="text" name="name" id="name" value="${(picture.name)!''}" maxlength="32" class="form-control" placeholder="图片名称"/>
 				<i class="icon-user"></i>
 			</span>
 		</div>

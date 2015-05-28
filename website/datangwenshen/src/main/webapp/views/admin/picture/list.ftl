@@ -33,11 +33,11 @@
 						<td>${tagUtils.formatDate(u.date)}</td>
 						<td>
 							<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
-								<a class="green" href="${ctx}/admin/picture/${u.id}/edit" alt="Edit">
+								<a class="green" href="${ctx}/admin/picture/${u.id}/edit${suffix}" alt="Edit">
 									<i class="icon-pencil bigger-130"></i>
 								</a>
 
-								<a class="red" href="${ctx}/admin/picture/${u.id}/delete" alt="Delete">
+								<a class="red" href="${ctx}/admin/picture/${u.id}/delete${suffix}" onclick="return confirm('你确定删除么?');" alt="Delete">
 									<i class="icon-trash bigger-130"></i>
 								</a>
 							</div>
@@ -57,7 +57,7 @@
 										</li>
 	
 										<li>
-											<a href="${ctx}/admin/picture/${u.id}/delete${suffix}" class="tooltip-error" data-rel="tooltip" title="删除" data-original-title="Delete">
+											<a href="${ctx}/admin/picture/${u.id}/delete${suffix}" onclick="return confirm('你确定删除么?');" class="tooltip-error" data-rel="tooltip" title="删除" data-original-title="Delete">
 												<span class="red">
 													<i class="icon-trash bigger-120"></i>
 												</span>
@@ -94,10 +94,10 @@
 	</h4>
 </#if>
 <script>
-$(document).ready(function(){
-	RP.addBreadcrumb([{name:"基础配置"}, {name:"大唐图片列表", active: true}]);
-	$("#breadcrumbs ul").append('&nbsp;&nbsp;&nbsp;&nbsp;<a href="${ctx}/admin/picture/add${suffix}?source=1"><i class="icon-zoom-in"></i><span class="label label-warning arrowed-in arrowed-in arrowed-right">新增大唐图片</span></a>');
-	$("#breadcrumbs ul").append('&nbsp;&nbsp;&nbsp;&nbsp;<a href="${ctx}/admin/picture/add${suffix}?source=2"><i class="icon-zoom-in"></i><span class="label label-warning arrowed-in arrowed-in arrowed-right">新增网络图片</span></a>');
-	$("#breadcrumbs ul").append('&nbsp;&nbsp;&nbsp;&nbsp;<a href="${ctx}/admin/picture/add${suffix}?source=3"><i class="icon-zoom-in"></i><span class="label label-warning arrowed-in arrowed-in arrowed-right">新增穿刺图片</span></a>');
-});
+	$(document).ready(function(){
+		RP.addBreadcrumb([{name:"基础配置"}, {name:"大唐图片列表", active: true}]);
+		$("#breadcrumbs ul").append('&nbsp;&nbsp;&nbsp;&nbsp;<a href="${ctx}/admin/picture/add${suffix}?source=1"><i class="icon-zoom-in"></i><span class="label label-warning arrowed-in arrowed-in arrowed-right">新增大唐图片</span></a>');
+		$("#breadcrumbs ul").append('&nbsp;&nbsp;&nbsp;&nbsp;<a href="${ctx}/admin/picture/add${suffix}?source=2"><i class="icon-zoom-in"></i><span class="label label-warning arrowed-in arrowed-in arrowed-right">新增网络图片</span></a>');
+		$("#breadcrumbs ul").append('&nbsp;&nbsp;&nbsp;&nbsp;<a href="${ctx}/admin/picture/add${suffix}?source=3"><i class="icon-zoom-in"></i><span class="label label-warning arrowed-in arrowed-in arrowed-right">新增穿刺图片</span></a>');
+	});
 </script>

@@ -3,7 +3,9 @@ package com.rpframework.website.datangwenshen.act.front;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -162,9 +164,31 @@ public class IndexAct extends BaseAct {
 		return "/" + daTangWenShenConfig.STYLE + "/online";
 	}
 	
+	/**
+	 * brow 纹眉漂唇
+	 */
+	@RequestMapping("brow")
+	public String brow() {
+		return "/" + daTangWenShenConfig.STYLE + "/brow";
+	}
+	
+	/**
+	 * manpiercing 人体穿刺
+	 */
+	@RequestMapping("manpiercing")
+	public String manpiercing() {
+		return "/" + daTangWenShenConfig.STYLE + "/manpiercing";
+	}
+	
 	@RequestMapping("commit_message")
-	public String commitMessage(@ModelAttribute Message message) {
-		messageService.insert(message);
+	public String commitMessage(@ModelAttribute Message message, @RequestParam(required=false) String verifyCode, HttpSession session) {
+		
+		Object randomCodeSession = session.getAttribute("randomCodeSession");
+		if(randomCodeSession == null || !StringUtils.equals(randomCodeSession.toString(), verifyCode)) {
+			throw new IllegalArgumentException("验证码不正确.");
+		}
+		messageService.createMessage(message);
+		session.removeAttribute("randomCodeSession");
 		return redirect("/index");
 	}
 }

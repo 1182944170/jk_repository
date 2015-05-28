@@ -5,6 +5,10 @@
 
 	<resultMap type="com.rpframework.website.datangwenshen.domain.Message" id="message" autoMapping="true" />
 	
+	<select id="doPager" resultMap="message">
+		select * from message where 1=1 order by recordCreateTime desc
+    </select>
+	    
 	<update id="update" parameterType="com.rpframework.website.datangwenshen.domain.Message" />
 	<insert id="insert" parameterType="com.rpframework.website.datangwenshen.domain.Message" useGeneratedKeys="true" keyProperty="id"/>
 	<delete id="delete" parameterType="com.rpframework.website.datangwenshen.domain.Message" />

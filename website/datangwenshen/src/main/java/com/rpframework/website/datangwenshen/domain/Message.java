@@ -18,6 +18,16 @@ public class Message extends Domain {
 	String phone;
 	@FieldMapperAnnotation
 	Integer sex;
+	
+	@FieldMapperAnnotation
+	long recordCreateTime;
+	
+	public long getRecordCreateTime() {
+		return recordCreateTime;
+	}
+	public void setRecordCreateTime(long recordCreateTime) {
+		this.recordCreateTime = recordCreateTime;
+	}
 	public Integer getId() {
 		return id;
 	}

@@ -17,6 +17,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.rpframework.core.BaseAct;
+import com.rpframework.core.utils.TagUtils;
 import com.rpframework.module.user.domain.ScoreShop;
 import com.rpframework.module.user.service.ScoreShopService;
 import com.rpframework.module.user.service.UserScoreService;
@@ -56,7 +57,7 @@ public class UserScoreShopApiAct extends BaseAct {
 		for (ScoreShop scoreShop : list) {
 			JsonObject ssJson = new JsonObject();
 			ssJson.addProperty("id", scoreShop.getId());
-			ssJson.addProperty("img", scoreShop.getImg());
+			ssJson.addProperty("img", TagUtils.getFileFullPath(scoreShop.getImg()));
 			ssJson.addProperty("name", scoreShop.getName());
 			ssJson.addProperty("remark", scoreShop.getRemark());
 			ssJson.addProperty("score", scoreShop.getScore());

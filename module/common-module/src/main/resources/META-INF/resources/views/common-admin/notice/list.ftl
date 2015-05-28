@@ -18,7 +18,7 @@
 					<tr>
 						<td><span class="green center">${u.id}</span></td>
 						<td><span class="gray center">${u.title}</span></td>
-						<td>${u.content}</td>
+						<td>${tagUtils.cutString(u.content, 100)}</td>
 						<td class="hidden-480">
 							<#if u.state == 1>
 								<span class="label label-sm label-success arrowed">正常状态</span>
