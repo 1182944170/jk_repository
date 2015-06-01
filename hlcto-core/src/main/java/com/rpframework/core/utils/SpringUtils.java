@@ -43,4 +43,8 @@ public class SpringUtils {
 			SpringUtils.context = servletContext;
 		}
 	}
+	
+	public static ServletContext getServletContext(){
+		return SpringUtils.context;
+	}
 }

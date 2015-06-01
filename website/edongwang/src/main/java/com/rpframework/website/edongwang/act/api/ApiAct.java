@@ -112,7 +112,7 @@ public class ApiAct extends BaseAct {
 			throw new APICodeException(-1, "非法参数!");
 		}
 		
-		if(smsService.checkVerifyCode(EConstants.ChannelType.SEND_SMS_REGIST_CHANNEL_TYPE, contact, verifyCode)) {
+		if(!smsService.checkVerifyCode(EConstants.ChannelType.SEND_SMS_REGIST_CHANNEL_TYPE, contact, verifyCode)) {
 			throw new APICodeException(-4, "验证码不正确!");
 		}
 		smsService.setVerifyCodeVaild(EConstants.ChannelType.SEND_SMS_REGIST_CHANNEL_TYPE, contact);

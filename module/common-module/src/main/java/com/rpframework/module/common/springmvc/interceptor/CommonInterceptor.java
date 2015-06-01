@@ -32,7 +32,7 @@ public class CommonInterceptor implements HandlerInterceptor {
 			logger.info("第一次Request事件触发!");
 			InitServlet.DOMAIN = TagUtils.getDomain(request);
 			//发送第一次请求事件
-			
+			SpringUtils.getServletContext().setAttribute("domain", InitServlet.DOMAIN);
 
 			Map<String, IModuleEvent> beans = SpringUtils.getApplicationContext().getBeansOfType(IModuleEvent.class);
 			if(CollectionUtils.isNotEmpty(beans)) {

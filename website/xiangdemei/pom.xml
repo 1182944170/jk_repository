@@ -7,19 +7,11 @@
     <artifactId>website</artifactId>
     <version>1.0</version>
   </parent>
-  <groupId>com.rpframework</groupId>
-  <artifactId>datangwenshen1</artifactId>
-  <version>1.0</version>
+  <artifactId>xiangdemei</artifactId>
   <packaging>war</packaging>
-  <name>datangwenshen1 Maven Webapp</name>
+  <name>xiangdemei Maven Webapp</name>
   <url>http://maven.apache.org</url>
   <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
     <dependency>
     	<groupId>com.rpframework</groupId>
     	<artifactId>admin-base-module</artifactId>
@@ -32,6 +24,6 @@
     </dependency>
   </dependencies>
   <build>
-    <finalName>datangwenshen1</finalName>
+    <finalName>xiangdemei</finalName>
   </build>
 </project>

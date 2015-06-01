@@ -230,6 +230,8 @@ public  @ResponseBody class HouseRecommendApiAct extends BaseAct {
 		hrJson.addProperty("areaCode", houseRecommend.getAreaCode());
 		hrJson.addProperty("totalPriceType", houseRecommend.getTotalPriceType());
 		hrJson.addProperty("state", houseRecommend.getState());//1 -未抢
+		hrJson.addProperty("recordCreateTime", houseRecommend.getRecordCreateTime());
+		hrJson.addProperty("acceptTime", houseRecommend.getAcceptTime());
 		
 		House house = houseRecommend.getHouse();
 		JsonObject houseJson = gson.toJsonTree(house).getAsJsonObject();
