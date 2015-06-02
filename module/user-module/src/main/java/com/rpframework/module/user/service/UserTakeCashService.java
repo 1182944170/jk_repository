@@ -5,12 +5,12 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
-import org.slf4j.helpers.MessageFormatter;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import com.rpframework.core.BaseService;
 import com.rpframework.core.utils.DictionarySettingUtils;
+import com.rpframework.core.utils.MessageFormatter;
 import com.rpframework.core.utils.cache.KVObj;
 import com.rpframework.module.common.service.SMSService;
 import com.rpframework.module.user.dao.IUserTakeCashDao;

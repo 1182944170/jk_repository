@@ -50,8 +50,8 @@ public  @ResponseBody class HouseApiAct extends BaseAct {
 			pager.getSearchMap().put("areaCode", areaCode);
 		}
 		
-		if(StringUtils.isNotBlank(areaCode)) {
-			pager.getSearchMap().put("houseName", keyword);
+		if(StringUtils.isNotBlank(keyword)) {
+			pager.getSearchMap().put("houseName", keyword.toUpperCase());//搜索都大写
 		}
 		
 		pager = houseService.getPager(pager);
@@ -91,9 +91,9 @@ public  @ResponseBody class HouseApiAct extends BaseAct {
 			HttpSession session,
 			Map<Object, Object> model, RedirectAttributes attr) {
 		User user = getSessionUser(session);
-		if(user.getIsSalesman() == 1) {
+		/*if(user.getIsSalesman() == 1) {
 			throw new APICodeException(-1, "业务员不能推荐");
-		}
+		}*/
 		String customerName = request.getParameter("customerName");
 		String contact = request.getParameter("contact");
 		Integer propertyType = NumberUtils.parseInt(request.getParameter("propertyType"));

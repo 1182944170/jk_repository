@@ -178,7 +178,7 @@ function fromSearch(f){
 }
 
 $(document).ready(function(){ 
-	RP.addBreadcrumb([{name:"楼盘推荐管理"}, {name:"楼盘推荐列表", linkUrl:"${ctx}/admin/house/list", active: true}]);
+	RP.addBreadcrumb([{name:"楼盘推荐管理"}, {name:"楼盘推荐列表", linkUrl:"${ctx}/admin/house_recommend/list", active: true}]);
 });
 </script>
 

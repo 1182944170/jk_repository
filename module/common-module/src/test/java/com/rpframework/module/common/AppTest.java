@@ -3,6 +3,7 @@ package com.rpframework.module.common;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import redis.clients.jedis.Jedis;
 
 /**
  * Unit test for simple App.
@@ -29,6 +30,9 @@ public class AppTest extends TestCase {
 	 * Rigourous Test :-)
 	 */
 	public void testApp() {
-		assertTrue(true);
+		Jedis jedis = new Jedis("localhost");
+		jedis.set("foo", "bar");
+		String value = jedis.get("foo");
+		System.out.println(value);
 	}
 }

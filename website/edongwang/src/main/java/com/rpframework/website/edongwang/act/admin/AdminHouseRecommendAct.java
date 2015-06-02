@@ -14,18 +14,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.rpframework.module.user.domain.UserBankCard;
-import com.rpframework.module.user.service.UserBankCardService;
 import com.rpframework.utils.CollectionUtils;
 import com.rpframework.utils.Pager;
 import com.rpframework.website.edongwang.domain.HouseRecommend;
+import com.rpframework.website.edongwang.domain.UserBankCard;
 import com.rpframework.website.edongwang.service.HouseRecommendService;
+import com.rpframework.website.edongwang.service.UserBankCardService;
 
 @Controller
 @RequestMapping("/admin/house_recommend")
 public class AdminHouseRecommendAct extends AdminAct{
 	@Resource HouseRecommendService houseRecommendService;
 	@Resource UserBankCardService userBankCardService;
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@RequestMapping("/all_custom")
+	public String allCustom(@RequestParam(value = "pager", required = false) Pager pager,Map<Object, Object> model, RedirectAttributes attr) {
+		if (pager == null) {
+			pager = new Pager();
+		}
+		pager = houseRecommendService.getPager(pager);
+		model.put("pager", pager);
+		return doPackageURI("house_recommend/all_custom");
+	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@RequestMapping("/list")

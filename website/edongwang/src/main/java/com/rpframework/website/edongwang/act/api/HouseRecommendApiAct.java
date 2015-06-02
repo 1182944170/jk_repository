@@ -281,13 +281,39 @@ public  @ResponseBody class HouseRecommendApiAct extends BaseAct {
 		return hrJson;
 	}
 	
+	@RequestMapping("/mycustom") //我的推荐客户
+	public  @ResponseBody JsonElement myCustom(@RequestParam(value = "pager", required = false) Pager<HouseRecommend> pager,HttpSession session, Map<Object, Object> model, RedirectAttributes attr) {
+		User user = getSessionUser(session);
+		if (pager == null) {
+			pager = new Pager<HouseRecommend>();
+		}
+		
+		pager.getSearchMap().put("recommendUserId", String.valueOf(user.getId()));//只搜索本区域的
+		pager = houseRecommendService.getPager(pager);
+		
+		JsonObject json = new JsonObject();
+		json.addProperty("totalPages", pager.getTotalPages());
+		json.addProperty("currentPage", pager.getCurrentPage());
+		json.addProperty("totalCount", pager.getTotalCount());
+		
+		List<HouseRecommend> list = pager.getItemList();
+		JsonArray array = new JsonArray();
+		json.add("arrays", array);
+		for (HouseRecommend houseRecommend : list) {
+			JsonObject hrJson = new JsonObject();
+			hrJson.addProperty("id", houseRecommend.getId());
+			hrJson.addProperty("customerName", houseRecommend.getCustomerName());
+			hrJson.addProperty("contact", houseRecommend.getContact());
+			hrJson.addProperty("recordCreateTime", houseRecommend.getRecordCreateTime());
+			array.add(hrJson);
+		}
+		return json;
+	}
+	
+	
 	@RequestMapping("/myrecommends")
 	public  @ResponseBody JsonElement myRecommends(@RequestParam(value = "pager", required = false) Pager<HouseRecommend> pager,HttpSession session, Map<Object, Object> model, RedirectAttributes attr) {
 		User user = getSessionUser(session);
-		if(user.getIsSalesman() == 1) {//
-			throw new APICodeException(-1, "二级会员没有我的推荐");
-		}
-		
 		if (pager == null) {
 			pager = new Pager<HouseRecommend>();
 		}
@@ -338,7 +364,7 @@ public  @ResponseBody class HouseRecommendApiAct extends BaseAct {
 	 * @return
 	 */
 	@RequestMapping("/mygrabs")
-	public  @ResponseBody JsonElement myGrabs(@RequestParam(value = "pager", required = false) Pager<HouseRecommend> pager,HttpSession session, Map<Object, Object> model, RedirectAttributes attr) {
+	public @ResponseBody JsonElement myGrabs(@RequestParam(value = "pager", required = false) Pager<HouseRecommend> pager,HttpSession session, Map<Object, Object> model, RedirectAttributes attr) {
 		User user = getSessionUser(session);
 		if(user.getIsSalesman() != 1) {//
 			throw new APICodeException(-1, "你没有查看二级会员的api权限");
@@ -348,7 +374,8 @@ public  @ResponseBody class HouseRecommendApiAct extends BaseAct {
 			pager = new Pager<HouseRecommend>();
 		}
 		
-		pager.getSearchMap().put("acceptSalesmanId", String.valueOf(user.getId()));//只搜索本区域的
+		pager.getSearchMap().put("acceptSalesmanId", String.valueOf(user.getId()));
+		pager.getSearchMap().put("order", "recordCreateTime desc");
 		pager = houseRecommendService.getPager(pager);
 		
 		JsonObject json = new JsonObject();
@@ -378,15 +405,15 @@ public  @ResponseBody class HouseRecommendApiAct extends BaseAct {
 	 * @return
 	 */
 	@RequestMapping("/grabs")
-	public  @ResponseBody JsonElement grabs(@RequestParam(value = "pager", required = false) Pager<HouseRecommend> pager,HttpSession session, Map<Object, Object> model, RedirectAttributes attr) {
+	public @ResponseBody JsonElement grabs(@RequestParam(value = "pager", required = false) Pager<HouseRecommend> pager,HttpSession session, Map<Object, Object> model, RedirectAttributes attr) {
 		User user = getSessionUser(session);
 		if(user.getIsSalesman() != 1) {//
-			throw new APICodeException(-1, "你没有查看二级会员的api权限");
+			throw new APICodeException(-1, "无权查看");
 		}
 		
-		if(user.getUserSalesman().getIsLeader() != 1) {
-			throw new APICodeException(-1, "二级会员该楼盘的负责人的api权限");
-		}
+		/*if(user.getUserSalesman().getIsLeader() != 1) {
+			throw new APICodeException(-1, "无权查看！");
+		}*/
 		
 		if (pager == null) {
 			pager = new Pager<HouseRecommend>();

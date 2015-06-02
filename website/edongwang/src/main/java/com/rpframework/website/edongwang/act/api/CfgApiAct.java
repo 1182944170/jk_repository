@@ -20,8 +20,8 @@ import com.rpframework.module.common.domain.CfgBank;
 import com.rpframework.module.common.domain.CfgBankAddress;
 import com.rpframework.module.common.service.CfgBankAddressService;
 import com.rpframework.module.common.service.CfgBankService;
-import com.rpframework.module.user.domain.CfgScore;
-import com.rpframework.module.user.service.CfgScoreService;
+import com.rpframework.website.edongwang.domain.CfgScore;
+import com.rpframework.website.edongwang.service.CfgScoreService;
 
 @Controller
 @RequestMapping("/api/cfg")

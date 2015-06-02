@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.website.edongwang.dao.IUserMoneyLogDao">
+
+	<resultMap type="com.rpframework.website.edongwang.domain.UserMoneyLog" id="mUserMoneyLog" autoMapping="true">
+		<id property="id" column="id" />
+		<result property="userId" column="userId"/>
+		<association property="user" column="userId" javaType="com.rpframework.core.vo.BaseUserVO" autoMapping="true" />
+	</resultMap>
+	
+	<select id="doPager" parameterType="map" resultMap="mUserMoneyLog">
+		select m.*,
+			u.realName,
+			u.contact,
+			u.sex
+		from u_money_log m
+			left outer join user u on u.id = m.userId
+		where 1=1
+		
+		<if test="page.searchMap.userId != null">
+			and m.userId = #{page.searchMap.userId} 
+		</if>
+		<if test="page.searchMap.realName != null">
+			and u.realName like "%"#{page.searchMap.realName}"%" 
+		</if>
+		 order by id desc
+	</select>
+
+	<update id="update" parameterType="com.rpframework.website.edongwang.domain.UserMoneyLog" />
+	<insert id="insert" parameterType="com.rpframework.website.edongwang.domain.UserMoneyLog" useGeneratedKeys="true" keyProperty="id"/>
+	<delete id="delete" parameterType="com.rpframework.website.edongwang.domain.UserMoneyLog" />
+	<select id="select" parameterType="Integer" resultMap="mUserMoneyLog">
+		select m.*,
+			u.realName,
+			u.contact,
+			u.sex
+		from u_money_log m
+			left outer join user u on u.userId = m.userId
+		where m.id=#{id}
+	</select> 
+</mapper>

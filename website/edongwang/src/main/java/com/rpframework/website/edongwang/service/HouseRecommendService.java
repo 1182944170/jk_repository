@@ -13,7 +13,6 @@ import com.google.gson.JsonParser;
 import com.rpframework.core.BaseService;
 import com.rpframework.core.utils.DictionarySettingUtils;
 import com.rpframework.core.utils.GsonUtils;
-import com.rpframework.module.user.service.UserScoreService;
 import com.rpframework.utils.CollectionUtils;
 import com.rpframework.utils.NumberUtils;
 import com.rpframework.utils.Pager;
@@ -66,6 +65,10 @@ public class HouseRecommendService extends BaseService {
 		
 		if(user.getIsSalesman() != 1) {
 			throw new IllegalArgumentException("只有业务员才能抢单.");
+		}
+		
+		if(houseRecommend.getRecommendUserId() == userId) {
+			throw new IllegalArgumentException("不能抢自己推荐的单子.");
 		}
 		
 		JsonObject scoreExtJson = new JsonObject();

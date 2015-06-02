@@ -4,6 +4,19 @@ import com.rpframework.core.utils.cache.KVObj;
 
 public final class EConstants {
 	public final static String COOKIE_LOGIN_ENCRYPT_KEY = "loginEncrypt";
+	public final static class ScoreShop {
+		/**
+		 * scoreShop.rule.1	不限次数	map	0	0	1
+			scoreShop.rule.2	一天仅可购买一次	map	0	0	2
+			scoreShop.rule.3	一周仅可购买一次	map	0	0	3
+			scoreShop.rule.4	一月仅可购买一次	map	0	0	4
+		 */
+		public final static int RULE_NO_LIMIT = 1;
+		public final static int RULE_ONE_DAY = 2;
+		public final static int RULE_ONE_WEEK = 3;
+		public final static int RULE_ONE_MONTH = 4;
+	}
+	
 	public static final class ScoreChannel {
 		public final static KVObj DEAL_RECOMMEND = new KVObj("1", "推荐成交积分");//score.deal
 		public final static KVObj DEAL_JD = new KVObj("2", "接单成交积分");//score.deal

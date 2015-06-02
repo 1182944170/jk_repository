@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
-import org.slf4j.helpers.MessageFormatter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,6 +16,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.rpframework.core.BaseAct;
 import com.rpframework.core.utils.DictionarySettingUtils;
+import com.rpframework.core.utils.MessageFormatter;
 import com.rpframework.core.utils.SpringUtils;
 import com.rpframework.module.common.service.SMSService;
 import com.rpframework.utils.AlgorithmEnum;
@@ -129,7 +129,8 @@ public class ApiAct extends BaseAct {
 		user.setHeadImg("");
 		user.setIsSalesman(0);
 		user.setPassword(password);
-		user.setRealName(contact);
+		user.setRealName("");
+		
 		user.setSex(1);
 		user.setState(1);
 		user.setRecordCreateTime(System.currentTimeMillis() / 1000);

@@ -24,23 +24,7 @@ import com.rpframework.core.BaseAct;
 import com.rpframework.core.api.FileService;
 import com.rpframework.core.utils.GsonUtils;
 import com.rpframework.core.utils.TagUtils;
-import com.rpframework.module.common.domain.CfgBank;
-import com.rpframework.module.common.domain.CfgBankAddress;
 import com.rpframework.module.common.service.SMSService;
-import com.rpframework.module.user.domain.UserBankCard;
-import com.rpframework.module.user.domain.UserMoney;
-import com.rpframework.module.user.domain.UserMoneyLog;
-import com.rpframework.module.user.domain.UserScore;
-import com.rpframework.module.user.domain.UserScoreLog;
-import com.rpframework.module.user.domain.UserScoreShopLog;
-import com.rpframework.module.user.domain.UserTakeCash;
-import com.rpframework.module.user.service.UserBankCardService;
-import com.rpframework.module.user.service.UserMoneyLogService;
-import com.rpframework.module.user.service.UserMoneyService;
-import com.rpframework.module.user.service.UserScoreLogService;
-import com.rpframework.module.user.service.UserScoreService;
-import com.rpframework.module.user.service.UserScoreShopLogService;
-import com.rpframework.module.user.service.UserTakeCashService;
 import com.rpframework.utils.AlgorithmEnum;
 import com.rpframework.utils.AlgorithmUtils;
 import com.rpframework.utils.CollectionUtils;
@@ -49,11 +33,25 @@ import com.rpframework.utils.Pager;
 import com.rpframework.website.edongwang.domain.House;
 import com.rpframework.website.edongwang.domain.LeaveMessage;
 import com.rpframework.website.edongwang.domain.User;
+import com.rpframework.website.edongwang.domain.UserBankCard;
+import com.rpframework.website.edongwang.domain.UserMoney;
+import com.rpframework.website.edongwang.domain.UserMoneyLog;
 import com.rpframework.website.edongwang.domain.UserSalesman;
+import com.rpframework.website.edongwang.domain.UserScore;
+import com.rpframework.website.edongwang.domain.UserScoreLog;
+import com.rpframework.website.edongwang.domain.UserScoreShopLog;
+import com.rpframework.website.edongwang.domain.UserTakeCash;
 import com.rpframework.website.edongwang.exception.APICodeException;
 import com.rpframework.website.edongwang.service.LeaveMessageService;
+import com.rpframework.website.edongwang.service.UserBankCardService;
+import com.rpframework.website.edongwang.service.UserMoneyLogService;
+import com.rpframework.website.edongwang.service.UserMoneyService;
 import com.rpframework.website.edongwang.service.UserSalesmanService;
+import com.rpframework.website.edongwang.service.UserScoreLogService;
+import com.rpframework.website.edongwang.service.UserScoreService;
+import com.rpframework.website.edongwang.service.UserScoreShopLogService;
 import com.rpframework.website.edongwang.service.UserService;
+import com.rpframework.website.edongwang.service.UserTakeCashService;
 
 @Controller
 @RequestMapping("/api/user")
@@ -127,7 +125,6 @@ public class UserApiAct extends BaseAct {
 		uBankCardJson.addProperty("name", userBankCard.getName());
 		uBankCardJson.addProperty("bankId", userBankCard.getCfgBank().getId());
 		uBankCardJson.addProperty("address", userBankCard.getAddress());
-		
 		return uBankCardJson;
 	}
 	
@@ -180,7 +177,6 @@ public class UserApiAct extends BaseAct {
 	public @ResponseBody JsonElement changeRealName(@RequestParam String realName,  HttpSession session, HttpServletRequest request){
 		User user = getSessionUser(session);
 		user.setRealName(realName);
-		user.setUserName(realName);
 		userService.update(user);
 		JsonObject json = new JsonObject();
 		json.addProperty("succ", true);
@@ -259,23 +255,24 @@ public class UserApiAct extends BaseAct {
 			HttpSession session, HttpServletRequest request) {
 		
 		User user = getSessionUser(session);
-		List<UserBankCard> list = userBankCardService.getCardsByUserId(user.getId());
-		if(CollectionUtils.isNotEmpty(list)) {
-			throw new APICodeException(-1, "已经有绑定银行卡数据!");
-		}
-		UserBankCard userBankCard = new UserBankCard();
-		CfgBank cfgBank = new CfgBank();
 		
-		userBankCard.setAccount(account);
-		cfgBank.setId(bankId);
-		userBankCard.setCfgBank(cfgBank);
-		userBankCard.setCfgBankAddress(new CfgBankAddress());
-		userBankCard.setName(name);
-		userBankCard.setAddress(address);
-		userBankCard.setState(1);
-		userBankCard.setUserId(user.getId());
+		boolean flag = userBankCardService.bind(user.getId(), name, bankId, account, address);
+		JsonObject json = new JsonObject();
+		json.addProperty("succ", flag);
+		return json;
+	}
+	
+	@RequestMapping("/rebind_bank_card")
+	public @ResponseBody JsonElement reBindBankCard(
+			@RequestParam Integer bankId,
+			@RequestParam String address,
+			@RequestParam String account,
+			@RequestParam String name,
+			HttpSession session, HttpServletRequest request) {
 		
-		boolean flag = userBankCardService.insert(userBankCard);
+		User user = getSessionUser(session);
+		
+		boolean flag = userBankCardService.reBind(user.getId(), name, bankId, account, address);
 		JsonObject json = new JsonObject();
 		json.addProperty("succ", flag);
 		return json;
@@ -284,13 +281,19 @@ public class UserApiAct extends BaseAct {
 	@RequestMapping("/apply_take")
 	public @ResponseBody JsonElement applyTake(
 			@RequestParam Double money,
-			@RequestParam Integer bankCardId,
+			@RequestParam Integer bankId,
+			@RequestParam String account, 
+			@RequestParam String name,
+			@RequestParam String address,
 			@RequestParam(value="remark", required=false) String remark,
 			HttpSession session, HttpServletRequest request) {
 		
 		User user = getSessionUser(session);
-		boolean flag = userTakeCashService.applyTakeCash(user.getId(), money, bankCardId, remark);
 		
+		if(money%100 != 0) {
+			throw new IllegalArgumentException("提现必须为100整数.");
+		}
+		boolean flag = userTakeCashService.applyTakeCash(user.getId(), money, account, name, bankId, address, remark);
 		JsonObject json = new JsonObject();
 		json.addProperty("succ", flag);
 		return json;
@@ -426,8 +429,11 @@ public class UserApiAct extends BaseAct {
 			log.addProperty("money", userTakeCash.getMoney());
 			log.addProperty("state", userTakeCash.getState());
 			log.addProperty("remark", userTakeCash.getRemark());
+			log.addProperty("bankId", userTakeCash.getCfgBank().getId());
+			log.addProperty("account", userTakeCash.getAccount());
+			log.addProperty("name", userTakeCash.getName());
+			log.addProperty("address", userTakeCash.getAddress());
 			log.addProperty("recordCreateTime", userTakeCash.getRecordCreateTime());
-			log.add("userBankCard", packageUserBankCard(userTakeCash.getUserBankCard()));
 			array.add(log);
 		}
 		return json;

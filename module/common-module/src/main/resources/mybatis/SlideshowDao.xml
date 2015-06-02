@@ -6,7 +6,7 @@
 	<resultMap type="com.rpframework.module.common.domain.Slideshow" id="mSlideshow" autoMapping="true" />
 
 	<select id="queryAll" resultMap="mSlideshow">
-		select * from slideshow
+		select * from slideshow order by type,sortIndex
 	</select>
 	
 	<select id="queryEffectiveSlideshow" parameterType="Integer" resultMap="mSlideshow">

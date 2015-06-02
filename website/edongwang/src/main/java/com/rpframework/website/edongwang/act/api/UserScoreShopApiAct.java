@@ -18,12 +18,12 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.rpframework.core.BaseAct;
 import com.rpframework.core.utils.TagUtils;
-import com.rpframework.module.user.domain.ScoreShop;
-import com.rpframework.module.user.service.ScoreShopService;
-import com.rpframework.module.user.service.UserScoreService;
-import com.rpframework.module.user.service.UserScoreShopLogService;
 import com.rpframework.utils.Pager;
+import com.rpframework.website.edongwang.domain.ScoreShop;
 import com.rpframework.website.edongwang.domain.User;
+import com.rpframework.website.edongwang.service.ScoreShopService;
+import com.rpframework.website.edongwang.service.UserScoreService;
+import com.rpframework.website.edongwang.service.UserScoreShopLogService;
 import com.rpframework.website.edongwang.service.UserService;
 import com.rpframework.website.edongwang.utils.EConstants;
 

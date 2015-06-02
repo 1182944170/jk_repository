@@ -39,8 +39,9 @@ public class SlideshowService extends BaseService {
 				throw new IllegalArgumentException("更新时找不到实体 " + slideshow.getId());
 			}
 			
-			//icon不同，需要删除
-			if(!StringUtils.equals(slideshowDB.getIcon(), slideshow.getIcon())) {
+			if(StringUtils.isBlank(slideshow.getIcon())) {
+				slideshow.setIcon(slideshowDB.getIcon());
+			} else if(!StringUtils.equals(slideshowDB.getIcon(), slideshow.getIcon())) {//icon不同，需要删除
 				try {
 					fileService.deleteFile(slideshowDB.getIcon());
 				} catch (Exception e) {
@@ -49,6 +50,9 @@ public class SlideshowService extends BaseService {
 			}
 			return slideshowDao.update(slideshow);
 		} else {
+			if(StringUtils.isBlank(slideshow.getIcon())) {
+				throw new IllegalArgumentException("新增情况下，必须上传Icon!");
+			}
 			return slideshowDao.insert(slideshow);
 		}
 			

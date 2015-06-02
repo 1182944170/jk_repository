@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.website.edongwang.dao.IUserScoreDao">
+
+	<resultMap type="com.rpframework.website.edongwang.domain.UserScore" id="mUserScore" autoMapping="true">
+		<id property="userId" column="userId" />
+		<association property="user" column="userId" javaType="com.rpframework.core.vo.BaseUserVO" autoMapping="true" />
+	</resultMap>
+
+	<select id="doPager" parameterType="map" resultMap="mUserScore">
+		select m.*,
+			u.userName,
+			u.realName,
+			u.contact,
+			u.sex
+		from u_score m
+			left outer join user u on u.id = m.userId
+		where 1=1
+		
+		<if test="page.searchMap.userId != null">
+			and m.userId = #{page.searchMap.userId} 
+		</if>
+		<if test="page.searchMap.realName != null">
+			and u.realName like "%"#{page.searchMap.realName}"%" 
+		</if>
+		 order by id desc
+	</select>
+	
+	<update id="update" parameterType="com.rpframework.website.edongwang.domain.UserScore" />
+	<insert id="insert" parameterType="com.rpframework.website.edongwang.domain.UserScore" useGeneratedKeys="true" keyProperty="userId"/>
+	<delete id="delete" parameterType="com.rpframework.website.edongwang.domain.UserScore" />
+	<select id="select" parameterType="Integer" resultMap="mUserScore">
+		select m.*,
+			u.userName,
+			u.realName,
+			u.contact,
+			u.sex
+		from u_score m
+			left outer join user u on u.id = m.userId
+		where m.userId=#{userId}
+	</select> 
+</mapper>

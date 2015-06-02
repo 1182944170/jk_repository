@@ -9,7 +9,6 @@ import org.springframework.util.Assert;
 import com.google.gson.JsonObject;
 import com.rpframework.core.BaseService;
 import com.rpframework.core.utils.DictionarySettingUtils;
-import com.rpframework.module.user.service.UserScoreService;
 import com.rpframework.utils.NumberUtils;
 import com.rpframework.website.edongwang.dao.IUserSalesmanDao;
 import com.rpframework.website.edongwang.domain.User;

@@ -17,15 +17,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.rpframework.core.exception.TipsException;
 import com.rpframework.module.adminbase.domain.AdminUser;
-import com.rpframework.module.user.domain.UserBankCard;
-import com.rpframework.module.user.service.UserBankCardService;
 import com.rpframework.utils.AlgorithmEnum;
 import com.rpframework.utils.AlgorithmUtils;
 import com.rpframework.utils.CollectionUtils;
 import com.rpframework.utils.NumberUtils;
 import com.rpframework.utils.Pager;
 import com.rpframework.website.edongwang.domain.User;
+import com.rpframework.website.edongwang.domain.UserBankCard;
 import com.rpframework.website.edongwang.domain.UserSalesman;
+import com.rpframework.website.edongwang.service.UserBankCardService;
 import com.rpframework.website.edongwang.service.UserSalesmanService;
 import com.rpframework.website.edongwang.service.UserService;
 

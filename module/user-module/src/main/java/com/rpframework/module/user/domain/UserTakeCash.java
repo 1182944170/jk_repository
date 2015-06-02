@@ -2,9 +2,12 @@ package com.rpframework.module.user.domain;
 
 import com.rpframework.core.Domain;
 import com.rpframework.core.mybatis.plugin.annotation.FieldMapperAnnotation;
+import com.rpframework.core.mybatis.plugin.annotation.FieldType;
 import com.rpframework.core.mybatis.plugin.annotation.TableMapperAnnotation;
 import com.rpframework.core.mybatis.plugin.annotation.UniqueKeyType;
 import com.rpframework.core.vo.BaseUserVO;
+import com.rpframework.module.common.domain.CfgBank;
+import com.rpframework.module.common.domain.CfgBankAddress;
 
 @TableMapperAnnotation(tableName = "u_take_cash", uniqueKeyType = UniqueKeyType.Single, uniqueKey = "id")
 public class UserTakeCash extends Domain {
@@ -31,9 +34,41 @@ public class UserTakeCash extends Domain {
 	@FieldMapperAnnotation
 	Integer userBankCardId;
 	
-	UserBankCard userBankCard;
+	@FieldMapperAnnotation
+	String account;
+	@FieldMapperAnnotation
+	String name;
+	@FieldMapperAnnotation(dbFieldName="bankId", fieldType=FieldType.Object) //cfgBankAddres 跟 cfgBank、address 是互斥的，兼容俩种情况
+	CfgBank cfgBank;
+	@FieldMapperAnnotation
+	String address;
+	
 	BaseUserVO user;
 	
+	public String getAccount() {
+		return account;
+	}
+	public void setAccount(String account) {
+		this.account = account;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public CfgBank getCfgBank() {
+		return cfgBank;
+	}
+	public void setCfgBank(CfgBank cfgBank) {
+		this.cfgBank = cfgBank;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
 	public BaseUserVO getUser() {
 		return user;
 	}
@@ -45,12 +80,6 @@ public class UserTakeCash extends Domain {
 	}
 	public void setUserBankCardId(Integer userBankCardId) {
 		this.userBankCardId = userBankCardId;
-	}
-	public UserBankCard getUserBankCard() {
-		return userBankCard;
-	}
-	public void setUserBankCard(UserBankCard userBankCard) {
-		this.userBankCard = userBankCard;
 	}
 	public Integer getId() {
 		return id;
