@@ -21,7 +21,7 @@
 	
 	<!-- 指定Sping组件扫描的基本包路径 -->
 	<context:component-scan base-package="com.rpframework.module.common" />
-
+	
 	<mvc:interceptors>  
 		<bean class="com.rpframework.module.common.springmvc.interceptor.CommonInterceptor"/>
 	</mvc:interceptors>

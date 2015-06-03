@@ -117,49 +117,7 @@ public  @ResponseBody class HouseRecommendApiAct extends BaseAct {
 	}
 	
 	/**
-	 * 抢单列表针对二级会员来说的
-	 * @param pager
-	 * @param session
-	 * @param model
-	 * @param attr
-	 * @return
-	 */
-	@RequestMapping("/grab_list")
-	public  @ResponseBody JsonElement list(@RequestParam(value = "pager", required = false) Pager<HouseRecommend> pager,HttpSession session, Map<Object, Object> model, RedirectAttributes attr) {
-		User user = getSessionUser(session);
-		if(user.getIsSalesman() == 0) {//
-			if(user.getUserSalesman() == null) {
-				throw new APICodeException(-1, "你不是二级会员，无权查看该API.");
-			} else {
-				throw new APICodeException(-2, "你申请的二级会员的状态为非通过状态.");
-			}
-		}
-		
-		if (pager == null) {
-			pager = new Pager<HouseRecommend>();
-		}
-		
-		
-		pager.getSearchMap().put("order", "state,recordCreateTime desc");
-		pager.getSearchMap().put("houseId", String.valueOf(user.getUserSalesman().getHouse().getId()));//只搜索本区域的
-		pager = houseRecommendService.getPager(pager);
-		
-		JsonObject json = new JsonObject();
-		json.addProperty("totalPages", pager.getTotalPages());
-		json.addProperty("currentPage", pager.getCurrentPage());
-		json.addProperty("totalCount", pager.getTotalCount());
-		
-		List<HouseRecommend> list = pager.getItemList();
-		JsonArray array = new JsonArray();
-		json.add("arrays", array);
-		for (HouseRecommend houseRecommend : list) {
-			array.add(packageHouseRecommend(houseRecommend, true));
-		}
-		return json;
-	}
-	
-	/**
-	 * 抢单列表针对二级会员来说的
+	 * 全城抢单
 	 * @param pager
 	 * @param session
 	 * @param model
@@ -190,7 +148,7 @@ public  @ResponseBody class HouseRecommendApiAct extends BaseAct {
 	}
 	
 	/**
-	 * 抢单列表针对二级会员来说的
+	 * 全城的接单信息
 	 * @param pager
 	 * @param session
 	 * @param model
@@ -304,6 +262,8 @@ public  @ResponseBody class HouseRecommendApiAct extends BaseAct {
 			hrJson.addProperty("id", houseRecommend.getId());
 			hrJson.addProperty("customerName", houseRecommend.getCustomerName());
 			hrJson.addProperty("contact", houseRecommend.getContact());
+			hrJson.addProperty("areaCode", houseRecommend.getAreaCode());
+			hrJson.addProperty("totalPriceType", houseRecommend.getTotalPriceType());
 			hrJson.addProperty("recordCreateTime", houseRecommend.getRecordCreateTime());
 			array.add(hrJson);
 		}
@@ -396,6 +356,50 @@ public  @ResponseBody class HouseRecommendApiAct extends BaseAct {
 	}
 	
 	/**
+	 * 抢单列表针对二级会员来说的
+	 * @param pager
+	 * @param session
+	 * @param model
+	 * @param attr
+	 * @return
+	 */
+	@RequestMapping("/grab_list")
+	public  @ResponseBody JsonElement list(@RequestParam(value = "pager", required = false) Pager<HouseRecommend> pager,HttpSession session, Map<Object, Object> model, RedirectAttributes attr) {
+		User user = getSessionUser(session);
+		if(user.getIsSalesman() == 0) {//
+			if(user.getUserSalesman() == null) {
+				throw new APICodeException(-1, "你不是二级会员，无权查看该API.");
+			} else {
+				throw new APICodeException(-2, "你申请的二级会员的状态为非通过状态.");
+			}
+		}
+		
+		if (pager == null) {
+			pager = new Pager<HouseRecommend>();
+		}
+		
+		
+		pager.getSearchMap().put("order", "state,recordCreateTime desc");
+		pager.getSearchMap().put("state", "1");
+		pager.getSearchMap().put("houseId", String.valueOf(user.getUserSalesman().getHouse().getId()));//只搜索本区域的
+		pager = houseRecommendService.getPager(pager);
+		
+		JsonObject json = new JsonObject();
+		json.addProperty("totalPages", pager.getTotalPages());
+		json.addProperty("currentPage", pager.getCurrentPage());
+		json.addProperty("totalCount", pager.getTotalCount());
+		
+		List<HouseRecommend> list = pager.getItemList();
+		JsonArray array = new JsonArray();
+		json.add("arrays", array);
+		for (HouseRecommend houseRecommend : list) {
+			array.add(packageHouseRecommend(houseRecommend, true));
+		}
+		return json;
+	}
+	
+	
+	/**
 	 * 
 	 * 如果是该楼盘的负责人，则可以看到该楼盘的所有的抢单
 	 * @param pager
@@ -404,21 +408,21 @@ public  @ResponseBody class HouseRecommendApiAct extends BaseAct {
 	 * @param attr
 	 * @return
 	 */
-	@RequestMapping("/grabs")
+	/*@RequestMapping("/grabs")
 	public @ResponseBody JsonElement grabs(@RequestParam(value = "pager", required = false) Pager<HouseRecommend> pager,HttpSession session, Map<Object, Object> model, RedirectAttributes attr) {
 		User user = getSessionUser(session);
 		if(user.getIsSalesman() != 1) {//
 			throw new APICodeException(-1, "无权查看");
 		}
 		
-		/*if(user.getUserSalesman().getIsLeader() != 1) {
+		if(user.getUserSalesman().getIsLeader() != 1) {
 			throw new APICodeException(-1, "无权查看！");
-		}*/
+		}
 		
 		if (pager == null) {
 			pager = new Pager<HouseRecommend>();
 		}
-		
+		pager.getSearchMap().put("order", "state,recordCreateTime desc");
 		pager.getSearchMap().put("houseId", String.valueOf(user.getUserSalesman().getHouse().getId()));
 		pager = houseRecommendService.getPager(pager);
 		
@@ -437,5 +441,5 @@ public  @ResponseBody class HouseRecommendApiAct extends BaseAct {
 			array.add(hrJson );
 		}
 		return json;
-	}
+	}*/
 }

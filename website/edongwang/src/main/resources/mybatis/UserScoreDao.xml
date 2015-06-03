@@ -10,7 +10,6 @@
 
 	<select id="doPager" parameterType="map" resultMap="mUserScore">
 		select m.*,
-			u.userName,
 			u.realName,
 			u.contact,
 			u.sex
@@ -32,7 +31,6 @@
 	<delete id="delete" parameterType="com.rpframework.website.edongwang.domain.UserScore" />
 	<select id="select" parameterType="Integer" resultMap="mUserScore">
 		select m.*,
-			u.userName,
 			u.realName,
 			u.contact,
 			u.sex

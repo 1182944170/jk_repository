@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.sitemesh.builder.SiteMeshFilterBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.redis.core.BoundValueOperations;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import com.rpframework.core.event.impl.ModuleEvent;
@@ -29,6 +31,7 @@ public class CommonEventModule extends ModuleEvent {
 		builder.addExcludedPath("/resources/*");
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public void init(ServletContext servletContext) {
 		CacheUtils.getIntance().add(new CountryCache());
@@ -42,6 +45,15 @@ public class CommonEventModule extends ModuleEvent {
 				entry.getValue().initForSet();
 			}
 		
+		}
+		
+		RedisTemplate<String, String> redisTemplate = SpringUtils.getBean(RedisTemplate.class);
+		if(redisTemplate != null) {//有配置 redis
+			BoundValueOperations<String, String> boundValueOps = redisTemplate.boundValueOps("test");
+			System.out.println(boundValueOps.get());
+			boundValueOps.set("testkey_OK");
+			BoundValueOperations<String,String> boundValueOps2 = redisTemplate.boundValueOps("test");
+			System.out.println(boundValueOps2.get());
 		}
 	}
 

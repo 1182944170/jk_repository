@@ -23,6 +23,12 @@
 		<if test="page.searchMap.userId != null">
 			and m.userId = #{page.searchMap.userId} 
 		</if>
+		
+		<if test="page.searchMap.state != null">
+			and m.state = #{page.searchMap.state} 
+		</if>
+		
+		
 		<if test="page.searchMap.realName != null">
 			and u.realName like "%"#{page.searchMap.realName}"%" 
 		</if>

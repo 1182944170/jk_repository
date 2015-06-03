@@ -11,7 +11,7 @@
 		select * from notice
 	</select>
 	<select id="queryAllEffectiveNotice" resultMap="mNotice">
-		select * from notice where state=1
+		select * from notice where state=1 order by recoreCreateTime desc
 	</select>
 
 	<update id="update" parameterType="com.rpframework.module.common.domain.Notice" />

@@ -37,8 +37,8 @@ public class UserScoreShopApiAct extends BaseAct {
 	@Resource ScoreShopService scoreShopService;
 	@Resource UserScoreShopLogService userScoreShopLogService;
 	
-	@RequestMapping
-	public @ResponseBody JsonElement execute(@RequestParam(value = "pager", required = false) Pager<ScoreShop> pager, HttpSession session, HttpServletRequest request) {
+	@RequestMapping("list")
+	public @ResponseBody JsonElement list(@RequestParam(value = "pager", required = false) Pager<ScoreShop> pager, HttpSession session, HttpServletRequest request) {
 		User user = getSessionUser(session);
 		if (pager == null) {
 			pager = new Pager<ScoreShop>();
