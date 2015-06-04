@@ -2,6 +2,8 @@ package com.rpframework.module.common.fck.requestcycle.impl;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
+
 import net.fckeditor.requestcycle.impl.ContextPathBuilder;
 
 import com.rpframework.core.api.FileService;
@@ -18,6 +20,7 @@ public class MyContextPathBuilder extends ContextPathBuilder {
 	@Override
 	public String getUserFilesPath(final HttpServletRequest request) {
 		FileService fileService = SpringUtils.getBean(FileService.class);
-		return FileUtils.splicePaths(fileService.getWebUrl() ,FCKUtils.getFCKUploadRoot());
+		String url = FileUtils.splicePaths(fileService.getWebUrl() ,FCKUtils.getFCKUploadRoot());
+		return StringUtils.replace(url, "\\", "/");
 	}
 }
