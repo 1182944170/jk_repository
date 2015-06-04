@@ -213,10 +213,15 @@ public class UserApiAct extends BaseAct {
 	@RequestMapping("/apply_salesman")
 	public @ResponseBody JsonElement applySalesman(@RequestParam(value="credentialsImgFile", required=false) CommonsMultipartFile credentialsImgFile, 
 			@RequestParam Integer houseId,
+			@RequestParam String realName,
 			HttpSession session, HttpServletRequest request){
 		User user = getSessionUser(session);
 		if(user.getIsSalesman() ==1) {//
 			throw new APICodeException(-1, "你已经是Salesman，请勿再次提交!");
+		}
+		if(StringUtils.isNotBlank(realName)) {
+			user.setRealName(realName);
+			userService.update(user);
 		}
 		
 		if(credentialsImgFile != null && credentialsImgFile.getSize() > 0) {
