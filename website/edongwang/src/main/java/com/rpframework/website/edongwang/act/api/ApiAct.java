@@ -1,5 +1,7 @@
 package com.rpframework.website.edongwang.act.api;
 
+import java.util.Map;
+
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -34,6 +36,16 @@ import com.rpframework.website.edongwang.utils.EConstants;
 public class ApiAct extends BaseAct {
 	@Resource UserService userService;
 	@Resource SMSService smsService;
+	
+	
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@RequestMapping("/just_view_text")
+	public String justViewText(@RequestParam String text, HttpSession session,Map model, HttpServletRequest request, HttpServletResponse response){
+		model.put("text", text);
+		return "just_view_text";
+	}
+	
 	
 	@RequestMapping("/login")
 	public @ResponseBody JsonElement login(@RequestParam(required=false) String contact, @RequestParam(required=false) String password, HttpSession session, HttpServletRequest request, HttpServletResponse response){
