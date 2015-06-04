@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -72,6 +73,58 @@ public class ApiAct extends BaseAct {
 		json.addProperty("succ", true);
 		return json;
 	}
+	
+	@RequestMapping("/sendsms_for_forget_password")
+	public @ResponseBody JsonElement sendSMSForForgetPassowrd(@RequestParam(required=false) String contact, HttpSession session, HttpServletRequest request) {
+		if(StringUtils.isBlank(contact)) {
+			throw new IllegalArgumentException("非法参数!");
+		}
+		
+		String verifyCode = String.valueOf(NumberUtils.random(6));
+		String sendContent = DictionarySettingUtils.getParameterValue("sendsms.forget_passowrd");
+		if(StringUtils.isBlank(sendContent)) {
+			sendContent =  "本次重置密码验证码:{}，请牢记";
+		}
+		sendContent = MessageFormatter.format(sendContent, verifyCode);
+		
+		boolean flag = smsService.sendSMS(EConstants.ChannelType.SEND_SMS_FORGET_PASSWORD_CHANNEL_TYPE, contact, verifyCode, sendContent);
+		if(!flag) {
+			throw new IllegalArgumentException("短信发送失败!");
+		}
+		JsonObject json = new JsonObject();
+		json.addProperty("succ", true);
+		return json;
+	}
+	
+	
+	@RequestMapping("/reset_password")
+	public @ResponseBody JsonElement resetPassword(HttpSession session, HttpServletRequest request) {
+		String contact = request.getParameter("contact");
+		String password = request.getParameter("password");
+		String verifyCode = request.getParameter("verifyCode");
+		
+		if(StringUtils.isBlank(contact) || StringUtils.isBlank(password) || StringUtils.isBlank(verifyCode)) {
+			throw new IllegalArgumentException("非法参数!");
+		}
+		
+		if(!smsService.checkVerifyCode(EConstants.ChannelType.SEND_SMS_FORGET_PASSWORD_CHANNEL_TYPE, contact, verifyCode)) {
+			throw new IllegalArgumentException("验证码不正确!");
+		}
+		
+		User user = userService.findUserByContact(contact);
+		Assert.notNull(user, "找不到用户!");
+		password = AlgorithmUtils.encodePassword(password, AlgorithmEnum.MD5);
+		if(StringUtils.equals(user.getPassword(), password)) {
+			throw new IllegalArgumentException("密码一致!");
+		}
+		user.setPassword(password);
+		userService.update(user);
+		smsService.setVerifyCodeVaild(EConstants.ChannelType.SEND_SMS_FORGET_PASSWORD_CHANNEL_TYPE, contact);
+		JsonObject json = new JsonObject();
+		json.addProperty("succ", true);
+		return json;
+	}
+	
 	
 	@RequestMapping("/sendsms_for_regist")
 	public @ResponseBody JsonElement sendSMSForRegist(@RequestParam(required=false) String contact, HttpSession session, HttpServletRequest request) {
