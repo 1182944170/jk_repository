@@ -7,6 +7,10 @@
 	<select id="findSMSByChannelTypeAndPhone" resultMap="mSMS">
 		select * from sms where channelType = #{0} and phone = #{1} and state=1 order by id desc limit 1
 	</select>
+	
+	<update id="resetNotVerify2Invalid" parameterType="Integer">
+		update sms set state=-1 where channelType=#{channelType} and state=1
+	</update>
 
 	<update id="update" parameterType="com.rpframework.module.common.domain.SMS" />
 	<insert id="insert" parameterType="com.rpframework.module.common.domain.SMS" useGeneratedKeys="true" keyProperty="id"/>

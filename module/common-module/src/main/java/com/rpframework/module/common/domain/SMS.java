@@ -7,6 +7,7 @@ import com.rpframework.core.mybatis.plugin.annotation.UniqueKeyType;
 
 @TableMapperAnnotation(tableName = "sms", uniqueKeyType = UniqueKeyType.Single, uniqueKey = "id")
 public class SMS extends Domain {
+	public static final int SMS_STATE_INVAILD = -1;
 	public static final int SMS_STATE_UNVERIFY = 1;
 	public static final int SMS_STATE_VERIFYED = 2;
 	/*
