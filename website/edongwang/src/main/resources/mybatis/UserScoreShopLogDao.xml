@@ -24,8 +24,8 @@
 			and m.userId = #{page.searchMap.userId} 
 		</if>
 		
-		<if test="page.searchMap.state != null">
-			and m.state = #{page.searchMap.state} 
+		<if test="page.searchMap.sendShopState != null">
+			and m.sendShopState = #{page.searchMap.sendShopState} 
 		</if>
 		
 		

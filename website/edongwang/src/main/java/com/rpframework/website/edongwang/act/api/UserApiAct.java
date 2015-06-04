@@ -318,7 +318,7 @@ public class UserApiAct extends BaseAct {
 			pager = new Pager<UserScoreShopLog>();
 		}
 		pager.getSearchMap().put("userId", String.valueOf(user.getId()));
-		pager.getSearchMap().put("state", "1");
+		pager.getSearchMap().put("sendShopState", "1");
 		pager = userScoreShopLogService.getPager(pager);
 		
 		JsonObject json = new JsonObject();
