@@ -27,7 +27,6 @@ import com.rpframework.utils.Pager;
 import com.rpframework.website.edongwang.domain.House;
 import com.rpframework.website.edongwang.domain.HouseRecommend;
 import com.rpframework.website.edongwang.domain.User;
-import com.rpframework.website.edongwang.exception.APICodeException;
 import com.rpframework.website.edongwang.service.HouseRecommendService;
 import com.rpframework.website.edongwang.service.HouseService;
 
@@ -113,7 +112,11 @@ public  @ResponseBody class HouseApiAct extends BaseAct {
 				||NumberUtils.isNotValid(totalPriceType)
 				||NumberUtils.isNotValid(firstHouseId)
 				) {
-			throw new APICodeException(-1, "参数异常");
+			throw new IllegalArgumentException("参数异常");
+		}
+		
+		if(NumberUtils.isValid(secondHouseId) && secondHouseId.equals(firstHouseId)) {
+			throw new IllegalArgumentException("首选楼盘与复选楼盘不能相同!");
 		}
 		
 		HouseRecommend hr = new HouseRecommend();

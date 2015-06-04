@@ -41,6 +41,17 @@ public class CfgApiAct extends BaseAct {
 	public @ResponseBody JsonElement surfaceTypes(Map<Object, Object> model, RedirectAttributes attr) {
 		return DictionarySettingUtils.getMapJsonArrayByKey("house.surfaceType");
 	}
+	
+	/**
+	 * 面积类型 
+	 * @param model
+	 * @param attr
+	 * @return
+	 */
+	@RequestMapping("/contactus")
+	public @ResponseBody JsonElement contactUs(Map<Object, Object> model, RedirectAttributes attr) {
+		return DictionarySettingUtils.getMapJsonArrayByKey("contactus");
+	}
 
 	/**
 	 * 物业类型 

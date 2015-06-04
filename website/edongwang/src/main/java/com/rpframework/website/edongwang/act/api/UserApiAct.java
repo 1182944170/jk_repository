@@ -22,7 +22,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.rpframework.core.BaseAct;
 import com.rpframework.core.api.FileService;
+import com.rpframework.core.utils.DictionarySettingUtils;
 import com.rpframework.core.utils.GsonUtils;
+import com.rpframework.core.utils.MessageFormatter;
 import com.rpframework.core.utils.TagUtils;
 import com.rpframework.module.common.service.SMSService;
 import com.rpframework.utils.AlgorithmEnum;
@@ -41,7 +43,6 @@ import com.rpframework.website.edongwang.domain.UserScore;
 import com.rpframework.website.edongwang.domain.UserScoreLog;
 import com.rpframework.website.edongwang.domain.UserScoreShopLog;
 import com.rpframework.website.edongwang.domain.UserTakeCash;
-import com.rpframework.website.edongwang.exception.APICodeException;
 import com.rpframework.website.edongwang.service.LeaveMessageService;
 import com.rpframework.website.edongwang.service.UserBankCardService;
 import com.rpframework.website.edongwang.service.UserMoneyLogService;
@@ -52,6 +53,7 @@ import com.rpframework.website.edongwang.service.UserScoreService;
 import com.rpframework.website.edongwang.service.UserScoreShopLogService;
 import com.rpframework.website.edongwang.service.UserService;
 import com.rpframework.website.edongwang.service.UserTakeCashService;
+import com.rpframework.website.edongwang.utils.EConstants;
 
 @Controller
 @RequestMapping("/api/user")
@@ -98,7 +100,7 @@ public class UserApiAct extends BaseAct {
 			JsonObject houseJson = new JsonObject();
 			salesmanJson.add("house", houseJson);
 			json.add("salesman", salesmanJson);
-			salesmanJson.addProperty("credentialsImg", user.getUserSalesman().getCredentialsImg());
+			salesmanJson.addProperty("credentialsImg", TagUtils.getFileFullPath(user.getUserSalesman().getCredentialsImg()));
 			salesmanJson.addProperty("recordCreateTime", user.getUserSalesman().getRecordCreateTime());
 			
 			houseJson.addProperty("id", user.getUserSalesman().getHouse().getId());
@@ -114,7 +116,7 @@ public class UserApiAct extends BaseAct {
 		}
 		
 		UserMoney userMoney = userMoneyService.getUserMoney(user.getId());
-		json.addProperty("userMoney", gson.toJson(userMoney));
+		json.add("userMoney", gson.toJsonTree(userMoney));
 		return json;
 	}
 	
@@ -128,8 +130,84 @@ public class UserApiAct extends BaseAct {
 		return uBankCardJson;
 	}
 	
+	@RequestMapping("/sendsms_for_change_contact")
+	public @ResponseBody JsonElement sendSMS4ChangeContact(@RequestParam(required=false) String contact, HttpSession session, HttpServletRequest request) {
+		if(StringUtils.isBlank(contact)) {
+			throw new IllegalArgumentException("非法参数!");
+		}
+		
+		String verifyCode = String.valueOf(NumberUtils.random(6));
+		String sendContent = DictionarySettingUtils.getParameterValue("sendsms.change_contact");
+		if(StringUtils.isBlank(sendContent)) {
+			sendContent =  "本次修改手机号验证码:{}，请牢记";
+		}
+		sendContent = MessageFormatter.format(sendContent, verifyCode);
+		
+		boolean flag = smsService.sendSMS(EConstants.ChannelType.SEND_SMS_CHANGE_CONTACT_CHANNEL_TYPE, contact, verifyCode, sendContent);
+		if(!flag) {
+			throw new IllegalArgumentException("短信发送失败!");
+		}
+		JsonObject json = new JsonObject();
+		json.addProperty("succ", true);
+		return json;
+	}
+	
+	@RequestMapping("/change_pwd")
+	public @ResponseBody JsonElement changePwd(@RequestParam String oldPassword,@RequestParam String newPassword, HttpSession session, HttpServletRequest request) {
+		User user = getSessionUser(session);
+		boolean flag = userService.changePassword(user, oldPassword, newPassword);
+		JsonObject json = new JsonObject();
+		json.addProperty("succ", flag);
+		return json;
+	}
+	
+	@RequestMapping("/change_contact")
+	public @ResponseBody JsonElement changeContact(@RequestParam String newContact,@RequestParam String verifyCode, HttpSession session, HttpServletRequest request) {
+		User user = getSessionUser(session);
+		if(StringUtils.isBlank(newContact) || StringUtils.isBlank(verifyCode)) {
+			throw new IllegalArgumentException("非法参数!");
+		}
+		
+		String oldContact = user.getContact();
+		if(StringUtils.equals(newContact, oldContact)) {
+			throw new IllegalArgumentException("手机号相同!");
+		}
+		if(!smsService.checkVerifyCode(EConstants.ChannelType.SEND_SMS_CHANGE_CONTACT_CHANNEL_TYPE, oldContact, verifyCode)) {
+			throw new IllegalArgumentException("验证码不正确!");
+		}
+		user.setContact(newContact);
+		userService.update(user);
+		smsService.setVerifyCodeVaild(EConstants.ChannelType.SEND_SMS_FORGET_PASSWORD_CHANNEL_TYPE, oldContact);
+		
+		JsonObject json = new JsonObject();
+		json.addProperty("succ", true);
+		return json;
+	}
+	
+	/**
+	 * 查看我的楼盘协议
+	 * 只有二级会员才能查看
+	 * @param message
+	 * @param session
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/view_my_house_protocol")
+	public @ResponseBody JsonElement viewMyHouseProtocol(HttpSession session, HttpServletRequest request){
+		User user = getSessionUser(session);
+		if(user.getIsSalesman() != 1) {
+			throw new IllegalArgumentException("只有二级会员才能查看我的楼盘协议!");
+		}
+		
+		String protocol = user.getUserSalesman().getHouse().getProtocol();
+		JsonObject json = new JsonObject();
+		json.addProperty("protocol", protocol);
+		return json;
+	}
+	
+	
 	@RequestMapping("/leave_msg")
-	public @ResponseBody JsonElement changeHeadImg(@RequestParam String message, HttpSession session, HttpServletRequest request){
+	public @ResponseBody JsonElement leaveMsg(@RequestParam String message, HttpSession session, HttpServletRequest request){
 		User user = getSessionUser(session);
 		LeaveMessage leaveMessage = new LeaveMessage();
 		leaveMessage.setMessage(message);
@@ -156,11 +234,11 @@ public class UserApiAct extends BaseAct {
 				json.addProperty("succ", true);
 				return json;
 			} catch (Exception e) {
-				throw new APICodeException(-1, "文件上传失败，原因:" + e.getLocalizedMessage());
+				throw new IllegalArgumentException("文件上传失败，原因:" + e.getLocalizedMessage());
 			}
 		}
 		
-		throw new APICodeException(-2, "参数错误!");
+		throw new IllegalArgumentException("参数错误!");
 	}
 	
 	@RequestMapping("/change_sex")
@@ -183,7 +261,7 @@ public class UserApiAct extends BaseAct {
 		return json;
 	}
 	
-	@RequestMapping("/change_county_code")
+	/*@RequestMapping("/change_county_code")
 	public @ResponseBody JsonElement changeCountyCode(@RequestParam String countyCode,HttpSession session, HttpServletRequest request){
 		User user = getSessionUser(session);
 		user.setCountyCode(countyCode);
@@ -191,7 +269,7 @@ public class UserApiAct extends BaseAct {
 		JsonObject json = new JsonObject();
 		json.addProperty("succ", true);
 		return json;
-	}
+	}*/
 	
 	@RequestMapping("/change_password")
 	public @ResponseBody JsonElement changePassword(@RequestParam String oldPassword, @RequestParam(required=false) String newPassword, HttpSession session, HttpServletRequest request){
@@ -199,7 +277,7 @@ public class UserApiAct extends BaseAct {
 		
 		String oldPasswordMD5 = AlgorithmUtils.encodePassword(oldPassword, AlgorithmEnum.MD5);
 		if(!StringUtils.equals(oldPasswordMD5, user.getPassword())) {
-			throw new APICodeException(-1, "原密码错误!");
+			throw new IllegalArgumentException("原密码错误!");
 		}
 		String newPasswordMD5 = AlgorithmUtils.encodePassword(newPassword, AlgorithmEnum.MD5);
 		
@@ -217,7 +295,7 @@ public class UserApiAct extends BaseAct {
 			HttpSession session, HttpServletRequest request){
 		User user = getSessionUser(session);
 		if(user.getIsSalesman() ==1) {//
-			throw new APICodeException(-1, "你已经是Salesman，请勿再次提交!");
+			throw new IllegalArgumentException("你已经是Salesman，请勿再次提交!");
 		}
 		if(StringUtils.isNotBlank(realName)) {
 			user.setRealName(realName);
@@ -244,11 +322,11 @@ public class UserApiAct extends BaseAct {
 				json.addProperty("succ", falg);
 				return json;
 			} catch (Exception e) {
-				throw new APICodeException(-1, "文件上传失败，原因:" + e.getLocalizedMessage());
+				throw new IllegalArgumentException("文件上传失败，原因:" + e.getLocalizedMessage());
 			}
 		}
 		
-		throw new APICodeException(-2, "参数错误!");
+		throw new IllegalArgumentException("参数错误!");
 	}
 	
 	@RequestMapping("/bind_bank_card")

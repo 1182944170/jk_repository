@@ -17,6 +17,7 @@ import com.rpframework.module.common.service.SMSService;
 import com.rpframework.utils.Pager;
 import com.rpframework.website.edongwang.dao.IUserTakeCashDao;
 import com.rpframework.website.edongwang.domain.UserTakeCash;
+import com.rpframework.website.edongwang.utils.EConstants;
 
 @Service
 public class UserTakeCashService extends BaseService {
@@ -63,7 +64,7 @@ public class UserTakeCashService extends BaseService {
 				}
 			}
 			
-			smsService.sendSMS(1000, userTakeCashDB.getUser().getContact(), "", sendContent);
+			smsService.sendSMS(EConstants.ChannelType.SEND_SMS_CHANGE_TAKE_CASH_CHANNEL_TYPE, userTakeCashDB.getUser().getContact(), "", sendContent);
 			
 			return update(userTakeCashDB);
 		} else {//

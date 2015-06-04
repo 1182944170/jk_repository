@@ -61,9 +61,8 @@
 		<if test="page.searchMap.acceptSalesmanRealName != null">
 			and u2.realName like "%"#{page.searchMap.acceptSalesmanRealName}"%" 
 		</if>
-		
 		<if test="page.searchMap.order != null">
-			 order by #{page.searchMap.order}
+			 order by ${page.searchMap.order}
 		</if>
 		<if test="page.searchMap.order == null">
 			 order by id desc

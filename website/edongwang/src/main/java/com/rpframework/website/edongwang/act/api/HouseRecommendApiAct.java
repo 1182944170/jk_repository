@@ -101,7 +101,7 @@ public  @ResponseBody class HouseRecommendApiAct extends BaseAct {
 	 * 单子的第三部，成交 之业务员提交成功，这时候 如果 state＝1的话，则等待负责人填写确认
 	 */
 	@RequestMapping("/{houseRecommendId}/deal")
-	public  @ResponseBody JsonElement deal(@PathVariable Integer houseRecommendId,
+	public @ResponseBody JsonElement deal(@PathVariable Integer houseRecommendId,
 			@RequestParam Long dealTime, 
 			@RequestParam Double surface, 
 			@RequestParam Double price, 
@@ -130,7 +130,7 @@ public  @ResponseBody class HouseRecommendApiAct extends BaseAct {
 			pager = new Pager<HouseRecommend>();
 		}
 		
-		pager.getSearchMap().put("order", "state,recordCreateTime desc");
+		pager.getSearchMap().put("order", "recordCreateTime desc, state asc");
 		pager = houseRecommendService.getPager(pager);
 		
 		JsonObject json = new JsonObject();
@@ -161,7 +161,7 @@ public  @ResponseBody class HouseRecommendApiAct extends BaseAct {
 			pager = new Pager<HouseRecommend>();
 		}
 		
-		pager.getSearchMap().put("order", "state,recordCreateTime desc");
+		pager.getSearchMap().put("order", "recordCreateTime desc, state asc");
 		pager.getSearchMap().put("state", "2");
 		pager = houseRecommendService.getPager(pager);
 		
@@ -379,7 +379,7 @@ public  @ResponseBody class HouseRecommendApiAct extends BaseAct {
 		}
 		
 		
-		pager.getSearchMap().put("order", "state,recordCreateTime desc");
+		pager.getSearchMap().put("order", "recordCreateTime desc, state asc");
 		pager.getSearchMap().put("state", "1");
 		pager.getSearchMap().put("houseId", String.valueOf(user.getUserSalesman().getHouse().getId()));//只搜索本区域的
 		pager = houseRecommendService.getPager(pager);
@@ -422,7 +422,7 @@ public  @ResponseBody class HouseRecommendApiAct extends BaseAct {
 		if (pager == null) {
 			pager = new Pager<HouseRecommend>();
 		}
-		pager.getSearchMap().put("order", "state,recordCreateTime desc");
+		pager.getSearchMap().put("order", "recordCreateTime desc, state asc");
 		pager.getSearchMap().put("houseId", String.valueOf(user.getUserSalesman().getHouse().getId()));
 		pager = houseRecommendService.getPager(pager);
 		
