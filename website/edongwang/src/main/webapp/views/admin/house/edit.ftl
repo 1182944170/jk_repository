@@ -179,7 +179,7 @@
 				<#list house.houseImgArrayList as f>
 					<div class="widget-box">
 						<div class="widget-header">
-							<h4><img src="${tagUtils.getFileFullPath(f)}" width=60 /></h4>
+							<h4><img src="${tagUtils.getFileFullPath(f)}" height=60 /></h4>
 							<span class="widget-toolbar">
 								<a href="javascript:RP.MultipleFile.commonDel('a_delHouseImg_${f_index}', '${f}', 'houseImgArray','houseImgIconFile', true)" id="a_delHouseImg_${f_index}">
 									<i class="icon-remove"></i>
@@ -210,7 +210,7 @@
 					<#list house.houseTypeImgArrayList as f>
 						<div class="widget-box">
 							<div class="widget-header">
-								<h4><img src="${tagUtils.getFileFullPath(f)}" width=60 /></h4>
+								<h4><img src="${tagUtils.getFileFullPath(f)}" height=60 /></h4>
 								<span class="widget-toolbar">
 									<a href="javascript:RP.MultipleFile.commonDel('a_delHouseTypeImg_${f_index}', '${f}', 'houseTypeImgArray','houseTypeImgIconFile', true)" id="a_delHouseTypeImg_${f_index}">
 										<i class="icon-remove"></i>

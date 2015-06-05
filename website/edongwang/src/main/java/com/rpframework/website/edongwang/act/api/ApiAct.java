@@ -180,7 +180,7 @@ public class ApiAct extends BaseAct {
 		if(!smsService.checkVerifyCode(EConstants.ChannelType.SEND_SMS_REGIST_CHANNEL_TYPE, contact, verifyCode)) {
 			throw new APICodeException(-4, "验证码不正确!");
 		}
-		smsService.setVerifyCodeVaild(EConstants.ChannelType.SEND_SMS_REGIST_CHANNEL_TYPE, contact);
+		
 		User user = userService.findUserByContact(contact);
 		if(user != null) {
 			throw new APICodeException(-2, "存在的手机号!");
@@ -200,8 +200,9 @@ public class ApiAct extends BaseAct {
 		user.setState(1);
 		user.setRecordCreateTime(System.currentTimeMillis() / 1000);
 		user.setState(1);
-		
 		boolean falg = userService.insert(user);
+		
+		smsService.setVerifyCodeVaild(EConstants.ChannelType.SEND_SMS_REGIST_CHANNEL_TYPE, contact);
 		session.removeAttribute(SESSION_USER_KEY);
 		JsonObject json = new JsonObject();
 		json.addProperty("succ", falg);
