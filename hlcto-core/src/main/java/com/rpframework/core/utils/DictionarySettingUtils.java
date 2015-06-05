@@ -20,6 +20,7 @@ import com.rpframework.utils.CollectionUtils;
 
 @Component("dicSetting")
 public class DictionarySettingUtils extends BaseRegistFreemarker {
+	
 	private static Log log = LogFactory.getLog(DictionarySettingUtils.class);
 	
 	private static Map<String, String> allConstantsMap = new HashMap<String, String>();
@@ -31,9 +32,8 @@ public class DictionarySettingUtils extends BaseRegistFreemarker {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public static List<String> getParameterList(String key) {
+	public static List<String> getParameterListWithOutLog(String key) {
 		if(!allSettings.containsKey(key)) {
-			log.warn("getParameterList allSettings not Contain key:" + key);
 			return null;
 		}
 		
@@ -47,6 +47,19 @@ public class DictionarySettingUtils extends BaseRegistFreemarker {
 	}
 	
 	/**
+	 * @param key like all.a.b
+	 * @return
+	 */
+	public static List<String> getParameterList(String key) {
+		List<String> obj = getParameterListWithOutLog(key);
+		if(obj != null) {
+			return (List<String>) obj;
+		}
+		
+		return obj;
+	}
+	
+	/**
 	 * @param settings eg:{ftp,ftp1} --> Object Map.toString()
 	 * 					  {ftp,ftp1,port} --> Object String
 	 * @return String
@@ -57,7 +70,7 @@ public class DictionarySettingUtils extends BaseRegistFreemarker {
 	
 	public static String getParameterValue(String setting){
 		List<String> l;
-		if((l = getParameterList(setting)) != null) {
+		if((l = getParameterListWithOutLog(setting)) != null) {
 			return l.get(0);
 		}
 		return (String)getParameterValue(StringUtils.split(setting, "."));
@@ -102,14 +115,6 @@ public class DictionarySettingUtils extends BaseRegistFreemarker {
 		return (Map<String, String>) getParameterMap(StringUtils.split(setting, "."));
 	}
 	
-//	private static void init() throws Exception {
-//		if (CollectionUtils.isEmpty(allConstantsMap) && CollectionUtils.isEmpty(allConstantsList)) {
-//			throw new Exception("allConstants collection is empty.");
-//		}
-//		initList();
-//		initMap();
-//	}
-
 	public static void reInit() {
 		if (CollectionUtils.isEmpty(allConstantsMap) && CollectionUtils.isEmpty(allConstantsList)) {
 			throw new IllegalAccessError("allConstants collection is empty.");
@@ -130,14 +135,14 @@ public class DictionarySettingUtils extends BaseRegistFreemarker {
 			KVObj ss = allConstantsList.get(i);
 			List<String> list = null;
 			String key = ss.k;
-			if(allSettings.containsKey(key)) {
-				list = (List<String>)allSettings.get(key);
+			if (allSettings.containsKey(key)) {
+				list = (List<String>) allSettings.get(key);
 			} else {
 				list = new ArrayList<String>();
 				allSettings.put(key, list);
 			}
-			
-			list.add((String)ss.v);
+
+			list.add((String) ss.v);
 		}
 	}
 
@@ -158,13 +163,13 @@ public class DictionarySettingUtils extends BaseRegistFreemarker {
 			Map<String, Object> subMap = null;
 			Object obj = null;
 			int len = keys.length - 1;
-			if (len < 1) { //only root node
+			if (len < 1) { // only root node
 				allSettings.put(variable, value);
 				continue;
 			}
 
 			supMap = (Map<String, Object>) allSettings.get(keys[0]);
-			if (supMap == null) { //new root node
+			if (supMap == null) { // new root node
 				supMap = new TreeMap<String, Object>();
 				allSettings.put(keys[0], supMap);
 			}
@@ -177,7 +182,7 @@ public class DictionarySettingUtils extends BaseRegistFreemarker {
 					supMap = (Map) obj;
 				} else {
 					subMap = new TreeMap<String, Object>();
-//					subMap = new LinkedHashMap<String, Object>();
+					// subMap = new LinkedHashMap<String, Object>();
 					supMap.put(key, subMap);
 					supMap = subMap;
 				}
@@ -194,14 +199,17 @@ public class DictionarySettingUtils extends BaseRegistFreemarker {
 		DictionarySettingUtils.allConstantsList = allConstantsList;
 	}
 	
-	public static JsonArray getMapJsonArrayByKey(String key){
+	public static JsonArray getMapJsonArrayByKey(String key) {
 		Map<String, String> map = DictionarySettingUtils.getParameterMap(key);
 		JsonArray array = new JsonArray();
-		for (Map.Entry<String, String> entry : map.entrySet()) {
-			JsonObject json = new JsonObject();
-			json.addProperty("id", entry.getKey());
-			json.addProperty("value", entry.getValue());
-			array.add(json);
+		
+		if(CollectionUtils.isNotEmpty(map)) {
+			for (Map.Entry<String, String> entry : map.entrySet()) {
+				JsonObject json = new JsonObject();
+				json.addProperty("id", entry.getKey());
+				json.addProperty("value", entry.getValue());
+				array.add(json);
+			}
 		}
 		return array;
 	}
