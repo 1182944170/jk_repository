@@ -35,7 +35,11 @@ public class Pager<T> implements Serializable {
 		}
 		
 		String[] params = value.split("_") ;
-		pager.setCurrentPage(NumberUtils.parseInt(params[0], 1)) ;
+		int parseInt = NumberUtils.parseInt(params[0], 1);
+		if(NumberUtils.isNotValid(parseInt)) {// <＝0 的都算 重置为1
+			parseInt = 1;
+		}
+		pager.setCurrentPage(parseInt) ;
 		
 		if(params.length < 2) return pager ;
 		

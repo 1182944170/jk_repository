@@ -53,10 +53,18 @@ public class UserTakeCashService extends BaseService {
 				
 				sendContent = DictionarySettingUtils.getParameterValue("sendsms.takeCash.success");
 				if(StringUtils.isBlank(sendContent)) {
-					sendContent =  "取现成功，金额:{}.";
+					sendContent =  "您的钱包提现人民币 {} 元，已成功转账至 {} 银行卡（尾号 {} 关联）。请查收。";
 				}
 				
-				sendContent = MessageFormatter.format(sendContent, userTakeCash.getMoney());
+				String cardNo = userTakeCashDB.getAccount();
+				if(StringUtils.isNotBlank(cardNo) && cardNo.length() > 4) {
+					cardNo = cardNo.substring(cardNo.length() - 4);
+				}
+				
+				sendContent = MessageFormatter.arrayFormat(sendContent, new Object[] { 
+										userTakeCashDB.getMoney(),
+										userTakeCashDB.getCfgBank().getName(),
+										cardNo });
 			} else {
 				sendContent = DictionarySettingUtils.getParameterValue("sendsms.takeCash.fail");
 				if(StringUtils.isBlank(sendContent)) {

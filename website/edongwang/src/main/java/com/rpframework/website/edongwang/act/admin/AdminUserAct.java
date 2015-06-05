@@ -103,6 +103,7 @@ public class AdminUserAct extends AdminAct {
 		String newPassword = String.valueOf(NumberUtils.random(6));
 		String tips = user.getRealName() + "会员密码重置成功，新密码为:" + newPassword + " !";
 		user.setPassword(AlgorithmUtils.encodePassword(newPassword, AlgorithmEnum.MD5));
+		userService.update(user);
 		throw new TipsException(tips);
 	}
 	

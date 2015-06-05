@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.rpframework.core.exception.AdminIllegalArgumentException;
+import com.rpframework.core.exception.TipsException;
 import com.rpframework.module.adminbase.domain.AdminRole;
 import com.rpframework.module.adminbase.domain.AdminUser;
 import com.rpframework.module.adminbase.service.AdminRoleService;
@@ -49,6 +51,18 @@ public class AdminUserAct extends AdminBaseAct {
 		}
 		model.put("adminUser", adminUser);
 		return this.add(attr);
+	}
+	
+	@RequestMapping("/{adminUserId}/resetpwd")
+	public String resetpwd(@PathVariable Integer adminUserId, Map<Object, Object> model,RedirectAttributes attr){
+		AdminUser adminUser = adminUserService.adminUserDao.select(adminUserId);
+		Assert.notNull(adminUser);
+		String newPassword = String.valueOf(NumberUtils.random(6));
+		String tips = adminUser.getUserName() + "密码重置成功，新密码为:" + newPassword + " !";
+		adminUser.setPwd(AlgorithmUtils.encodePassword(newPassword, AlgorithmEnum.MD5));
+		adminUserService.update(adminUser);
+		throw new TipsException(tips);
+		
 	}
 	
 	@RequestMapping("/{adminUserId}/delete")
@@ -100,7 +114,7 @@ public class AdminUserAct extends AdminBaseAct {
 			
 			adminUser.setRecordCreateTime(System.currentTimeMillis() / 1000);
 			adminUser.setSelfAdmin(1);
-			adminUser.setViewOnlyAdmin(1);
+			adminUser.setViewOnlyAdmin(0);
 			adminUserService.adminUserDao.insert(adminUser);
 		}
 		

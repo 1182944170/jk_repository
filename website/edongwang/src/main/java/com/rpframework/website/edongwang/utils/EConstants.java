@@ -49,6 +49,7 @@ public final class EConstants {
 	public static class ChannelType {
 		public static final int SEND_SMS_REGIST_CHANNEL_TYPE = 1;
 		public static final int SEND_SMS_FORGET_PASSWORD_CHANNEL_TYPE = 2;
+		public static final int SEND_SMS_FORGET_PASSWORD_SUCC_CHANNEL_TYPE = 5;
 		public static final int SEND_SMS_CHANGE_CONTACT_CHANNEL_TYPE = 3;
 		public static final int SEND_SMS_CHANGE_TAKE_CASH_CHANNEL_TYPE = 4;
 	}

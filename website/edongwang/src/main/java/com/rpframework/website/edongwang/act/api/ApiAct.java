@@ -125,13 +125,23 @@ public class ApiAct extends BaseAct {
 		
 		User user = userService.findUserByContact(contact);
 		Assert.notNull(user, "找不到用户!");
-		password = AlgorithmUtils.encodePassword(password, AlgorithmEnum.MD5);
+		String newPasswordMD5 = AlgorithmUtils.encodePassword(password, AlgorithmEnum.MD5);
 		if(StringUtils.equals(user.getPassword(), password)) {
 			throw new IllegalArgumentException("密码一致!");
 		}
-		user.setPassword(password);
+		user.setPassword(newPasswordMD5);
 		userService.update(user);
 		smsService.setVerifyCodeVaild(EConstants.ChannelType.SEND_SMS_FORGET_PASSWORD_CHANNEL_TYPE, contact);
+		
+		//发送短信提示给用户
+		String sendContent = DictionarySettingUtils.getParameterValue("sendsms.forget_passowrd_succ");
+		if(StringUtils.isBlank(sendContent)) {
+			sendContent =  "本次重置密码验证码:{}，请牢记";
+		}
+		
+		sendContent = MessageFormatter.format(sendContent, password);
+		
+		smsService.sendSMS(EConstants.ChannelType.SEND_SMS_FORGET_PASSWORD_SUCC_CHANNEL_TYPE, user.getContact(), "", sendContent);
 		JsonObject json = new JsonObject();
 		json.addProperty("succ", true);
 		return json;

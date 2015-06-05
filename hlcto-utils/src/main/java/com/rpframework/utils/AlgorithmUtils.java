@@ -191,5 +191,9 @@ public class AlgorithmUtils {
 		String enBase64 = enBase64(json.toString());
 		System.out.println(enBase64);
 		System.out.println(deBase64(enBase64));
+		
+		String s = "15390891113";
+		
+		;System.out.println(s.substring(s.length() - 4));
 	}
 }
