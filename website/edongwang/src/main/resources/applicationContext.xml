@@ -123,6 +123,10 @@
 	        <mvc:exclude-mapping path="/api/cfg/**"/>
 	        <mvc:exclude-mapping path="/api/regist"/>
 	        <mvc:exclude-mapping path="/api/dologin"/>
+	        <mvc:exclude-mapping path="/api/sendsms_for_forget_password"/>
+	        <mvc:exclude-mapping path="/api/reset_password"/>
+	        <mvc:exclude-mapping path="/api/sendsms_for_regist"/>
+	        
 	        <!-- 定义在mvc:interceptor下面的表示是对特定的请求才进行拦截的 -->  
 	        <bean class="com.rpframework.website.edongwang.springmvc.interceptor.EDongWangApiInterceptor"/>  
 	    </mvc:interceptor>  
