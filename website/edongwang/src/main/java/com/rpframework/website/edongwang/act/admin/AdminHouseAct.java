@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -77,7 +78,7 @@ public class AdminHouseAct extends AdminAct{
 			for (CommonsMultipartFile commonsMultipartFile : houseImgIconFile) {
 				if(commonsMultipartFile.getSize() <= 0) continue;
 				try {
-					String relativelyPath = "resources/house/" + house.getName() + "_" + (NumberUtils.random(5)) +"_" + commonsMultipartFile.getOriginalFilename();
+					String relativelyPath = "resources/house/" + DateUtils.nowDate(DateUtils.YYYYMMDDHHMMSS) + NumberUtils.random() + "." + FilenameUtils.getExtension(commonsMultipartFile.getOriginalFilename());
 					fileService.saveFile(commonsMultipartFile.getInputStream(), relativelyPath);
 					houseImg.add(new JsonPrimitive(relativelyPath));
 				} catch (Exception e) {
@@ -98,7 +99,8 @@ public class AdminHouseAct extends AdminAct{
 			for (CommonsMultipartFile commonsMultipartFile : houseTypeImgIconFile) {
 				if(commonsMultipartFile.getSize() <= 0) continue;
 				try {
-					String relativelyPath = "resources/house/" + house.getName() + "_" + (NumberUtils.random(5)) +"_" + commonsMultipartFile.getOriginalFilename();
+					String extension = "." + FilenameUtils.getExtension(commonsMultipartFile.getOriginalFilename());
+					String relativelyPath = "resources/house/" + DateUtils.nowDate(DateUtils.YYYYMMDDHHMMSS) + NumberUtils.random() + "." + FilenameUtils.getExtension(commonsMultipartFile.getOriginalFilename());
 					fileService.saveFile(commonsMultipartFile.getInputStream(), relativelyPath);
 					houseImg.add(new JsonPrimitive(relativelyPath));
 				} catch (Exception e) {
@@ -108,20 +110,6 @@ public class AdminHouseAct extends AdminAct{
 			
 			house.setHouseTypeImgArray(houseImg.toString());
 		}
-		
-		/*if(houseTypeImgIconFile.getSize() > 0) {
-			try {
-				String relativelyPath = "resources/housetype/" + NumberUtils.random(3) + houseTypeImgIconFile.getOriginalFilename();
-				fileService.saveFile(houseTypeImgIconFile.getInputStream(), relativelyPath);
-//				house.setHouseTypeImg(relativelyPath);
-			} catch (Exception e) {
-				throw new IllegalArgumentException("文件上传失败，原因:" + e.getLocalizedMessage());
-			}
-		} else {
-			if(house == null || NumberUtils.isNotValid(house.getId())) {
-				throw new IllegalArgumentException("新增情况下，户型图必须上传Icon!");
-			}
-		}*/
 		
 		house.setProtocolBeginTime(DateUtils.parse(protocolBeginTimeString).getTime()/1000);
 		house.setProtocolEndTime(DateUtils.parse(protocolEndTimeString).getTime()/1000);

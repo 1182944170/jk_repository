@@ -35,10 +35,11 @@
 
 				<div class="profile-social-links center">
 					<div class="profile-contact-links align-left">
+						<!--
 						<a class="btn btn-link" href="${ctx}/admin/user/${user.id}/resetPwd${suffix}">
 							<i class="icon-globe bigger-120 red"></i>
 							重置密码
-						</a>
+						</a>-->
 					</div>
 				</div>
 			</div>
@@ -55,7 +56,14 @@
 					<div class="profile-info-name"> 会员姓名 </div>
 	
 					<div class="profile-info-value">
-						<span class="editable" id="username">${user.realName}</span>
+					
+						<span class="editable" id="username">
+						<#if user.realName?has_content>
+							${user.realName}
+						<#else>
+							暂无
+						</#if>
+						</span>
 					</div>
 				</div>
 				<div class="profile-info-row">

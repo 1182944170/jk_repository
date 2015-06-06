@@ -13,7 +13,7 @@
 						<th>年龄要求</th>
 						<th>经验要求</th>
 						<th>学历要求</th>
-						<th>职位性质</th>
+						<!--<th>职位性质</th>-->
 						<th>职位月薪</th>
 						<th>联系电话</th>
 						<th>佣金提点</th>
@@ -28,10 +28,10 @@
 						<td>${u.workAddress}</td>
 						<td>${u.remark}</td>
 						<td>${u.countString}</td>
-						<td>${dicSetting.getParameterValue("job.ageType." + u.ageType)}</td>
+						<td>${u.ageTypeString}</td>
 						<td>${dicSetting.getParameterValue("job.expType." + u.expType)}</td>
 						<td>${dicSetting.getParameterValue("job.eduType." + u.eduType)}</td>
-						<td>${dicSetting.getParameterValue("job.jobType." + u.jobType)}</td>
+						<!--<td>${dicSetting.getParameterValue("job.jobType." + u.jobType)}</td>-->
 						<td>${u.money}</td>
 						<td>${u.contact}</td>
 						<td>${u.commissionPercent}</td>

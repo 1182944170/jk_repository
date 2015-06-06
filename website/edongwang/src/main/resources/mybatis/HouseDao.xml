@@ -20,9 +20,14 @@
 			and areaCode = #{page.searchMap.areaCode}
 		</if>
 		
+		<if test="page.searchMap.areaCodeLike != null">
+			and areaCode like ""#{page.searchMap.areaCodeLike}"%"
+		</if>
+		
 		<if test="page.searchMap.houseName != null">
 			and name like "%"#{page.searchMap.houseName}"%"
 		</if>
+		
 		order by recordCreateTime desc
 	</select>
 	

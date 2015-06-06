@@ -33,6 +33,10 @@
 			and u.realName like "%"#{page.searchMap.realName}"%" 
 		</if>
 		
+		<if test="page.searchMap.contact != null">
+			and u.contact like "%"#{page.searchMap.contact}"%" 
+		</if>
+		
 		<if test="page.searchMap.scoreShopId != null">
 			and m.scoreShopId = #{page.searchMap.scoreShopId} 
 		</if>

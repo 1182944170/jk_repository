@@ -46,7 +46,14 @@ public  @ResponseBody class HouseApiAct extends BaseAct {
 		String areaCode = request.getParameter("areaCode");
 		String keyword = request.getParameter("keyword");
 		if(StringUtils.isNotBlank(areaCode)) {
-			pager.getSearchMap().put("areaCode", areaCode);
+			int parseInt = NumberUtils.parseInt(areaCode);
+			if(parseInt % 100 == 0) {
+				parseInt = parseInt/100;
+				pager.getSearchMap().put("areaCodeLike", String.valueOf(parseInt));//杭州 市
+			} else {
+				pager.getSearchMap().put("areaCode", areaCode); //市下面的区
+			}
+			
 		}
 		
 		if(StringUtils.isNotBlank(keyword)) {

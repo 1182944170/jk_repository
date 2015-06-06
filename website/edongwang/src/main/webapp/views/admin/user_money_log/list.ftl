@@ -1,6 +1,9 @@
 <title>用户金额日志列表</title>
 <form class="form-horizontal" role="form" id="validation-form" method="POST" action="${ctx}/admin/user_money_log/list" onsubmit="return fromSearch(this)">
 	<input type="hidden" name="pager" value="1_"/>
+	<label>会员手机号:</label>
+	<input type="text" name="contact" value="${(pager.searchMap.contact)!''}" placeholder="会员手机号"/>
+	
 	<label>会员姓名:</label>
 	<input type="text" name="realName" value="${(pager.searchMap.realName)!''}" placeholder="会员姓名"/>
 	<button class="btn btn-minier btn-success" type="submit"><i class="icon-search"></i>搜  索</button>
@@ -13,7 +16,7 @@
 				<thead>
 					<tr>
 						<th>Id</th>
-						<th>会员ID/会员姓名</th>
+						<th>会员ID/会员姓名/会员手机号</th>
 						<th>金额</th>
 						<th>总使用金额</th>
 						<th>当前余额</th>
@@ -77,6 +80,10 @@
 </#if>
 <script>
 function fromSearch(f){
+	if(f.contact.value) {
+		f.pager.value += "$$contact--" + f.contact.value;
+	}
+	
 	if(f.realName.value) {
 		f.pager.value += "$$realName--" + f.realName.value;
 	}

@@ -254,7 +254,7 @@
 	</div>
 </div> 
 <div class="form-group">
-	<label class="control-label col-xs-12 col-sm-3 no-padding-right">楼盘协议:</label>
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right">抢单规则:</label>
 	<div class="col-xs-12 col-sm-9 width-60">
 		<div class="clearfix">
 		<@fck value="${(house.protocol)!''}" instanceName="protocol" inputName="protocol" height="300px;" toolbarSet="Basic">

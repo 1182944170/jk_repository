@@ -13,6 +13,9 @@
 	<input type="hidden" name="id" value="${job.id}"/>
 	<input type="hidden" name="recordCreateTime" value="${job.recordCreateTime}"/>
 </#if>
+
+<input type="hidden" name="jobType" value="1"/>
+<input type="hidden" name="ageType" value="1"/>
 <fieldset>
 
 <div class="form-group">
@@ -64,13 +67,16 @@
 	<label class="control-label col-xs-12 col-sm-3 no-padding-right">年龄要求:</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
-		<#assign propertyTypes=dicSetting.getParameterMap("job.ageType") />
-		<@ace.formSingleSelect options=propertyTypes checkValue=(job.ageType)!-1 name="ageType" listKey="key" listValue="value"/>
+			<span class="block input-icon width-40">
+				<input type="text" name="ageTypeString" id="ageTypeString" value="${(job.ageTypeString)!''}" class="form-control" placeholder="年龄要求"/>
+				<i class="icon-user"></i>
+			</span>
 		</div>
 	</div>
 </div>
+
 <div class="form-group">
-	<label class="control-label col-xs-12 col-sm-3 no-padding-right">经验要求:</label>
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right">工作年限:</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 		<#assign propertyTypes=dicSetting.getParameterMap("job.expType") />
@@ -109,6 +115,8 @@
 		</div>
 	</div>
 </div>
+
+<!--
 <div class="form-group">
 	<label class="control-label col-xs-12 col-sm-3 no-padding-right">职位性质:</label>
 	<div class="col-xs-12 col-sm-9">
@@ -117,7 +125,7 @@
 		<@ace.formSingleSelect options=propertyTypes checkValue=(job.jobType)!-1 name="jobType" listKey="key" listValue="value"/>
 		</div>
 	</div>
-</div>
+</div>-->
 
 <div class="form-group">
 	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="contact">联系电话/联系人:</label>
@@ -177,7 +185,7 @@ $(document).ready(function(){
 			workAddress: {
 				required: true
 			},
-			ageType: {
+			ageTypeString: {
 				required: true
 			},
 			expType: {
@@ -186,9 +194,7 @@ $(document).ready(function(){
 			eduType: {
 				required: true
 			},
-			jobType: {
-				required: true
-			},
+			
 			money:{
 				required: true
 			},

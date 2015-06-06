@@ -1,8 +1,8 @@
 <title>用户列表</title>
 <form class="form-horizontal" role="form" id="validation-form" method="POST" action="${ctx}/admin/user/list" onsubmit="return fromSearch(this)">
 	<input type="hidden" name="pager" value="1_"/>
-	<label>用户ID:</label>
-	<input type="text" name="id" value="${(pager.searchMap.id)!''}" placeholder="用户ID"/>
+	<label>会员手机号:</label>
+	<input type="text" name="contact" value="${(pager.searchMap.contact)!''}" placeholder="会员手机号"/>
 	
 	<label>会员姓名:</label>
 	<input type="text" name="realName" value="${(pager.searchMap.realName)!''}" placeholder="会员姓名"/>
@@ -112,8 +112,8 @@
 </#if>
 <script>
 function fromSearch(f){
-	if(f.id.value) {
-		f.pager.value += "$$id--" + f.id.value;
+	if(f.contact.value) {
+		f.pager.value += "$$contact--" + f.contact.value;
 	}
 	if(f.realName.value) {
 		f.pager.value += "$$realName--" + f.realName.value;

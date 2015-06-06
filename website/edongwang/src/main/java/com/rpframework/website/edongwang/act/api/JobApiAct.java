@@ -52,10 +52,10 @@ public  @ResponseBody class JobApiAct extends BaseAct {
 	
 	private JsonObject packageJson(Job job){
 		JsonObject jsonObject = gson.toJsonTree(job).getAsJsonObject();
-		jsonObject.addProperty("ageTypeString", DictionarySettingUtils.getParameterValue("job.ageType." + job.getAgeType()));
+//		jsonObject.addProperty("ageTypeString", DictionarySettingUtils.getParameterValue("job.ageType." + job.getAgeType()));
 		jsonObject.addProperty("expTypeString", DictionarySettingUtils.getParameterValue("job.expType." + job.getExpType()));
 		jsonObject.addProperty("eduTypeString", DictionarySettingUtils.getParameterValue("job.eduType." + job.getEduType()));
-		jsonObject.addProperty("jobTypeString", DictionarySettingUtils.getParameterValue("job.jobType." + job.getJobType()));
+//		jsonObject.addProperty("jobTypeString", DictionarySettingUtils.getParameterValue("job.jobType." + job.getJobType()));
 		return jsonObject;
 	}
 	@RequestMapping("{jobId}")

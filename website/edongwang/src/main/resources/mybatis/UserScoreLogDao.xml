@@ -25,6 +25,10 @@
 			and u.realName like "%"#{page.searchMap.realName}"%" 
 		</if>
 		
+		<if test="page.searchMap.contact != null">
+			and u.contact like "%"#{page.searchMap.contact}"%" 
+		</if>
+		
 		order by id desc
 	</select>
 	

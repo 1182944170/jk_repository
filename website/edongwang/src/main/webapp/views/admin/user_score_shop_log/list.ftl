@@ -1,6 +1,10 @@
 <title>积分商城日志列表</title>
 <form class="form-horizontal" role="form" id="validation-form" method="POST" action="${ctx}/admin/user_score_shop_log/list" onsubmit="return fromSearch(this)">
 	<input type="hidden" name="pager" value="1_"/>
+	
+	<label>会员手机号:</label>
+	<input type="text" name="contact" value="${(pager.searchMap.contact)!''}" placeholder="会员手机号"/>
+	
 	<label>会员姓名:</label>
 	<input type="text" name="realName" value="${(pager.searchMap.realName)!''}" placeholder="会员姓名"/>
 	
@@ -23,7 +27,7 @@
 				<thead>
 					<tr>
 						<th>ID</th>
-						<th>会员ID/会员姓名</th>
+						<th>会员ID/会员姓名/会员手机号</th>
 						<th>商品ID/名称</th>
 						<th>发货状态</th>
 						<th>兑换时间</th>
@@ -118,6 +122,10 @@
 </#if>
 <script>
 function fromSearch(f){
+	if(f.contact.value) {
+		f.pager.value += "$$contact--" + f.contact.value;
+	}
+	
 	if(f.realName.value) {
 		f.pager.value += "$$realName--" + f.realName.value;
 	}

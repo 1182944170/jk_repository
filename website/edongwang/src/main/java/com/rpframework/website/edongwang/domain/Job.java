@@ -30,6 +30,8 @@ public class Job extends Domain{
 	@FieldMapperAnnotation
 	Integer ageType; 
 	@FieldMapperAnnotation
+	String ageTypeString; 
+	@FieldMapperAnnotation
 	Integer expType; 
 	@FieldMapperAnnotation
 	Integer eduType;
@@ -48,6 +50,12 @@ public class Job extends Domain{
 	@FieldMapperAnnotation
 	Long recordCreateTime;
 	
+	public String getAgeTypeString() {
+		return ageTypeString;
+	}
+	public void setAgeTypeString(String ageTypeString) {
+		this.ageTypeString = ageTypeString;
+	}
 	public String getCountString() {
 		return countString;
 	}

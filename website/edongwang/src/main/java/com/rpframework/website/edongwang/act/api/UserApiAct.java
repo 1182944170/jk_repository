@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +31,7 @@ import com.rpframework.module.common.service.SMSService;
 import com.rpframework.utils.AlgorithmEnum;
 import com.rpframework.utils.AlgorithmUtils;
 import com.rpframework.utils.CollectionUtils;
+import com.rpframework.utils.DateUtils;
 import com.rpframework.utils.NumberUtils;
 import com.rpframework.utils.Pager;
 import com.rpframework.website.edongwang.domain.House;
@@ -200,7 +202,7 @@ public class UserApiAct extends BaseAct {
 	public @ResponseBody JsonElement viewMyHouseProtocol(HttpSession session, HttpServletRequest request){
 		User user = getSessionUser(session);
 		if(user.getIsSalesman() != 1) {
-			throw new IllegalArgumentException("只有二级会员才能查看我的楼盘协议!");
+			throw new IllegalArgumentException("只有二级会员才能查看抢单规则!");
 		}
 		
 		String protocol = user.getUserSalesman().getHouse().getProtocol();
@@ -229,7 +231,8 @@ public class UserApiAct extends BaseAct {
 		User user = getSessionUser(session);
 		if(headImgFile != null && headImgFile.getSize() > 0) {
 			try {
-				String relativelyPath = "resources/head/" + NumberUtils.random(6) + headImgFile.getOriginalFilename();
+				
+				String relativelyPath = "resources/head/" + DateUtils.nowDate(DateUtils.YYYYMMDDHHMMSS) + NumberUtils.random() + "." + FilenameUtils.getExtension(headImgFile.getOriginalFilename());
 				fileService.saveFile(headImgFile.getInputStream(), relativelyPath);
 				user.setHeadImg(relativelyPath);
 				userService.update(user);
@@ -308,7 +311,7 @@ public class UserApiAct extends BaseAct {
 		
 		if(credentialsImgFile != null && credentialsImgFile.getSize() > 0) {
 			try {
-				String relativelyPath = "resources/credentials/" + NumberUtils.random(6) + credentialsImgFile.getOriginalFilename();
+				String relativelyPath = "resources/credentials/" + DateUtils.nowDate(DateUtils.YYYYMMDDHHMMSS) + NumberUtils.random() + "." + FilenameUtils.getExtension(credentialsImgFile.getOriginalFilename());
 				fileService.saveFile(credentialsImgFile.getInputStream(), relativelyPath);
 				boolean falg = true;
 				

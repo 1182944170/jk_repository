@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +21,7 @@ import com.rpframework.core.exception.AdminIllegalArgumentException;
 import com.rpframework.module.common.act.CommonBaseAct;
 import com.rpframework.module.common.domain.Slideshow;
 import com.rpframework.module.common.service.SlideshowService;
+import com.rpframework.utils.DateUtils;
 import com.rpframework.utils.NumberUtils;
 
 @Controller
@@ -65,15 +67,11 @@ public class AdminSlideshowAct extends CommonBaseAct{
 	public String doSaveOrUpdate(@RequestParam(value="iconFile", required=false) CommonsMultipartFile iconFile, @ModelAttribute Slideshow slideshow, HttpSession session, HttpServletRequest request,RedirectAttributes attr){
 		if(iconFile.getSize() > 0) {
 			try {
-				String relativelyPath = "resources/slideshow/" + NumberUtils.random(3) + iconFile.getOriginalFilename();
+				String relativelyPath = "resources/slideshow/" + DateUtils.nowDate(DateUtils.YYYYMMDDHHMMSS) + NumberUtils.random() + "." + FilenameUtils.getExtension(iconFile.getOriginalFilename());
 				fileService.saveFile(iconFile.getInputStream(), relativelyPath);
 				slideshow.setIcon(relativelyPath);
 			} catch (Exception e) {
 				throw new IllegalArgumentException("文件上传失败，原因:" + e.getLocalizedMessage());
-			}
-		} else {
-			if(slideshow == null || NumberUtils.isNotValid(slideshow.getId())) {
-				throw new IllegalArgumentException("新增情况下，必须上传Icon!");
 			}
 		}
 		slideshowService.doSaveOrUpdate(slideshow);
