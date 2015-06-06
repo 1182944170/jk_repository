@@ -334,6 +334,7 @@ public  @ResponseBody class HouseRecommendApiAct extends BaseAct {
 			pager = new Pager<HouseRecommend>();
 		}
 		
+		pager.getSearchMap().put("queryNotOpenData", "true");
 		if(user.getUserSalesman().getIsLeader() == 1) {//楼盘负责人能看到该楼盘下的所有的接单信息
 			pager.getSearchMap().put("houseId", String.valueOf(user.getUserSalesman().getHouse().getId()));
 		} else {

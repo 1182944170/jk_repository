@@ -38,6 +38,11 @@
 		</if>
 		
 		where 1=1
+		
+		<if test="page.searchMap.queryNotOpenData != null">
+			and state>=1
+		</if>
+		
 		<if test="page.searchMap.state != null">
 			and m.state = #{page.searchMap.state} 
 		</if>
