@@ -1,8 +1,8 @@
 <title>意见与反馈列表</title>
 <form class="form-horizontal" role="form" id="validation-form" method="POST" action="${ctx}/admin/leave_msg/list" onsubmit="return fromSearch(this)">
 	<input type="hidden" name="pager" value="1_"/>
-	<label>会员名称:</label>
-	<input type="text" name="realName" value="${(pager.searchMap.realName)!''}" placeholder="会员名称"/>
+	<label>会员手机号:</label>
+	<input type="text" name="contact" value="${(pager.searchMap.contact)!''}" placeholder="会员手机号"/>
 	<button class="btn btn-minier btn-success" type="submit"><i class="icon-search"></i>搜  索</button>
 </form>
 <div class="hr hr-5"></div>
@@ -13,7 +13,7 @@
 				<thead>
 					<tr>
 						<th>ID</th>
-						<th>会员ID/会员姓名</th>
+						<th>会员ID/会员姓名/会员手机号</th>
 						<th width=60%>信息</th>
 						<th>时间</th>
 						<th></th>
@@ -71,8 +71,8 @@
 </#if>
 <script>
 function fromSearch(f){
-	if(f.realName.value) {
-		f.pager.value += "$$realName--" + f.realName.value;
+	if(f.contact.value) {
+		f.pager.value += "$$contact--" + f.contact.value;
 	}
 	return true;
 }
