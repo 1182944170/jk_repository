@@ -178,11 +178,19 @@ public class UserApiAct extends BaseAct {
 		if(StringUtils.equals(newContact, oldContact)) {
 			throw new IllegalArgumentException("手机号相同!");
 		}
+		
 		if(!smsService.checkVerifyCode(EConstants.ChannelType.SEND_SMS_CHANGE_CONTACT_CHANNEL_TYPE, oldContact, verifyCode)) {
 			throw new IllegalArgumentException("验证码不正确!");
 		}
+		
+		User newContactUser = userService.findUserByContact(newContact);
+		if(newContactUser != null) {
+			throw new IllegalArgumentException("新的手机号码已经注册为本站的会员!");
+		}
+		
 		user.setContact(newContact);
 		userService.update(user);
+		
 		smsService.setVerifyCodeVaild(EConstants.ChannelType.SEND_SMS_FORGET_PASSWORD_CHANNEL_TYPE, oldContact);
 		
 		JsonObject json = new JsonObject();
