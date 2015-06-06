@@ -117,6 +117,10 @@ public class UserApiAct extends BaseAct {
 		
 		UserMoney userMoney = userMoneyService.getUserMoney(user.getId());
 		json.add("userMoney", gson.toJsonTree(userMoney));
+		
+		UserScore userScore = userScoreService.getUserScore(user.getId());
+		json.add("userScore", gson.toJsonTree(userScore));
+		
 		return json;
 	}
 	

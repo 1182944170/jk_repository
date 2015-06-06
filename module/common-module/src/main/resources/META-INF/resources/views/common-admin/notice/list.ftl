@@ -8,8 +8,7 @@
 					<tr>
 						<th>ID</th>
 						<th>标题</th>
-						<th>内容</th>
-						<th><i class="icon-time bigger-110 hidden-480"></i> 状态</th>
+						<th>状态</th>
 						<th></th>
 					</tr>
 				</thead>
@@ -18,7 +17,6 @@
 					<tr>
 						<td><span class="green center">${u.id}</span></td>
 						<td><span class="gray center">${u.title}</span></td>
-						<td>${tagUtils.cutString(u.content, 100)}</td>
 						<td class="hidden-480">
 							<#if u.state == 1>
 								<span class="label label-sm label-success arrowed">正常状态</span>
