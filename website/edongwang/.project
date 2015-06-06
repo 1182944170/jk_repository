@@ -3,6 +3,8 @@
 	<name>edongwang</name>
 	<comment></comment>
 	<projects>
+		<project>admin-base-module</project>
+		<project>common-module</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

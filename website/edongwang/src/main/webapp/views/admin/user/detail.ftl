@@ -77,7 +77,7 @@
 					<div class="profile-info-name"> 性别 </div>
 	
 					<div class="profile-info-value">
-						<span class="editable" id="username"><#if user.sex == 1>先生<#else>女士</#if></span>
+						<span class="editable" id="username"><#if user.sex == 1>男<#else>女</#if></span>
 					</div>
 				</div>
 				<div class="profile-info-row">

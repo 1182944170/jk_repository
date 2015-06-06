@@ -29,7 +29,7 @@
 					<tr>
 						<td><span class="green center">${m.userSalesman.house.name}</span></td>
 						<td><span class="gray center">${m.realName}</span></td>
-						<td><#if m.sex == 1>先生<#else>女士</#if></td>
+						<td><#if m.sex == 1>男<#else>女</#if></td>
 						<td>${m.contact}</td>
 						<td>
 							<div class="col-xs-3">

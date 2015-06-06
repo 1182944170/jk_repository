@@ -32,7 +32,9 @@
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<span class="block input-icon width-40">
-				<input type="text" name="aliasesTitle" id="aliasesTitle" value="${(help.aliasesTitle)!''}" class="form-control" placeholder="${helpEditTitle}别名"/>
+				<#assign aliasesTitleCanModify=(dicSetting.getParameterValue("help.aliasesTitleCanModify"))!"1" />
+				
+				<input type="text" name="aliasesTitle" id="aliasesTitle" <#if aliasesTitleCanModify == "0" && help??>readonly</#if>  value="${(help.aliasesTitle)!''}" class="form-control" placeholder="${helpEditTitle}别名"/>
 				<i class="icon-user"></i>
 				<small>别名请使用唯一标识</small>
 			</span>

@@ -231,7 +231,6 @@ public class UserApiAct extends BaseAct {
 		User user = getSessionUser(session);
 		if(headImgFile != null && headImgFile.getSize() > 0) {
 			try {
-				
 				String relativelyPath = "resources/head/" + DateUtils.nowDate(DateUtils.YYYYMMDDHHMMSS) + NumberUtils.random() + "." + FilenameUtils.getExtension(headImgFile.getOriginalFilename());
 				fileService.saveFile(headImgFile.getInputStream(), relativelyPath);
 				user.setHeadImg(relativelyPath);
