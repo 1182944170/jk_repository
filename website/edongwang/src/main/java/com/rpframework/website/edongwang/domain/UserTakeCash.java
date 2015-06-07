@@ -8,6 +8,16 @@ import com.rpframework.core.mybatis.plugin.annotation.UniqueKeyType;
 import com.rpframework.core.vo.BaseUserVO;
 import com.rpframework.module.common.domain.CfgBank;
 
+/**
+ * 
+ * title: UserTakeCash.java 
+ * description
+ *
+ * @author rplees
+ * @email rplees.i.ly@gmail.com
+ * @version 1.0  
+ * @created 2015年6月7日 下午5:32:37
+ */
 @TableMapperAnnotation(tableName = "u_take_cash", uniqueKeyType = UniqueKeyType.Single, uniqueKey = "id")
 public class UserTakeCash extends Domain {
 	private static final long serialVersionUID = 1L;

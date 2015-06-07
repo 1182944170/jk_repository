@@ -95,7 +95,21 @@
 														</div>
 													</div>
 												</div>
+												
+												<div class="form-group">
+													<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="verifyCode">验证码:</label>
 
+													<div class="col-xs-12 col-sm-9">
+														<div class="clearfix">
+															<span class="block input-icon input-icon-right">
+																<input type="text" name="verifyCode" id="verifyCode" class="form-control" placeholder="验证码" />
+																<i class="icon-lock"></i>
+															</span>
+															<br/>
+															<img src="${ctx}/common/randomcode/admin"/>
+														</div>
+													</div>
+												</div>
 												
 												<div class="clearfix">
 													<button type="submit" class="width-100 pull-right btn btn-sm btn-primary">
@@ -168,6 +182,9 @@
 					focusInvalid: false,
 					rules: {
 						userName: {
+							required: true
+						},
+						verifyCode: {
 							required: true
 						},
 						pwd: {

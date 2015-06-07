@@ -5,6 +5,16 @@ import com.rpframework.core.mybatis.plugin.annotation.FieldMapperAnnotation;
 import com.rpframework.core.mybatis.plugin.annotation.TableMapperAnnotation;
 import com.rpframework.core.mybatis.plugin.annotation.UniqueKeyType;
 
+/**
+ * 
+ * title: ScoreShop.java 
+ * description
+ *
+ * @author rplees
+ * @email rplees.i.ly@gmail.com
+ * @version 1.0  
+ * @created 2015年6月7日 下午5:32:03
+ */
 @TableMapperAnnotation(tableName = "score_shop", uniqueKeyType = UniqueKeyType.Single, uniqueKey = "id")
 public class ScoreShop extends Domain {
 

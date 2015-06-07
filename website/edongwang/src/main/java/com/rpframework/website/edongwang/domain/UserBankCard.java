@@ -8,6 +8,16 @@ import com.rpframework.core.mybatis.plugin.annotation.UniqueKeyType;
 import com.rpframework.module.common.domain.CfgBank;
 import com.rpframework.module.common.domain.CfgBankAddress;
 
+/**
+ * 
+ * title: UserBankCard.java 
+ * description
+ *
+ * @author rplees
+ * @email rplees.i.ly@gmail.com
+ * @version 1.0  
+ * @created 2015年6月7日 下午5:32:10
+ */
 @TableMapperAnnotation(tableName = "u_bank_card", uniqueKeyType = UniqueKeyType.Single, uniqueKey = "id")
 public class UserBankCard extends Domain {
 

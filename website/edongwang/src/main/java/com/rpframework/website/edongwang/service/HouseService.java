@@ -31,7 +31,7 @@ public class HouseService extends BaseService {
 	}
 
 	public boolean doSaveOrUpdate(House house) {
-		if(house == null)  {//TODO:补全验证
+		if(house == null || StringUtils.isBlank(house.getName()))  {//TODO:补全验证
 			throw new IllegalArgumentException();
 		}
 		

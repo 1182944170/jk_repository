@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.website.edongwang.dao.ISalesmanStatDao">
+
+	<resultMap type="com.rpframework.website.edongwang.domain.SalesmanStat" id="mSalesmanStat" autoMapping="true">
+		<id property="id" column="id" />
+		<result property="userId" column="userId" />
+		<result property="houseId" column="houseId" />
+		
+	    <association property="user" javaType="com.rpframework.core.vo.BaseUserVO">  
+	        <id property="userId" column="userId"/>  
+	        <result property="realName" column="u_realName"/>  
+	        <result property="contact" column="u_contact"/>  
+	        <result property="sex" column="u_sex"/>  
+	    </association>
+	    
+	    <association property="house" javaType="com.rpframework.website.edongwang.domain.House">  
+	        <id property="id" column="houseId"/>  
+	        <result property="name" column="house_name"/>  
+	    </association>
+	</resultMap>
+	
+	<select id="selectByUserIdAndHouseId" parameterType="map" resultMap="mSalesmanStat">
+		select m.*,
+		
+			u.realName as u_realName,
+			u.contact as u_contact,
+			u.sex as u_sex,
+			
+			h.name as house_name
+			
+		from salesman_stat m
+			left outer join user u on u.id = m.userId
+			left outer join e_house h on h.id = m.houseId
+		where
+			m.userId = #{0} 
+		and
+			m.houseId = #{1}
+	</select>
+	<select id="doPager" parameterType="map" resultMap="mSalesmanStat">
+		select m.*,
+		
+			u.realName as u_realName,
+			u.contact as u_contact,
+			u.sex as u_sex,
+			
+			h.name as house_name
+			
+		from salesman_stat m
+			left outer join user u on u.id = m.userId
+			left outer join e_house h on h.id = m.houseId
+		where 1=1
+		
+		<if test="page.searchMap.userId != null">
+			and m.userId = #{page.searchMap.userId} 
+		</if>
+		
+		<if test="page.searchMap.realName != null">
+			and u.realName like "%"#{page.searchMap.realName}"%" 
+		</if>
+		
+		<if test="page.searchMap.contact != null">
+			and u.contact like "%"#{page.searchMap.contact}"%" 
+		</if>
+		
+		
+		<if test="page.searchMap.order != null">
+			 order by m.${page.searchMap.order}
+		</if>
+		<if test="page.searchMap.order == null">
+			 order by m.id desc
+		</if>
+	</select>
+	
+	<update id="update" parameterType="com.rpframework.website.edongwang.domain.SalesmanStat" />
+	<insert id="insert" parameterType="com.rpframework.website.edongwang.domain.SalesmanStat" useGeneratedKeys="true" keyProperty="id"/>
+	<delete id="delete" parameterType="com.rpframework.website.edongwang.domain.SalesmanStat" />
+	<select id="select" parameterType="Integer" resultMap="mSalesmanStat">
+		select m.*,
+		
+			u.realName as u_realName,
+			u.contact as u_contact,
+			u.sex as u_sex,
+			
+			h.name as house_name
+			
+		from salesman_stat m
+			left outer join user u on u.id = m.userId
+			left outer join e_house h on h.id = m.houseId
+		where
+			m.id = #{id}
+	</select>
+</mapper>

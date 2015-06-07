@@ -6,8 +6,13 @@ import com.rpframework.core.mybatis.plugin.annotation.TableMapperAnnotation;
 import com.rpframework.core.mybatis.plugin.annotation.UniqueKeyType;
 
 /**
- * loupan
- * @author hzyuanyong@126.com
+ * title: LeaveMessage.java 
+ * description
+ *
+ * @author rplees
+ * @email rplees.i.ly@gmail.com
+ * @version 1.0  
+ * @created 2015年6月7日 下午5:31:26
  */
 @TableMapperAnnotation(tableName = "e_leave_msg", uniqueKeyType = UniqueKeyType.Single, uniqueKey = "id")
 public class LeaveMessage extends Domain{

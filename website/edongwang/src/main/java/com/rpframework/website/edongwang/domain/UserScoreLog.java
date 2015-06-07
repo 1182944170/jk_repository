@@ -6,6 +6,16 @@ import com.rpframework.core.mybatis.plugin.annotation.TableMapperAnnotation;
 import com.rpframework.core.mybatis.plugin.annotation.UniqueKeyType;
 import com.rpframework.core.vo.BaseUserVO;
 
+/**
+ * 
+ * title: UserScoreLog.java 
+ * description
+ *
+ * @author rplees
+ * @email rplees.i.ly@gmail.com
+ * @version 1.0  
+ * @created 2015年6月7日 下午5:32:29
+ */
 @TableMapperAnnotation(tableName = "u_score_log", uniqueKeyType = UniqueKeyType.Single, uniqueKey = "id")
 public class UserScoreLog extends Domain {
 

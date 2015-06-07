@@ -9,8 +9,14 @@ import com.rpframework.core.mybatis.plugin.annotation.UniqueKeyType;
 import com.rpframework.utils.CollectionUtils;
 
 /**
- * loupan
- * @author hzyuanyong@126.com
+ * 
+ * title: HouseRecommend.java 
+ * description
+ *
+ * @author rplees
+ * @email rplees.i.ly@gmail.com
+ * @version 1.0  
+ * @created 2015年6月7日 下午5:31:51
  */
 @TableMapperAnnotation(tableName = "e_house_recommend", uniqueKeyType = UniqueKeyType.Single, uniqueKey = "id")
 public class HouseRecommend extends Domain{

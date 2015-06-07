@@ -6,6 +6,16 @@ import com.rpframework.core.mybatis.plugin.annotation.TableMapperAnnotation;
 import com.rpframework.core.mybatis.plugin.annotation.UniqueKeyType;
 import com.rpframework.core.vo.BaseUserVO;
 
+/**
+ * 
+ * title: UserMoneyLog.java 
+ * description
+ *
+ * @author rplees
+ * @email rplees.i.ly@gmail.com
+ * @version 1.0  
+ * @created 2015年6月7日 下午5:32:17
+ */
 @TableMapperAnnotation(tableName = "u_money_log", uniqueKeyType = UniqueKeyType.Single, uniqueKey = "id")
 public class UserMoneyLog extends Domain {
 

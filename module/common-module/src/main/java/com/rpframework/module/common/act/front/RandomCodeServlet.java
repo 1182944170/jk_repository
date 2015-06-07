@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.rpframework.module.common.utils.Constants;
+import com.rpframework.core.utils.GlobalConstant;
 
 @Controller
 @RequestMapping("/common/randomcode")
@@ -32,9 +32,23 @@ public class RandomCodeServlet {
 	private int width = 60;
 	// 验证码图片的高度。
 	private int height = 20;
+	
+	@RequestMapping("/admin")
+	public void serviceForAdmin(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, java.io.IOException {
+		doMakeImg(req, resp, GlobalConstant.ADMIN_RANDOM_CODE_SESSION);
+	}
+	
 	@RequestMapping
 	public void service(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, java.io.IOException {
+		doMakeImg(req, resp, GlobalConstant.RANDOM_CODE_SESSION);
+	}
+
+	
+	private void doMakeImg(HttpServletRequest req, HttpServletResponse resp, String sessionKey)
+			throws ServletException, java.io.IOException {
+		
 		BufferedImage buffImg = new BufferedImage(width, height,
 				BufferedImage.TYPE_INT_RGB);
 		Graphics2D g = buffImg.createGraphics();
@@ -88,7 +102,7 @@ public class RandomCodeServlet {
 		}
 		// 将四位数字的验证码保存到Session中。
 		HttpSession session = req.getSession();
-		session.setAttribute(Constants.RANDOM_CODE_SESSION, randomCode.toString());
+		session.setAttribute(sessionKey, randomCode.toString());
 
 		// 禁止图像缓存。
 		resp.setHeader("Pragma", "no-cache");
@@ -102,7 +116,7 @@ public class RandomCodeServlet {
 		ImageIO.write(buffImg, "jpeg", sos);
 		sos.close();
 	}
-
+	
 	Color getRandColor(int fc, int bc) {// 给定范围获得随机颜色
 		Random random = new Random();
 		if (fc > 255)

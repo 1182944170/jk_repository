@@ -1,5 +1,5 @@
 <title>用户列表</title>
-<form class="form-horizontal" role="form" id="validation-form" method="POST" action="${ctx}/admin/user/list" onsubmit="return fromSearch(this)">
+<form class="form-horizontal" role="form" id="validation-form" method="POST" action="${ctx}/admin/user/list${suffix}" onsubmit="return fromSearch(this)">
 	<input type="hidden" name="pager" value="1_"/>
 	<label>会员手机号:</label>
 	<input type="text" name="contact" value="${(pager.searchMap.contact)!''}" placeholder="会员手机号"/>
@@ -62,9 +62,14 @@
 						<td>${tagUtils.formatDate(m.recordCreateTime)}</td>
 						<td>
 						<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
-							<a class="green" href="${ctx}/admin/user/${m.id}/detail" alt="Detail">
+							<a class="green" href="${ctx}/admin/user/${m.id}/detail${suffix}" alt="Detail">
 								<i class="icon-pencil bigger-130"></i>查 看
 							</a>
+							<#if m.isSalesman == 1>
+								<a class="green" href="${ctx}/admin/user/${m.id}/change_salesman${suffix}" alt="change_salesman">
+									<i class="icon-pencil bigger-130"></i>重新认证
+								</a>
+							</#if>
 						</div>
 
 						<div class="visible-xs visible-sm hidden-md hidden-lg">
@@ -74,7 +79,7 @@
 								</button>
 								<ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
 									<li>
-										<a href="${ctx}/admin/user/${m.id}/detail" class="tooltip-success" data-rel="tooltip" title="查看" data-original-title="Detail">
+										<a href="${ctx}/admin/user/${m.id}/detail${suffix}" class="tooltip-success" data-rel="tooltip" title="查看" data-original-title="Detail">
 											<span class="green">
 												<i class="icon-edit bigger-120"></i>
 											</span>
@@ -91,7 +96,7 @@
 		</div><!-- /.table-responsive -->
 		
 		<div class="hr hr-18 dotted hr-double"></div>
-		<@h.page pager=pager action="${ctx}/admin/user/list" />
+		<@h.page pager=pager action="${ctx}/admin/user/list${suffix}" />
 	</div><!-- /span -->
 </div><!-- /row -->
 

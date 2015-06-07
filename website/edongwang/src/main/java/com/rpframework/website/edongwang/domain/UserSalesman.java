@@ -6,6 +6,16 @@ import com.rpframework.core.mybatis.plugin.annotation.FieldType;
 import com.rpframework.core.mybatis.plugin.annotation.TableMapperAnnotation;
 import com.rpframework.core.mybatis.plugin.annotation.UniqueKeyType;
 
+/**
+ * 
+ * title: UserSalesman.java 
+ * description
+ *
+ * @author rplees
+ * @email rplees.i.ly@gmail.com
+ * @version 1.0  
+ * @created 2015年6月7日 下午5:32:21
+ */
 @TableMapperAnnotation(tableName = "e_user_salesman", uniqueKeyType = UniqueKeyType.Single, uniqueKey = "userId") 
 public class UserSalesman extends Domain {
 	

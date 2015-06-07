@@ -5,6 +5,16 @@ import com.rpframework.core.mybatis.plugin.annotation.FieldMapperAnnotation;
 import com.rpframework.core.mybatis.plugin.annotation.TableMapperAnnotation;
 import com.rpframework.core.mybatis.plugin.annotation.UniqueKeyType;
 
+/**
+ * 
+ * title: User.java 
+ * description
+ *
+ * @author rplees
+ * @email rplees.i.ly@gmail.com
+ * @version 1.0  
+ * @created 2015年6月7日 下午5:32:06
+ */
 @TableMapperAnnotation(tableName = "user", uniqueKeyType = UniqueKeyType.Single, uniqueKey = "id") 
 public class User extends Domain {
 	

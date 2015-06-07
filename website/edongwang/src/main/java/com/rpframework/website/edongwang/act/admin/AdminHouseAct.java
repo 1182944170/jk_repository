@@ -99,7 +99,6 @@ public class AdminHouseAct extends AdminAct{
 			for (CommonsMultipartFile commonsMultipartFile : houseTypeImgIconFile) {
 				if(commonsMultipartFile.getSize() <= 0) continue;
 				try {
-					String extension = "." + FilenameUtils.getExtension(commonsMultipartFile.getOriginalFilename());
 					String relativelyPath = "resources/house/" + DateUtils.nowDate(DateUtils.YYYYMMDDHHMMSS) + NumberUtils.random() + "." + FilenameUtils.getExtension(commonsMultipartFile.getOriginalFilename());
 					fileService.saveFile(commonsMultipartFile.getInputStream(), relativelyPath);
 					houseImg.add(new JsonPrimitive(relativelyPath));

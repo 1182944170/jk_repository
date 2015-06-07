@@ -246,6 +246,7 @@ public class UserApiAct extends BaseAct {
 				
 				JsonObject json = new JsonObject();
 				json.addProperty("succ", true);
+				json.addProperty("headImg", TagUtils.getFileFullPath(relativelyPath));
 				return json;
 			} catch (Exception e) {
 				throw new IllegalArgumentException("文件上传失败，原因:" + e.getLocalizedMessage());

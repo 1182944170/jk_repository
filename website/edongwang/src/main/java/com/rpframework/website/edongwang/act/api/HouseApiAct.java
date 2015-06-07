@@ -25,7 +25,6 @@ import com.rpframework.core.utils.TagUtils;
 import com.rpframework.utils.NumberUtils;
 import com.rpframework.utils.Pager;
 import com.rpframework.website.edongwang.domain.House;
-import com.rpframework.website.edongwang.domain.HouseRecommend;
 import com.rpframework.website.edongwang.domain.User;
 import com.rpframework.website.edongwang.service.HouseRecommendService;
 import com.rpframework.website.edongwang.service.HouseService;
@@ -97,9 +96,6 @@ public  @ResponseBody class HouseApiAct extends BaseAct {
 			HttpSession session,
 			Map<Object, Object> model, RedirectAttributes attr) {
 		User user = getSessionUser(session);
-		/*if(user.getIsSalesman() == 1) {
-			throw new APICodeException(-1, "业务员不能推荐");
-		}*/
 		String customerName = request.getParameter("customerName");
 		String contact = request.getParameter("contact");
 		Integer propertyType = NumberUtils.parseInt(request.getParameter("propertyType"));
@@ -110,41 +106,15 @@ public  @ResponseBody class HouseApiAct extends BaseAct {
 		Integer secondHouseId = NumberUtils.parseInt(request.getParameter("secondHouseId"));
 		String customerInfo = request.getParameter("customerInfo");
 		
-		if(StringUtils.isBlank(customerName)
-				||StringUtils.isBlank(contact)
-				||StringUtils.isBlank(areaCode)
-				||StringUtils.isBlank(customerInfo)
-				||NumberUtils.isNotValid(propertyType)
-				||NumberUtils.isNotValid(surfaceType)
-				||NumberUtils.isNotValid(totalPriceType)
-				||NumberUtils.isNotValid(firstHouseId)
-				) {
-			throw new IllegalArgumentException("参数异常");
-		}
-		
 		if(NumberUtils.isValid(secondHouseId) && secondHouseId.equals(firstHouseId)) {
 			throw new IllegalArgumentException("首选楼盘与复选楼盘不能相同!");
 		}
 		
-		HouseRecommend hr = new HouseRecommend();
-		hr.setAreaCode(areaCode);
-		hr.setContact(contact);
-		hr.setCustomerInfo(customerInfo);
-		hr.setCustomerName(customerName);
-		hr.setHouseId(firstHouseId);
-		hr.setPropertyType(propertyType);
-		hr.setRecordCreateTime(System.currentTimeMillis() / 1000);
-		hr.setSurfaceType(surfaceType);
-		hr.setState(1);
-		hr.setTotalPriceType(totalPriceType);
-		hr.setRecommendUserId(user.getId());
-		boolean flag = houseRecommendService.insert(hr);
+		boolean flag = houseRecommendService.addRecommend(user.getId(), firstHouseId, customerName, contact, propertyType, surfaceType, totalPriceType, areaCode, customerInfo);
 		
 		if(NumberUtils.isValid(secondHouseId)) {
 			//新增另外一个
-			hr.setId(null);
-			hr.setHouseId(secondHouseId);
-			flag = houseRecommendService.insert(hr);
+			flag = houseRecommendService.addRecommend(user.getId(), secondHouseId, customerName, contact, propertyType, surfaceType, totalPriceType, areaCode, customerInfo);
 		}
 		
 		JsonObject json = new JsonObject();

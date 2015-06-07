@@ -11,8 +11,10 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.rpframework.core.utils.GlobalConstant;
 import com.rpframework.module.adminbase.dao.IAdminAuthResDao;
 import com.rpframework.module.adminbase.dao.IAdminMenuDao;
 import com.rpframework.module.adminbase.domain.AdminUser;
@@ -55,11 +57,18 @@ public class AdminLoginAct extends AdminBaseAct {
 	}
 	
 	@RequestMapping("/dologin")
-	public String doLogin(@ModelAttribute AdminUser adminUser, HttpSession session, HttpServletRequest request,RedirectAttributes attr){
+	public String doLogin(@ModelAttribute AdminUser adminUser, @RequestParam String verifyCode, HttpSession session, HttpServletRequest request,RedirectAttributes attr){
 		
 		if(this.getSessionAdminUser(session) != null) {
 			return redirect("/admin/main");
 		}
+		
+		Object seesionVerifyCode = session.getAttribute(GlobalConstant.ADMIN_RANDOM_CODE_SESSION);
+		if(seesionVerifyCode == null || !StringUtils.equals(verifyCode, seesionVerifyCode.toString())) {
+			this.setErrorMsg("验证码不正确!", attr);
+			return redirect("/admin/login");
+		}
+		
 		attr.addFlashAttribute("adminUser", adminUser);
 		
 		if(StringUtils.isBlank(adminUser.getUserName())) {
@@ -88,6 +97,8 @@ public class AdminLoginAct extends AdminBaseAct {
 			super.setErrorMsg("您的用户所在的角色不是启用状态！", attr);
 			return redirect("/admin/login");
 		}
+		
+		session.removeAttribute(GlobalConstant.ADMIN_RANDOM_CODE_SESSION);
 		
 		adminUser2.setLastLoginIp(adminUser2.getLoginIp()) ;
 		adminUser2.setLoginIp(request.getRemoteAddr());

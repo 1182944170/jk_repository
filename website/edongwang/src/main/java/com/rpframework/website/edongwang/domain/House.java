@@ -14,8 +14,14 @@ import com.rpframework.core.mybatis.plugin.annotation.TableMapperAnnotation;
 import com.rpframework.core.mybatis.plugin.annotation.UniqueKeyType;
 
 /**
- * loupan
- * @author hzyuanyong@126.com
+ * 
+ * title: House.java 
+ * description
+ *
+ * @author rplees
+ * @email rplees.i.ly@gmail.com
+ * @version 1.0  
+ * @created 2015年6月7日 下午5:31:40
  */
 @TableMapperAnnotation(tableName = "e_house", uniqueKeyType = UniqueKeyType.Single, uniqueKey = "id")
 public class House extends Domain{

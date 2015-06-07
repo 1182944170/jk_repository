@@ -28,6 +28,8 @@ public class HouseRecommendService extends BaseService {
 	@Resource public IHouseRecommendDao recommendDao;
 	@Resource HouseRecommendProgressService houseRecommendProgressService;
 	@Resource UserScoreService userScoreService;
+	@Resource SalesmanStatService salesmanStatService;
+	@Resource RecommendStatService recommendStatService;
 	
 	public Pager<HouseRecommend> getPager(Pager<HouseRecommend> pager) {
 		long startTime = System.currentTimeMillis();
@@ -44,6 +46,64 @@ public class HouseRecommendService extends BaseService {
 		pager.setItemList(itemList);
 		pager.setCostTime(System.currentTimeMillis() - startTime);
 		return pager;
+	}
+	
+	/**
+	 * 
+	 * 该业务员是否有未完成的单子
+	 * @param userId
+	 * @return
+	 */
+	public boolean hasUnfinishedRecommend(Integer userId) {
+		//acceptSalesmanId
+		//state=2
+		
+		Pager<HouseRecommend> pager = new Pager<HouseRecommend>();
+		pager.getSearchMap().put("acceptSalesmanId", String.valueOf(userId));
+		pager.getSearchMap().put("state", String.valueOf(EConstants.Recommend.STATE_DEALING));
+		getPager(pager);
+		
+		return CollectionUtils.isNotEmpty(pager.getItemList());
+	}
+	/**
+	 * 推荐
+	 * @param houseRecommend
+	 * @return
+	 */
+	public boolean addRecommend(Integer userId, Integer houseId, String customerName, String contact, Integer propertyType, Integer surfaceType, Integer totalPriceType,String areaCode,String customerInfo) {
+		
+		if(StringUtils.isBlank(customerName)
+				||StringUtils.isBlank(contact)
+				||StringUtils.isBlank(areaCode)
+				||StringUtils.isBlank(customerInfo)
+				||NumberUtils.isNotValid(propertyType)
+				||NumberUtils.isNotValid(surfaceType)
+				||NumberUtils.isNotValid(totalPriceType)
+				||NumberUtils.isNotValid(houseId)
+				) {
+			throw new IllegalArgumentException("参数异常");
+		}
+		
+		HouseRecommend houseRecommend = new HouseRecommend();
+		houseRecommend.setAreaCode(areaCode);
+		houseRecommend.setContact(contact);
+		houseRecommend.setCustomerInfo(customerInfo);
+		houseRecommend.setCustomerName(customerName);
+		houseRecommend.setHouseId(houseId);
+		houseRecommend.setPropertyType(propertyType);
+		houseRecommend.setSurfaceType(surfaceType);
+		houseRecommend.setTotalPriceType(totalPriceType);
+		houseRecommend.setRecommendUserId(userId);
+		
+		houseRecommend.setState(1);
+		houseRecommend.setRecordCreateTime(System.currentTimeMillis() / 1000);
+		
+		boolean insert = insert(houseRecommend);
+		
+		if(insert) {//推荐次数埋点
+			recommendStatService.totalCountStat(userId);
+		}
+		return insert;
 	}
 	
 	/**
@@ -71,6 +131,10 @@ public class HouseRecommendService extends BaseService {
 			throw new IllegalArgumentException("不能抢自己推荐的单子");
 		}
 		
+		if(!user.getUserSalesman().getHouse().getId().equals(houseRecommend.getHouseId())) {//如果不是自己楼盘下面的则不让接单
+			throw new IllegalArgumentException("不能抢不是自己楼盘下的单子");
+		}
+		
 		JsonObject scoreExtJson = new JsonObject();
 		Integer grabRecommendScore = NumberUtils.parseInt(DictionarySettingUtils.getParameterValue(EConstants.ScoreChannel.USERSCORE_VALUECFG_GRABRECOMMEND), 0);
 		scoreExtJson.addProperty("houseRecommendId", houseRecommend.getId());
@@ -82,7 +146,11 @@ public class HouseRecommendService extends BaseService {
 		houseRecommend.setState(EConstants.Recommend.STATE_DEALING);
 		houseRecommend.setAcceptSalesmanId(userId);
 		houseRecommend.setAcceptTime(System.currentTimeMillis() / 1000);
-		return update(houseRecommend);
+		boolean update = update(houseRecommend);
+		if(update) {//接单次数
+			salesmanStatService.grabCountStat(userId, houseRecommend.getHouseId());
+		}
+		return update;
 	}
 
 	
@@ -137,7 +205,11 @@ public class HouseRecommendService extends BaseService {
 		houseRecommendProgressService.insert(hrp);
 		
 		houseRecommend.setState(EConstants.Recommend.STATE_OVER);
-		return update(houseRecommend);
+		boolean update = update(houseRecommend);
+		if(update) {//无效次数埋点
+			recommendStatService.invalidCountStat(userId);
+		}
+		return update;
 	}
 	
 	/**
@@ -170,6 +242,7 @@ public class HouseRecommendService extends BaseService {
 		hrp.setState(1);
 		hrp.setType(EConstants.Progress.P1);
 		hrp.setExt(json.toString());
+		
 		
 		if(intentStar >= 2) {
 			JsonObject scoreExtJson = new JsonObject();
@@ -260,6 +333,11 @@ public class HouseRecommendService extends BaseService {
 			flag = houseRecommendProgressService.insert(hrp);
 			
 			//成交积分 和推荐积分 是后台 结佣后 才增加 增加积分
+			HouseRecommendProgress progressP1 = houseRecommend.getProgress(EConstants.Progress.P1);
+			HouseRecommendProgress progressP3 = houseRecommend.getProgress(EConstants.Progress.P3);
+			Assert.notNull(progressP1, "完结状态下找不到进度type ：" + EConstants.Progress.P1 + ":houseRecommendId:" + houseRecommendId);
+			Assert.notNull(progressP3, "完结状态下找不到进度type ：" + EConstants.Progress.P3 + ":houseRecommendId:" + houseRecommendId);
+			
 			Integer dealScoreRecommend = NumberUtils.parseInt(DictionarySettingUtils.getParameterValue(EConstants.ScoreChannel.USERSCORE_VALUECFG_HOUSEDEAL_RECOMMEND), 0);
 			Integer dealScoreJD = NumberUtils.parseInt(DictionarySettingUtils.getParameterValue(EConstants.ScoreChannel.USERSCORE_VALUECFG_HOUSEDEAL_JD), 0);
 			
@@ -271,18 +349,42 @@ public class HouseRecommendService extends BaseService {
 			//成交积分给 推荐者的
 			userScoreService.addScore(houseRecommend.getRecommendUserId(), dealScoreRecommend, EConstants.ScoreChannel.DEAL_RECOMMEND, scoreExtJson.toString());
 			userScoreService.addScore(houseRecommend.getAcceptSalesmanId(), dealScoreJD, EConstants.ScoreChannel.DEAL_JD, scoreExtJson.toString());
-			HouseRecommendProgress progress = houseRecommend.getProgress(EConstants.Progress.P1);
-			Assert.notNull(progress, "完结状态下找不到进度type ：" + EConstants.Progress.P1 + ":houseRecommendId:" + houseRecommendId);
-			JsonObject jsonObject = new JsonParser().parse(progress.getExt()).getAsJsonObject();
-			int infoStar = GsonUtils.getInt(jsonObject, "infoStar");
+			
+			JsonObject jsonObjectP1 = new JsonParser().parse(progressP1.getExt()).getAsJsonObject();
+			JsonObject jsonObjectP3 = new JsonParser().parse(progressP3.getExt()).getAsJsonObject();
+			
+			double price = GsonUtils.getInt(jsonObjectP3, "price");
+			double surface = GsonUtils.getInt(jsonObjectP3, "surface");
+			int infoStar = GsonUtils.getInt(jsonObjectP1, "infoStar");
 			if(infoStar >= 2) {
 				//推荐积分也是给 推荐者的
-				//基础上 + 星级 * 10
-				
 				Integer pjjf = NumberUtils.parseInt(DictionarySettingUtils.getParameterValue(EConstants.ScoreChannel.USERSCORE_VALUECFG_PJJF), 0);
 				userScoreService.addScore(houseRecommend.getRecommendUserId(), pjjf, EConstants.ScoreChannel.COMMENT, scoreExtJson.toString());
 			}
-				
+			
+			//推荐者统计埋点
+			//A，B，C，D 有效次数、 成交套数、成交总面积、成交总金额 埋点
+			//infoStar 1-D 2-C 3-B 4-A
+			if(infoStar == 1) {
+				recommendStatService.dCountStat(houseRecommend.getRecommendUserId());
+			} else if(infoStar == 2) {
+				recommendStatService.cCountStat(houseRecommend.getRecommendUserId());
+			} else if(infoStar == 3) {
+				recommendStatService.bCountStat(houseRecommend.getRecommendUserId());
+			} else if(infoStar == 4) {
+				recommendStatService.aCountStat(houseRecommend.getRecommendUserId());
+			}
+			
+			recommendStatService.effectiveCountStat(houseRecommend.getRecommendUserId());
+			recommendStatService.dealHouseCountStat(houseRecommend.getRecommendUserId());
+			recommendStatService.totalDealPriceStat(houseRecommend.getRecommendUserId(), price);
+			recommendStatService.totalSurfaceStat(houseRecommend.getRecommendUserId(), surface);
+			
+			//业务员统计埋点
+			salesmanStatService.dealCountStat(houseRecommend.getAcceptSalesmanId(), houseRecommend.getHouseId());//成交套数
+			salesmanStatService.totalDealPriceStat(houseRecommend.getAcceptSalesmanId(), houseRecommend.getHouseId(), price);
+			salesmanStatService.totalSurfaceStat(houseRecommend.getAcceptSalesmanId(), houseRecommend.getHouseId(), surface);
+			
 		}
 		return flag;
 	}
