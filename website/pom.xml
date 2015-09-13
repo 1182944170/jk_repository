@@ -18,14 +18,4 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-  <modules>
-    <module>testwebsite</module>
-    <module>edongwang</module>
-    <module>xuetian-exam</module>
-    <module>yunpiaopiao</module>
-    <module>yunnongxin</module>
-    <module>datangwenshen</module>
-    <module>mf</module>
-    <module>xiangdemei</module>
-  </modules>
 </project>
