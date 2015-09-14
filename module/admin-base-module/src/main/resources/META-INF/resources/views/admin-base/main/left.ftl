@@ -34,11 +34,18 @@
 		<#return false>
 	</#function>
 	
+	
+	
+	
 	<@admin_perm cmd="ad_menu_list" pId=0>
 		<#assign tempURI=springMacroRequestContext.requestUri />
+		<!--如果没有m_list这个值的话 tempURI就是另外的值了-->
 		<#if !menuWasContain(m_list,tempURI)>
 			<#assign tempURI=springMacroRequestContext.servletContext.getAttribute("_admin_left_menupath_uri_") />
 		</#if>
+		
+		
+		<!--如果m_list 有值-->
 		<#list m_list as menu1>
 		<@admin_perm cmd="ad_check_menu_limit" adminMenu=menu1>
 		<li <#if menuWasContain2(menu1,tempURI)>class="active<#if menu1.children?has_content> open</#if>"</#if>>
@@ -50,10 +57,12 @@
 				<#if menu1.children?has_content><b class="arrow icon-angle-down"></b></#if>
 			</a>
 			
+			<!-- 如果里面有值 就显示-->
 			<#if menu1.children?has_content>
 			<ul class="submenu">
 				<#list menu1.children as menu2>
 				<@admin_perm cmd="ad_check_menu_limit" adminMenu=menu2>
+				<!--循环显示值里面的地址链接和显示css的class-->
 				<li <#if menuWasContain2(menu2,tempURI)>class="active"</#if>>
 					<a href="${ctx}/${menu2.linkUrl}${suffix}">
 						<#if menu2.icon?has_content>
@@ -62,6 +71,7 @@
 							<i class="icon-double-angle-right"></i>
 						</#if>
 						<i class="${menu2.icon}"></i>
+						<!--显示值里面的name列表-->
 						 ${menu2.menuName} 
 					</a>
 				</li>
@@ -69,9 +79,15 @@
 				</#list>
 			</ul>
 			</#if>
-		</li>
+		       </li>	
+		       
+		       
+		       
 		</@admin_perm>
-		</#list>
+	</#list>
+	
+	
+	
 	</@admin_perm>
 	</ul><!-- /.nav-list -->
 

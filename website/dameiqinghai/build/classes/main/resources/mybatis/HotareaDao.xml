@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.website.dameiqinghai.dao.IHotareaDao">
+	<resultMap type="com.rpframework.website.dameiqinghai.domian.Hotarea" id="mHotarea" autoMapping="true">
+		<id property="id" column="id"/>
+	</resultMap>
+
+	<select id="doHotareaPager" parameterType="map" resultMap="mHotarea">
+		select * from hotarea where id=#{id}
+	</select>
+	<select id="deleteByIds" parameterType="map" resultMap="mHotarea">
+		delete * from hotarea
+	</select>
+	
+	<update id="update" parameterType="com.rpframework.website.dameiqinghai.domian.Hotarea" />
+	<insert id="insert" parameterType="com.rpframework.website.dameiqinghai.domian.Hotarea" useGeneratedKeys="true" keyProperty="id"/>
+	<delete id="delete" parameterType="com.rpframework.website.dameiqinghai.domian.Hotarea" />
+	<select id="select" parameterType="Integer" resultMap="mHotarea">
+		select * from hotarea where id=#{id}
+	</select>
+</mapper>

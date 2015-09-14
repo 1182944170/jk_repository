@@ -55,7 +55,7 @@ B.Country = {
 			
 		} else {
 			var checkedCityCode = this.checkedCfg.county ? this.checkedCfg.county.code : -1;
-			var defaultOption = $(document.createElement("option")).attr("value",-1).text("--please choose--");
+			var defaultOption = $(document.createElement("option")).attr("value",-1).text("--请选择--");
 			if(checkedCityCode == -1) {
 				defaultOption.attr("selected", "true");
 			}
@@ -83,7 +83,7 @@ B.Country = {
 		if(!province) {//如果没项目科目则清空
 		} else {
 			var checkProvinceCode = this.checkedCfg.city? this.checkedCfg.city.code : -1;
-			var defaultOption = $(document.createElement("option")).attr("value",-1).text("--please choose--");
+			var defaultOption = $(document.createElement("option")).attr("value",-1).text("--请选择--");
 			if(checkProvinceCode == -1) {
 				defaultOption.attr("selected", "true");
 			}
@@ -112,7 +112,7 @@ B.Country = {
 		select1.empty();
 		
 		var checkedCountryCode = this.checkedCfg.province ? this.checkedCfg.province.code : -1;
-		var defaultOption = $(document.createElement("option")).attr("value",-1).text("--please choose--");
+		var defaultOption = $(document.createElement("option")).attr("value",-1).text("--请选择--");
 		if(checkedCountryCode == -1) {
 			defaultOption.attr("selected", "true");
 		}

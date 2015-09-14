@@ -8,6 +8,9 @@
 	<select id="queryAll" resultMap="mCity">
 		select * from city where 1=1
 	</select>
+	<select id="searchByCity" resultMap="mCity">
+		select * from city where countryCode=#{provinceCode}
+	</select>
 	
 	<update id="update" parameterType="com.rpframework.module.common.domain.City" />
 	<insert id="insert" parameterType="com.rpframework.module.common.domain.City" useGeneratedKeys="true" keyProperty="code"/>

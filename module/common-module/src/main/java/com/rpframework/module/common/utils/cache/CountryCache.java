@@ -77,11 +77,12 @@ public class CountryCache extends CacheObj {
 	
 	@Override
 	public Object load() {
-		provinceMap.clear();
-		cityMap.clear();
-		countyMap.clear();
-		countrys = new JsonArray();
 		
+		Map<String, Province> provinceMap = new LinkedHashMap<String, Province>();
+		Map<String, List<City>> cityMap = new LinkedHashMap<String, List<City>>();
+		Map<String, List<County>> countyMap = new LinkedHashMap<String, List<County>>();
+		JsonArray countrys = new JsonArray();
+
 		ProvinceService provinceService = SpringUtils.getBean(ProvinceService.class);
 		CityService cityService = SpringUtils.getBean(CityService.class);
 		CountyService countyService = SpringUtils.getBean(CountyService.class);
@@ -147,6 +148,15 @@ public class CountryCache extends CacheObj {
 			
 			countrys.add(jsonObject);
 		}
+		
+		this.provinceMap.clear();
+		this.cityMap.clear();
+		this.countyMap.clear();
+		
+		this.provinceMap = provinceMap;
+		this.cityMap = cityMap;
+		this.countyMap = countyMap;
+		this.countrys = countrys;
 		return new Object();
 	}
 

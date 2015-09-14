@@ -26,6 +26,18 @@
 		<bean class="com.rpframework.module.common.springmvc.interceptor.CommonInterceptor"/>
 	</mvc:interceptors>
 	
+	<!-- 用于页面跳转,根据请求的不同跳转到不同页面，如请求index.do则跳转到/WEB-INF/jsp/index.jsp -->
+	<!-- <bean id="urlFilenameViewController"
+		class="org.springframework.web.servlet.mvc.UrlFilenameViewController" />
+
+	<bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="admin/test/upload">urlFilenameViewController</prop>表示admin/test/upload转向index.jsp页面
+			</props>
+		</property>
+	</bean> -->
+	
 	<!-- Setup a simple strategy: 1. Take all the defaults. 2. Return XML by default when not sure. -->
 	<bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
 		 <property name="favorPathExtension" value="false" />

@@ -15,6 +15,7 @@ import java.util.GregorianCalendar;
  */
 public class DateUtils {
 	
+	public final static String YYYY_MM_DD_HH_MM = "yyyy-MM-dd HH:mm";
 	public final static String YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd HH:mm:ss";
 	public final static String DEFAULT_DATE_FORMAT = YYYY_MM_DD_HH_MM_SS;
 	public final static String YYYYMMDDHHMMSS = "yyyyMMddHHmmss";
@@ -32,6 +33,9 @@ public class DateUtils {
 //		}
 		System.out.println("耗时:" + (System.currentTimeMillis() - s) + " 毫秒");*/
 	System.out.println(hourAdd(24));
+	
+	int dd = NumberUtils.parseInt(DateUtils.nowDate(DateUtils.YYYYMMDD));
+	System.out.println(dd);
 	}
 /*	*//**
 	 * 验证是不是有效的日期
@@ -56,8 +60,13 @@ public class DateUtils {
 	}
 	
 	public static Date getTodayStartDate() {
+		return getDayStartDate(new Date());
+	}
+	
+	public static Date getDayStartDate(Date date) {
 		Calendar currentDate = new GregorianCalendar();   
-		  
+		currentDate.setTime(date);
+		
 		currentDate.set(Calendar.HOUR_OF_DAY, 0);  
 		currentDate.set(Calendar.MINUTE, 0);  
 		currentDate.set(Calendar.SECOND, 0);  
@@ -65,14 +74,19 @@ public class DateUtils {
 		return currentDate.getTime();
 	}
 	
-	public static Date getTodayEndDate() {
+	public static Date getDayEndDate(Date date) {
 		Calendar currentDate = new GregorianCalendar();   
-		  
+		currentDate.setTime(date);
+		
 		currentDate.set(Calendar.HOUR_OF_DAY, 24);  
 		currentDate.set(Calendar.MINUTE, 0);  
 		currentDate.set(Calendar.SECOND, 0);
 		currentDate.set(Calendar.MILLISECOND, 0);
 		return currentDate.getTime();
+	}
+	
+	public static Date getTodayEndDate() {
+		return getDayEndDate(new Date());
 	}
 	
 	
@@ -218,7 +232,7 @@ public class DateUtils {
 			return null;
 		}
 	}
-
+	
     public static Date parse(String date) {
     	try {
     		return getDateFormat().parse(date);
@@ -227,12 +241,16 @@ public class DateUtils {
 	    		return getDateFormat(YYYY_MM_DD_HH_MM_SS).parse(date);
 			} catch (Exception e1) {
 				try {
-		    		return getDateFormat(YYYYMMDDHHMMSS).parse(date);
-				} catch (Exception e2) {
+					return getDateFormat(YYYY_MM_DD_HH_MM).parse(date);
+				} catch (ParseException e2) {
 					try {
-			    		return getDateFormat(YYYY_MM_DD).parse(date);
+			    		return getDateFormat(YYYYMMDDHHMMSS).parse(date);
 					} catch (Exception e3) {
-						return null;
+						try {
+				    		return getDateFormat(YYYY_MM_DD).parse(date);
+						} catch (Exception e4) {
+							return null;
+						}
 					}
 				}
 			}

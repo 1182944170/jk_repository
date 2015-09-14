@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.module.common.dao.ICommentDao">
+	<resultMap type="com.rpframework.module.common.domain.Comment" id="mCommend" autoMapping="true">
+		<id property="id" column="id" />
+		<association property="parent" column="parentId" select="select" />
+		<collection property="children" column="id" select="getListByParentId" />
+	</resultMap>
+
+	<select id="doPager" resultMap="mCommend">
+		select * from comment where 1=1
+		
+		<if test="page.searchMap.moduleName != null">
+			and moduleName = #{page.searchMap.moduleName} 
+		</if>
+		
+		<if test="page.searchMap.modulePri != null">
+			and modulePri = #{page.searchMap.modulePri} 
+		</if>
+		
+		<if test="page.searchMap.isOnlyRootData != null">
+			and parentId is NULL 
+		</if>
+		
+		<if test="page.searchMap.state != null">
+			and state = #{page.searchMap.state} 
+		</if>
+		
+		order by recordCreateTime desc
+	</select>
+	
+	<select id="getListByParentId" parameterType="String" resultMap="mCommend">
+		select 
+			* 
+		from comment 
+		where 
+			parentId=#{parentId}
+	</select>
+
+	<update id="update" parameterType="com.rpframework.module.common.domain.Comment" />
+	<insert id="insert" parameterType="com.rpframework.module.common.domain.Comment" useGeneratedKeys="true" keyProperty="id"/>
+	<delete id="delete" parameterType="com.rpframework.module.common.domain.Comment" />
+	<select id="select" parameterType="Integer" resultMap="mCommend">
+		select * from comment where id=#{id}
+	</select> 
+</mapper>

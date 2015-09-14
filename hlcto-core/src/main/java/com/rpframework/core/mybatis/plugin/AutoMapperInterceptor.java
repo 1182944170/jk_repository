@@ -61,23 +61,34 @@ public class AutoMapperInterceptor implements Interceptor {
             MappedStatement mappedStatement = (MappedStatement) metaStatementHandler.getValue("delegate.mappedStatement");
             // 根据ID生成相应类型的sql语句（id需剔除namespace信息）
             String id = mappedStatement.getId();
-            
-            Class<?> targetClass = mappedStatement.getParameterMap().getType();
-            if(targetClass == null) {
-            	throw new RuntimeException("targetClass can not nil.");
-            }
+           
             id = id.substring(id.lastIndexOf(".") + 1);
-            
-            if ("insert".equals(id)) {
-                newSql = SqlBuilder.buildInsertSql(parameterObject);
-            } else if ("update".equals(id)) {
-                newSql = SqlBuilder.buildUpdateSql(parameterObject);
-            } else if ("delete".equals(id)) {
-                newSql = SqlBuilder.buildDeleteSql(parameterObject, targetClass);
-            } else if ("select".equals(id)) {
-                newSql = SqlBuilder.buildSelectSql(parameterObject, targetClass);
+            if ("upadteWithField".equals(id)) {
+            	if(parameterObject instanceof ClassFieldBuilder) {
+            		newSql = ((ClassFieldBuilder)parameterObject).buildUpdateSql();
+            	} else {
+            		throw new IllegalArgumentException("upadteWithField 参数不是 ClassFieldBuilder 类型，无法处理");
+            	}
+            } else {
+            	 Class<?> targetClass = mappedStatement.getParameterMap().getType();
+                 if(targetClass == null) {
+                 	throw new RuntimeException("targetClass can not nil.");
+                 }
+                 
+            	if ("insert".equals(id)) {
+                    newSql = SqlBuilder.buildInsertSql(parameterObject);
+                } else if ("update".equals(id)) {
+                    newSql = SqlBuilder.buildUpdateSql(parameterObject);
+                } else if ("delete".equals(id)) {
+                    newSql = SqlBuilder.buildDeleteSql(parameterObject, targetClass);
+                } else if ("select".equals(id)) {
+                    newSql = SqlBuilder.buildSelectSql(parameterObject, targetClass);
+                }
             }
-            logger.info("Auto generated sql:" + newSql);
+            
+            
+            
+            logger.info(id + ":Auto generated sql:" + newSql);
             //
             SqlSource sqlSource = buildSqlSource(configuration, newSql, parameterObject.getClass());
             List<ParameterMapping> parameterMappings = sqlSource.getBoundSql(parameterObject).getParameterMappings();

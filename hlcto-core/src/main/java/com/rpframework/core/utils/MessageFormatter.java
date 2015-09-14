@@ -133,7 +133,8 @@ final public class MessageFormatter {
    *                formatting anchors
    * @return The formatted message
    */
-  final public static String arrayFormat(final String messagePattern,
+  @SuppressWarnings("rawtypes")
+final public static String arrayFormat(final String messagePattern,
       final Object[] argArray) {
     if (messagePattern == null) {
       return null;
@@ -211,7 +212,8 @@ final public class MessageFormatter {
   }
 
   // special treatment of array values was suggested by 'lizongbo'
-  private static void deeplyAppendParameter(StringBuffer sbuf, Object o,
+  @SuppressWarnings("rawtypes")
+private static void deeplyAppendParameter(StringBuffer sbuf, Object o,
       Map seenMap) {
     if (o == null) {
       sbuf.append("null");
@@ -256,7 +258,8 @@ final public class MessageFormatter {
 
   }
 
-  private static void objectArrayAppend(StringBuffer sbuf, Object[] a,
+  @SuppressWarnings({ "unchecked", "rawtypes" })
+private static void objectArrayAppend(StringBuffer sbuf, Object[] a,
       Map seenMap) {
     sbuf.append('[');
     if (!seenMap.containsKey(a)) {

@@ -68,7 +68,7 @@ public class AdminSlideshowAct extends CommonBaseAct{
 		if(iconFile.getSize() > 0) {
 			try {
 				String relativelyPath = "resources/slideshow/" + DateUtils.nowDate(DateUtils.YYYYMMDDHHMMSS) + NumberUtils.random() + "." + FilenameUtils.getExtension(iconFile.getOriginalFilename());
-				fileService.saveFile(iconFile.getInputStream(), relativelyPath);
+				fileService.saveFile(iconFile, relativelyPath);
 				slideshow.setIcon(relativelyPath);
 			} catch (Exception e) {
 				throw new IllegalArgumentException("文件上传失败，原因:" + e.getLocalizedMessage());

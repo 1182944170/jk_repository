@@ -1,7 +1,9 @@
 package com.rpframework.utils ;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 /**
  * @author <a href="mailto:rplees.i.ly@gmail.com">rplees</a>
@@ -70,4 +72,40 @@ public class CollectionUtils {
 		return sb.toString();
 	}
 	
+	/**
+	 * 
+	 * 俩个list比较找出相对与后者来说不同的部分
+	 * @param aList
+	 * @param bList
+	 * @return 不同的集合
+	 */
+	public static <T> List<T> compareLatterFindDiff(List<T> aList, List<T> bList) {
+		List<T> ret = new ArrayList<T>();
+		if(aList == bList) {
+			return null;
+		}
+		
+		if(bList == null) {
+			return null;
+		}
+		if(aList == null) {
+			return bList;
+		}
+		
+		for (T bObj : bList) {
+			boolean isFind = false;
+			for (T aObj : aList) {
+				
+				if(bObj == aObj || bObj.equals(aObj)) {
+					isFind = true; break;
+				}
+			}
+			
+			if(!isFind) { //删除
+				ret.add(bObj);
+			}
+		}
+		
+		return ret;
+	}
 }

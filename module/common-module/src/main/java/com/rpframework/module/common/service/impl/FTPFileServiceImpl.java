@@ -1,25 +1,22 @@
 package com.rpframework.module.common.service.impl;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.SocketException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
-import org.apache.commons.net.ftp.FTPReply;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.rpframework.core.api.FileService;
 import com.rpframework.core.utils.DictionarySettingUtils;
-import com.rpframework.utils.CodeUtils;
-import com.rpframework.utils.CollectionUtils;
+import com.rpframework.module.common.exception.FTPClientException;
+import com.rpframework.module.common.utils.FTPClientTemplate;
 
 /**
  * 
@@ -34,133 +31,59 @@ import com.rpframework.utils.CollectionUtils;
 public class FTPFileServiceImpl extends FileService {
 	private static final int FTP_CONNECTION_RETRY_COUNT = 3;
 	final Logger logger = LoggerFactory.getLogger(getClass());
-	private FTPClient ftpClient;
-	private String host;
-	private int port;
-	private String username;
-	private String password;
-	private String uploadfolder;	//remote FTP folder (absolute FTP virtual path), such as "/jpeg"
-	private boolean overwrite;
+	
+	FTPClientTemplate mFTPClientTemplate;
 	
 	public FTPFileServiceImpl(String host, int port, String username, String password, String uploadfolder, boolean overwrite) {
-		this.host = host;
-		this.port = port;
-		this.username = username;
-		this.password = password;
-		this.uploadfolder = uploadfolder;
-		this.overwrite = overwrite;
+		mFTPClientTemplate = new FTPClientTemplate();
+		mFTPClientTemplate.setBinaryTransfer(true);
+		mFTPClientTemplate.setClientTimeout(1000);
+		mFTPClientTemplate.setEncoding("UTF-8");
+		mFTPClientTemplate.setHost(host);
+		mFTPClientTemplate.setPassiveMode(true);
+		mFTPClientTemplate.setPassword(password);
+		mFTPClientTemplate.setPort(port);
+		mFTPClientTemplate.setUsername(username);
+		
+//		this.host = host;
+//		this.port = port;
+//		this.username = username;
+//		this.password = password;
+//		this.uploadfolder = uploadfolder;
+//		this.overwrite = overwrite;
 		
 		int retry = 0;
 		while (retry++ < FTP_CONNECTION_RETRY_COUNT){
 			try {
-				initFtpClient();
+				mFTPClientTemplate.getFTPClient();
 				break;
 			} catch (Exception e) {
 			}
 		}
 
 		if (retry > 2) {
-			ftpClient = null;
 			logger.error("init Ftp Server error!");
 		}
-	}
-	
-	private void initFtpClient() throws SocketException, IOException {
-		ftpClient = new FTPClient();
-		if (port > 0 && port < 65535 && port != 21) {	//default FTP port is 21
-			ftpClient.setDefaultPort(port);
-		}
-
-		ftpClient.connect(host);
-
-		int reply = ftpClient.getReplyCode();
-
-		if (!FTPReply.isPositiveCompletion(reply)) {
-			ftpClient.disconnect();
-			throw new SocketException("FTP server refused connection.");
-		}
-
-		if (!ftpClient.login(username, password)) {
-			ftpClient.logout();
-			throw new SocketException("FTP server login failed.");
-		}
-
-		ftpClient.enterLocalPassiveMode();
-		ftpClient.makeDirectory(uploadfolder);
-		ftpClient.changeWorkingDirectory(uploadfolder);
-		ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE);  // 使用二进制流上传文件
 	}
 	
 	@Override
 	public boolean saveFile(File file, String relativelyPath)
 			 throws Exception {
-		transferFile(new FileInputStream(file), relativelyPath);
-		return true;
+		return mFTPClientTemplate.put(file, relativelyPath);
 	}
 
 	@Override
 	public boolean saveFile(InputStream inputStream, String relativelyPath)  throws Exception{
-		transferFile(inputStream, relativelyPath);
-		return true;
-	}
-
-	/**
-	 * transfer File to FTP server
-	 * 
-	 * @param input
-	 *            local InputStream, or FileInputStream
-	 * @param remote
-	 *            remote FTP file name, such as "test.jpg"
-	 * @throws IOException 
-	 * @throws IOException
-	 * @throws Exception
-	 */
-	public void transferFile(InputStream input, String remote) throws IOException {
-		remote = StringUtils.replace(remote, "//", "/");
-		ifNeedCreateDirecroty(remote);
-		ftpClient.enterLocalPassiveMode();
-		try {
-			if (!ftpClient.isConnected()) {		//if the FTP session is timeout, login and connect again.
-				initFtpClient();
-			}
-			
-			int index = remote.lastIndexOf('/');
-			if (index < 0) {
-				index = remote.lastIndexOf('\\');
-			}
-			if (index > 0) {
-				try {
-					ftpClient.makeDirectory(remote.substring(0, index));
-				} catch (Exception e) {
-					logger.error("Ftp Server make Directory error", e);
-				}
-			}
-			
-			boolean result = false;
-			if (overwrite) {
-				result = ftpClient.storeFile(remote, input);
-			} else {
-				result = ftpClient.storeUniqueFile(remote, input);
-			}
-			if(!result){
-				throw new IOException("upload to ftp failed! maybe remote file exists!");
-			}
-		} finally {
-			try {
-				input.close();
-				ftpClient.disconnect();
-			} catch (Exception e) {
-				logger.error("transfer File finally", e);
-			}
-		}
+		return mFTPClientTemplate.put(inputStream, relativelyPath, true);
 	}
 	@Override
+	public boolean saveFile(MultipartFile multipartFile, String relativelyPath) throws Exception {
+		return mFTPClientTemplate.put(multipartFile.getInputStream(), relativelyPath, true);
+	}
+
+	@Override
 	public InputStream retrieveFileStream(String relativelyPath)  throws Exception{
-		if (!ftpClient.isConnected()) {		//if the FTP session is timeout, login and connect again.
-			initFtpClient();
-		}
-    	ftpClient.enterLocalPassiveMode();
-    	return ftpClient.retrieveFileStream(relativelyPath);
+		return mFTPClientTemplate.get(relativelyPath);
 	}
 	
 	public boolean ifNeedCreateDirecroty(String relativelyPath) throws IOException{
@@ -174,16 +97,12 @@ public class FTPFileServiceImpl extends FileService {
 	}
 	
 	@Override
-	public boolean deleteFile(String relativelyPath)  throws Exception{
+	public boolean deleteFile(String relativelyPath)  throws Exception {
 		if (StringUtils.isBlank(relativelyPath)) {
 			return false;
 		}
-		if (!ftpClient.isConnected()) {		//if the FTP session is timeout, login and connect again.
-			initFtpClient();
-		}
-    	ftpClient.deleteFile(relativelyPath);
-	    int status = ftpClient.getReplyCode();
-	    return status == 250 ;
+		
+		return mFTPClientTemplate.delete(relativelyPath);
 	}
 
 	@Override
@@ -196,71 +115,24 @@ public class FTPFileServiceImpl extends FileService {
 	@Override
 	public List<FTPFile> getData(String remote, boolean isFloder) {
 		try {
-			boolean b = ftpClient.changeWorkingDirectory(remote);
-			
-			if(!b) {
-				logger.error("{} 远程 path 不存在!", remote);
-				return null;
-			}
-			
-			FTPFile[] listFiles = ftpClient.listFiles();
-			if(CollectionUtils.isEmpty(listFiles)) {
-				return null;
-			}
-			
-			List<FTPFile> list = new ArrayList<FTPFile>();
-			
-			for(FTPFile ftpFile: listFiles) {
-				if(isFloder) {
-					if(ftpFile.isDirectory()) {
-						list.add(ftpFile);
-					}
-				} else {
-					if(!ftpFile.isDirectory()) {
-						list.add(ftpFile);
-					}
-				}
-			}
-			return list;
-		} catch (IOException e) {
-			logger.error("getData error:{}", e);
-			return null;
+			return mFTPClientTemplate.getData(remote, isFloder);
+		} catch (FTPClientException e) {
+			e.printStackTrace();
 		}
 		
+		return null;
 	}
 
 	@Override
 	public boolean createDirecroty(String directory) throws IOException {
-		if (!directory.equalsIgnoreCase("/") && !ftpClient.changeWorkingDirectory(CodeUtils.changeISO2GBK(directory))) {  
-            //如果远程目录不存在，则递归创建远程服务器目录   
-            int start=0;   
-            int end = 0;   
-            if(directory.startsWith("/")){   
-                start = 1;   
-            }else{   
-                start = 0;   
-            }   
-            end = directory.indexOf("/",start);   
-            while(true){   
-                String subDirectory = CodeUtils.changeISO2GBK(directory.substring(start,end));   
-                if(!ftpClient.changeWorkingDirectory(subDirectory)){   
-                    if(ftpClient.makeDirectory(subDirectory)){   
-                        ftpClient.changeWorkingDirectory(subDirectory);   
-                    }else {   
-                        logger.info("创建目录失败, subDirectory:{}, relativelyPath:{}", subDirectory,directory);   
-                        return false;   
-                    }   
-                }   
-                   
-                start = end + 1;   
-                end = directory.indexOf("/",start);   
-                   
-                //检查所有目录是否创建完毕   
-                if(end <= start){   
-                    break;   
-                }   
-            }   
-        }   
-        return true; 
+		FTPClient ftpClient;
+		try {
+			ftpClient = mFTPClientTemplate.getFTPClient();
+			mFTPClientTemplate.createDirecroty(directory, ftpClient);
+		} catch (FTPClientException e) {
+			e.printStackTrace();
+		}
+		
+		return false;
 	}
 }

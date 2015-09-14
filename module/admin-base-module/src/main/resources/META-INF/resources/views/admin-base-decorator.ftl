@@ -25,7 +25,8 @@
 		<link rel="stylesheet" href="${ctx}/resources/cssframework/ace/css/daterangepicker.css" />
 		<link rel="stylesheet" href="${ctx}/resources/cssframework/ace/css/colorpicker.css" />
 		<link rel="stylesheet" href="${ctx}/resources/cssframework/ace/css/select2.css" />
-		
+		<link rel="stylesheet" href="${ctx}/resources/cssframework/ace/css/dropzone.css" />
+		<link rel="stylesheet" href="${ctx}/resources/cssframework/ace/css/colorbox.css" />
 		<!-- fonts -->
 		<link rel="stylesheet" href="${ctx}/resources/cssframework/ace/css/open_Sans.css" />
 
@@ -65,6 +66,7 @@
 		<script type="text/javascript">
 			if("ontouchend" in document) document.write("<script src='${ctx}/resources/cssframework/ace/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
 			ctx = '${ctx}';
+			webUrl = '${tagUtils.getWebUrl()}';
 		</script>
 		<script src="${ctx}/resources/cssframework/ace/js/bootstrap.min.js"></script>
 		<script src="${ctx}/resources/cssframework/ace/js/typeahead-bs2.min.js"></script>
@@ -95,20 +97,27 @@
 		<script src="${ctx}/resources/cssframework/ace/js/jquery.inputlimiter.1.3.1.min.js"></script>
 		<script src="${ctx}/resources/cssframework/ace/js/jquery.maskedinput.min.js"></script>
 		<script src="${ctx}/resources/cssframework/ace/js/bootstrap-tag.min.js"></script>
-		
+		<script src="${ctx}/resources/cssframework/ace/js/typeahead-bs2.min.js"></script>
+		<script src="${ctx}/resources/cssframework/ace/js/jquery.dataTables.min.js"></script>
+		<script src="${ctx}/resources/cssframework/ace/js/jquery.dataTables.bootstrap.js"></script>
 		<!-- mindmup-editabletable.js-->
 		<script src="${ctx}/resources/plugins/mindmup-editabletable.js"></script>
 		
 		<!-- page specific plugin scripts -->
-
+		<script src="${ctx}/resources/cssframework/ace/js/dropzone.min.js"></script>
+		<script src="${ctx}/resources/cssframework/ace/js/bootbox.min.js"></script>
+		<script src="${ctx}/resources/cssframework/ace/js/jquery.colorbox-min.js"></script>
 		<!-- ace scripts -->
 		<script src="${ctx}/resources/cssframework/ace/js/ace-elements.min.js"></script>
 		<script src="${ctx}/resources/cssframework/ace/js/ace.min.js"></script>
+		
+		<script type=text/javascript src="${ctx}/resources/plugins/My97DatePicker/WdatePicker.js" charset="utf-8"></script>
 		
 		<!--custom js import -->
 		<script src="${ctx}/resources/js/base_x.js"></script>
 		<script src="${ctx}/resources/static/data_country_static.js"></script>
 		<script src="${ctx}/resources/js/country_static.js"></script>
+		<script src="${ctx}/resources/js/StringUtils.js"></script>
 		<script src="${ctx}/resources/js/admin.js"></script>
 		<script src="${ctx}/resources/js/showpages.js"></script>
 		<@common cmd="has_include_file" file="admin/sub_website_include_js.ftl">
@@ -223,10 +232,24 @@
 <script>
 $(document).ready(function(){
 	$('[data-toggle="tooltip"]').tooltip();
-	$('.date-picker').datepicker({autoclose:true}).next().on(ace.click_event, function(){
+	$('.date-picker').datepicker({
+		autoclose:true,
+		language: 'zh-CN',
+		todayBtn: 1,
+		todayHighlight: 1}
+	).next().on(ace.click_event, function(){
 		$(this).prev().focus();
 	});
 	$(".chosen-select").chosen(); 
+	<#assign defaultColor=(dicSetting.getParameterValue("admin.defaultColor"))!"#438EB9" />
+	
+	var defaultColor = '${defaultColor}';
+	$(".colorpick-btn").each(function() {
+		var mThis = $(this);
+		if(mThis.attr("data-color") == defaultColor) {
+			mThis.trigger("click");
+		}
+	});
 });
 </script>
 
