@@ -27,8 +27,8 @@ public abstract class SMSAbstractSendChannel1Event implements ISMSEvent {
 	protected String charset = "UTF-8";
 	protected String serverIP = "222.73.117.158";
 	protected String serverPort = "80";
-	protected String accout = "jiekou-zcs-03";
-	protected String pswd = "Tch147369";
+	protected String accout = "vip_xdem";
+	protected String pswd = "Tch123456";
 	
 	@Override
 	public int getChannelSend() {

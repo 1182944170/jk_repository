@@ -1,7 +1,7 @@
 package com.rpframework.module.adminbase.event;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -43,8 +43,12 @@ public class AdminBaseModuleEvent extends ModuleEvent {
 	}
 	
 	@Override
-	public void init(ServletContext servletContext) {
+	public void preInit(ServletContext servletContext) {
 		this.initDictionary();
+	}
+	
+	@Override
+	public void init(ServletContext servletContext) {
 		CacheUtils.getIntance().add(new RoleAdminAuthResCache());
 	}
 	
@@ -53,7 +57,7 @@ public class AdminBaseModuleEvent extends ModuleEvent {
 		DictionaryService dictionaryService = SpringUtils.getBean(DictionaryService.class);
 		List<Dictionary> list = dictionaryService.quertAll();
 		if(CollectionUtils.isNotEmpty(list)) {
-			Map<String, String> constantsMap = new HashMap<String, String>();
+			Map<String, String> constantsMap = new LinkedHashMap<String, String>();
 			List<KVObj> constantsList = new ArrayList<KVObj>();
 			KVObj kvObj = null;
 			for (Dictionary dictionary : list) {

@@ -1,5 +1,7 @@
 package com.rpframework.core;
 
+import com.rpframework.core.mybatis.plugin.ClassFieldBuilder;
+
 /**
  * 
  * title: IDao.java 
@@ -12,6 +14,8 @@ package com.rpframework.core;
  */
 public interface IDao {
 	
+	<T> boolean upadteWithField(ClassFieldBuilder classFieldBuilder);
+	
 	/**
 	 * 由MyBatis的拦截器自动注入完成
 	 * 
@@ -21,6 +25,15 @@ public interface IDao {
 	 * @return T 实体
 	 */
 	<T> T select(Object idObj);
+	/**
+	 * 由MyBatis的拦截器自动注入完成
+	 * 
+	 * 根据主键id查找实体
+	 * 
+	 * @param idObj 主键
+	 * @return T 实体
+	 */
+	<T> T selectForLock(Object idObj);
 	
 	/**
 	 * 由MyBatis的拦截器自动注入完成

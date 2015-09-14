@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.website.dameiqinghai.dao.ISpotsPhotoDao">
+	<resultMap type="com.rpframework.website.dameiqinghai.domian.SpotsPhoto" id="mSpotsPhoto" autoMapping="true">
+		<id property="id" column="id"/>
+	</resultMap>
+
+	<select id="doSpotsPhotoPager" parameterType="map" resultMap="mSpotsPhoto">
+		select * from spotsphoto where 1=1 
+		
+			<if test="page.searchMap.photoName != null">
+				and photoName like '%${page.searchMap.photoName}%' 
+			</if>
+			
+			<if test="page.searchMap.state != null">
+				and state = #{page.searchMap.state} 
+			</if>
+			
+		ORDER BY createTime
+	</select>
+
+	<select id="findCommendSpotsPhotoByNumber" parameterType="Integer" resultMap="mSpotsPhoto">
+		select * from spotsphoto where isCommend = 1 ORDER BY createTime desc limit 0 , #{number} 
+	</select>
+	
+	<select id="queryAll">
+		select * from spotsphoto where 1 = 1 order by createTime desc
+	</select>
+	
+	<update id="update" parameterType="com.rpframework.website.dameiqinghai.domian.SpotsPhoto" />
+	<insert id="insert" parameterType="com.rpframework.website.dameiqinghai.domian.SpotsPhoto" useGeneratedKeys="true" keyProperty="id"/>
+	<delete id="delete" parameterType="com.rpframework.website.dameiqinghai.domian.SpotsPhoto" />
+	<select id="select" parameterType="Integer" resultMap="mSpotsPhoto">
+		select * from spotsphoto where id=#{id}
+	</select>
+</mapper>

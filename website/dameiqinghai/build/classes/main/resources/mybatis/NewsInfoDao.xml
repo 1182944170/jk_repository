@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.website.dameiqinghai.dao.INewsInfoDao">
+	<resultMap type="com.rpframework.website.dameiqinghai.domian.NewsInfo" id="mNewsInfo" autoMapping="true">
+		<id property="id" column="id"/>
+	</resultMap>
+
+	<select id="doNewsInfoPager" parameterType="map" resultMap="mNewsInfo">
+		select * from newsinfo where 1=1 
+			
+			<if test="page.searchMap.state != null">
+				and state = #{page.searchMap.state} 
+			</if>
+			
+			<if test="page.searchMap.caption != null">
+				and caption like '%${page.searchMap.caption}%' 
+			</if>
+			
+		order by createTime desc
+	</select>
+	
+	<select id="querCommendNewsinfo" parameterType="map" resultMap="mNewsInfo">
+		SELECT * FROM newsinfo WHERE isCommend = 1 and state = 1 ORDER BY createTime desc LIMIT #{param1} , #{param2}
+	</select>
+	
+	<select id="queryNowNewsinfo" parameterType="map" resultMap="mNewsInfo">
+		SELECT * FROM newsinfo WHERE state = 1 ORDER BY createTime desc LIMIT #{param1} , #{param2}
+	</select>
+	
+	
+	<update id="update" parameterType="com.rpframework.website.dameiqinghai.domian.NewsInfo" />
+	<insert id="insert" parameterType="com.rpframework.website.dameiqinghai.domian.NewsInfo" useGeneratedKeys="true" keyProperty="id"/>
+	<delete id="delete" parameterType="com.rpframework.website.dameiqinghai.domian.NewsInfo" />
+	<select id="select" parameterType="Integer" resultMap="mNewsInfo">
+		select * from newsinfo where id=#{id}
+	</select>
+</mapper>

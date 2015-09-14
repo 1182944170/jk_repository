@@ -7,4 +7,6 @@ import com.rpframework.module.common.domain.City;
 
 public interface ICityDao extends IDao {
 	List<City> queryAll();
+
+	List<City> searchByCity(String provinceCode);
 }

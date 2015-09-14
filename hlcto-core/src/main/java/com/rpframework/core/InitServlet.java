@@ -36,6 +36,16 @@ public class InitServlet extends HttpServlet {
 		SpringUtils.setServletContext(servletContext);
 		
 		Map<String, IModuleEvent> beans = SpringUtils.getApplicationContext().getBeansOfType(IModuleEvent.class);
+		
+		if(CollectionUtils.isNotEmpty(beans)) {
+			IModuleEvent moduleEvent = null;
+			for(String keys : beans.keySet()) {
+				moduleEvent = beans.get(keys);
+				
+				moduleEvent.preInit(servletContext);
+			}
+		}
+		
 		if(CollectionUtils.isNotEmpty(beans)) {
 			IModuleEvent moduleEvent = null;
 			for(String keys : beans.keySet()) {

@@ -1,11 +1,9 @@
 package com.rpframework.core.utils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -23,7 +21,7 @@ public class DictionarySettingUtils extends BaseRegistFreemarker {
 	
 	private static Log log = LogFactory.getLog(DictionarySettingUtils.class);
 	
-	private static Map<String, String> allConstantsMap = new HashMap<String, String>();
+	private static Map<String, String> allConstantsMap = new LinkedHashMap<String, String>();
 	private static List<KVObj> allConstantsList = new ArrayList<KVObj>();
 	public static Map<String, Object> allSettings = new LinkedHashMap<String, Object>();
 	
@@ -89,6 +87,11 @@ public class DictionarySettingUtils extends BaseRegistFreemarker {
 			return allSettings.get(settings[0]);
 		Map tempMap = (Map) allSettings.get(settings[0]);
 		for (int i = 1; i < settings.length - 1; i++) {
+			
+			if(tempMap == null){
+				//System.out.println();
+				return null;
+			}
 			tempMap = (Map) tempMap.get(settings[i]);
 			if(tempMap == null) {
 				return null;
@@ -170,7 +173,7 @@ public class DictionarySettingUtils extends BaseRegistFreemarker {
 
 			supMap = (Map<String, Object>) allSettings.get(keys[0]);
 			if (supMap == null) { // new root node
-				supMap = new TreeMap<String, Object>();
+				supMap = new LinkedHashMap<String, Object>();
 				allSettings.put(keys[0], supMap);
 			}
 
@@ -181,7 +184,7 @@ public class DictionarySettingUtils extends BaseRegistFreemarker {
 				if (obj != null && obj instanceof Map) {
 					supMap = (Map) obj;
 				} else {
-					subMap = new TreeMap<String, Object>();
+					subMap = new LinkedHashMap<String, Object>();
 					// subMap = new LinkedHashMap<String, Object>();
 					supMap.put(key, subMap);
 					supMap = subMap;
@@ -199,6 +202,14 @@ public class DictionarySettingUtils extends BaseRegistFreemarker {
 		DictionarySettingUtils.allConstantsList = allConstantsList;
 	}
 	
+	/**
+	 * 方法 已经过时了，
+	 * 使用 like
+	 * 	Object parameter = DictionarySettingUtils.getParameter("scoreRule", "cfg");
+	 *	return gson.toJsonTree(parameter);
+	 * @return
+	 */
+	@Deprecated
 	public static JsonArray getMapJsonArrayByKey(String key) {
 		Map<String, String> map = DictionarySettingUtils.getParameterMap(key);
 		JsonArray array = new JsonArray();

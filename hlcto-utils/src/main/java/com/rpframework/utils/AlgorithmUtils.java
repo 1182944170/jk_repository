@@ -1,27 +1,13 @@
 package com.rpframework.utils;
 
+import java.io.IOException;
 import java.security.MessageDigest;
-import java.security.Security;
-import java.util.Date;
 
-import javax.crypto.Cipher;
-import javax.crypto.SecretKey;
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.DESedeKeySpec;
-import javax.crypto.spec.IvParameterSpec;
-
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
-
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.JsonPrimitive;
-import com.sun.crypto.provider.SunJCE;
 
 /**
  * @author <a href="mailto:rplees.i.ly@gmail.com">rplees</a>
@@ -31,89 +17,6 @@ import com.sun.crypto.provider.SunJCE;
 public class AlgorithmUtils {
 	private final static Log log = LogFactory.getLog(AlgorithmUtils.class);
 	
-	private static final String algorithm = "DESede"; // 定义 加密算法,可用 DES,DESede,Blowfish
-
-	private static DESedeKeySpec spec;
-	private static SecretKeyFactory keyFactory;
-	private static SecretKey theKey;
-	private static Cipher cipher;
-	private static IvParameterSpec ivParameters;
-	static {
-		try {
-			try {
-				Cipher.getInstance(algorithm);
-			} catch (Exception e) {
-				log.info("Installling SunJCE provider.");
-				Security.addProvider(new SunJCE());
-			}
-			String strDefaultKey = "WERTYUOPWERTYUOPWERTYUOP";
-			/*try {
-				strDefaultKey = PropertiesLoader.getProperty("info.jd.secretkey");
-			} catch (Exception e) {
-				log.warn("get info.jd.secretkey from properties error.");
-			}
-			if (strDefaultKey == null || strDefaultKey.length() < 25) {
-				strDefaultKey = "WERTYUOPWERTYUOPWERTYUOP";
-			}
-			log.info("default encrypt key: " + strDefaultKey);*/
-			spec = new DESedeKeySpec(strDefaultKey.getBytes());
-			keyFactory = SecretKeyFactory.getInstance(algorithm);
-			theKey = keyFactory.generateSecret(spec);
-			cipher = Cipher.getInstance("DESede/CBC/PKCS5Padding");
-			ivParameters = new IvParameterSpec(new byte[] { 12, 34, 56, 78, 90,	87, 65, 43 });
-		} catch (Exception e) {
-			log.error("Installling provider error.", e);
-		}
-	}
-
-	/**
-	 * 
-	 * 加密算法（双向）
-	 * 
-	 * @param password
-	 *            未加密的密码
-	 * 
-	 * @return 加密后的密码
-	 */
-	public static String encrypt(String password) {
-		byte[] encryptedPassword = null;
-		try {
-			cipher.init(Cipher.ENCRYPT_MODE, theKey, ivParameters);
-			encryptedPassword = cipher.doFinal(password.getBytes());
-		} catch (Exception e) {
-			log.error("encrypt error.", e);
-			return password;
-		}
-		StringBuffer sb = new StringBuffer();
-		for (byte ep: encryptedPassword) {
-			sb.append(ep + ",");
-		}
-		return enBase64(sb.toString());
-	}
-	/**
-	 * 
-	 * 解密算法（双向）
-	 * 
-	 * @param password
-	 *            加过密的密码
-	 * 
-	 * @return 解密后的密码
-	 */
-	public static String decrypt(String spassword) {
-		String[] ss = deBase64(spassword).split(",");
-		byte[] decryptedPassword = new byte[ss.length];
-		for (int i = 0; i < ss.length; i++) {
-			decryptedPassword[i] = (byte) (new Integer(ss[i]).intValue());
-		}
-		try {
-			cipher.init(Cipher.DECRYPT_MODE, theKey, ivParameters);
-			return new String(cipher.doFinal(decryptedPassword));
-		} catch (Exception e) {
-			log.error("decrypt error.", e);
-		}
-		return null;
-	}
-
 	/**
 	 * BASE64 编码
 	 * @param s
@@ -173,27 +76,47 @@ public class AlgorithmUtils {
         return buf.toString();
     }
     
-    public static void main(String[] args) {
-    	System.out.println(new Date().getTime());
-		System.out.println(encodePassword("111111", AlgorithmEnum.MD5));
+    
+    /**
+	 * Description 根据键值进行加密
+	 * 
+	 * @param data
+	 * @param key
+	 *            加密键byte数组
+	 * @return
+	 * @throws Exception
+	 */
+	public static String encrypt(String data, String key) throws Exception {
+		return DesUtil.encrypt(data, key);
+	}
+
+	/**
+	 * Description 根据键值进行解密
+	 * 
+	 * @param data
+	 * @param key
+	 *            加密键byte数组
+	 * @return
+	 * @throws IOException
+	 * @throws Exception
+	 */
+	public static String decrypt(String data, String key) throws IOException,
+			Exception {
+		return DesUtil.decrypt(data, key);
+	}
+	
+	public static void main(String[] args) {
+		int parseInt = NumberUtils.parseInt("10329569873");
+		System.out.println(parseInt);
+		String contact = "15390891113";
 		
-		JsonArray arr = new JsonParser().parse("['dddd','gggg']").getAsJsonArray();
-		arr.add(new JsonPrimitive("hhhh"));
-		System.out.println(arr.toString());
+		String s = contact.substring(0,  3) + "***" + contact.substring(contact.length() - 3, contact.length());
+		System.out.println(s);
 		
-		String uri = "ddd/ddd.html";
-		
-		System.out.println(StringUtils.substring(uri,0, StringUtils.indexOf(uri, ".")) );
-		
-		JsonObject json = new JsonObject();
-		json.addProperty("contact", "15390891113");
-		json.addProperty("time", System.currentTimeMillis());
-		String enBase64 = enBase64(json.toString());
-		System.out.println(enBase64);
-		System.out.println(deBase64(enBase64));
-		
-		String s = "15390891113";
-		
-		;System.out.println(s.substring(s.length() - 4));
+		System.out.println(encodePassword("123789", AlgorithmEnum.MD5));
+//    	DESede buildDesedeAlgorithm2 = AlgorithmUtils.buildDesedeAlgorithm(key + "2");
+//    	String decrypt = buildDesedeAlgorithm2.decrypt(encrypt);
+//    	
+//    	System.out.println(encrypt);
 	}
 }

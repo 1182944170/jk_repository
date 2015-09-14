@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.website.dameiqinghai.dao.IApplnDao">
+	<resultMap type="com.rpframework.website.dameiqinghai.domian.Appln" id="mAppln" autoMapping="true">
+		<id property="id" column="id"/>
+	</resultMap>
+
+	<select id="doApplnPager" parameterType="map" resultMap="mAppln">
+		select * from apply_annal where 1=1 
+			<if test="page.searchMap.type != null">
+				and type = #{page.searchMap.type} 
+			</if>
+			
+			<if test="page.searchMap.realName != null">
+				and realName like '%${page.searchMap.realName}%' 
+			</if>
+			
+			<if test="page.searchMap.shopName != null">
+				and shopName like '%${page.searchMap.shopName}%' 
+			</if>
+			
+			<if test="page.searchMap.cardNo != null">
+				and cardNo like '%${page.searchMap.cardNo}%' 
+			</if>
+			<if test="page.searchMap.state != null">
+				and state = #{page.searchMap.state} 
+			</if>
+		ORDER BY applnTime desc
+	</select>
+	
+	<select id="findApplnByUserIdAndType" parameterType="map" resultMap="mAppln">
+		select * from apply_annal where 1=1 
+			and userId = #{param1} and type = #{param2} 
+		order by id desc
+	</select>
+	
+	<select id="findApplnByAppidAndTypeAndState" parameterType="map" resultMap="mAppln">
+		select * from apply_annal where 1=1 
+			and userId = #{param1} and type = #{param2} and state = #{param3} 
+		ORDER BY applnTime desc
+	</select>
+	
+	<update id="update" parameterType="com.rpframework.website.dameiqinghai.domian.Appln" />
+	<insert id="insert" parameterType="com.rpframework.website.dameiqinghai.domian.Appln" useGeneratedKeys="true" keyProperty="id"/>
+	<delete id="delete" parameterType="com.rpframework.website.dameiqinghai.domian.Appln" />
+	<select id="select" parameterType="Integer" resultMap="mAppln">
+		select * from apply_annal where id=#{id}
+	</select>
+</mapper>

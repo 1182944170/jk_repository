@@ -10,9 +10,15 @@ import com.rpframework.module.common.utils.cache.CountryCache;
 
 @Component("commonTag")
 public class CommonTag extends BaseRegistFreemarker {
-	public static String getCountyPath(String countyCode) {
+	
+	public static JsonObject getCountyPathJson(String countyCode) {
 		CountryCache cache = CacheUtils.getIntance().get2(CountryCache.k);
 		JsonObject obj = cache.findByCountyCode(countyCode);
+		return obj;
+	}
+	
+	public static String getCountyPath(String countyCode) {
+		JsonObject obj = getCountyPathJson(countyCode);
 		if(obj == null) {
 			return "--";
 		} else {

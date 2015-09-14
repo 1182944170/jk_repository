@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.website.dameiqinghai.dao.IPhotoBookDao">
+	<resultMap type="com.rpframework.website.dameiqinghai.domian.PhotoBook" id="mPhotoBook" autoMapping="true">
+		<id property="id" column="id"/>
+	</resultMap>
+
+	<select id="doPhotoBookPager" parameterType="map" resultMap="mPhotoBook">
+		select * from photobook where userId in (select id from user where state = 1) 
+			<if test="page.searchMap.userId != null">
+				and userId = #{page.searchMap.userId} 
+			</if>
+			
+			<if test="page.searchMap.isCommend != null">
+				and isCommend = #{page.searchMap.isCommend} 
+			</if>
+			
+			<if test="page.searchMap.spotsId != null">
+				and spotsId = #{page.searchMap.spotsId} 
+			</if>
+			
+			<if test="page.searchMap.state != null">
+				and state = #{page.searchMap.state} 
+			</if>
+
+			<if test="page.searchMap.name != null">
+				and name like '%${page.searchMap.name}%' 
+			</if>
+		order by createTime desc
+	</select>
+	
+	<select id="queryIsCommendPhotoBook" parameterType="Integer" resultMap="mPhotoBook">
+		select * from photobook where userId in (select id from user where state = 1) and isCommend = 1 order by createTime desc limit 0 , #{number}
+	</select>
+	
+	<select id="querySpotsPhotoBook" parameterType="map" resultMap="mPhotoBook">
+		select * from photobook where userId in (select id from user where state = 1) and isCommend = 1 and spotsId = #{param1} order by createTime limit 0 , #{param2}
+	</select>
+	
+	<select id="queryCommendPhotoBook" parameterType="map" resultMap="mPhotoBook">
+		select * from photobook where userId in (select id from user where state = 1) and isCommend = 1 order by createTime desc limit #{param1} , #{param2}
+	</select>
+	
+	<update id="update" parameterType="com.rpframework.website.dameiqinghai.domian.PhotoBook" />
+	<insert id="insert" parameterType="com.rpframework.website.dameiqinghai.domian.PhotoBook" useGeneratedKeys="true" keyProperty="id"/>
+	<delete id="delete" parameterType="com.rpframework.website.dameiqinghai.domian.PhotoBook" />
+	<select id="select" parameterType="Integer" resultMap="mPhotoBook">
+		select * from photobook where id=#{id}
+	</select>
+</mapper>

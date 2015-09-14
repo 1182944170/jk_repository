@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.module.common.dao.ISequenceDao">
+
+
+	<select id="currVal" parameterType="String" resultType="Integer">
+		select currval(#{seqName});
+	</select>
+	
+	<select id="nextVal" parameterType="String" resultType="Integer">
+		select nextval2(#{seqName});
+	</select>
+</mapper>

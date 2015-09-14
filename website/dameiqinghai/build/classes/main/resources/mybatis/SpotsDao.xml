@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.website.dameiqinghai.dao.ISpotsDao">
+	<resultMap type="com.rpframework.website.dameiqinghai.domian.Spots" id="mSpots" autoMapping="true">
+		<id property="id" column="id"/>
+	</resultMap>
+
+	<select id="doSpotsPager" parameterType="map" resultMap="mSpots">
+		select * from spots where 1=1 
+			<if test="page.searchMap.state != null">
+				and state = #{page.searchMap.state} 
+			</if>
+			
+			<if test="page.searchMap.spotsName != null">
+				and spotsName like '%${page.searchMap.spotsName}%' 
+			</if>
+			
+		ORDER BY createTime desc
+	</select>
+	
+	<select id="findCommendSpotsByNumber" parameterType="Integer" resultMap="mSpots">
+		select * from spots where isCommend = 1	order by createTime desc limit 0 , #{number}
+	</select>
+	
+	<select id="findSpotsBySpotsName" parameterType="map" resultMap="mSpots">
+		select * from spots where spotsName = #{param1} order by createTime desc limit 0 , #{param2}
+	</select>
+	
+	<select id="queryAll" resultMap="mSpots">
+		SELECT * FROM spots WHERE 1 = 1 ORDER BY createTime desc
+	</select>
+	
+	<update id="update" parameterType="com.rpframework.website.dameiqinghai.domian.Spots" />
+	<insert id="insert" parameterType="com.rpframework.website.dameiqinghai.domian.Spots" useGeneratedKeys="true" keyProperty="id"/>
+	<delete id="delete" parameterType="com.rpframework.website.dameiqinghai.domian.Spots" />
+	<select id="select" parameterType="Integer" resultMap="mSpots">
+		select * from spots where id=#{id}
+	</select>
+</mapper>

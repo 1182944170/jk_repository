@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.website.dameiqinghai.dao.IShopsDao">
+	<resultMap type="com.rpframework.website.dameiqinghai.domian.Shops" id="mShops" autoMapping="true">
+		<id property="id" column="id"/>
+	</resultMap>
+
+	<select id="findShopsByUserIdAndShopType" parameterType="map" resultMap="mShops">
+		select * from shops where userId in (select id from user where state = 1) and userId = #{param1} and shopType = #{param2} ORDER BY createTime desc
+	</select>
+
+	<select id="findSuppplierByAreaCode" parameterType="map" resultMap="mShops">
+		SELECT * FROM shops WHERE userId in (select id from user where state = 1) and areaCode = #{param1} AND shopType = #{param2} ORDER BY createTime desc LIMIT 0 , #{param3}
+	</select>
+
+	<update id="update" parameterType="com.rpframework.website.dameiqinghai.domian.Shops" />
+	<insert id="insert" parameterType="com.rpframework.website.dameiqinghai.domian.Shops" useGeneratedKeys="true" keyProperty="id"/>
+	<delete id="delete" parameterType="com.rpframework.website.dameiqinghai.domian.Shops" />
+	<select id="select" parameterType="Integer" resultMap="mShops">
+		select * from shops where id=#{id}
+	</select>
+</mapper>

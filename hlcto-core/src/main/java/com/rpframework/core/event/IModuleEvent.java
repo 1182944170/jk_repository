@@ -20,6 +20,8 @@ public interface IModuleEvent extends IBaseEvent {
 	
 	void applySiteMeshCustomConfiguration(SiteMeshFilterBuilder builder);
 	
+	void preInit(ServletContext servletContext);
+	
 	void init(ServletContext servletContext);
 
 	void fisrtRequset(HttpServletRequest request, HttpServletResponse response);

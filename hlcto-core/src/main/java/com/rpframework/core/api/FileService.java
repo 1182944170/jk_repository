@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.util.List;
 
 import org.apache.commons.net.ftp.FTPFile;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 
@@ -48,11 +49,14 @@ public abstract class FileService {
 	protected static final String TYPE_LOCATION = "location";
 	protected static final String TYPE_LOCATION_ABS = "location_abs";
 	protected static final String TYPE_FTP = "ftp";
+	protected static final String TYPE_OSS = "oss";//阿里OSS
 	protected static final String WEB_URL_KEY = ROOT + ".webUrl";
 	
 	public abstract boolean saveFile(File file, String relativelyPath) throws Exception ;
 	
 	public abstract boolean saveFile(InputStream inputStream, String relativelyPath) throws Exception;
+	
+	public abstract boolean saveFile(MultipartFile multipartFile, String relativelyPath) throws Exception;
 	
 	public abstract InputStream retrieveFileStream(String relativelyPath) throws Exception;
 	
