@@ -1,7 +1,6 @@
 package com.rpframework.utils;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,14 +43,7 @@ public class Pager<T> implements Serializable {
 		
 		if(params.length < 2) return pager ;
 		
-		String pString = value;
-		if(value.length() > 2) {
-			pString = StringUtils.substring(pString, pString.indexOf("_") + 1);
-		} else {
-			pString = "";
-		}
-		
-		String[] strMaps = StringUtils.split(pString, "$$") ;
+		String[] strMaps =StringUtils.split(params[1], "$$") ;
 		if(strMaps.length >= 1){
 			String[] m;
 			Map<String, String> paramMap = new HashMap<String, String>();
@@ -83,37 +75,11 @@ public class Pager<T> implements Serializable {
 		return p;
 	}
 	
-	/**
-	 * 
-	 * 内存List构建
-	 * @param allItemList
-	 */
-	public void buildWithItemList(List<T> allItemList) {
-		
-		Integer totalCount = allItemList.size();
-		int startIdx = (this.getCurrentPage() - 1) * this.getPageSize();
-		int endIdx = this.getCurrentPage() * this.getPageSize();
-		
-		if(CollectionUtils.isEmpty(allItemList) || (totalCount <= startIdx)) {
-			this.setTotalCount(0);
-			this.setItemList(new ArrayList<T>());
-			return;
-		} else {
-			List<T> pageItemList = null;
-			if(endIdx > totalCount) {
-				endIdx = totalCount;
-			}
-			this.setTotalCount(totalCount);
-			pageItemList = allItemList.subList(startIdx, endIdx);
-			this.setItemList(pageItemList);
-		}
-	}
-	
 	public Pager() {
 		searchMap = new HashMap<String, String>();
 	}
 
-	public Pager(int pageSize , int currentPage ){
+	public Pager( int pageSize , int currentPage ){
 		this.pageSize = pageSize ;
 		this.currentPage = currentPage ;
 	}
@@ -245,4 +211,5 @@ public class Pager<T> implements Serializable {
 	public void setCostTime(long costTime) {
 		this.costTime = costTime;
 	}
+	
 }

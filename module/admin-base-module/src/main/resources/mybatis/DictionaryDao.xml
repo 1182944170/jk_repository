@@ -13,7 +13,7 @@
 	</resultMap>
 	
 	<select id="queryAll" resultMap="dictionary">
-		select * from dictionary_setting where 1=1 order by sortIndex asc
+		select * from dictionary_setting where 1=1 
 	</select>
 	
 	<select id="doPager" parameterType="map" resultMap="dictionary">

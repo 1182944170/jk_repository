@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
 
 import com.rpframework.core.Domain;
@@ -36,7 +35,7 @@ public class SqlBuilder {
      * @param dtoClass
      * @return TableMapper
      */
-    public static TableMapper buildTableMapper(Class<?> dtoClass) {
+    private static TableMapper buildTableMapper(Class<?> dtoClass) {
 
         HashMap<String, FieldMapper> fieldMapperCache = null;
         ArrayList<FieldMapper> fieldMapperList = null;
@@ -175,9 +174,6 @@ public class SqlBuilder {
     		return dtoFieldMap.get(fieldMapper.getFieldName());
     	} else { //Object
     		Object obj = dtoFieldMap.get(fieldMapper.getFieldName());
-    		if(obj == null) { //如果对象为null，则表示数据库此字段的值为 null，而非默认
-    			return null;
-    		}
     		if(obj instanceof Domain) {
     			Map<String, Object> subChildMap = PropertyUtils.describe(obj);
     			
@@ -241,13 +237,13 @@ public class SqlBuilder {
         return tableSql.append(whereSql).toString();
     }
 
-    public static Object formatValue(Object value) {
+    private static Object formatValue(Object value) {
     	if(value == null) {
     		return "NULL";
     	} else if(value instanceof Number) {
     		return value;
     	} else {
-    		return "'" + StringEscapeUtils.escapeSql(value.toString()) + "'";
+    		return "'" + value.toString() + "'";
     	}
 	}
 

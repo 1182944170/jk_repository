@@ -54,9 +54,9 @@
 	</#if>	
 </#macro>
 
-<#macro formSingleSelect options checkValue name="_formSingleSelectDefaultName_" defaultValue="" listKey="id" listValue="value" attributes="" defaultChooiceTip="--请选择--">
+<#macro formSingleSelect options checkValue name="_formSingleSelectDefaultName_" listKey="id" listValue="value" attributes="">
     <select id="${name}" name="${name}" ${attributes}>
-    	<option value="${defaultValue}" <@checkSelected checkValue "-1"/> > ${defaultChooiceTip} </option>
+    	<option value <@checkSelected checkValue "-1"/> >--请选择--</option>
     	
     	<#if options?is_hash>
             <#list options?keys as value>
@@ -70,24 +70,9 @@
         </#if>
     </select>
 </#macro>
-<#macro formMultiSelect options checkValues name="_formMultiSelectDefaultName_" defaultValue="" listKey="id" listValue="value" attributes="">
+<#macro formMultiSelect options checkValues name="_formMultiSelectDefaultName_" listKey="id" listValue="value" attributes="">
     <select id="${name}" name="${name}" multiple="multiple" ${attributes} class="chosen-select">
-    	<option value="${defaultValue}" <#if !checkValues?has_content>selected="selected"</#if> >--请选择--</option>
-    	<#if options?is_hash>
-            <#list options?keys as value>
-             <option value="${value?html}" <@checkMultiSelected checkValues value listKey listValue/> >${options[value]?html}</option>
-            </#list>
-        <#else> 
-	        <#list options as value>
-	        <@deepGetValue value listKey/>
-	        <option value="${_deep_value?html}" <@checkMultiSelected checkValues _deep_value listKey listValue/> ><@deepGetValue value listValue/> ${_deep_value?html}</option>
-	        </#list>
-        </#if>
-    </select>
-</#macro>
-
-<#macro formMultiSelectWithoutDefault options checkValues name="_formformMultiSelectWithoutDefault_" listKey="id" listValue="value" attributes="">
-    <select id="${name}" name="${name}" multiple="multiple" ${attributes} class="chosen-select">
+    	<option value <#if !checkValues?has_content>selected="selected"</#if> >--请选择--</option>
     	<#if options?is_hash>
             <#list options?keys as value>
              <option value="${value?html}" <@checkMultiSelected checkValues value listKey listValue/> >${options[value]?html}</option>

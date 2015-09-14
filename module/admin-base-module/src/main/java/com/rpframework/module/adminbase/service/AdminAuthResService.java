@@ -1,7 +1,5 @@
 package com.rpframework.module.adminbase.service;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -50,8 +48,4 @@ public class AdminAuthResService extends BaseService {
 		return ret;
 	}
 	
-	public List<AdminAuthRes> getAdminAuthResByParentId(Integer parentId) {
-		List<AdminAuthRes> list = adminAuthResDao.getAdminAuthResByParentId(parentId);
-		return list;
-	}
 }

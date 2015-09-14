@@ -11,7 +11,6 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.net.ftp.FTPFile;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.rpframework.core.api.FileService;
 import com.rpframework.core.utils.DictionarySettingUtils;
@@ -40,23 +39,6 @@ public class FileServiceImpl extends FileService {
 				boolean orverwrite = BooleanUtils.toBoolean(ftpMap.get("overwrite"));
 				
 				proxy = new FTPFileServiceImpl(host, port, username, password, uploadfolder, orverwrite);
-			}  else if(StringUtils.equals(TYPE_OSS, type)) {
-				Map<String, String> ftpMap = DictionarySettingUtils.getParameterMap(ROOT + "." + TYPE_OSS);
-				Assert.notEmpty(ftpMap, "无法获得 ftpService.oss 类型的Map");
-				
-				String accessKeyId = ftpMap.get("accessKeyId");
-				String accessKeySecret = ftpMap.get("accessKeySecret");
-				String bucketName = ftpMap.get("bucketName");
-				String endpoint = ftpMap.get("endpoint");
-
-			
-//				String accessKeyId = "Z3LJU6unvUVixrz0";
-//		        String accessKeySecret = "GBRnxveCdBF3vrq2A72Oewckt8Kfw6";
-//		        // 以杭州为例
-//		        String endpoint = "http://oss-cn-hangzhou.aliyuncs.com";
-//				String bucketName = "xdmfile";
-				
-				proxy = new OSSFileServiceImpl(accessKeyId, accessKeySecret, bucketName, endpoint);
 			} else {//default
 				proxy = new LocationABSFileServiceImpl();
 			}
@@ -102,11 +84,5 @@ public class FileServiceImpl extends FileService {
 	@Override
 	public List<FTPFile> getData(String remote, boolean isFloder) {
 		return getFileServiceInstance().getData(remote, isFloder);
-	}
-
-	@Override
-	public boolean saveFile(MultipartFile multipartFile, String relativelyPath)
-			throws Exception {
-		return getFileServiceInstance().saveFile(multipartFile, relativelyPath);
 	}
 }

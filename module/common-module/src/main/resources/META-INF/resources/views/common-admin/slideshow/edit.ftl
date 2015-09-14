@@ -48,9 +48,6 @@
 				<i class="icon-user"></i>
 			</span>
 		</div>
-		<small class="red">
-			${(dicSetting.getParameterValue("slideshow.field.url.tip"))!""}
-		</small>
 	</div>
 </div>
 

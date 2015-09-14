@@ -25,7 +25,7 @@ public class SMSService extends BaseService {
 			return false;
 		}
 		
-		smsDao.resetNotVerify2Invalid(channelType, phone);
+		smsDao.resetNotVerify2Invalid(channelType);
 		
 		//根据 channelType 把之前的没验证的都重置为失效
 		ISMSEvent smsEvent = beans.values().iterator().next();

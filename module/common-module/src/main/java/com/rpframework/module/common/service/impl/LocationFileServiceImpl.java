@@ -11,7 +11,6 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.net.ftp.FTPFile;
 import org.springframework.util.Assert;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.rpframework.core.api.FileService;
 import com.rpframework.core.utils.DictionarySettingUtils;
@@ -57,11 +56,6 @@ public class LocationFileServiceImpl extends FileService {
 		return new FileInputStream(file);
 	}
 
-	@Override
-	public boolean saveFile(MultipartFile multipartFile, String relativelyPath) throws Exception {
-		return saveFile(multipartFile.getInputStream(), relativelyPath);
-	}
-	
 	@Override
 	public boolean deleteFile(String relativelyPath)  throws Exception{
 		relativelyPath = getFullFilePath(relativelyPath);

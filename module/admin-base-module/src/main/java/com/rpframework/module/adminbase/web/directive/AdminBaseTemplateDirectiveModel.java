@@ -44,7 +44,6 @@ public class AdminBaseTemplateDirectiveModel extends BaseTemplateDirectiveModel 
 	public void execute(Environment env, Map params, TemplateModel[] loopVars,
 			TemplateDirectiveBody body) throws TemplateException, IOException {
 		
-		//得到前端传进来的参数
 		String cmd = DirectiveUtils.getString("cmd", params);
 		Map paramWarp = new HashMap(params);
 		AdminUser adminUser = DirectiveUtils.getSessionAttrFormEnvironment(env, AdminBaseAct.SESSION_ADMIN_USER_KEY);
@@ -56,10 +55,10 @@ public class AdminBaseTemplateDirectiveModel extends BaseTemplateDirectiveModel 
 			} else {
 				pass = roleAdminAuthResVerifyEvent.checkLimit(adminUser, uri);
 			}
-		} else if(StringUtils.equals(cmd, AD_MENU_LIST)) { //如果是AD_MENU_LIST
+		} else if(StringUtils.equals(cmd, AD_MENU_LIST)) {
 			Integer pId = DirectiveUtils.getInt("pId", params);
 			AdminMenuService adminMenuService = SpringUtils.getBean("adminMenuService");
-			List<AdminMenu> list = adminMenuService.getMenuListByParentId(pId);
+			List<AdminMenu> list = adminMenuService.adminMenuDao.getMenuListByParentId(pId);
 			paramWarp.put("m_list", ObjectWrapper.DEFAULT_WRAPPER.wrap(list));
 		} else if(StringUtils.equals(cmd, AD_CHECK_MENU_LIMIT)) {
 			if(adminUser == null) {
@@ -91,7 +90,7 @@ public class AdminBaseTemplateDirectiveModel extends BaseTemplateDirectiveModel 
 			paramWarp.put("r_list", ObjectWrapper.DEFAULT_WRAPPER.wrap(list));
 		} else if(StringUtils.equals(cmd, AD_PARENT_ADMINAUTHRES_LIST)) {
 			AdminAuthResService adminAuthResService = SpringUtils.getBean("adminAuthResService");
-			List<AdminAuthRes> list = adminAuthResService.getAdminAuthResByParentId(new Integer(0));
+			List<AdminAuthRes> list = adminAuthResService.adminAuthResDao.getAdminAuthResByParentId(new Integer(0));
 			paramWarp.put("ar_list", ObjectWrapper.DEFAULT_WRAPPER.wrap(list));
 		} else if(StringUtils.equals(cmd, AD_ROLE_HAS_PERM)) {
 			AdminRole adminRole = DirectiveUtils.getObject("adminRole", params);

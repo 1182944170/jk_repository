@@ -21,19 +21,7 @@ public class NumberUtils {
 	 * @return true 为有效数字
 	 */
 	public static boolean isValid(Number n) {
-		if(n != null) {
-			if(n instanceof Double) {
-				return n.doubleValue() > 0D;
-			} else if (n instanceof Float){
-				return n.floatValue() > 0L;
-			} else if (n instanceof Long){
-				return n.longValue() > 0L;
-			}
-			
-			return n.intValue() > DEFAULT_VALUE;
-		} else {
-			return false;
-		}
+		return (n != null && n.intValue() > DEFAULT_VALUE);
 	}
 	/**
 	 * 判断该数字是否为无效数字

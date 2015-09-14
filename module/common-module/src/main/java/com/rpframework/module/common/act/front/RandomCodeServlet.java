@@ -31,14 +31,13 @@ public class RandomCodeServlet {
 	 */
 	private int width = 60;
 	// 验证码图片的高度。
-	private int height = 30;
+	private int height = 20;
 	
 	@RequestMapping("/admin")
 	public void serviceForAdmin(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, java.io.IOException {
 		doMakeImg(req, resp, GlobalConstant.ADMIN_RANDOM_CODE_SESSION);
 	}
-	
 	
 	@RequestMapping
 	public void service(HttpServletRequest req, HttpServletResponse resp)
@@ -61,7 +60,7 @@ public class RandomCodeServlet {
 		g.fillRect(0, 0, width, height);
 
 		// 创建字体，字体的大小应该根据图片的高度来定。
-		Font font = new Font("Times New Roman", Font.BOLD, 21);
+		Font font = new Font("Times New Roman", Font.BOLD, 18);
 		// 设置字体。
 		g.setFont(font);
 
@@ -96,7 +95,7 @@ public class RandomCodeServlet {
 			// 用随机产生的颜色将验证码绘制到图像中。
 			g.setColor(new Color(red, green, blue));
 
-			g.drawString(strRand, 13 * i + 5, 21);// 随机数字、左边距（间距）、上边距
+			g.drawString(strRand, 13 * i + 5, 18);// 随机数字、左边距（间距）、上边距
 
 			// 将产生的四个随机数组合在一起。
 			randomCode.append(strRand);

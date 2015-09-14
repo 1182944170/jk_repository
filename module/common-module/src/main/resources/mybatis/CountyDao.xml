@@ -8,12 +8,6 @@
 	<select id="queryAll" resultMap="mCounty">
 		select * from county where 1=1
 	</select>
-	<select id="searchByCountry" resultMap="mCounty">
-		select * from county where provinceCode=#{citycode}
-	</select>
-	<select id="searchByCityCode" resultMap="mCounty">
-		select * from county where code=#{dbcode}
-	</select>
 
 	<update id="update" parameterType="com.rpframework.module.common.domain.County" />
 	<insert id="insert" parameterType="com.rpframework.module.common.domain.County" useGeneratedKeys="true" keyProperty="code"/>

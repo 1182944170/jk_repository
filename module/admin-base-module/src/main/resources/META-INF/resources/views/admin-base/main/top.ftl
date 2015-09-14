@@ -264,7 +264,6 @@
 						</li>
 					</ul>
 				</li>
-				<li class="purple"></li>
 			</ul><!-- /.ace-nav -->
 		</div><!-- /.navbar-header -->
 	</div><!-- /.container -->

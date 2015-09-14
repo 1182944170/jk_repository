@@ -13,12 +13,10 @@ import org.springframework.stereotype.Component;
 import com.rpframework.core.freemarker.directive.BaseTemplateDirectiveModel;
 import com.rpframework.core.freemarker.directive.DirectiveUtils;
 import com.rpframework.core.utils.SpringUtils;
-import com.rpframework.module.common.domain.CfgBank;
 import com.rpframework.module.common.domain.Document;
 import com.rpframework.module.common.domain.Help;
 import com.rpframework.module.common.domain.Notice;
 import com.rpframework.module.common.domain.Slideshow;
-import com.rpframework.module.common.service.CfgBankService;
 import com.rpframework.module.common.service.DocumentService;
 import com.rpframework.module.common.service.HelpSevice;
 import com.rpframework.module.common.service.NoticeService;
@@ -39,7 +37,6 @@ public class CommonTemplateDirectiveModel extends BaseTemplateDirectiveModel {
 	static final String HAS_INCLUDE_FILE = "has_include_file";
 	static final String DOCUMENT_LIST = "document_list";
 	static final String NOTICE_LIST = "notice_list";
-	static final String BANK_LIST = "bank_list";
 	static final String NOTICE_BY_ID = "notice_by_id";
 	static final String SLIDESHOW_LIST = "slideshow_list";
 	static final String HELP_LIST_GROUP_TYPE = "help_list_group_type";
@@ -68,11 +65,6 @@ public class CommonTemplateDirectiveModel extends BaseTemplateDirectiveModel {
 			
 			DocumentService documentService = SpringUtils.getBean(DocumentService.class);
 			List<Document> list = documentService.queryAllByParentId(0);
-			paramWarp.put("m_list", ObjectWrapper.DEFAULT_WRAPPER.wrap(list));
-		}  else if(StringUtils.equals(cmd, BANK_LIST)) {
-			
-			CfgBankService cfgBankService = SpringUtils.getBean(CfgBankService.class);
-			List<CfgBank> list = cfgBankService.queryAllEffective();
 			paramWarp.put("m_list", ObjectWrapper.DEFAULT_WRAPPER.wrap(list));
 		} else if(StringUtils.equals(cmd, SLIDESHOW_LIST)) {
 			

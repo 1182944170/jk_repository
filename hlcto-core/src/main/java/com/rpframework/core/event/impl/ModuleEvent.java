@@ -14,11 +14,6 @@ public abstract class ModuleEvent implements IModuleEvent {
 	public void applySiteMeshCustomConfiguration(SiteMeshFilterBuilder builder) {
 
 	}
-	
-	@Override
-	public void preInit(ServletContext servletContext) {
-
-	}
 
 	@Override
 	public void init(ServletContext servletContext) {

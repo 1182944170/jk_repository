@@ -107,15 +107,6 @@ public class PageInterceptor implements Interceptor {
      */
     private void setPageParameter(String sql, Connection connection, MappedStatement mappedStatement,
             BoundSql boundSql, Pager<?> page) {
-    	int orderByIdx = sql.lastIndexOf("order by");
-	    if (orderByIdx == -1) {
-	    	
-	    } else {
-	    	int flagIdx = sql.lastIndexOf(")");
-	    	if(flagIdx < orderByIdx) {
-	    		sql = sql.substring(0, orderByIdx);
-	    	}
-	    }
         // 记录总记录数
         String countSql = "select count(0) from (" + sql + ") as total";
         PreparedStatement countStmt = null;

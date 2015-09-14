@@ -7,8 +7,4 @@ import com.rpframework.module.common.domain.County;
 
 public interface ICountyDao extends IDao {
 	List<County> queryAll();
-
-	List<County> searchByCountry(String citycode);
-
-	County searchByCityCode(String dbcode);
 }

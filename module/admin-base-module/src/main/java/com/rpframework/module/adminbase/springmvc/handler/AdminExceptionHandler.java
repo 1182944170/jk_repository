@@ -24,8 +24,6 @@ public class AdminExceptionHandler implements HandlerExceptionResolver {
 		if(StringUtils.indexOf(requestURI, "/admin/") >= 0) {
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("ex", ex);
-			
-			ex.printStackTrace();
 			return new ModelAndView("admin-base/exception", map);
 		}
 		

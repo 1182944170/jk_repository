@@ -6,5 +6,5 @@ import com.rpframework.module.common.domain.SMS;
 public interface ISMSDao extends IDao {
 	SMS findSMSByChannelTypeAndPhone(Integer channelType, String phone);
 
-	void resetNotVerify2Invalid(int channelType, String phone);
+	void resetNotVerify2Invalid(int channelType);
 }

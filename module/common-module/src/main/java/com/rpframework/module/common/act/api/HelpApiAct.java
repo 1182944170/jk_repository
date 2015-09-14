@@ -54,11 +54,4 @@ public class HelpApiAct extends CommonBaseAct {
 		o.addProperty("typeString", DictionarySettingUtils.getParameterValue("help.type." + help.getType()));
 		return o;
 	}
-	
-	@RequestMapping("/{aliasesTitle}/page")
-	public String viewPage(@PathVariable String aliasesTitle, Map<String, Object> model){
-		Help help = helpSevice.getHelpByaliasesTitle(aliasesTitle);
-		model.put("help", help);
-		return "/api/help/page";
-	}
 }

@@ -8,34 +8,25 @@
 		<association property="parent" column="parentId" select="select" />
 		<collection property="children" column="id" select="getMenuListByParentId" />
 	</resultMap>
-	
-	<sql id="mBaseSql"> 
-		select 
-			_admin_menu.*
-		from 
-			admin_menu _admin_menu
-	</sql>
-	
+
 	<select id="getMenuListByParentId" parameterType="Integer" resultMap="adminMenu">
-		<include refid="mBaseSql" />
-		where 1=1 
+		select * from admin_menu where 1=1 
 		<choose>
             <when test="_parameter>0">
-				and _admin_menu.parentId=#{parentId}
+				and parentId=#{parentId}
             </when>
             <otherwise>
-				and _admin_menu.parentId is NULL
+				and parentId is NULL
             </otherwise>
         </choose>
         
-        order by _admin_menu.orderIndex
+        order by orderIndex
 	</select>
 	
 	<update id="update" parameterType="com.rpframework.module.adminbase.domain.AdminMenu" />
 	<insert id="insert" parameterType="com.rpframework.module.adminbase.domain.AdminMenu" useGeneratedKeys="true" keyProperty="id"/>
 	<delete id="delete" parameterType="com.rpframework.module.adminbase.domain.AdminMenu" />
 	<select id="select" parameterType="Integer" resultMap="adminMenu">
-		<include refid="mBaseSql" />
-		where _admin_menu.id=#{id}
+		select * from admin_menu where id=#{id}
 	</select>
 </mapper>

@@ -5,7 +5,6 @@ import java.util.Map;
 import javax.servlet.ServletContext;
 
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationEvent;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.rpframework.utils.CollectionUtils;
@@ -47,9 +46,5 @@ public class SpringUtils {
 	
 	public static ServletContext getServletContext(){
 		return SpringUtils.context;
-	}
-	
-	public static void publishEvent(ApplicationEvent event) {
-		getApplicationContext().publishEvent(event);
 	}
 }
