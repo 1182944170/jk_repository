@@ -20,6 +20,16 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+    	<groupId>com.rpframework</groupId>
+    	<artifactId>admin-base-module</artifactId>
+    	<version>1.0</version>
+    </dependency>
+    <dependency>
+    	<groupId>com.rpframework</groupId>
+    	<artifactId>common-module</artifactId>
+    	<version>1.0</version>
+    </dependency>
   </dependencies>
   <build>
     <finalName>luoluo</finalName>

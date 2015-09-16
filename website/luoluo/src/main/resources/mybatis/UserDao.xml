@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.website.luoluo.dao.IUserDao">
+
+	<resultMap type="com.rpframework.website.luoluo.domain.User" id="user" autoMapping="true">
+		<id property="id" column="id" />
+	</resultMap>		
+
+	<select id="doPager" resultMap="user">
+		select * from user where 1=1
+		<if test = "page.searchMap.typeid != null">
+			and type = #{page.searchMap.typeid}
+		</if>
+		<if test = "page.searchMap.typeOne != null">
+			and id = #{page.searchMap.typeOne}
+		</if>
+		<if test = "page.searchMap.type != null">
+			and type = #{page.searchMap.type}
+		</if>
+		<if test = "page.searchMap.se != null">
+			and id = #{page.searchMap.se}
+		</if>
+	</select>
+	  <select id="findUserBy" resultMap="user">
+		select * from user where phone=#{name} 
+    </select>
+     <select id="findUserByName" resultMap="user">
+		select * from user where name=#{name} 
+    </select>
+    
+    <select id="findUserByPhone" resultMap="user">
+		select * from user where 1=1 and phone =#{phone} 
+	</select>
+	 <select id="AccoutSelect" resultMap="user" parameterType="String">
+		select * from user where acnumber=#{uid} and type=1
+    </select>
+    
+	<update id="update" parameterType="com.rpframework.website.luoluo.domain.User" />
+	<insert id="insert" parameterType="com.rpframework.website.luoluo.domain.User" useGeneratedKeys="true" keyProperty="id"/>
+	<delete id="delete" parameterType="com.rpframework.website.luoluo.domain.User" />
+	<select id="select" parameterType="Integer" resultMap="user">
+		select * from user where id=#{id} order by id
+	</select>
+</mapper>

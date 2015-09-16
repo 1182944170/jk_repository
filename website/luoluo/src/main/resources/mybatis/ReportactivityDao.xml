@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.website.luoluo.dao.IReportactivityDao">
+
+	<resultMap type="com.rpframework.website.luoluo.domain.Reportactivity" id="Reportactivity" autoMapping="true">
+		<id property="id" column="id" />
+	</resultMap>		
+
+	<select id="doPager" resultMap="Reportactivity">
+		select * from report_activity where 1=1
+	</select>
+	  <select id="findUserBy" resultMap="Reportactivity">
+		select * from report_activity where label=#{name} 
+    </select>
+	
+	<insert id="insert" parameterType="com.rpframework.website.luoluo.domain.Reportactivity" useGeneratedKeys="true" keyProperty="id"/>
+	<delete id="delete" parameterType="com.rpframework.website.luoluo.domain.Reportactivity" />
+	<select id="select" parameterType="Integer" resultMap="Reportactivity">
+		select * from report_activity where id=#{id} 
+	</select>
+</mapper>

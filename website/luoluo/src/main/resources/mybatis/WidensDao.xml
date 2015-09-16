@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.website.luoluo.dao.IWidensDao">
+
+	<resultMap type="com.rpframework.website.luoluo.domain.Widens" id="Widens" autoMapping="true">
+		<id property="id" column="id" />
+	</resultMap>		
+	<select id="doPager" resultMap="Widens">
+		select * from widens where 1=1
+		<if test = "page.searchMap.typeid != null">
+			and type = #{page.searchMap.typeid}
+		</if>
+	</select>
+	<update id="update" parameterType="com.rpframework.website.luoluo.domain.Widens" />
+	<insert id="insert" parameterType="com.rpframework.website.luoluo.domain.Widens" useGeneratedKeys="true" keyProperty="id"/>
+	<delete id="delete" parameterType="com.rpframework.website.luoluo.domain.Widens" />
+	<select id="select" parameterType="Integer" resultMap="Widens">
+		select * from widens where id=#{id} order by id
+	</select>
+</mapper>
