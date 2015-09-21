@@ -10,6 +10,9 @@ import java.util.List;
 
 
 
+
+
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -32,8 +35,10 @@ import com.rpframework.core.utils.TagUtils;
 import com.rpframework.utils.DateUtils;
 import com.rpframework.utils.NumberUtils;
 import com.rpframework.utils.Pager;
+import com.rpframework.website.luoluo.domain.Mypersonalitylabel;
 import com.rpframework.website.luoluo.domain.User;
 import com.rpframework.website.luoluo.exception.APICodeException;
+import com.rpframework.website.luoluo.service.MypersonalitylabelService;
 import com.rpframework.website.luoluo.service.UserService;
 
 
@@ -43,7 +48,7 @@ public class ApiUserAct extends BaseAct{
 	Gson gson = new Gson();
 	@Resource UserService userservice;
 	@Resource FileService fileService;
-	
+	@Resource MypersonalitylabelService mypersonalitylabelService;
 	/**
 	 * 用户列表
 	 * @date 2015年7月13日 下午5:47:24
@@ -108,15 +113,15 @@ public class ApiUserAct extends BaseAct{
 	 * @throws InterruptedException
 	 */
 	@RequestMapping("/user_one")
-	public @ResponseBody JsonElement userone(HttpSession session) throws ParserException, InterruptedException{
+	public @ResponseBody JsonElement userone(@RequestParam(required=false) String type,HttpSession session) throws ParserException, InterruptedException{
 		JsonObject json = new JsonObject();
 		User currUser = getSessionUser(session);
 		if(currUser == null){
 			throw new APICodeException(-4, "你还没登陆!");
 		}
-		if(currUser.getType()==0){
+		if(type.equals(0)){
 			currUser.setType(2);
-		}else if(currUser.getType()==2){
+		}else if(type.equals(2)){
 			currUser.setType(0);
 		}
 			
@@ -135,30 +140,33 @@ public class ApiUserAct extends BaseAct{
 	 */
 	@RequestMapping("/update_data")
 	public @ResponseBody JsonElement updateData(
-			@RequestParam(required=false) String nameNick ,
-			@RequestParam(required=false) Integer sex ,
-			@RequestParam(required=false) Integer age ,
-			@RequestParam(required=false) Integer marriage ,
-			@RequestParam(required=false) String hobbues ,
-			@RequestParam(required=false) String constellation ,
-			@RequestParam(required=false) String company ,
-			@RequestParam(required=false) String nowlive ,
-			@RequestParam(required=false) String hometown ,
-			@RequestParam(required=false) String qqaccount ,
-			@RequestParam(required=false) String loveStar ,
-			@RequestParam(required=false) String lovemuice ,
-			@RequestParam(required=false) String loveDeliciousfood ,
-			@RequestParam(required=false) String loveFilm ,
-			@RequestParam(required=false) String signature ,
+			@RequestParam(required=false) String nameNick,
+			@RequestParam(required=false) String sex,
+			@RequestParam(required=false) String age,
+			@RequestParam(required=false) String marriage ,
+			@RequestParam(required=false) String hobbues,
+			@RequestParam(required=false) String constellation,
+			@RequestParam(required=false) String company,
+			@RequestParam(required=false) String nowlive,
+			@RequestParam(required=false) String hometown,
+			@RequestParam(required=false) String qqaccount,
+			@RequestParam(required=false) String loveStar,
+			@RequestParam(required=false) String lovemuice,
+			@RequestParam(required=false) String loveDeliciousfood,
+			@RequestParam(required=false) String loveFilm,
+			@RequestParam(required=false) String signature,
 			HttpSession session){
 		JsonObject json = new JsonObject();
 		User currUser = getSessionUser(session);
 		if(currUser == null){
 			throw new APICodeException(-4, "你还没登陆!");
 		}
+		int sexs = Integer.parseInt(sex);
+		int ages=Integer.parseInt(age);
+		
 		currUser.setNameNick(nameNick);
-		currUser.setSex(sex);
-		currUser.setAge(age);
+		currUser.setSex(sexs);
+		currUser.setAge(ages);
 		currUser.setMarriage(marriage);
 		currUser.setHobbues(hobbues);
 		currUser.setConstellation(constellation);
@@ -170,7 +178,7 @@ public class ApiUserAct extends BaseAct{
 		currUser.setLovemuice(lovemuice);
 		currUser.setLoveDeliciousfood(loveDeliciousfood);
 		currUser.setLoveFilm(loveFilm);
-		currUser.setNameNick(signature);
+		currUser.setSignature(signature);
 		boolean bFlag = userservice.updatedo(currUser);
 		if(bFlag){
 			json.addProperty("succ", bFlag);
@@ -185,19 +193,22 @@ public class ApiUserAct extends BaseAct{
 		json.addProperty("userPic", TagUtils.getFileFullPath(user.getNamePic()));
 		json.addProperty("nickName", user.getNameNick());
 		json.addProperty("sex", user.getSex());
+		json.addProperty("age", user.getAge());
 		json.addProperty("phone", user.getPhone());
-		json.addProperty("marriage", user.getNameNick());
-		json.addProperty("constellation", user.getSex());
-		json.addProperty("company", user.getPhone());
-		json.addProperty("nowlive", user.getNameNick());
-		json.addProperty("hometown", user.getSex());
-		json.addProperty("qqaccount", user.getPhone());
-		json.addProperty("loveStar", user.getAcnumber());
-		json.addProperty("loveStar", user.getPhone());
-		json.addProperty("lovemuice", user.getNameNick());
-		json.addProperty("loveDeliciousfood", user.getSex());
-		json.addProperty("loveFilm", user.getPhone());
-		json.addProperty("signature", user.getPhone());
+		json.addProperty("marriage", user.getMarriage());
+		json.addProperty("constellation", user.getConstellation());
+		json.addProperty("company", user.getCompany());
+		json.addProperty("nowlive", user.getNowlive());
+		json.addProperty("hometown", user.getHometown());
+		json.addProperty("qqaccount", user.getQqaccount());
+		json.addProperty("hobbues", user.getHobbues());
+		json.addProperty("loveStar", user.getLoveStar());
+		json.addProperty("lovemuice", user.getLovemuice());
+		json.addProperty("loveDeliciousfood", user.getLoveDeliciousfood());
+		json.addProperty("loveFilm", user.getLoveFilm());
+		json.addProperty("signature", user.getSignature());
+		json.addProperty("ctiontime", user.getCtiontime());
+		json.addProperty("acnumber", user.getAcnumber());
 		return json;
 	}
 	/**
@@ -210,7 +221,7 @@ public class ApiUserAct extends BaseAct{
 		User user = getSessionUser(session);
 		if(userPic != null && !userPic.isEmpty()) {
 			try {
-				String relativelyPath = "kuale/user/userPic/" + DateUtils.nowDate(DateUtils.YYYYMMDDHHMMSS) + NumberUtils.random() + "." + FilenameUtils.getExtension(userPic.getOriginalFilename());
+				String relativelyPath = "luoluo/user/userPic/" + DateUtils.nowDate(DateUtils.YYYYMMDDHHMMSS) + NumberUtils.random() + "." + FilenameUtils.getExtension(userPic.getOriginalFilename());
 				fileService.saveFile(userPic.getInputStream(), relativelyPath);
 				boolean bFlag = userservice.changeUserPic(user, relativelyPath);
 				JsonObject json = new JsonObject();
@@ -229,6 +240,59 @@ public class ApiUserAct extends BaseAct{
 		}
 		throw new IllegalArgumentException("参数错误!");
 	}
+	
+	/**
+	 * 好友相信信息
+	 * @time 2015年7月30日 下午3:39:57
+	 */
+	@RequestMapping("/change_user_find")
+	public @ResponseBody JsonElement changeUserfind(
+			@RequestParam(required=false) Integer userid,
+			HttpSession session, HttpServletRequest request){
+		User currUser = getSessionUser(session);
+		if(currUser == null){
+			throw new APICodeException(-4, "你还没登陆!");		
+		}
+		JsonObject json = new JsonObject();
+		//用户
+		User user=userservice.selectOnlyOne(userid);
+		json.addProperty("id", user.getId());
+		json.addProperty("userPic", TagUtils.getFileFullPath(user.getNamePic()));
+		json.addProperty("nickName", user.getNameNick());
+		json.addProperty("sex", user.getSex());
+		json.addProperty("age", user.getAge());
+		json.addProperty("phone", user.getPhone());
+		json.addProperty("marriage", user.getMarriage());
+		json.addProperty("constellation", user.getConstellation());
+		json.addProperty("company", user.getCompany());
+		json.addProperty("nowlive", user.getNowlive());
+		json.addProperty("hometown", user.getHometown());
+		json.addProperty("qqaccount", user.getQqaccount());
+		json.addProperty("hobbues", user.getHobbues());
+		json.addProperty("loveStar", user.getLoveStar());
+		json.addProperty("lovemuice", user.getLovemuice());
+		json.addProperty("loveDeliciousfood", user.getLoveDeliciousfood());
+		json.addProperty("loveFilm", user.getLoveFilm());
+		json.addProperty("signature", user.getSignature());
+		json.addProperty("ctiontime", user.getCtiontime());
+		json.addProperty("acnumber", user.getAcnumber());
+		//标签
+		Mypersonalitylabel Myperson=mypersonalitylabelService.selectOnlyOne(userid);
+		json.addProperty("Mylabel1", Myperson.getMylabel1());
+		json.addProperty("Mylabel2", Myperson.getMylabel2());
+		json.addProperty("Mylabel3", Myperson.getMylabel3());
+		json.addProperty("Mylabel4", Myperson.getMylabel4());
+		json.addProperty("Mylabel5", Myperson.getMylabel5());
+		json.addProperty("Mylabel6", Myperson.getMylabel6());
+		json.addProperty("Mylabel7", Myperson.getMylabel7());
+		json.addProperty("Mylabel8", Myperson.getMylabel8());
+		json.addProperty("Userid", Myperson.getUserid());
+		return json;
+	}
+	
+	
+	
+	
 }
 
 

@@ -1,9 +1,9 @@
 <title>分类管理</title>
 <div class="row">
 	<div class="col-xs-12">
-	<form action="${ctx}/admin/user/seleNamePhone${suffix}" method="POST">
-		<input type="text" name="nameone"><input type="submit" value="搜索">&nbsp;&nbsp;&nbsp;
-		<a href="${ctx}/admin/user/${0}/state${suffix}"><b>允许的用户查询</b></a> &nbsp;&nbsp;&nbsp; <a href="${ctx}/admin/user/${1}/state${suffix}"><b>禁止的用户查询</b></a>
+	<form action="${ctx}/admin/advice/seleNamePhone${suffix}" method="POST">
+		<br>
+		<a href="${ctx}/admin/advice/${1}/state${suffix}"><b>已处理查询</b></a> &nbsp;&nbsp;&nbsp; <a href="${ctx}/admin/advice/${0}/state${suffix}"><b>未处理查询</b></a>
 	</form>
 		<div class="table-responsive">
 		<br>
@@ -11,10 +11,8 @@
 				<thead>
 					<tr>
 						<th>ID</th>
-						<th>用户姓名</th>
-						<th>用户性别</th>
 						<th>用户电话</th>
-						<th>用户密码</th>
+						<th>意见信息</th>
 						<th>状态</th>
 						<th></th>
 						
@@ -23,51 +21,36 @@
 				</thead>
 				<tbody>
 			<#list pager.itemList as u>
-					<tr>
-						<td><span class="green center">${u.id!}</span></td>
-						<td><span class="gray center">${u.name!}</span></td>
-						<th>
-						<#if u.sex == 1 >
-						女
-						</#if>
-						<#if u.sex == 0 >
-						男
-						</#if>
-						</th>
-						
-					
-						<td><span class="gray center">${u.phone!}</span></td>
-					
-						<th><span class="gray center">${u.password!}</span></th>
+						<td><span class="gray center">${u.id!}</span></td>
+						<td><span class="gray center">${u.userphone!}</span></td>
+						<th><span class="gray center">${u.comments!}</span></th>
 						<td>
 						<#if u.type == 0 >
-						<span class="gray center" style="color:Green"><b>允许</b></span>
+						<span class="gray center" style="color:red"><b>未处理</b></span>
+						
 						</#if>
 						<#if u.type == 1 >
-						<span class="gray center" style="color:red"><b>禁止</b></span>
+						<span class="gray center" style="color:Green"><b>已处理</b></span>
 						</#if>
 						</td>
-				
 						<td>
 							<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
-								<a class="green" href="${ctx}/admin/user/${u.id}/edit${suffix}" alt="Edit">
+								<a class="green" href="${ctx}/admin/advice/${u.id}/edit${suffix}" alt="Edit">
 									<i class="icon-pencil bigger-130"></i>
 								</a>
 								<#if u.type == 0 >
-								<a class="red" href="${ctx}/admin/user/${u.id}/saveUserda${suffix}" onclick="return confirm('你确定禁止用户么?');" alt="Delete">
-									<img src="${ctx}/resources/images/zhengque.jpg" width="15" height="15" alt="" />
-								</a>
-								</#if>
-								<#if u.type == 1 >
-								<a class="red" href="${ctx}/admin/user/${u.id}/saveUserda${suffix}" onclick="return confirm('你确定允许用户么?');" alt="Delete">
+								
+								<a class="red" href="${ctx}/admin/advice/${u.id}/saveUserda${suffix}" onclick="return confirm('你确定允许用户么?');" alt="Delete">
 									<img src="${ctx}/resources/images/jinzhi.jpg" width="15" height="15" alt="" />
 								</a>
 								</#if>
-								
-								<a class="red" href="${ctx}/admin/user/${u.id}/deletUser${suffix}" onclick="return confirm('你确定删除么?');" alt="Delete">
-									<i class="icon-trash bigger-130"></i>
+								<#if u.type == 1 >
+								<a class="red" href="${ctx}/admin/advice/${u.id}/saveUserda${suffix}" onclick="return confirm('你确定禁止用户么?');" alt="Delete">
+									<img src="${ctx}/resources/images/zhengque.jpg" width="15" height="15" alt="" />
 								</a>
-							
+								</#if>
+								
+			
 							</div>
 	
 							<!--<div class="visible-xs visible-sm hidden-md hidden-lg">
@@ -132,6 +115,6 @@
 <script>
 	$(document).ready(function(){
 		RP.addBreadcrumb([{name:"基础配置"}, {name:"用户", active: true}]);
-		$("#breadcrumbs ul").append('&nbsp;&nbsp;&nbsp;&nbsp;<a href="${ctx}/admin/user/add${suffix}"><i class="icon-zoom-in"></i><span class="label label-warning arrowed-in arrowed-in arrowed-right">添加用户</span></a>');
+		$("#breadcrumbs ul").append('&nbsp;&nbsp;&nbsp;&nbsp;);
 	});
 </script>

@@ -17,24 +17,27 @@ import com.rpframework.website.luoluo.domain.ClaGoods;
 public class ClaGoodsService extends BaseService{
 	
 	@Resource
-	public IClaGoodsDao claGoodsDao;
+	public IClaGoodsDao claDao;
 	
 	public List<ClaGoods> getMovieActorByMovieId(Integer goodId) {
-		return claGoodsDao.getGoodsByclaId(goodId);
+		return claDao.getGoodsByclaId(goodId);
 	}
 	
 	public boolean insertOrUpdateByMovie(Integer goodId, List<ClaGoods> claGoods) {
 		this.deleteListByMovieId(goodId);
+		
+		
 		if(CollectionUtils.isEmpty(claGoods)) {//clear
 		} else {
 			for (ClaGoods cla : claGoods) {
-				claGoodsDao.insert(cla);
+				
+				claDao.insert(cla);
 			}
 		}
 		return true;
 	}
 
 	public void deleteListByMovieId(Integer goodId) {
-		claGoodsDao.deleteByGoodsId(goodId);
+		claDao.deleteByGoodsId(goodId);
 	}
 }

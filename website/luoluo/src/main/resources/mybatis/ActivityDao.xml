@@ -8,7 +8,7 @@
 		<collection property="classList" column="id" select="com.rpframework.website.luoluo.dao.IClaGoodsDao.getGoodsByclaId" />
 	</resultMap>		
 	<select id="doPager" resultMap="Activity">
-		select * from release_activity where 1=1
+		select * from release_activity where 1=1 order by id desc
 	</select>
 	<update id="update" parameterType="com.rpframework.website.luoluo.domain.Activity" />
 	<insert id="insert" parameterType="com.rpframework.website.luoluo.domain.Activity" useGeneratedKeys="true" keyProperty="id"/>

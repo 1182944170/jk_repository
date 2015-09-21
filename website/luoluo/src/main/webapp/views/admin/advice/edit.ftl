@@ -1,59 +1,48 @@
-<title>添加系统消息</title>
+<title>修改用户信息</title>
 <div class="page-header">
 	<h1>
-		添加系统消息
+		修改用户信息
 		<small>
 			<i class="icon-double-angle-right"></i>
 		</small>
 	</h1>
 </div>
 
-<form action="${ctx}/admin/windens/dosave${suffix}" class="form-horizontal" role="form" id="validation-form" method="POST" enctype="multipart/form-data">
+<form action="${ctx}/admin/advice/${user.id}/saveUserda${suffix}" class="form-horizontal" role="form" id="validation-form" method="POST" enctype="multipart/form-data">
+
 <fieldset>
-
-<div class="form-group">
-	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="clubId">系统标题:</label>
-	<div class="col-xs-12 col-sm-9">
-		<div class="clearfix">
-			<span class="block input-icon width-40">
-				<input type="text" name ="syTitle" value=""  maxlength="32" class="form-control" placeholder="系统提示"/>
-				<i class="icon-user"></i>
-			</span>
-		</div>
-	</div>
-</div>
-
-<div class="form-group">
-	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="nickName">系统内容:</label>
-	<div class="col-xs-12 col-sm-9">
-		<div class="clearfix">
-			<span class="block input-icon width-40">
-				<textarea rows="10" cols="10" name="sycontent" id="clubName" value=""  maxlength="32" class="form-control"></textarea >
-			</span>
-		</div>
-	</div>
-</div>
-
-
-<div class="form-group">
-	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="userPicPath">系统图片:</label>
-	<div class="col-xs-12 col-sm-9">
-		<div class="clearfix">
-			<div class="ace-file-input width-40">
-				<input type="file" name="mainFile" id="id-input-file-1" value="">
+	<input type="hidden" name="id" value="${user.id}">
+	<div class="form-group">
+		<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="phone">电话号码:</label>
+		<div class="col-xs-12 col-sm-9">
+			<div class="clearfix">
+				<span class="block input-icon width-40">
+					<input type="text" name="phone" readonly id="phone" value="${user.userphone!}" maxlength="20" class="form-control" placeholder="电话号码" onblur="onblurs()"/>
+					<i class="icon-user"></i><font color="red" id="cue" name="cue"></font>
+				</span>
 			</div>
-			<small>* 已经存在的icon如果不修改则不需要填写</small>
+		</div>
+	</div>
+
+
+<div class="form-group">
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">公司简介:</label>
+	<div class="col-xs-12 col-sm-9">
+		<div class="clearfix">
+			<span class="block input-icon width-40">
+				<@fck value="${(user.comments)!''}" instanceName="entintroduction" inputName="entintroduction" height="300px;" toolbarSet="Basic">
+		    	${fck_body}
+		    </@fck>
+			</span>
 		</div>
 	</div>
 </div>
-
-
 
 <div class="form-group">
 	<div class="col-md-offset-3 col-md-9">
-		<button class="btn btn-info" type="submit"><i class="icon-ok bigger-110"></i>提  交</button>
+		<button class="btn btn-info" type="submit"><i class="icon-ok bigger-110"></i>处理</button>
 		&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
-		<button class="btn" type="reset"><i class="icon-undo bigger-110"></i>重  置</button>
+		<button class="btn" type="reset"><i class="icon-undo bigger-110"></i>取消</button>
 	</div>
 </div>
 
@@ -93,7 +82,7 @@
 	}
 
 	$(document).ready(function(){
-		RP.addBreadcrumb([{name:"基础设置"}, {name:"编辑系统消息",  active: true}]);
+		RP.addBreadcrumb([{name:"基础设置"}, {name:"修改用户",  active: true}]);
 		$('#id-input-file-1').ace_file_input({
 			no_file:'没图片 ...',
 			btn_choose:'请选择图片',

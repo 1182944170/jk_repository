@@ -6,16 +6,18 @@
 				<thead>
 					<tr>
 						<th>ID</th>
-						<th>领队姓名</th>
+						
+						<th>真实头像</th>
 						<th>领队电话</th>
-						<th>领队信息</th>
+						
 				<#if se??>
 						<th>公司负责手机</th>
 						<th>公司电话</th>
-						<th>公司负责人信息</th>
+						
 						<th>公司信息</th>
 				</#if>		
 						<th>类型</th>
+						<th>状态</th>
 						<th>注册时间</th>
 						
 						<th></th>
@@ -25,19 +27,20 @@
 				<tbody>
 				<#list pager.itemList as u>
 					<tr>
+						<input type="hidden" id="toor" value="${u.type}">
 						<td><span class="green center">${u.id}</span></td>
-						 <@showprive cmd="get_showprive_list" type="${u.userid!}" pagerString="1_" pageSize="50">
-                			<#list m_pager.itemList as f>
-								<td><span class="gray center">${f.name!}</span></td>
-						    </#list>
-  						</@showprive>
-							<td><span class="gray center">${u.user_phone!}</span></td>
-					        <td><span class="gray center">${u.user_information!}</span></td>
+						
+  						<th><img src="${tagUtils.getFileFullPath(u.userpicture!)}" width="90px" height="40px"/></th>
+							<td><span class="gray center">${u.userphone!}</span></td>
+					        
 				        <#if u.type==2>
-					        <td><span class="gray center">${u.user_telephone}</span></td>
+							<td><span class="gray center">${u.usertelephone!}</span></td>
 							<td><span class="gray center">${u.telephone!}</span></td>
-							<td><span class="gray center">${u.responsibility!}</span></td>
-					        <td><span class="gray center">${u.ent_introduction!}</span></td>
+							
+					        <td>
+					        	<input type="text" value="${u.entintroduction!}" readonly style="overflow-x:visible;width:210px;border:0px solid #F9F9F9" >
+					       	
+					        </td>
 				        </#if>
 				        <#if u.type==1>
 				        	<td><span class="gray center">个人</span></td>
@@ -45,7 +48,15 @@
 				        <#if u.type==2>
 				        	<td><span class="gray center">公司</span></td>
 				        </#if>
-				         	<td><span class="gray center">${u.activityTime!}</span></td>
+				       <#if u.typeopp == 1 >
+						<td><span class="gray center" style="color:Green"><b>已审核</b></span></td>
+						</#if>
+						<#if u.typeopp == 0 >
+						<td><span class="gray center" style="color:red"><b>未审核</b></span></td>
+						</#if>
+				        
+				        
+				         	<td><span class="gray center">${tagUtils.formatDate(u.activityTime)!""}</span></td>
 						<td>
 							<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
 								<a class="green" href="${ctx}/admin/spons/${u.id}/edit${suffix}" alt="Edit">
@@ -110,7 +121,8 @@
 </#if>
 <script>
 	$(document).ready(function(){
+	
 		RP.addBreadcrumb([{name:"基础配置"}, {name:"活动添加", active: true}]);
-		$("#breadcrumbs ul").append('&nbsp;&nbsp;&nbsp;&nbsp;<a href="${ctx}/admin/good/add${suffix}"><i class="icon-zoom-in"></i><span class="label label-warning arrowed-in arrowed-in arrowed-right">添加商品管理</span></a>');
+		$("#breadcrumbs ul").append('&nbsp;&nbsp;&nbsp;&nbsp;<a href="${ctx}/admin/spons/add${suffix}"><i class="icon-zoom-in"></i><span class="label label-warning arrowed-in arrowed-in arrowed-right">新增<#if se??>企业<#else>个人</#if>管理</span></a>');
 	});
 </script>

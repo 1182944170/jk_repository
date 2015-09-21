@@ -23,6 +23,15 @@ import com.rpframework.website.luoluo.service.ReportactivityService;
 public class ApiReportactivityAct  extends BaseAct{
 	@Resource ReportactivityService reportactivityService;
 	
+	/**
+	 * 举报
+	 * @param activityid
+	 * @param reportContext
+	 * @param session
+	 * @return
+	 * @throws ParserException
+	 * @throws InterruptedException
+	 */
 	@RequestMapping("add")
 	public @ResponseBody JsonElement userlist(	
 			@RequestParam(required=false) Integer activityid,

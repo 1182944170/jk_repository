@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.website.luoluo.dao.IMypersonalitylabelDao">
+
+	<resultMap type="com.rpframework.website.luoluo.domain.Mypersonalitylabel" id="mypersonalitylabel" autoMapping="true">
+		<id property="id" column="id" />
+	</resultMap>		
+	<select id="doPager" resultMap="mypersonalitylabel">
+		select * from mypersonalitylabel where 1=1 order by id desc
+		
+	</select>
+	<update id="update" parameterType="com.rpframework.website.luoluo.domain.Mypersonalitylabel" />
+	<insert id="insert" parameterType="com.rpframework.website.luoluo.domain.Mypersonalitylabel" useGeneratedKeys="true" keyProperty="id"/>
+	<delete id="delete" parameterType="com.rpframework.website.luoluo.domain.Mypersonalitylabel" />
+	<select id="select" parameterType="Integer" resultMap="mypersonalitylabel">
+		select * from mypersonalitylabel where id=#{id} order by id
+	</select>
+</mapper>

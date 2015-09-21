@@ -3,21 +3,23 @@
 
 <mapper namespace="com.rpframework.website.luoluo.dao.ISponsorDao">
 
-	<resultMap type="com.rpframework.website.luoluo.domain.Sponsor" id="Sponsor" autoMapping="true">
+	<resultMap type="com.rpframework.website.luoluo.domain.Sponsorlis" id="sponsor" autoMapping="true">
 		<id property="id" column="id" />
 	</resultMap>		
 
-	<select id="doPager" resultMap="Sponsor">
+	<select id="doPager" resultMap="sponsor">
 		select * from sponsor where 1=1
 		<if test = "page.searchMap.teyeid!= null">
 			and type = #{page.searchMap.teyeid}
 		</if>
+		order by id desc
+	</select>
+<update id="update" parameterType="com.rpframework.website.luoluo.domain.Sponsorlis" />
+	<insert id="insert" parameterType="com.rpframework.website.luoluo.domain.Sponsorlis" useGeneratedKeys="true" keyProperty="id"/>
+	<delete id="delete" parameterType="com.rpframework.website.luoluo.domain.Sponsorlis" />
+	
+	<select id="select" parameterType="Integer" resultMap="sponsor">
+         select * from  sponsor where id=#{id}
 	</select>
 
-	<update id="update" parameterType="com.rpframework.website.luoluo.domain.Sponsor" />
-	<insert id="insert" parameterType="com.rpframework.website.luoluo.domain.Sponsor" useGeneratedKeys="true" keyProperty="id"/>
-	<delete id="delete" parameterType="com.rpframework.website.luoluo.domain.Sponsor" />
-	<select id="select" parameterType="Integer" resultMap="Sponsor">
-		select * from sponsor where id=#{id} 
-	</select>
 </mapper>

@@ -7,15 +7,16 @@
 		<id property="id" column="id" />
 	</resultMap>		
 	<select id="doPager" resultMap="Myimpression">
-		select * from Myimpression where 1=1
+		select * from myimpression where 1=1
 		<if test = "page.searchMap.type != null">
 			and userid = #{page.searchMap.type}
 		</if>
+		order by id desc
 	</select>
 	<update id="update" parameterType="com.rpframework.website.luoluo.domain.Myimpression" />
 	<insert id="insert" parameterType="com.rpframework.website.luoluo.domain.Myimpression" useGeneratedKeys="true" keyProperty="id"/>
 	<delete id="delete" parameterType="com.rpframework.website.luoluo.domain.Myimpression" />
 	<select id="select" parameterType="Integer" resultMap="Myimpression">
-		select * from Myimpression where id=#{id} order by id
+		select * from myimpression where id=#{id} order by id
 	</select>
 </mapper>

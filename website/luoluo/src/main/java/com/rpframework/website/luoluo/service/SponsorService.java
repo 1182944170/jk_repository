@@ -6,10 +6,13 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+
+
+
 import com.rpframework.core.BaseService;
 import com.rpframework.utils.Pager;
 import com.rpframework.website.luoluo.dao.ISponsorDao;
-import com.rpframework.website.luoluo.domain.Sponsor;
+import com.rpframework.website.luoluo.domain.Sponsorlis;
 
 @Service
 public class SponsorService extends BaseService{
@@ -19,9 +22,9 @@ public class SponsorService extends BaseService{
 	 * @param pager
 	 * @return
 	 */
-	public Pager<Sponsor> getpager(Pager<Sponsor> pager){
+	public Pager<Sponsorlis> getpager(Pager<Sponsorlis> pager){
 		long startTime = System.currentTimeMillis();
-		List<Sponsor> list = isponsorDao.doPager(this.packageMyBatisParam(pager));
+		List<Sponsorlis> list = isponsorDao.doPager(this.packageMyBatisParam(pager));
 		pager.setItemList(list);
 		pager.setCostTime(System.currentTimeMillis() - startTime);
 		return pager;
@@ -31,8 +34,20 @@ public class SponsorService extends BaseService{
 	 * @param id
 	 * @return
 	 */
-	public Sponsor seletOne(Integer id){
-		Sponsor spor=isponsorDao.select(id);
+	public Sponsorlis seletOne(Integer id){
+		Sponsorlis spor=isponsorDao.select(id);
 		return spor;
+	}
+	
+	public boolean updatedo(Sponsorlis sponsorlis) {
+		return isponsorDao.update(sponsorlis);
+	}
+	public boolean insertsponsor(Sponsorlis sponsor) {
+		// TODO Auto-generated method stub
+		return isponsorDao.insert(sponsor);
+	}
+	public boolean deletesell(Integer deleteid) {
+		// TODO Auto-generated method stub
+		return isponsorDao.delete(deleteid);
 	}
 }

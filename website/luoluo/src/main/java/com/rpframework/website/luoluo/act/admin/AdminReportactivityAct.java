@@ -53,6 +53,6 @@ public class AdminReportactivityAct extends AdminAct{
 	public String deleteli(@PathVariable Integer id,RedirectAttributes attr){
 		reporService.deletesell(id);
 		setInfoMsg("删除成功！", attr);
-		return this.doPackageURI("list");
+		return redirect("/admin/repot/list");
 	}
 }

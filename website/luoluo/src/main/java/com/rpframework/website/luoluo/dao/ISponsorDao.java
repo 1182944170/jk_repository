@@ -6,8 +6,8 @@ import java.util.Map;
 
 
 import com.rpframework.core.IDao;
-import com.rpframework.website.luoluo.domain.Sponsor;
+import com.rpframework.website.luoluo.domain.Sponsorlis;
 
 public interface ISponsorDao extends IDao{
-	List<Sponsor> doPager(Map<?, ?> map);
+	List<Sponsorlis> doPager(Map<?, ?> map);
 }

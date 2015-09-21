@@ -70,4 +70,8 @@ public class PersonalabelService extends BaseService{
 		return pager;
 		
 	}
+	public boolean deletesell(Integer deleteid) {
+		// TODO Auto-generated method stub
+		return iperslabeldao.delete(deleteid);
+	}
 }

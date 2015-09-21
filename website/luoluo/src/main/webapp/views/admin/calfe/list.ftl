@@ -81,7 +81,7 @@
 </#if>
 <script>
 	$(document).ready(function(){
-		RP.addBreadcrumb([{name:"基础配置"}, {name:"分类管理", active: true}]);
+		RP.addBreadcrumb([{name:"基础配置"}, {name:"分类", active: true}]);
 		$("#breadcrumbs ul").append('&nbsp;&nbsp;&nbsp;&nbsp;<a href="${ctx}/admin/cal/add${suffix}"><i class="icon-zoom-in"></i><span class="label label-warning arrowed-in arrowed-in arrowed-right">添加分类管理</span></a>');
 	});
 </script>

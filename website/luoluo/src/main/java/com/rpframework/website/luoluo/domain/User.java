@@ -24,7 +24,7 @@ public class User {
 	@FieldMapperAnnotation
 	private Integer age;			//年龄
 	@FieldMapperAnnotation
-	private Integer  marriage;	//婚姻
+	private String  marriage;	//婚姻
 	@FieldMapperAnnotation
 	private String constellation;	//星座
 	@FieldMapperAnnotation
@@ -99,10 +99,11 @@ public class User {
 	public void setAge(Integer age) {
 		this.age = age;
 	}
-	public Integer getMarriage() {
+	
+	public String getMarriage() {
 		return marriage;
 	}
-	public void setMarriage(Integer marriage) {
+	public void setMarriage(String marriage) {
 		this.marriage = marriage;
 	}
 	public String getHobbues() {

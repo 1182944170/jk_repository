@@ -16,6 +16,9 @@ import com.rpframework.website.luoluo.domain.Activity;
 @Service
 public class ActivityService extends BaseService{
 	@Resource IActivityDao iactivitydao;
+	
+	
+	
 	public Pager<Activity> getpager(Pager<Activity> pager){
 		long startTime = System.currentTimeMillis();
 		List<Activity> list = iactivitydao.doPager(this.packageMyBatisParam(pager));
@@ -32,5 +35,11 @@ public class ActivityService extends BaseService{
 
 		Activity cationDO=iactivitydao.select(id);
 		return cationDO;
+	}
+	public boolean insertone(Activity activity) {
+		// TODO Auto-generated method stub
+		 iactivitydao.insert(activity);
+		 activity.setActivitynumber("100000"+activity.getId());
+		 return iactivitydao.update(activity);
 	}
 }

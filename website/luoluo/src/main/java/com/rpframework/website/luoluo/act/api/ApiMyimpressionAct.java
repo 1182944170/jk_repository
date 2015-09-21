@@ -26,7 +26,14 @@ import com.rpframework.website.luoluo.service.MyimpressionService;
 public class ApiMyimpressionAct extends BaseAct{
 	Gson gson = new Gson();
 	@Resource MyimpressionService myimpressionService;
-	
+	/**
+	 * 好感度添加
+	 * @param findid
+	 * @param session
+	 * @return
+	 * @throws ParserException
+	 * @throws InterruptedException
+	 */
 	@RequestMapping("add")
 	public @ResponseBody JsonElement userlist(	
 			@RequestParam(required=false) Integer findid,
@@ -50,7 +57,7 @@ public class ApiMyimpressionAct extends BaseAct{
 		return json;
 	}
 	/**
-	 * 用户列表
+	 * 好感度用户列表
 	 * @date 2015年7月13日 下午5:47:24
 	 */
 	@RequestMapping("/user_myimpression")
@@ -60,6 +67,10 @@ public class ApiMyimpressionAct extends BaseAct{
 			pager=new Pager<Myimpression>();
 		}
 		User currUser = getSessionUser(session);
+	
+		if(currUser == null){
+			throw new APICodeException(-4, "你还没登陆!");
+		}
 		pager.getSearchMap().put("type", String.valueOf(currUser.getId()));
 		myimpressionService.Userpager(pager);
 		JsonObject json = new JsonObject();
@@ -73,4 +84,5 @@ public class ApiMyimpressionAct extends BaseAct{
 		System.out.println("user_list: "+json.toString());
 		return json;
 	}
+
 }

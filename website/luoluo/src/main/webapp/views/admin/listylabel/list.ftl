@@ -23,7 +23,7 @@
 									<i class="icon-pencil bigger-130"></i>
 								</a>
 
-								<a class="red" href="${ctx}/admin/lable/${u.id}/deletUser${suffix}" onclick="return confirm('你确定删除么?');" alt="Delete">
+								<a class="red" href="${ctx}/admin/lable/${u.id}/delete${suffix}" onclick="return confirm('你确定删除么?');" alt="Delete">
 									<i class="icon-trash bigger-130"></i>
 								</a>
 							
@@ -58,7 +58,7 @@
 </#if>
 <script>
 	$(document).ready(function(){
-		RP.addBreadcrumb([{name:"基础配置"}, {name:"添加用户", active: true}]);
-		$("#breadcrumbs ul").append('&nbsp;&nbsp;&nbsp;&nbsp;<a href="${ctx}/admin/lable/add${suffix}"><i class="icon-zoom-in"></i><span class="label label-warning arrowed-in arrowed-in arrowed-right">添加分类管理</span></a>');
+		RP.addBreadcrumb([{name:"基础配置"}, {name:"标签", active: true}]);
+		$("#breadcrumbs ul").append('&nbsp;&nbsp;&nbsp;&nbsp;<a href="${ctx}/admin/lable/add${suffix}"><i class="icon-zoom-in"></i><span class="label label-warning arrowed-in arrowed-in arrowed-right">添加标签</span></a>');
 	});
 </script>

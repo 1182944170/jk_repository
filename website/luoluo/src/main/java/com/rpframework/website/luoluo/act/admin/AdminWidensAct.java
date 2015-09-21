@@ -74,7 +74,7 @@ public class AdminWidensAct extends AdminAct{
 					widen.setSytime(System.currentTimeMillis()/1000);
 					widenserivece.wideninsert(widen);
 					setInfoMsg("新增操作成功！", attr);
-					return redirect("list");
+					return redirect("/admin/windens/list");
 				} catch(Exception e) {
 					throw new IllegalArgumentException(e.getLocalizedMessage());
 				}
@@ -91,14 +91,14 @@ public class AdminWidensAct extends AdminAct{
 				widen.setSyimages(relativelyVideoPath);
 				widenserivece.updatewiden(widen);
 				setInfoMsg("更新操作成功！", attr);
-				return redirect("list");
+				return redirect("/admin/windens/list");
 			} catch(Exception e) {
 				throw new IllegalArgumentException(e.getLocalizedMessage());
 			}
 		}
 			
 		}
-		return "";
+		return redirect("/admin/windens/list");
 	}
 	/**
 	 * 禁用用户
@@ -127,7 +127,7 @@ public class AdminWidensAct extends AdminAct{
 	public String deletUser(@PathVariable Integer id,RedirectAttributes attr){
 		widenserivece.deletesell(id);
 		setInfoMsg("删除成功！", attr);
-		return redirect("list");
+		return redirect("/admin/windens/list");
 	}
 	/**
 	 * 跳转添加用户

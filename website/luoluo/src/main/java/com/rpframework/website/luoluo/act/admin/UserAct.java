@@ -84,7 +84,7 @@ public class UserAct extends AdminAct{
 	 * @return
 	 */
 	@RequestMapping("/{id}/saveUserda")
-	public String saveUserda(@PathVariable(value="id")Integer id){
+	public String saveUserda(@PathVariable(value="id")Integer id,RedirectAttributes attr){
 		User userOne=userservice.selectOnlyOne(id);
 		if(userOne.getType()==1){
 			userOne.setType(0);
@@ -93,7 +93,8 @@ public class UserAct extends AdminAct{
 			userOne.setType(1);
 			userservice.updatedo(userOne);
 		}
-		throw new AdminIllegalArgumentException("修改成功");
+		setInfoMsg("修改成功！", attr);
+		return redirect("/admin/user/list");
 	}
 	/**
 	 * 通过用户名和电话查询
@@ -153,7 +154,7 @@ public class UserAct extends AdminAct{
 	public String deletUser(@PathVariable Integer id,RedirectAttributes attr){
 		userservice.deletesell(id);
 		setInfoMsg("删除成功！", attr);
-		return redirect("list");
+		return redirect("/admin/user/list");
 	}
 	/**
 	 * 跳转添加用户

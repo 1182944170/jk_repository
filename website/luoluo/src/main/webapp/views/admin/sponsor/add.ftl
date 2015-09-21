@@ -1,4 +1,12 @@
-<title><#if user??>编辑<#else>新增</#if>活动管理</title>
+<title>新增活动管理</title>
+<script type="text/javascript" src="${ctx}/resources/js/tool.js"></script>
+<script type="text/javascript">
+	function checkSub(){
+		var names = "usernowlive,居住地址;userphone,领队手机号码";
+		return checkCommit(names);
+
+	}
+</script>
 <script>
 function selectMap(){
 		$("#mapdiv").css("display","");
@@ -6,42 +14,51 @@ function selectMap(){
 </script>
 <div class="page-header">
 	<h1>
-		<#if user??>编辑<#else>新增</#if>活动管理
+		新增活动管理
 		<small>
 			<i class="icon-double-angle-right"></i>
 		</small>
 	</h1>
 </div>
 
-<form action="${ctx}/admin/spons/${user.id}/saveUserda${suffix}" class="form-horizontal" role="form" id="validation-form" method="POST" enctype="multipart/form-data">
+<form action="${ctx}/admin/spons/addsavese${suffix}" class="form-horizontal" role="form" id="validation-form" method="POST" onsubmit="return commitSubmit()"  enctype="multipart/form-data">
 <#if user??>
-	<input type="hidden" name="id" value="${user.id}"/>
+	<input type="hidden" name="id" value=""/>
 </#if>
 <fieldset>
 
-
-<#assign fieldName="userpicture" />
-<#assign fieldLabel="真实头像" />
-<#include "/common-admin/upload/upload_field_pre.ftl" />
 <div class="form-group">
-	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name"></label>
+<#if infoMsg??>
+	<div class="hr hr-18 hr-double dotted"></div>
+	<h4 class="lighter">
+		<i class="icon-hand-right icon-animated-hand-pointer green"></i>
+		<span class="pink">${infoMsg}</span>
+	</h4>
+</#if>
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">真实头像上传</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
-			
+			 <span>
+	              <div class="w_jdwl">
+	                  <div id="cardf">
+	                       <img id="previewb" width="166" height="127" src="${ctx}/resources/images/zhengmian.jpg" style="display: block; width: 240px; height: 180px;">
+	         			<span>
+	             	 	<input type="file" name="cardFrontPage" id="cardFrontPage" onchange="setImagePreview('cardFrontPage','previewb','cardf');">
+	                </span>
+	            </div>	
+	          </div>
+	        </span>
 		</div>
 	</div>
 </div>
+
 <div class="form-group">
+<br>
 	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">类型</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<span class="block input-icon width-40">
-			<#if user.type==1>
-				<input type="text" readonly name="" id="name" value="私人" maxlength="32" class="form-control" />
-				<!--<i class="icon-user"></i>-->
-				<#elseif user.type==2>
-				<input type="text" readonly name="" id="name" value="公司" maxlength="32" class="form-control" />
-				</#if>
+			<select name="type" id="userSex"><option value="1">个人</option><option value="2" selected = "selected">公司</option></select>
 			</span>
 		</div>
 	</div>
@@ -53,7 +70,7 @@ function selectMap(){
 				<#include "../baidumap.ftl">
 				<input type="hidden" name="lng" id="lng" value="">
 				<input type="hidden" name="lat" id="lat" value="">
-				<input type="text" id="lnglat" name="usernowlive" value="${user.usernowlive}" onclick="selectMap();"/>
+				<input type="text" id="lnglat" name="usernowlive" onclick="selectMap();"/>
 				<!--<i class="icon-user"></i>-->
 	</div>
 </div>
@@ -62,32 +79,42 @@ function selectMap(){
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<span class="block input-icon width-40">
-				<input type="text" name="userphone" id="oriprice" value="${user.userphone}" maxlength="32" class="form-control" />
+				<input type="text" name="userphone" id="userphone" onchange="checkTel(this.value,'showss')" maxlength="32" class="form-control" />
+				<b class="classerror" id="showss"></b>
 				<!--<i class="icon-user"></i>-->
 			</span>
+			 <b id="cue" style="color:red ;align:center"> </b>  
 		</div>
 	</div>
 </div>
 <#assign fieldName="userinformation" />
 <#assign fieldLabel="领队信息" />
 <#include "/common-admin/upload/upload_field_pre.ftl" />
-<#if user.type==2>
+
 <div class="form-group">
 	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name"></label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
-			
+	</div>
+	</div>
+</div>
+<div class="form-group">
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name"></label>
+	<div class="col-xs-12 col-sm-9">
+		<div class="clearfix">
+			<span class="block input-icon width-40">
+				<b Style="color:red">当选择公司时 必须填写下列内容</b>
+			</span>
 		</div>
 	</div>
 </div>
-
 <div class="form-group">
 	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">负责人手机号:</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<span class="block input-icon width-40">
-				<input type="text" name="usertelephone" id="oriprice" value="${user.usertelephone}" maxlength="32" class="form-control" />
-				<!--<i class="icon-user"></i>-->
+				<input type="text" name="usertelephone" id="usertelephone" value="" onchange="checkTel(this.value,'showsss')" maxlength="32" class="form-control" />
+				<b class="classerror" id="showsss"></b>
 			</span>
 		</div>
 	</div>
@@ -97,12 +124,13 @@ function selectMap(){
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<span class="block input-icon width-40">
-				<input type="text" name="telephone" id="disprice" value="${user.telephone}" maxlength="32" class="form-control" />
-				<!--<i class="icon-user"></i>-->
+				<input type="text" name="telephone" id="telephone" value="" maxlength="32" class="form-control" />
 			</span>
+			<i>温馨提示：匹配形式如 0511-4405222 或 021-87888822</i>
 		</div>
 	</div>
 </div>
+
 <#assign fieldName="responsibility" />
 <#assign fieldLabel="负责人信息" />
 <#include "/common-admin/upload/upload_field_pre.ftl" />
@@ -110,8 +138,11 @@ function selectMap(){
 	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name"></label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
-			
+			<span class="block input-icon width-40">
+				<i class="icon-user">请显示公司注册图片</i>
+			</span>
 		</div>
+		
 	</div>
 </div>
 
@@ -120,32 +151,24 @@ function selectMap(){
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<span class="block input-icon width-40">
-				<@fck value="${(user.entintroduction)!''}" instanceName="entintroduction" inputName="entintroduction" height="300px;" toolbarSet="Basic">
+				<@fck value="" instanceName="entintroduction" inputName="entintroduction" height="300px;" toolbarSet="Basic">
 		    	${fck_body}
 		    </@fck>
 			</span>
 		</div>
 	</div>
 </div>
-</#if>
-
 
 <div class="form-group">
 	<div class="col-md-offset-3 col-md-9">
-		<button class="btn btn-info" type="submit"><i class="icon-ok bigger-110"></i>审核</button>
+		<button class="btn btn-info" type="submit"onclick="return checkSub(this.form)"><i class="icon-ok bigger-110"></i>提  交</button>
 		&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
-		<button class="btn" type="reset"><i class="icon-undo bigger-110"></i>取消</button>
+		<button class="btn" type="reset"><i class="icon-undo bigger-110"></i>重  置</button>
 	</div>
 </div>
-
 </fieldset>
 </form>
 
-<#assign fieldName="userpicture" />
-<#assign rootPath="jiaju/resource/goodsImg/" />
-<#assign fieldNameValue=(user.userpicture)!""  />
-<#assign isSingle=1 />
-<#include "/common-admin/upload/upload_field_after.ftl" />
 
 <#assign fieldName="userinformation" />
 <#assign rootPath="jiaju/resource/goodsImg/" />
@@ -160,14 +183,7 @@ function selectMap(){
 <#include "/common-admin/upload/upload_field_after.ftl" />
 
 
-<#if errorMsg??>
-	<div class="hr hr-18 hr-double dotted"></div>
-	<h4 class="lighter">
-		<i class="icon-hand-right icon-animated-hand-pointer red"></i>
-		<span class="pink">${errorMsg}
-		</span>
-	</h4>
-</#if>
+
 
 <script>
 $(document).ready(function(){
@@ -232,12 +248,4 @@ $(document).ready(function(){
 	});
 });
 
- <!--劵价-->
- function   getSubPrice(){
-	   var ori_price=$("#oriprice").val();
-	   var dis_price=$("#disprice").val();
-	   var sub_section=$("#subsection").val();
-	   var sub_Price=(ori_price - dis_price)/sub_section
-	   $("#subPrice").val(sub_Price);
-   }
 </script>

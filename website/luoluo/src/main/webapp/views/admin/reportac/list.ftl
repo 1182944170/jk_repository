@@ -1,4 +1,4 @@
-<title>分类管理</title>
+<title>举报管理</title>
 <div class="row">
 	<div class="col-xs-12">
 		<div class="table-responsive">

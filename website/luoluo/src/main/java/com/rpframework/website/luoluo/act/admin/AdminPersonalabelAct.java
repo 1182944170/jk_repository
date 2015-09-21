@@ -6,7 +6,6 @@ import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
-
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,10 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.rpframework.core.exception.AdminIllegalArgumentException;
-
 import com.rpframework.utils.Pager;
-
 import com.rpframework.website.luoluo.domain.Personalabel;
+import com.rpframework.website.luoluo.domain.Sponsorlis;
 import com.rpframework.website.luoluo.service.PersonalabelService;
 
 @Controller
@@ -94,4 +92,19 @@ public class AdminPersonalabelAct extends AdminAct{
 	public String add(){
 		return this.doPackageURI("listylabel/add");
 	}
+	/**
+	 * 删除信息页面
+	 * @param attr
+	 * @param model
+	 * @return
+	 */
+		@RequestMapping("/{deleteid}/delete")
+		public String delete(@PathVariable Integer deleteid,RedirectAttributes attr){
+			
+			labelService.deletesell(deleteid);
+			
+				setInfoMsg("删除成功！", attr);
+				return redirect("/admin/lable/list");
+		
+		}
 }

@@ -5,7 +5,7 @@
 
 	<resultMap type="com.rpframework.website.luoluo.domain.ClaGoods" id="mClaGoods" autoMapping="true">
 		<id property="id" column="id" />
-		<association property="classification" column="claid" select="com.rpframework.website.luoluo.dao.IClassificationDao.select"/>
+		<association property="classification" column="claId" select="com.rpframework.website.luoluo.dao.IClassificationDao.select"/>
 	</resultMap>		
 
 	<select id="doPager" resultMap="mClaGoods">
