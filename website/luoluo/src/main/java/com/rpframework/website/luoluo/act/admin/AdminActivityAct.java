@@ -1,6 +1,6 @@
 package com.rpframework.website.luoluo.act.admin;
 
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Map;
 
@@ -20,10 +20,9 @@ import com.rpframework.core.exception.AdminIllegalArgumentException;
 import com.rpframework.utils.NumberUtils;
 import com.rpframework.utils.Pager;
 import com.rpframework.website.luoluo.domain.Activity;
-import com.rpframework.website.luoluo.domain.ClaGoods;
 import com.rpframework.website.luoluo.domain.Classification;
 import com.rpframework.website.luoluo.service.ActivityService;
-import com.rpframework.website.luoluo.service.ClaGoodsService;
+
 import com.rpframework.website.luoluo.service.ClassificationService;
 
 @Controller
@@ -33,18 +32,36 @@ public class AdminActivityAct extends AdminAct{
 	@Resource FileService fileService;
 	@Resource ActivityService activityService;
 	@Resource ClassificationService classificationService;
-	@Resource  ClaGoodsService   claGoodsService;
+
 	
 	//显示页面
-	@RequestMapping("list")
+	@RequestMapping("/list")
 	public String list(@RequestParam(value="pager", required=false) Pager<Activity> pager, Map<Object, Object> model, RedirectAttributes attr){
 		if(pager==null){
 			pager=new Pager<Activity>();
 		}
+		List<Classification> cal=classificationService.queryAll();
 		pager=activityService.getpager(pager);
+		
+		model.put("cal", cal);
 		model.put("pager", pager);
 		return this.doPackageURI("activity/list");
 	}
+	
+	//查询分类的内容
+	@RequestMapping("/{id}/listOlyeone")
+	public String listOlyeone(@PathVariable Integer id, @RequestParam(value="pager", required=false) Pager<Activity> pager, Map<Object, Object> model, RedirectAttributes attr){
+		if(pager==null){
+			pager=new Pager<Activity>();
+		}
+		List<Classification> cal=classificationService.queryAll();
+		pager.getSearchMap().put("calid",  String.valueOf(id));
+		pager=activityService.getpager(pager);
+		model.put("cal", cal);
+		model.put("pager", pager);
+		return this.doPackageURI("activity/list");
+	}
+	
 	//跳转添加页面
 	@RequestMapping("/{id}/edit")
 	public String edit(@PathVariable Integer id, Map<Object, Object> model,RedirectAttributes attr){
@@ -83,40 +100,20 @@ public class AdminActivityAct extends AdminAct{
 	 */
 	@RequestMapping("/dosave")
 	public String dosave(@ModelAttribute Activity activity, Map<Object, Object> model,
-			@RequestParam(value="fitlist", required=false) Integer[] fitlist,
+	
 			@RequestParam(value="iconFile", required=false) CommonsMultipartFile iconFile,
 			RedirectAttributes attr){
-		List<ClaGoods> clads= new ArrayList<ClaGoods>();
-		if(fitlist != null) {
-			for (Integer claId : fitlist) {
-				if(NumberUtils.isValid(claId)) {
-					ClaGoods claGoods=new ClaGoods();
-					Classification   classDO=new Classification();
-					classDO.setId(claId);
-					claGoods.setClassification(classDO);
-					claGoods.setGoodId(activity.getId());
-					clads.add(claGoods);
-				}
-			}
-		}
-		activity.setClassList(clads);
-		claGoodsService.insertOrUpdateByMovie(activity.getId(), activity.getClassList());
-		if(iconFile.getSize() > 0 ) { // 判断 icon 大小是否大于0
-			try {
-				String relativelyPath = "/fenl/" + NumberUtils.random(3) + iconFile.getOriginalFilename(); // new 随即产生随即4位数开头的一个相对路径文件名
-				fileService.saveFile(iconFile.getInputStream(), relativelyPath);  // 保存文件
-				activity.setCover(relativelyPath); // 设置相对路径
-			} catch (Exception e) {
-				throw new IllegalArgumentException("文件上传失败，原因:" + e.getLocalizedMessage());
-			}
-			
-		} else {
-			
+		if(activity.getType()==1){
+			activity.setType(0);
+			activityService.updatedo(activity);
+		}else if(activity.getType()==0){
+			activity.setType(1);
+			activityService.updatedo(activity);
 		}
 		if (NumberUtils.isValid(activity.getId())) {// update
-			setInfoMsg("更新操作成功！", attr);
+			setInfoMsg("审核成功！", attr);
 		} else {// insert
-			setInfoMsg("新增操作成功！", attr);
+			setInfoMsg("审核成功！", attr);
 		}
 		return redirect("list");
 	}
@@ -154,8 +151,19 @@ public class AdminActivityAct extends AdminAct{
 		activity.setType(0);
 		activity.setTypeok(0);
 		activityService.insertone(activity);
-		
-		return redirect("admin/activity/list");
+		setInfoMsg("添加成功！", attr);
+		return redirect("/admin/actcy/list");
 	}
-	
+	/**
+	 * 删除用户
+	 * @param id
+	 * @param attr
+	 * @return
+	 */
+	@RequestMapping("/{id}/deletUser")
+	public String deletUser(@PathVariable Integer id,RedirectAttributes attr){
+		activityService.deletesell(id);
+		setInfoMsg("删除成功！", attr);
+		return redirect("/admin/actcy/list");
+	}
 }

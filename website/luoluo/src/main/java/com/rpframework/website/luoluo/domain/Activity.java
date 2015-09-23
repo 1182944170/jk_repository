@@ -1,6 +1,5 @@
 package com.rpframework.website.luoluo.domain;
 
-import java.util.List;
 
 import com.rpframework.core.mybatis.plugin.annotation.FieldMapperAnnotation;
 import com.rpframework.core.mybatis.plugin.annotation.TableMapperAnnotation;
@@ -13,7 +12,7 @@ public class Activity {
 	@FieldMapperAnnotation
 	private Integer sponsorid; // 主办方Id
 	@FieldMapperAnnotation
-	private String Cover; // 封面图片
+	private String cover; // 封面图片
 	@FieldMapperAnnotation
 	private String activitynumber;  // 活动编号
 	@FieldMapperAnnotation
@@ -42,8 +41,11 @@ public class Activity {
 	private Integer type;  //类型
 	@FieldMapperAnnotation
 	private Integer typeok;  //举办是否成功
-	
-	private List<ClaGoods>  classList;//商品分类集合
+	@FieldMapperAnnotation
+	private String lng; //经度
+	@FieldMapperAnnotation
+	private String lat; //纬度
+
 
 	public Integer getId() {
 		return id;
@@ -60,13 +62,28 @@ public class Activity {
 	public void setSponsorid(Integer sponsorid) {
 		this.sponsorid = sponsorid;
 	}
+	public String getLng() {
+		return lng;
+	}
+
+	public void setLng(String lng) {
+		this.lng = lng;
+	}
+
+	public String getLat() {
+		return lat;
+	}
+
+	public void setLat(String lat) {
+		this.lat = lat;
+	}
 
 	public String getCover() {
-		return Cover;
+		return cover;
 	}
 
 	public void setCover(String cover) {
-		Cover = cover;
+		this.cover = cover;
 	}
 
 	public String getActivitynumber() {
@@ -184,18 +201,12 @@ public class Activity {
 		this.typeok = typeok;
 	}
 
-	public List<ClaGoods> getClassList() {
-		return classList;
-	}
-
-	public void setClassList(List<ClaGoods> classList) {
-		this.classList = classList;
-	}
+	
 
 	@Override
 	public String toString() {
 		return "Activity [id=" + id + ", sponsorid=" + sponsorid + ", Cover="
-				+ Cover + ", activitynumber=" + activitynumber
+				+ cover + ", activitynumber=" + activitynumber
 				+ ", activityname=" + activityname + ", activitycategory="
 				+ activitycategory + ", activitylocation=" + activitylocation
 				+ ", number=" + number + ", children_expense="
@@ -203,7 +214,7 @@ public class Activity {
 				+ ", activitypicture=" + activitypicture + ", activitycontent="
 				+ activitycontent + ", Starttime=" + starttime + ", Outtime="
 				+ outtime + ", nowtime=, type=" + type
-				+ ", typeok=" + typeok + ", classList=" + classList + "]";
+				+ ", typeok=" + typeok + ", classList=]";
 	}
 	
 	

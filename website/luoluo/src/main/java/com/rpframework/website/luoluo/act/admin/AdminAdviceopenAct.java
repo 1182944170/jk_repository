@@ -12,7 +12,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.rpframework.utils.Pager;
 import com.rpframework.website.luoluo.domain.Adviceopen;
-import com.rpframework.website.luoluo.domain.User;
 import com.rpframework.website.luoluo.service.AdviceopenService;
 
 @Controller

@@ -1,4 +1,4 @@
-/*package com.rpframework.website.furnishing.event.impl;
+package com.rpframework.website.luoluo.event.impl;
 
 
 
@@ -19,8 +19,8 @@ import com.rpframework.core.utils.SpringUtils;
 import com.rpframework.utils.Pager;
 
 
-import com.rpframework.website.furnishing.service.DynamicService;
-import com.rpframework.website.furnishing.service.UserCommentSeriver;
+
+import com.rpframework.website.luoluo.service.ClassificationService;
 
 import freemarker.core.Environment;
 import freemarker.template.ObjectWrapper;
@@ -47,7 +47,7 @@ public class MiFanCutDirectiveModel extends BaseTemplateDirectiveModel {
 		} else if (StringUtils.equals(cmd, GET_MFCUTPIC_LIST)) {
 			//int source = DirectiveUtils.getInt("source", params);
 			Integer type = DirectiveUtils.getInt("type", params);
-			UserCommentSeriver userCommentSeriver = SpringUtils.getBean(UserCommentSeriver.class);
+			ClassificationService classificationService = SpringUtils.getBean(ClassificationService.class);
 
 			String pagerString = DirectiveUtils
 					.getString("pagerString", params);
@@ -57,7 +57,7 @@ public class MiFanCutDirectiveModel extends BaseTemplateDirectiveModel {
 			
 			
 			pager.getSearchMap().put("type", String.valueOf(type));
-			userCommentSeriver.getPager(pager);
+			classificationService.getPager(pager);
 
 			paramWarp.put("p_pager", ObjectWrapper.DEFAULT_WRAPPER.wrap(pager));
 		}
@@ -68,4 +68,4 @@ public class MiFanCutDirectiveModel extends BaseTemplateDirectiveModel {
 		}
 		DirectiveUtils.removeParamsFromVariable(env, paramWarp, origWarp);
 	}
-}*/
+}

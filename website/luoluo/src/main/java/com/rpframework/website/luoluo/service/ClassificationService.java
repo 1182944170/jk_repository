@@ -30,7 +30,11 @@ public class ClassificationService extends BaseService{
 			pager.setCostTime(System.currentTimeMillis() - startTime);
 			return pager;
 		}
+	
 
+		public List<Classification> queryAlllesei() {
+			return ictionDao.queryAlllesei();
+		}
 		public List<Classification> queryAll() {
 			return ictionDao.queryAll();
 		}

@@ -1,7 +1,7 @@
-<title>添加用户信息</title>
+<title>添加标签信息</title>
 <div class="page-header">
 	<h1>
-		添加用户信息
+		添加标签信息
 		<small>
 			<i class="icon-double-angle-right"></i>
 		</small>
@@ -74,7 +74,7 @@
 	}
 
 	$(document).ready(function(){
-		RP.addBreadcrumb([{name:"基础设置"}, {name:"新增老师",  active: true}]);
+		RP.addBreadcrumb([{name:"基础设置"}, {name:"新增标签",  active: true}]);
 		$('#id-input-file-1').ace_file_input({
 			no_file:'没图片 ...',
 			btn_choose:'请选择图片',

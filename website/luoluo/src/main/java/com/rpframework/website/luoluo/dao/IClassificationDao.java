@@ -9,6 +9,6 @@ import com.rpframework.website.luoluo.domain.Classification;
 
 public interface IClassificationDao  extends IDao{
 	List<Classification> doPager(Map<?, ?> map);
-	
+	List<Classification> queryAlllesei();
 	List<Classification> queryAll();
 }

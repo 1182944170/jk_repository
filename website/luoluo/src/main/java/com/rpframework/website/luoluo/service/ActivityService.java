@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 
+
 import com.rpframework.core.BaseService;
 import com.rpframework.utils.Pager;
 import com.rpframework.website.luoluo.dao.IActivityDao;
@@ -31,10 +32,16 @@ public class ActivityService extends BaseService{
 	 * @param id
 	 * @return
 	 */
+	public boolean deletesell(Integer id){
+		return iactivitydao.delete(id);
+	}
 	public Activity selectcal(Integer id){
-
+		
 		Activity cationDO=iactivitydao.select(id);
 		return cationDO;
+	}
+	public boolean updatedo(Activity activity){
+		return iactivitydao.update(activity);
 	}
 	public boolean insertone(Activity activity) {
 		// TODO Auto-generated method stub
@@ -42,4 +49,5 @@ public class ActivityService extends BaseService{
 		 activity.setActivitynumber("100000"+activity.getId());
 		 return iactivitydao.update(activity);
 	}
+
 }

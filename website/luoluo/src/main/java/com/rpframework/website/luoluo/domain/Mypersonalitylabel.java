@@ -12,21 +12,21 @@ public class Mypersonalitylabel {
 	@FieldMapperAnnotation
 	private Integer userid;  //id
 	@FieldMapperAnnotation
-	private Integer mylabel1;  //id
+	private String mylabela;  //id
 	@FieldMapperAnnotation
-	private Integer mylabel2;  //id
+	private String mylabelb;  //id
 	@FieldMapperAnnotation
-	private Integer mylabel3;  //id
+	private String mylabelc;  //id
 	@FieldMapperAnnotation
-	private Integer mylabel4;  //id
+	private String mylabeld;  //id
 	@FieldMapperAnnotation
-	private Integer mylabel5;  //id
+	private String mylabele;  //id
 	@FieldMapperAnnotation
-	private Integer mylabel6;  //id
+	private String mylabelf;  //id
 	@FieldMapperAnnotation
-	private Integer mylabel7;  //id
+	private String mylabelg;  //id
 	@FieldMapperAnnotation
-	private Integer mylabel8;  //id
+	private String mylabels;  //id
 	public Integer getId() {
 		return id;
 	}
@@ -39,54 +39,55 @@ public class Mypersonalitylabel {
 	public void setUserid(Integer userid) {
 		this.userid = userid;
 	}
-	public Integer getMylabel1() {
-		return mylabel1;
+	public String getMylabela() {
+		return mylabela;
 	}
-	public void setMylabel1(Integer mylabel1) {
-		this.mylabel1 = mylabel1;
+	public void setMylabela(String mylabela) {
+		this.mylabela = mylabela;
 	}
-	public Integer getMylabel2() {
-		return mylabel2;
+	public String getMylabelb() {
+		return mylabelb;
 	}
-	public void setMylabel2(Integer mylabel2) {
-		this.mylabel2 = mylabel2;
+	public void setMylabelb(String mylabelb) {
+		this.mylabelb = mylabelb;
 	}
-	public Integer getMylabel3() {
-		return mylabel3;
+	public String getMylabelc() {
+		return mylabelc;
 	}
-	public void setMylabel3(Integer mylabel3) {
-		this.mylabel3 = mylabel3;
+	public void setMylabelc(String mylabelc) {
+		this.mylabelc = mylabelc;
 	}
-	public Integer getMylabel4() {
-		return mylabel4;
+	public String getMylabeld() {
+		return mylabeld;
 	}
-	public void setMylabel4(Integer mylabel4) {
-		this.mylabel4 = mylabel4;
+	public void setMylabeld(String mylabeld) {
+		this.mylabeld = mylabeld;
 	}
-	public Integer getMylabel5() {
-		return mylabel5;
+	public String getMylabele() {
+		return mylabele;
 	}
-	public void setMylabel5(Integer mylabel5) {
-		this.mylabel5 = mylabel5;
+	public void setMylabele(String mylabele) {
+		this.mylabele = mylabele;
 	}
-	public Integer getMylabel6() {
-		return mylabel6;
+	public String getMylabelf() {
+		return mylabelf;
 	}
-	public void setMylabel6(Integer mylabel6) {
-		this.mylabel6 = mylabel6;
+	public void setMylabelf(String mylabelf) {
+		this.mylabelf = mylabelf;
 	}
-	public Integer getMylabel7() {
-		return mylabel7;
+	public String getMylabelg() {
+		return mylabelg;
 	}
-	public void setMylabel7(Integer mylabel7) {
-		this.mylabel7 = mylabel7;
+	public void setMylabelg(String mylabelg) {
+		this.mylabelg = mylabelg;
 	}
-	public Integer getMylabel8() {
-		return mylabel8;
+	public String getMylabels() {
+		return mylabels;
 	}
-	public void setMylabel8(Integer mylabel8) {
-		this.mylabel8 = mylabel8;
+	public void setMylabels(String mylabels) {
+		this.mylabels = mylabels;
 	}
+
 	
 	
 }

@@ -64,7 +64,7 @@
 	<div class="hr hr-18 hr-double dotted"></div>
 	<h4 class="lighter">
 		<i class="icon-hand-right icon-animated-hand-pointer red"></i>
-		<span class="pink"></span>
+		<span class="pink">${infoMsg}</span>
 	</h4>
 </#if>
 
@@ -72,7 +72,7 @@
 	<div class="hr hr-18 hr-double dotted"></div>
 	<h4 class="lighter">
 		<i class="icon-hand-right icon-animated-hand-pointer green"></i>
-		<span class="pink"></span>
+		<span class="pink">${infoMsg}</span>
 	</h4>
 </#if>
 <script>

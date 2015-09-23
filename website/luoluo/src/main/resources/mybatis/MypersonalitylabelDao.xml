@@ -14,6 +14,6 @@
 	<insert id="insert" parameterType="com.rpframework.website.luoluo.domain.Mypersonalitylabel" useGeneratedKeys="true" keyProperty="id"/>
 	<delete id="delete" parameterType="com.rpframework.website.luoluo.domain.Mypersonalitylabel" />
 	<select id="select" parameterType="Integer" resultMap="mypersonalitylabel">
-		select * from mypersonalitylabel where id=#{id} order by id
+		select * from mypersonalitylabel where userid=#{id} order by id
 	</select>
 </mapper>

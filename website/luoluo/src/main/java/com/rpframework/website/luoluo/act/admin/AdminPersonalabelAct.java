@@ -15,7 +15,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.rpframework.core.exception.AdminIllegalArgumentException;
 import com.rpframework.utils.Pager;
 import com.rpframework.website.luoluo.domain.Personalabel;
-import com.rpframework.website.luoluo.domain.Sponsorlis;
 import com.rpframework.website.luoluo.service.PersonalabelService;
 
 @Controller

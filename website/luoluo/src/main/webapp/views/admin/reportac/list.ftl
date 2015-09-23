@@ -6,9 +6,9 @@
 				<thead>
 					<tr>
 						<th>ID</th>
-						<th>举报活动id</th>
+						
 						<th>举报内容</th>
-						<th>用户id</th>
+						<th>用户姓名</th>
 						<th>举报时间</th>
 						<th></th>
 						<!--<th>logo</th>-->
@@ -18,14 +18,12 @@
 				<#list pager.itemList as u>
 					<tr>
 						<td><span class="green center">${u.id!}</span></td>
-						<td><span class="gray center">${u.activityid!}</span></td>
+						
 						<td><span class="gray center">${u.reportContext!}</span></td>
-						 <@showprive cmd="get_showprive_list" type="${u.userid!}" pagerString="1_" pageSize="50">
-                			<#list m_pager.itemList as f>
-								<td><span class="gray center">${f.name!}</span></td>
-						    </#list>
-  						</@showprive>
-						<td><span class="gray center">${u.acttime!}</span></td>
+						
+								<td><span class="gray center">${u.phone!}</span></td>
+						
+						<td><span class="gray center">${tagUtils.formatDate(u.acttime)!''}</span></td>
 				
 						<td>
 							<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">

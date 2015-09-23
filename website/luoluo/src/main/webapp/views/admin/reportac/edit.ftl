@@ -16,11 +16,11 @@
 <fieldset>
 
 <div class="form-group">
-	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="clubId">活动id:</label>
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="clubId">活动名称:</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<span class="block input-icon width-40">
-				<input type="text" name ="syTitle" value="${user.activityid!}"  maxlength="32" class="form-control" placeholder="活动id"/>
+				<input type="text" name ="syTitle" value="${activityName.activityname!}"  maxlength="32" class="form-control" placeholder="活动id"/>
 				<i class="icon-user"></i>
 			</span>
 		</div>
@@ -38,20 +38,24 @@
 	</div>
 </div>
 <div class="form-group">
-	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="clubId">活动id:</label>
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="clubId">举报电话:</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<span class="block input-icon width-40">
-				<input type="text" name ="syTitle" value="${user.userid!}"  maxlength="32" class="form-control" placeholder="系统提示"/>
+				<input type="text" name ="syTitle" value="${user.phone!}"  maxlength="32" class="form-control" placeholder="系统提示"/>
 				<i class="icon-user"></i>
 			</span>
 		</div>
 	</div>
 </div>
 
+
 <div class="form-group">
 	<div class="col-md-offset-3 col-md-9">
-		<button class="btn btn-info" type="submit"><i class="icon-ok bigger-110"></i>提  交</button>
+		<button class="btn btn-info" ><i class="icon-ok bigger-110"></i>
+		
+		<a href="${ctx}/admin/actcy/${user.activityid}/edit${suffix}">前往查看</a>
+		</button>
 		&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
 		<button class="btn" type="reset"><i class="icon-undo bigger-110"></i>重  置</button>
 	</div>

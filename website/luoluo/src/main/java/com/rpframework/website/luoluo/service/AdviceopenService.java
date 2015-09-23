@@ -10,7 +10,6 @@ import com.rpframework.core.BaseService;
 import com.rpframework.utils.Pager;
 import com.rpframework.website.luoluo.dao.IAdviceopenDao;
 import com.rpframework.website.luoluo.domain.Adviceopen;
-import com.rpframework.website.luoluo.domain.User;
 
 @Service
 public class AdviceopenService  extends BaseService{

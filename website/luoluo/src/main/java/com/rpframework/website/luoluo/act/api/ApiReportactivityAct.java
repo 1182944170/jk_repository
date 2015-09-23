@@ -36,6 +36,7 @@ public class ApiReportactivityAct  extends BaseAct{
 	public @ResponseBody JsonElement userlist(	
 			@RequestParam(required=false) Integer activityid,
 			@RequestParam(required=false) String reportContext,
+			@RequestParam(required=false) String phone,
 			HttpSession session) throws ParserException, InterruptedException{
 	
 		JsonObject json = new JsonObject();
@@ -50,7 +51,7 @@ public class ApiReportactivityAct  extends BaseAct{
 		reporta.setActivityid(activityid);
 		reporta.setActtime(System.currentTimeMillis()/1000);
 		reporta.setReportContext(reportContext);
-		reporta.setUserid(currUser.getId());
+		reporta.setPhone(phone);
 		boolean bFlag = reportactivityService.insertdo(reporta);
 		if(bFlag == true){ // 修改成功
 			json.addProperty("succ", true);

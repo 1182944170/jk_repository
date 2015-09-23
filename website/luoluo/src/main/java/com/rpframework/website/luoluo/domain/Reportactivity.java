@@ -12,7 +12,7 @@ public class Reportactivity {
 	@FieldMapperAnnotation
 	private Integer activityid;  //举报活动id
 	@FieldMapperAnnotation
-	private Integer userid;  //举报的用户
+	private String phone;  //举报的用户
 	@FieldMapperAnnotation
 	private String reportContext; //举报内容
 	@FieldMapperAnnotation
@@ -29,11 +29,12 @@ public class Reportactivity {
 	public void setActivityid(Integer activityid) {
 		this.activityid = activityid;
 	}
-	public Integer getUserid() {
-		return userid;
+
+	public String getPhone() {
+		return phone;
 	}
-	public void setUserid(Integer userid) {
-		this.userid = userid;
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 	public String getReportContext() {
 		return reportContext;
@@ -51,7 +52,7 @@ public class Reportactivity {
 	@Override
 	public String toString() {
 		return "Reportactivity [id=" + id + ", activityid=" + activityid
-				+ ", userid=" + userid + ", reportContext=" + reportContext
+				+ ", userid=" + phone + ", reportContext=" + reportContext
 				+ "]";
 	}
 	

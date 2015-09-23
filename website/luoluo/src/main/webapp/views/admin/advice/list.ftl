@@ -1,4 +1,4 @@
-<title>分类管理</title>
+<title>用户管理</title>
 <div class="row">
 	<div class="col-xs-12">
 	<form action="${ctx}/admin/advice/seleNamePhone${suffix}" method="POST">

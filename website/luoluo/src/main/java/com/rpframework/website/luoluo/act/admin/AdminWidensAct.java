@@ -14,7 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.rpframework.core.api.FileService;
-import com.rpframework.core.exception.AdminIllegalArgumentException;
 import com.rpframework.utils.DateUtils;
 import com.rpframework.utils.NumberUtils;
 import com.rpframework.utils.Pager;
@@ -106,16 +105,20 @@ public class AdminWidensAct extends AdminAct{
 	 * @return
 	 */
 	@RequestMapping("/{id}/saveUserda")
-	public String saveUserda(@PathVariable(value="id")Integer id){
+	public String saveUserda(@PathVariable(value="id")Integer id,RedirectAttributes attr){
 		Widens widenOne=widenserivece.selectOnlyOne(id);
 		if(widenOne.getType()==1){
+			setInfoMsg("可以使用！", attr);
+			
 			widenOne.setType(0);
 			widenserivece.updatewiden(widenOne);
 		}else if(widenOne.getType()==0){
+			setInfoMsg("禁用成功！", attr);
 			widenOne.setType(1);
 			widenserivece.updatewiden(widenOne);
 		}
-		throw new AdminIllegalArgumentException("修改成功");
+		
+		return redirect("/admin/windens/list");
 	}
 /**
 	 * 删除用户

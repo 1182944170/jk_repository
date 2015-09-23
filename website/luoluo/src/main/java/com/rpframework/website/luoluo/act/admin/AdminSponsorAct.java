@@ -21,7 +21,6 @@ import com.rpframework.utils.DateUtils;
 import com.rpframework.utils.NumberUtils;
 import com.rpframework.utils.Pager;
 import com.rpframework.website.luoluo.domain.Sponsorlis;
-import com.rpframework.website.luoluo.domain.User;
 import com.rpframework.website.luoluo.service.ActivityService;
 import com.rpframework.website.luoluo.service.ClassificationService;
 import com.rpframework.website.luoluo.service.SponsorService;
@@ -211,11 +210,11 @@ public class AdminSponsorAct extends AdminAct{
 					sponsorService.updatedo(userOne);
 				}
 				if(userOne.getType()==1){
-					setInfoMsg("更新操作成功！", attr);
+					setInfoMsg("审核成功！", attr);
 					return redirect("/admin/spons/individuallist");
 				}
 				else{
-					setInfoMsg("更新操作成功！", attr);
+					setInfoMsg("审核成功！", attr);
 					return redirect("/admin/spons/companylist");
 				}
 			}

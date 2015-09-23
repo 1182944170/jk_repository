@@ -1,4 +1,4 @@
-<title>分类管理</title>
+<title>标签管理</title>
 <div class="row">
 	<div class="col-xs-12">
 		<div class="table-responsive">

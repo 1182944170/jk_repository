@@ -40,19 +40,18 @@ public class ApiMypersonalitylabelAct extends BaseAct{
 		}	
 		Mypersonalitylabel Myperson=mypersonalitylabelService.selectOnlyOne(currUser.getId());
 		if(Myperson.getUserid()==null){
-			
 			Myperson.setUserid(currUser.getId());
 			mypersonalitylabelService.insertdo(Myperson);
 		}
 		JsonObject json = new JsonObject();
-		json.addProperty("mylabel1", Myperson.getMylabel1());
-		json.addProperty("mylabel2", Myperson.getMylabel2());
-		json.addProperty("mylabel3", Myperson.getMylabel3());
-		json.addProperty("mylabel4", Myperson.getMylabel4());
-		json.addProperty("mylabel5", Myperson.getMylabel5());
-		json.addProperty("mylabel6", Myperson.getMylabel6());
-		json.addProperty("mylabel7", Myperson.getMylabel7());
-		json.addProperty("mylabel8", Myperson.getMylabel8());
+		json.addProperty("mylabel1", Myperson.getMylabela());
+		json.addProperty("mylabel2", Myperson.getMylabelb());
+		json.addProperty("mylabel3", Myperson.getMylabelc());
+		json.addProperty("mylabel4", Myperson.getMylabeld());
+		json.addProperty("mylabel5", Myperson.getMylabele());
+		json.addProperty("mylabel6", Myperson.getMylabelf());
+		json.addProperty("mylabel7", Myperson.getMylabelg());
+		json.addProperty("mylabel8", Myperson.getMylabels());
 		return json;
 	}
 	
@@ -60,29 +59,53 @@ public class ApiMypersonalitylabelAct extends BaseAct{
 	@RequestMapping("/mylableupdate")
 	public @ResponseBody JsonElement mylableupdate(
 			@RequestParam(required=false) Integer userid,
-			@RequestParam(required=false) Integer mylabel1,
-			@RequestParam(required=false) Integer mylabel2,
-			@RequestParam(required=false) Integer mylabel3,
-			@RequestParam(required=false) Integer mylabel4,
-			@RequestParam(required=false) Integer mylabel5,
-			@RequestParam(required=false) Integer mylabel6,
-			@RequestParam(required=false) Integer mylabel7,
-			@RequestParam(required=false) Integer mylabel8,
+			@RequestParam(required=false) String mylabela,
+			@RequestParam(required=false) String mylabelb,
+			@RequestParam(required=false) String mylabelc,
+			@RequestParam(required=false) String mylabeld,
+			@RequestParam(required=false) String mylabele,
+			@RequestParam(required=false) String mylabelf,
+			@RequestParam(required=false) String mylabelg,
+			@RequestParam(required=false) String mylabelh,
 			HttpSession session) throws ParserException, InterruptedException{
 				User currUser = getSessionUser(session);
 				
 					if(currUser == null){
 						throw new APICodeException(-4, "你还没登陆!");
 					}	
+					if(mylabela.equals("-1")){
+						mylabela="";
+					}
+					if(mylabelb.equals("-1")){
+						mylabelb="";
+					}
+					if(mylabelc.equals("-1")){
+						mylabelc="";
+					}
+					if(mylabeld.equals("-1")){
+						mylabeld="";
+					}
+					if(mylabele.equals("-1")){
+						mylabele="";
+					}
+					if(mylabelf.equals("-1")){
+						mylabelf="";
+					}
+					if(mylabelg.equals("-1")){
+						mylabelg="";
+					}
+					if(mylabelh.equals("-1")){
+						mylabelh="";
+					}
 					Mypersonalitylabel Myperson=mypersonalitylabelService.selectOnlyOne(userid);
-						Myperson.setMylabel1(mylabel1);
-						Myperson.setMylabel2(mylabel2);
-						Myperson.setMylabel3(mylabel3);
-						Myperson.setMylabel4(mylabel4);
-						Myperson.setMylabel5(mylabel5);
-						Myperson.setMylabel6(mylabel6);
-						Myperson.setMylabel7(mylabel7);
-						Myperson.setMylabel8(mylabel8);
+						Myperson.setMylabela(mylabela);
+						Myperson.setMylabelb(mylabelb);
+						Myperson.setMylabelc(mylabelc);
+						Myperson.setMylabeld(mylabeld);
+						Myperson.setMylabele(mylabele);
+						Myperson.setMylabelf(mylabelf);
+						Myperson.setMylabelg(mylabelg);
+						Myperson.setMylabels(mylabelh);
 						boolean c=mypersonalitylabelService.updatedo(Myperson);
 		JsonObject json = new JsonObject();
 		if(c){ // 添加成功

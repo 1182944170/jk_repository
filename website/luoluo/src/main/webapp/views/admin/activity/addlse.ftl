@@ -1,4 +1,4 @@
-<title>新增活动管理</title>
+<title>新增活动</title>
 <script type="text/javascript" src="${ctx}/resources/js/tool.js"></script>
 <script>
 function selectMap(){
@@ -114,9 +114,10 @@ function selectMap(){
 		</div>
 	</div>
 </div>
-<#assign fieldName="mainImg" />
+<#assign fieldName="activitypicture" />
 <#assign fieldLabel="活动图片" />
 <#include "/common-admin/upload/upload_field_pre.ftl" />
+
 <div class="form-group">
 	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">活动内容:</label>
 	<div class="col-xs-12 col-sm-9">
@@ -171,10 +172,10 @@ function selectMap(){
 </fieldset>
 </form>
 
-<#assign fieldName="mainImg" />
+<#assign fieldName="activitypicture" />
 <#assign rootPath="jiaju/resource/goodsImg/" />
 <#assign fieldNameValue=(goodsDO.mainImg)!"" />
-<#assign isSingle=1 />
+<#assign isSingle=0 />
 <#include "/common-admin/upload/upload_field_after.ftl" />
 
 <#assign fieldName="figureImg" />
@@ -196,7 +197,7 @@ function selectMap(){
 
 <script>
 $(document).ready(function(){
-	RP.addBreadcrumb([{name:"基础设置"}, {name:"<#if classificationDO??>编辑<#else>新增</#if>分类管理",  active: true}]);
+	RP.addBreadcrumb([{name:"基础设置"}, {name:"新增活动",  active: true}]);
 	$('#id-input-file-2').ace_file_input({
 		no_file:'没图片 ...',
 		btn_choose:'请选择图片',

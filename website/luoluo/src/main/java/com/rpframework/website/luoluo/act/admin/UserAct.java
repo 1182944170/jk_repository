@@ -135,7 +135,7 @@ public class UserAct extends AdminAct{
 	 * @return
 	 */
 	@RequestMapping("/{size}/state")
-	public String state(@PathVariable Integer size  ,@RequestParam(value="pager", required=false) Pager<User> pager,Map<Object, Object> model, RedirectAttributes attr){
+	public String state(@PathVariable Integer size,@RequestParam(value="pager", required=false) Pager<User> pager,Map<Object, Object> model, RedirectAttributes attr){
 		if(pager == null) {
 			pager = new Pager<User>();
 		}

@@ -1,4 +1,4 @@
-<title><#if oop??>编辑<#else>新增</#if>商品管理</title>
+<title>查看活动</title>
 <script>
 function selectMap(){
 		$("#mapdiv").css("display","");
@@ -6,7 +6,7 @@ function selectMap(){
 </script>
 <div class="page-header">
 	<h1>
-		<#if oop??>编辑<#else>新增</#if>商品管理
+		查看活动
 		<small>
 			<i class="icon-double-angle-right"></i>
 		</small>
@@ -18,6 +18,7 @@ function selectMap(){
 	<input type="hidden" name="id" value="${(oop.id)!''}"/>
 	<input type="hidden" name="sponsorid" value="${(oop.sponsorid)!''}"/>
 	<input type="hidden" name="nowtime" value="${(oop.nowtime)!''}"/>
+	<input type="hidden" name="type" value="${(oop.type)!''}"/>
 </#if>
 <fieldset>
 
@@ -47,9 +48,10 @@ function selectMap(){
 	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="url">封面图片:</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
-			<div class="ace-file-input width-40">
-				<input type="file" name="iconFile" id="id-input-file-2">
-			</div>
+			
+		
+				<img src="${tagUtils.getFileFullPath(oop.cover)!''}">
+			
 			<small>* 已经存在的icon如果不修改则不需要填写</small>
 		</div>
 	</div>
@@ -112,7 +114,7 @@ function selectMap(){
 		</div>
 	</div>
 </div>
-<#assign fieldName="mainImg" />
+<#assign fieldName="activitypicture" />
 <#assign fieldLabel="活动图片" />
 <#include "/common-admin/upload/upload_field_pre.ftl" />
 <div class="form-group">
@@ -161,10 +163,10 @@ function selectMap(){
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<span class="block input-icon width-40">
-			<#if oop.typeok==1>
+			<#if oop.typeok==0>
 				<input type="text" readonly value="未成功">
 				</#if><!--<i class="icon-user"></i>-->
-			<#if oop.typeok==2>
+			<#if oop.typeok==1>
 				<input type="text" readonly value="成功">
 				</#if>
 				<input type="hidden" value="${oop.typeok}">
@@ -178,7 +180,15 @@ function selectMap(){
 
 <div class="form-group">
 	<div class="col-md-offset-3 col-md-9">
-		<button class="btn btn-info" type="submit"><i class="icon-ok bigger-110"></i>提  交</button>
+		<button class="btn btn-info" type="submit"><i class="icon-ok bigger-110"></i>
+		<#if oop.type==0> 
+		审核
+		</#if>
+		<#if oop.type==1> 
+		取消审核
+		</#if>
+		
+		</button>
 		&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
 		<button class="btn" type="reset"><i class="icon-undo bigger-110"></i>重  置</button>
 	</div>
@@ -187,17 +197,12 @@ function selectMap(){
 </fieldset>
 </form>
 
-<#assign fieldName="mainImg" />
+<#assign fieldName="activitypicture" />
 <#assign rootPath="jiaju/resource/goodsImg/" />
-<#assign fieldNameValue=(goodsDO.mainImg)!"" />
+<#assign fieldNameValue=(oop.activitypicture)!"" />
 <#assign isSingle=1 />
 <#include "/common-admin/upload/upload_field_after.ftl" />
 
-<#assign fieldName="figureImg" />
-<#assign rootPath="jiaju/resource/goodsImg/" />
-<#assign fieldNameValue=(goodsDO.figureImg)!"" />
-<#assign isSingle=0 />
-<#include "/common-admin/upload/upload_field_after.ftl" />
 
 
 <#if errorMsg??>
@@ -211,7 +216,7 @@ function selectMap(){
 
 <script>
 $(document).ready(function(){
-	RP.addBreadcrumb([{name:"基础设置"}, {name:"<#if oop??>编辑<#else>新增</#if>商品管理",  active: true}]);
+	RP.addBreadcrumb([{name:"基础设置"}, {name:"<#if oop??>编辑<#else>新增</#if>活动管理",  active: true}]);
 	$('#id-input-file-2').ace_file_input({
 		no_file:'没图片 ...',
 		btn_choose:'请选择图片',

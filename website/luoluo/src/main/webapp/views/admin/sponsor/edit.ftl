@@ -132,7 +132,14 @@ function selectMap(){
 
 <div class="form-group">
 	<div class="col-md-offset-3 col-md-9">
-		<button class="btn btn-info" type="submit"><i class="icon-ok bigger-110"></i>审核</button>
+		<button class="btn btn-info" type="submit"><i class="icon-ok bigger-110"></i>	
+		<#if user.typeopp==0> 
+		审核
+		</#if>
+		<#if user.typeopp==1> 
+		取消审核
+		</#if>
+		</button>
 		&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
 		<button class="btn" type="reset"><i class="icon-undo bigger-110"></i>取消</button>
 	</div>
