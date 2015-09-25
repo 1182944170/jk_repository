@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.website.luoluo.dao.IActivitypictureDao">
+
+	<resultMap type="com.rpframework.website.luoluo.domain.Activitypicture" id="Activitypicture" autoMapping="true">
+		<id property="id" column="id" />
+	</resultMap>		
+	<select id="doPager" resultMap="Activitypicture">
+		select * from activity_registration where 1=1
+		<if test = "page.searchMap.sponserid != null">
+			and sponsorld = #{page.searchMap.sponserid}
+		</if>
+
+	</select>
+	<update id="update" parameterType="com.rpframework.website.luoluo.domain.Activitypicture" />
+	<insert id="insert" parameterType="com.rpframework.website.luoluo.domain.Activitypicture" useGeneratedKeys="true" keyProperty="id"/>
+	<delete id="delete" parameterType="com.rpframework.website.luoluo.domain.Activitypicture" />
+	<select id="select" parameterType="Integer" resultMap="Activitypicture">
+		select * from activity_registration where id=#{id} order by id
+	</select>
+	<select id="selectole" parameterType="Integer" resultMap="Activitypicture" >
+		select * from activity_registration where sponsorld=#{activiid} 
+	</select>
+</mapper>

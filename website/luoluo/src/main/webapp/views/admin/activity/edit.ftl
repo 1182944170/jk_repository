@@ -1,4 +1,5 @@
 <title>查看活动</title>
+<script type="text/javascript" src="${ctx}/resources/js/tools.js"></script>
 <script>
 function selectMap(){
 		$("#mapdiv").css("display","");
@@ -97,8 +98,9 @@ function selectMap(){
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<span class="block input-icon width-40">
-				<input type="text" name="children_expense" id="name" value="${(oop.children_expense)!''}" maxlength="32" class="form-control" />
-				<!--<i class="icon-user"></i>-->
+				<input type="text" name="children_expense" id="children_expense" onchange="checkInt(this.value,'msgfff')" value="${(oop.children_expense)!''}" maxlength="32" class="form-control" />
+				<i class="icon-user" id="msg"></i>
+				<span class="icon-user" id="msgfff"></span>
 			</span>
 		</div>
 	</div>
@@ -133,7 +135,7 @@ function selectMap(){
 <link type="text/css" href="${ctx}/resources/css/demo.css"  rel="stylesheet" />
 <link type="text/css" href="${ctx}/resources/css/easyui.css"  rel="stylesheet" />
 
-<script type="text/javascript" src="${ctx}/resources/js/jquery_1.8.3.min.js"></script>
+<script type="text/javascript" src="${ctx}/resources/js/jquery.min.js"></script>
 <script type="text/javascript" src="${ctx}/resources/js/jquery.easyui.min.js"></script>
 <div class="form-group">
 	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">开始时间:</label>
@@ -157,7 +159,6 @@ function selectMap(){
 		</div>
 	</div>
 </div>
-
 <div class="form-group">
 	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">是否成功</label>
 	<div class="col-xs-12 col-sm-9">

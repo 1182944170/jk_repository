@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.website.luoluo.dao.IBanksDao">
+
+	<resultMap type="com.rpframework.website.luoluo.domain.Banks" id="Banks" autoMapping="true">
+		<id property="id" column="id" />
+	</resultMap>		
+	<select id="doPager" resultMap="Banks">
+		select * from bank where 1=1
+	</select>
+	
+	<select id="queryAlllesei" resultMap="Banks">
+		 select *   from  bank where 1=1
+	</select>
+	<select id="queryAll" resultMap="Banks">
+		select * from bank where 1=1
+	</select>
+	<update id="update" parameterType="com.rpframework.website.luoluo.domain.Banks" />
+	<insert id="insert" parameterType="com.rpframework.website.luoluo.domain.Banks" useGeneratedKeys="true" keyProperty="id"/>
+	<delete id="delete" parameterType="com.rpframework.website.luoluo.domain.Banks" />
+	<select id="select" parameterType="Integer" resultMap="Banks">
+		select * from bank where id=#{id} order by id
+	</select>
+	
+</mapper>

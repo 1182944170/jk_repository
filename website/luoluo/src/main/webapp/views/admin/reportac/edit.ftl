@@ -20,7 +20,7 @@
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<span class="block input-icon width-40">
-				<input type="text" name ="syTitle" value="${activityName.activityname!}"  maxlength="32" class="form-control" placeholder="活动id"/>
+				<input type="text" name ="syTitle" value="${(activityName.activityname)!""}"  maxlength="32" class="form-control" placeholder="活动id"/>
 				<i class="icon-user"></i>
 			</span>
 		</div>

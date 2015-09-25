@@ -54,10 +54,13 @@
 								<a class="green" href="${ctx}/admin/actcy/${u.id}/edit${suffix}" alt="Edit">
 									<i class="icon-pencil bigger-130"></i>
 								</a>
-
+								<a class="red" href="${ctx}/admin/actcyitypic/${u.id}/list${suffix}"  alt="Delete">
+									<img src="${ctx}/resources/images/xqing.jpg" width="15" height="15" alt="" />
+								</a>
 								<a class="red" href="${ctx}/admin/actcy/${u.id}/deletUser${suffix}" onclick="return confirm('你确定删除么?');" alt="Delete">
 									<i class="icon-trash bigger-130"></i>
 								</a>
+								
 							</div>
 	
 							<div class="visible-xs visible-sm hidden-md hidden-lg">

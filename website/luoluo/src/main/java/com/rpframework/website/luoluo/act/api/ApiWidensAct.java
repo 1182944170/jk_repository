@@ -47,6 +47,9 @@ public class ApiWidensAct extends BaseAct{
 		}	
  		widensService.widenpager(pager);
 		JsonObject json = new JsonObject();
+		json.addProperty("totalPages", pager.getTotalPages());
+		json.addProperty("currentPage", pager.getCurrentPage());
+		json.addProperty("totalCount", pager.getTotalCount());
 		List<Widens> list = pager.getItemList();
 		JsonArray array = new JsonArray();
 		json.add("arrays", array);

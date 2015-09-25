@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.website.luoluo.dao.IBankcardDao">
+
+	<resultMap type="com.rpframework.website.luoluo.domain.Bankcard" id="Bankcard" autoMapping="true">
+		<id property="id" column="id" />
+	</resultMap>		
+	<select id="doPager" resultMap="Bankcard">
+		select * from bankcard where 1=1
+	</select>
+	<update id="update" parameterType="com.rpframework.website.luoluo.domain.Bankcard" />
+	<insert id="insert" parameterType="com.rpframework.website.luoluo.domain.Bankcard" useGeneratedKeys="true" keyProperty="id"/>
+	<delete id="delete" parameterType="com.rpframework.website.luoluo.domain.Bankcard" />
+	<select id="select" parameterType="Integer" resultMap="Bankcard">
+		select * from bankcard where id=#{id} order by id
+	</select>
+	
+</mapper>

@@ -6,7 +6,8 @@
 				<thead>
 					<tr>
 						<th>ID</th>
-						<th>分类名称</th>
+						<th>银行名称</th>
+						<th>图片</th>
 						<th></th>
 						<!--<th>logo</th>-->
 					</tr>
@@ -15,17 +16,17 @@
 				<#list pager.itemList as u>
 					<tr>
 						<td><span class="green center">${u.id}</span></td>
-						<td><span class="gray center">${u.claName!}</span></td>
-				
+						<td><span class="gray center">${u.bankname!}</span></td>
+						<td><img src="${tagUtils.getFileFullPath(u.bankprivice!)}" width="90px" height="40px"></td>
 						<td>
 							<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
-								<a class="green" href="${ctx}/admin/cal/${u.id}/edit${suffix}" alt="Edit">
+								<a class="green" href="${ctx}/admin/bank/${u.id}/edit${suffix}" alt="Edit">
 									<i class="icon-pencil bigger-130"></i>
 								</a>
 
-								<!--<a class="red" href="${ctx}/admin/cal/${u.id}/delete${suffix}" onclick="return confirm('你确定删除么?');" alt="Delete">
+								<a class="red" href="${ctx}/admin/bank/${u.id}/delete${suffix}" onclick="return confirm('你确定删除么?');" alt="Delete">
 									<i class="icon-trash bigger-130"></i>
-								</a>-->
+								</a>
 							</div>
 	
 							<div class="visible-xs visible-sm hidden-md hidden-lg">
@@ -82,7 +83,6 @@
 <script>
 	$(document).ready(function(){
 		RP.addBreadcrumb([{name:"基础配置"}, {name:"分类", active: true}]);
-		$("#breadcrumbs ul").append('&nbsp;&nbsp;&nbsp;&nbsp;');
+	$("#breadcrumbs ul").append('&nbsp;&nbsp;&nbsp;&nbsp;<a href="${ctx}/admin/bank/add${suffix}"><i class="icon-zoom-in"></i><span class="label label-warning arrowed-in arrowed-in arrowed-right">添加银行</span></a>');
 	});
 </script>
-<!--<a href="${ctx}/admin/cal/add${suffix}"><i class="icon-zoom-in"></i><span class="label label-warning arrowed-in arrowed-in arrowed-right">添加分类管理</span></a>-->

@@ -74,6 +74,9 @@ public class ApiMyimpressionAct extends BaseAct{
 		pager.getSearchMap().put("type", String.valueOf(currUser.getId()));
 		myimpressionService.Userpager(pager);
 		JsonObject json = new JsonObject();
+		json.addProperty("totalPages", pager.getTotalPages());
+		json.addProperty("currentPage", pager.getCurrentPage());
+		json.addProperty("totalCount", pager.getTotalCount());
 		List<Myimpression> list = pager.getItemList();
 		JsonArray array = new JsonArray();
 		json.add("arrays", array);

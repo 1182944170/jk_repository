@@ -14,6 +14,9 @@
 		<if test = "page.searchMap.type != null">
 			and type = #{page.searchMap.type}
 		</if>
+		<if test = "page.searchMap.typeok != null">
+			and typeok = #{page.searchMap.typeok}
+		</if>
 		<if test = "page.searchMap.activiid != null">
 			and sponsorid = #{page.searchMap.activiid}
 		</if>
@@ -23,6 +26,6 @@
 	<insert id="insert" parameterType="com.rpframework.website.luoluo.domain.Activity" useGeneratedKeys="true" keyProperty="id"/>
 	<delete id="delete" parameterType="com.rpframework.website.luoluo.domain.Activity" />
 	<select id="select" parameterType="Integer" resultMap="Activity">
-		select * from release_activity where id=#{id} order by id
+		select * from release_activity where id=#{activiid} order by id
 	</select>
 </mapper>

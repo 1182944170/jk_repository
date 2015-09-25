@@ -83,7 +83,7 @@ public class AdminPersonalabelAct extends AdminAct{
 		return redirect("list");
 	}
 	/**
-	 * 添加老师
+	 * 添加标签
 	 * @return
 	 * @time 2015年7月23日 下午1:58:35
 	 */

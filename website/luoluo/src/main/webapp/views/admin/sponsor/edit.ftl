@@ -53,7 +53,7 @@ function selectMap(){
 				<#include "../baidumap.ftl">
 				<input type="hidden" name="lng" id="lng" value="">
 				<input type="hidden" name="lat" id="lat" value="">
-				<input type="text" id="lnglat" name="usernowlive" value="${user.usernowlive}" onclick="selectMap();"/>
+				<input type="text" id="lnglat" name="usernowlive" value="${user.usernowlive!}" onclick="selectMap();"/>
 				<!--<i class="icon-user"></i>-->
 	</div>
 </div>
@@ -62,7 +62,7 @@ function selectMap(){
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<span class="block input-icon width-40">
-				<input type="text" name="userphone" id="oriprice" value="${user.userphone}" maxlength="32" class="form-control" />
+				<input type="text" name="userphone" id="oriprice" value="${user.userphone!}" maxlength="32" class="form-control" />
 				<!--<i class="icon-user"></i>-->
 			</span>
 		</div>
@@ -81,6 +81,17 @@ function selectMap(){
 	</div>
 </div>
 
+<div class="form-group">
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="companyname">公司名称:</label>
+	<div class="col-xs-12 col-sm-9">
+		<div class="clearfix">
+			<span class="block input-icon width-40">
+				<input type="text" name="companyname" id="companyname" value="${user.companyname!}" maxlength="32" class="form-control" />
+				<!--<i class="icon-user"></i>-->
+			</span>
+		</div>
+	</div>
+</div>
 <div class="form-group">
 	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">负责人手机号:</label>
 	<div class="col-xs-12 col-sm-9">

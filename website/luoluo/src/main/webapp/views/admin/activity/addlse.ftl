@@ -10,6 +10,22 @@ function selectMap(){
 		var names = "activityname,活动名称;d-input-file-2,封面图片;activitylocation,活动地点;number,活动人数;children_expense,儿童费用;old_expense,成人费用";
 		return checkCommit(names);
 	}
+	
+	$.fn.datebox.defaults.formatter = function(date){
+	var y = date.getFullYear();
+	var m = date.getMonth()+1;
+	var d = date.getDate();
+	return y+'-'+m+'-'+d;
+}
+$.fn.datebox.defaults.parser = function(s){
+	var t = Date.parse(s);
+	if (!isNaN(t)){
+		return new Date(t);
+	} else {
+		return new Date();
+	}
+}
+	
 </script>
 <div class="page-header">
 	<h1>
@@ -133,25 +149,25 @@ function selectMap(){
 <link type="text/css" href="${ctx}/resources/css/demo.css"  rel="stylesheet" />
 <link type="text/css" href="${ctx}/resources/css/easyui.css"  rel="stylesheet" />
 
-<script type="text/javascript" src="${ctx}/resources/js/jquery_1.8.3.min.js"></script>
+<script type="text/javascript" src="${ctx}/resources/js/jquery1.8.3.min.js"></script>
 <script type="text/javascript" src="${ctx}/resources/js/jquery.easyui.min.js"></script>
 <div class="form-group">
-	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">开始时间:</label>
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="starttimeString">开始时间:</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<span class="block input-icon width-40">
-				<input type="text" name="starttime" id="starttime"  class ="easyui-datetimebox"value="" maxlength="32" class="form-control" />
+				<input type="text" name="starttimeString" id="starttimeString"  class ="easyui-datetimebox"value="" maxlength="32" class="form-control" />
 				<!--<i class="icon-user"></i>-->
 			</span>
 		</div>
 	</div>
 </div>
 <div class="form-group">
-	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">结束时间:</label>
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="outtimeString">结束时间:</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<span class="block input-icon width-40">
-				<input type="text" name="outtime" id="outtime" class ="easyui-datetimebox" value="" maxlength="32" class="form-control" />
+				<input type="text" name="outtimeString" id="outtimeString" class ="easyui-datetimebox" value="" maxlength="32" class="form-control" />
 				<!--<i class="icon-user"></i>-->
 			</span>
 		</div>

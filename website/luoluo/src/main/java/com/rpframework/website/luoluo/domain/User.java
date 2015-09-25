@@ -50,7 +50,7 @@ public class User {
 	@FieldMapperAnnotation
 	private String signature;	//个人签名
 	@FieldMapperAnnotation
-	private Long ctiontime;//注册时间
+	private long ctiontime;//注册时间
 	@FieldMapperAnnotation
 	private Integer type;     //状态
 	

@@ -17,7 +17,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.rpframework.core.BaseAct;
 import com.rpframework.utils.Pager;
-import com.rpframework.website.luoluo.domain.Activity;
 import com.rpframework.website.luoluo.domain.MyActivities;
 import com.rpframework.website.luoluo.domain.User;
 import com.rpframework.website.luoluo.exception.APICodeException;
@@ -49,8 +48,10 @@ public class ApiMyActivitiesAct extends BaseAct{
 		}
 		pager.getSearchMap().put("currUserid", String.valueOf(currUser.getId()));
 		myactivitiesSercice.getpager(pager);
-		
 		JsonObject json = new JsonObject();
+		json.addProperty("totalPages", pager.getTotalPages());
+		json.addProperty("currentPage", pager.getCurrentPage());
+		json.addProperty("totalCount", pager.getTotalCount());
 		List<MyActivities> list = pager.getItemList();
 		JsonArray array = new JsonArray();
 		json.add("arrays", array);
@@ -62,7 +63,7 @@ public class ApiMyActivitiesAct extends BaseAct{
 		return json;
 	}
 	/**
-	 * 收藏用户
+	 * 收藏活动
 	 * @param type
 	 * @param activitiesid
 	 * @param session
@@ -92,7 +93,7 @@ public class ApiMyActivitiesAct extends BaseAct{
 		return json;
 	}
 	/**
-	 * 收藏用户
+	 * 收藏或取消用户
 	 * @param type
 	 * @param activitiesid
 	 * @param session

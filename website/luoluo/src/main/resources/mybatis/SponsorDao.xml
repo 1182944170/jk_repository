@@ -21,5 +21,8 @@
 	<select id="select" parameterType="Integer" resultMap="sponsor">
          select * from  sponsor where id=#{id}
 	</select>
+	<select id="selectsponsorid" parameterType="Integer" resultMap="sponsor">
+         select * from  sponsor where userid=#{sponsorid}
+	</select>
 
 </mapper>

@@ -64,6 +64,7 @@ function selectMap(){
 	</div>
 </div>
 
+
 <div class="form-group"style="position:relative;">
 	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">居住地点:</label>
 	<div class="col-xs-12 col-sm-9" >
@@ -72,6 +73,19 @@ function selectMap(){
 				<input type="hidden" name="lat" id="lat" value="">
 				<input type="text" id="lnglat" name="usernowlive" onclick="selectMap();"/>
 				<!--<i class="icon-user"></i>-->
+	</div>
+</div>
+<div class="form-group">
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="username">领队姓名:</label>
+	<div class="col-xs-12 col-sm-9">
+		<div class="clearfix">
+			<span class="block input-icon width-40">
+				<input type="text" name="username" id="username"  maxlength="32" class="form-control" />
+				<b class="classerror" id="showss"></b>
+				<!--<i class="icon-user"></i>-->
+			</span>
+			 <b id="cue" style="color:red ;align:center"> </b>  
+		</div>
 	</div>
 </div>
 <div class="form-group">
@@ -104,6 +118,28 @@ function selectMap(){
 		<div class="clearfix">
 			<span class="block input-icon width-40">
 				<b Style="color:red">当选择公司时 必须填写下列内容</b>
+			</span>
+		</div>
+	</div>
+</div>
+<div class="form-group">
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="companyname">公司姓名:</label>
+	<div class="col-xs-12 col-sm-9">
+		<div class="clearfix">
+			<span class="block input-icon width-40">
+				<input type="text" name="companyname" id="companyname" value=""  maxlength="32" class="form-control" />
+				<b class="classerror" id="showsss"></b>
+			</span>
+		</div>
+	</div>
+</div>
+<div class="form-group">
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="responname">负责人姓名:</label>
+	<div class="col-xs-12 col-sm-9">
+		<div class="clearfix">
+			<span class="block input-icon width-40">
+				<input type="text" name="responname" id="responname" value=""  maxlength="32" class="form-control" />
+				<b class="classerror" id="showsss"></b>
 			</span>
 		</div>
 	</div>

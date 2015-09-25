@@ -30,7 +30,7 @@ public class ApiPersonalitylbel extends BaseAct{
 	@Resource PersonalabelService   labelService ;
 	
 	/**
-	 * 显示标签
+	 * 显示数据库所有标签
 	 * @param pager
 	 * @param model
 	 * @param session
@@ -50,6 +50,9 @@ public class ApiPersonalitylbel extends BaseAct{
 		}	
 		labelService.labelpager(pager);
 		JsonObject json = new JsonObject();
+		json.addProperty("totalPages", pager.getTotalPages());
+		json.addProperty("currentPage", pager.getCurrentPage());
+		json.addProperty("totalCount", pager.getTotalCount());
 		List<Personalabel> list = pager.getItemList();
 		JsonArray array = new JsonArray();
 		json.add("arrays", array);

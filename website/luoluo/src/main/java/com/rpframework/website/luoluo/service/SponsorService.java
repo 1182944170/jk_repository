@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 
 
+
 import com.rpframework.core.BaseService;
 import com.rpframework.utils.Pager;
 import com.rpframework.website.luoluo.dao.ISponsorDao;
@@ -49,5 +50,9 @@ public class SponsorService extends BaseService{
 	public boolean deletesell(Integer deleteid) {
 		// TODO Auto-generated method stub
 		return isponsorDao.delete(deleteid);
+	}
+	public Sponsorlis seletOnesponsor(Integer sponsorid) {
+		// TODO Auto-generated method stub
+		return isponsorDao.selectsponsorid(sponsorid);
 	}
 }

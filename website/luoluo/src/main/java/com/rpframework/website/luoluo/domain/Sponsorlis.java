@@ -12,6 +12,8 @@ public class Sponsorlis {
 	@FieldMapperAnnotation
 	private Integer userid;  // 用户id
 	@FieldMapperAnnotation
+	private String username; //领队姓名
+	@FieldMapperAnnotation
 	private String userpicture;  //真实头像
 	@FieldMapperAnnotation
 	private String usernowlive;  //常驻地
@@ -24,13 +26,17 @@ public class Sponsorlis {
 	@FieldMapperAnnotation
 	private String telephone;  //公司电话
 	@FieldMapperAnnotation
+	private String companyname;  //公司名称
+	@FieldMapperAnnotation
 	private String responsibility;  // 企业负责任信息
+	@FieldMapperAnnotation
+	private String responname;  // 企业负姓名
 	@FieldMapperAnnotation
 	private String entintroduction;  // 公司介绍
 	@FieldMapperAnnotation
 	private Integer type;  // 类型
 	@FieldMapperAnnotation
-	private Long activityTime;  // 时间
+	private long activityTime;  // 时间
 	@FieldMapperAnnotation
 	private Integer goint;  // 成功次数
 	@FieldMapperAnnotation
@@ -98,6 +104,12 @@ public class Sponsorlis {
 	public Integer getType() {
 		return type;
 	}
+	public String getCompanyname() {
+		return companyname;
+	}
+	public void setCompanyname(String companyname) {
+		this.companyname = companyname;
+	}
 	public void setType(Integer type) {
 		this.type = type;
 	}
@@ -118,6 +130,21 @@ public class Sponsorlis {
 	}
 	public void setTypeopp(Integer typeopp) {
 		this.typeopp = typeopp;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public String getResponname() {
+		return responname;
+	}
+	public void setResponname(String responname) {
+		this.responname = responname;
+	}
+	public void setActivityTime(long activityTime) {
+		this.activityTime = activityTime;
 	}
 
 	

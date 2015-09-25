@@ -16,7 +16,6 @@ import com.rpframework.core.exception.AdminIllegalArgumentException;
 import com.rpframework.utils.Pager;
 import com.rpframework.website.luoluo.domain.Activity;
 import com.rpframework.website.luoluo.domain.Reportactivity;
-import com.rpframework.website.luoluo.domain.User;
 import com.rpframework.website.luoluo.service.ActivityService;
 import com.rpframework.website.luoluo.service.ReportactivityService;
 import com.rpframework.website.luoluo.service.UserService;

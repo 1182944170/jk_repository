@@ -15,7 +15,7 @@ public class Widens {
 	@FieldMapperAnnotation
 	private String syimages ;  //系统图片
 	@FieldMapperAnnotation
-	private Long sytime;	//系统时间
+	private long sytime;	//系统时间
 	@FieldMapperAnnotation
 	private Integer type;	//状态
 	

@@ -28,11 +28,37 @@ public class Activitypicture {
 	private Integer type;
 	@FieldMapperAnnotation
 	private String[] insure;
+	@FieldMapperAnnotation
+	private Integer sponsorld;
+	@FieldMapperAnnotation
+	private Integer myld;
+	@FieldMapperAnnotation
+	private Integer number;
+	
 	public Integer getId() {
 		return id;
 	}
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	
+	public Integer getNumber() {
+		return number;
+	}
+	public void setNumber(Integer number) {
+		this.number = number;
+	}
+	public Integer getSponsorld() {
+		return sponsorld;
+	}
+	public void setSponsorld(Integer sponsorld) {
+		this.sponsorld = sponsorld;
+	}
+	public Integer getMyld() {
+		return myld;
+	}
+	public void setMyld(Integer myld) {
+		this.myld = myld;
 	}
 	public String getName() {
 		return name;

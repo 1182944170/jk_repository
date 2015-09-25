@@ -11,6 +11,7 @@
 						<th>领队电话</th>
 						
 				<#if se??>
+						<th>公司姓名</th>
 						<th>公司负责手机</th>
 						<th>公司电话</th>
 						
@@ -34,6 +35,7 @@
 							<td><span class="gray center">${u.userphone!}</span></td>
 					        
 				        <#if u.type==2>
+							<td><span class="gray center">${u.companyname!}</span></td>
 							<td><span class="gray center">${u.usertelephone!}</span></td>
 							<td><span class="gray center">${u.telephone!}</span></td>
 							

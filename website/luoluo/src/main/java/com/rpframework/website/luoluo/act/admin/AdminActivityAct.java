@@ -17,12 +17,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.rpframework.core.api.FileService;
 import com.rpframework.core.exception.AdminIllegalArgumentException;
+import com.rpframework.utils.DateUtils;
 import com.rpframework.utils.NumberUtils;
 import com.rpframework.utils.Pager;
 import com.rpframework.website.luoluo.domain.Activity;
 import com.rpframework.website.luoluo.domain.Classification;
 import com.rpframework.website.luoluo.service.ActivityService;
-
 import com.rpframework.website.luoluo.service.ClassificationService;
 
 @Controller
@@ -100,7 +100,6 @@ public class AdminActivityAct extends AdminAct{
 	 */
 	@RequestMapping("/dosave")
 	public String dosave(@ModelAttribute Activity activity, Map<Object, Object> model,
-	
 			@RequestParam(value="iconFile", required=false) CommonsMultipartFile iconFile,
 			RedirectAttributes attr){
 		if(activity.getType()==1){
@@ -127,14 +126,18 @@ public class AdminActivityAct extends AdminAct{
 	 * @return
 	 */
 	@RequestMapping("/addsave")
-	public String addsave(@ModelAttribute Activity activity,Map<Object, Object> model, RedirectAttributes attr,
+	public String addsave(@ModelAttribute Activity activity,
+			@RequestParam(value="outtimeString" ,required=false)String outtimeString,
+			@RequestParam(value="starttimeString",required=false)String starttimeString,
+			Map<Object, Object> model, RedirectAttributes attr,
 			@RequestParam(value="iconFile", required=false) CommonsMultipartFile iconFile
 			){
 		
-		if(StringUtils.isBlank(activity.getStarttime())||StringUtils.isBlank(activity.getOuttime())){
+		if(StringUtils.isBlank(outtimeString)||StringUtils.isBlank(starttimeString)){
 			throw new AdminIllegalArgumentException("开始时间和结束时间不能为空");
 		}
-		
+		activity.setStarttime(DateUtils.parse(starttimeString).getTime()/1000);
+		activity.setOuttime(DateUtils.parse(outtimeString).getTime()/1000);
 		if(iconFile.getSize() > 0 ) { // 判断 icon 大小是否大于0
 			try {
 				String relativelyPath = "/fenl/" + NumberUtils.random(3) + iconFile.getOriginalFilename(); // new 随即产生随即4位数开头的一个相对路径文件名

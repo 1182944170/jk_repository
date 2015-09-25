@@ -35,9 +35,9 @@ public class ActivityService extends BaseService{
 	public boolean deletesell(Integer id){
 		return iactivitydao.delete(id);
 	}
-	public Activity selectcal(Integer id){
+	public Activity selectcal(Integer activiid){
 		
-		Activity cationDO=iactivitydao.select(id);
+		Activity cationDO=iactivitydao.select(activiid);
 		return cationDO;
 	}
 	public boolean updatedo(Activity activity){

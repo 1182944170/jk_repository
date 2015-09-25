@@ -20,4 +20,5 @@
 	<select id="select" parameterType="Integer" resultMap="Adviceopen">
 		select * from advice where id=#{id} order by id
 	</select>
+
 </mapper>

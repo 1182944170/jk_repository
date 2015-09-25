@@ -16,9 +16,13 @@ public class Reportactivity {
 	@FieldMapperAnnotation
 	private String reportContext; //举报内容
 	@FieldMapperAnnotation
-	private Long acttime;  //举报时间
+	private long acttime;  //举报时间
+	
 	public Integer getId() {
 		return id;
+	}
+	public void setActtime(long acttime) {
+		this.acttime = acttime;
 	}
 	public void setId(Integer id) {
 		this.id = id;

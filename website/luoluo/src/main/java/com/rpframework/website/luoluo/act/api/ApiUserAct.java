@@ -63,6 +63,9 @@ public class ApiUserAct extends BaseAct{
 		pager.getSearchMap().put("type", String.valueOf(0));
 		userservice.Userpager(pager);
 		JsonObject json = new JsonObject();
+		json.addProperty("totalPages", pager.getTotalPages());
+		json.addProperty("currentPage", pager.getCurrentPage());
+		json.addProperty("totalCount", pager.getTotalCount());
 		List<User> list = pager.getItemList();
 		JsonArray array = new JsonArray();
 		json.add("arrays", array);

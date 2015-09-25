@@ -1,6 +1,14 @@
 package com.rpframework.website.luoluo.domain;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.lang.StringUtils;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.rpframework.core.mybatis.plugin.annotation.FieldMapperAnnotation;
 import com.rpframework.core.mybatis.plugin.annotation.TableMapperAnnotation;
 import com.rpframework.core.mybatis.plugin.annotation.UniqueKeyType;
@@ -32,9 +40,9 @@ public class Activity {
 	@FieldMapperAnnotation
 	private String activitycontent;  //活动内容
 	@FieldMapperAnnotation
-	private String starttime;   //开始时间
+	private long starttime;   //开始时间
 	@FieldMapperAnnotation
-	private String outtime;   //结束时间
+	private long outtime;   //结束时间
 	@FieldMapperAnnotation
 	private long nowforetime;   //现在时间
 	@FieldMapperAnnotation
@@ -158,24 +166,21 @@ public class Activity {
 		this.activitycontent = activitycontent;
 	}
 
-	
-	public String getStarttime() {
+	public long getStarttime() {
 		return starttime;
 	}
 
-	public void setStarttime(String starttime) {
+	public void setStarttime(long starttime) {
 		this.starttime = starttime;
 	}
 
-	public String getOuttime() {
+	public long getOuttime() {
 		return outtime;
 	}
 
-	public void setOuttime(String outtime) {
+	public void setOuttime(long outtime) {
 		this.outtime = outtime;
 	}
-
-
 
 	public Integer getType() {
 		return type;
@@ -200,8 +205,18 @@ public class Activity {
 	public void setTypeok(Integer typeok) {
 		this.typeok = typeok;
 	}
-
-	
+	public List<String> getPhotoPathList(){
+		if(StringUtils.isBlank(getActivitypicture())) {
+			return null;
+		}
+		JsonArray array = new JsonParser().parse(getActivitypicture()).getAsJsonArray();
+		List<String> list = new ArrayList<String>();
+		
+		for (JsonElement je : array) {
+			list.add(je.getAsString());
+		}
+		return list;
+	}
 
 	@Override
 	public String toString() {
