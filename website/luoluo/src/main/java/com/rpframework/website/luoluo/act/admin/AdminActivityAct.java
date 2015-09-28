@@ -127,17 +127,12 @@ public class AdminActivityAct extends AdminAct{
 	 */
 	@RequestMapping("/addsave")
 	public String addsave(@ModelAttribute Activity activity,
-			@RequestParam(value="outtimeString" ,required=false)String outtimeString,
-			@RequestParam(value="starttimeString",required=false)String starttimeString,
+
 			Map<Object, Object> model, RedirectAttributes attr,
 			@RequestParam(value="iconFile", required=false) CommonsMultipartFile iconFile
-			){
+			)throws Exception{
 		
-		if(StringUtils.isBlank(outtimeString)||StringUtils.isBlank(starttimeString)){
-			throw new AdminIllegalArgumentException("开始时间和结束时间不能为空");
-		}
-		activity.setStarttime(DateUtils.parse(starttimeString).getTime()/1000);
-		activity.setOuttime(DateUtils.parse(outtimeString).getTime()/1000);
+		
 		if(iconFile.getSize() > 0 ) { // 判断 icon 大小是否大于0
 			try {
 				String relativelyPath = "/fenl/" + NumberUtils.random(3) + iconFile.getOriginalFilename(); // new 随即产生随即4位数开头的一个相对路径文件名

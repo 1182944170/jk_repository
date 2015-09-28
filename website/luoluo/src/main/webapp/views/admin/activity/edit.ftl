@@ -132,33 +132,7 @@ function selectMap(){
 		</div>
 	</div>
 </div>
-<link type="text/css" href="${ctx}/resources/css/demo.css"  rel="stylesheet" />
-<link type="text/css" href="${ctx}/resources/css/easyui.css"  rel="stylesheet" />
 
-<script type="text/javascript" src="${ctx}/resources/js/jquery.min.js"></script>
-<script type="text/javascript" src="${ctx}/resources/js/jquery.easyui.min.js"></script>
-<div class="form-group">
-	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">开始时间:</label>
-	<div class="col-xs-12 col-sm-9">
-		<div class="clearfix">
-			<span class="block input-icon width-40">
-				<input type="text" name="starttime" id="name"  class ="easyui-datetimebox"value="${oop.starttime!}" maxlength="32" class="form-control" />
-				<!--<i class="icon-user"></i>-->
-			</span>
-		</div>
-	</div>
-</div>
-<div class="form-group">
-	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">结束时间:</label>
-	<div class="col-xs-12 col-sm-9">
-		<div class="clearfix">
-			<span class="block input-icon width-40">
-				<input type="text" name="outtime" id="name" class ="easyui-datetimebox" value="${oop.outtime!}" maxlength="32" class="form-control" />
-				<!--<i class="icon-user"></i>-->
-			</span>
-		</div>
-	</div>
-</div>
 <div class="form-group">
 	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">是否成功</label>
 	<div class="col-xs-12 col-sm-9">

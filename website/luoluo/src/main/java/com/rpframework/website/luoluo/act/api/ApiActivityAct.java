@@ -90,9 +90,11 @@ public class ApiActivityAct extends BaseAct{
 		json.addProperty("old_expense", activity.getOld_expense());
 		json.addProperty("activitycontent", activity.getActivitycontent());
 		json.addProperty("starttime", activity.getStarttime());
+		
 		List<Activitypicture> activitypict=activitypictureSercice.selectlist(activiid);
 		JsonArray array = new JsonArray();
 		json.add("arrays", array);
+		
 			List<String> imgList = activity.getPhotoPathList();
 			JsonArray imgArray = new JsonArray();
 			if(CollectionUtils.isNotEmpty(imgList)) {

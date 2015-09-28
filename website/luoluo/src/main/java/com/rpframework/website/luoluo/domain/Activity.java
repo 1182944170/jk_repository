@@ -205,6 +205,7 @@ public class Activity {
 	public void setTypeok(Integer typeok) {
 		this.typeok = typeok;
 	}
+	
 	public List<String> getPhotoPathList(){
 		if(StringUtils.isBlank(getActivitypicture())) {
 			return null;
