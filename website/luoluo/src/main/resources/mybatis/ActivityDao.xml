@@ -20,6 +20,9 @@
 		<if test = "page.searchMap.activiid != null">
 			and sponsorid = #{page.searchMap.activiid}
 		</if>
+		<if test = "page.searchMap.ssid != null">
+			and id = #{page.searchMap.ssid}
+		</if>
 		 order by id desc
 	</select>
 	<update id="update" parameterType="com.rpframework.website.luoluo.domain.Activity" />

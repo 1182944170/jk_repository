@@ -1,5 +1,4 @@
 <title>活动管理</title>
-
 &nbsp;&nbsp;&nbsp;
 		<h5><a href="${ctx}/admin/actcy/list${suffix}"><b>全部</b></a>
 <#list cal as s>
@@ -8,6 +7,7 @@
 		&nbsp;&nbsp;&nbsp;&nbsp;
 </#list>
 </h5>
+   
 <div class="row">
 	<div class="col-xs-12">
 		<div class="table-responsive">
@@ -30,7 +30,7 @@
 				<tbody>
 				<#list pager.itemList as u>
 					<tr>
-						<td><span class="green center">${u.id}</span></td>
+						<td><span id="green11" class="green center">${u.id}</span></td>
 						<td><span class="gray center">${u.activitynumber!}</span></td>
 						<td><span class="gray center">${u.activityname!}</span></td>
 						 <@mifancut cmd="get_mfcutpic_list" type="${u.activitycategory!}" pagerString="1_" pageSize="50">
@@ -39,8 +39,9 @@
 				            </#list>
   						</@mifancut>
 				        <td><span class="gray center">${u.number!}</span></td>
-				        <td><span class="gray center">${u.starttime!}</span></td>
-				        <td><span class="gray center">${u.outtime!}</span></td>
+			
+				        <td><span class="gray center">${tagUtils.formatDate(u.starttime!)}</span></td>
+				        <td><span class="gray center">${tagUtils.formatDate(u.outtime!)}</span></td>
 				   
 				        <td><span class="gray center">${tagUtils.formatDate(u.nowforetime!)}</span></td>
 				       <#if u.type == 1 >

@@ -1,5 +1,9 @@
 <title>新增活动</title>
 <script type="text/javascript" src="${ctx}/resources/js/tool.js"></script>
+<link type="text/css" href="${ctx}/resources/css/demo.css"  rel="stylesheet" />
+<link type="text/css" href="${ctx}/resources/css/easyui.css"  rel="stylesheet" />
+<script type="text/javascript" src="${ctx}/resources/js/jquery1.8.3.min.js"></script>
+<script type="text/javascript" src="${ctx}/resources/js/jquery.easyui.min.js"></script>
 <script>
 function selectMap(){
 		$("#mapdiv").css("display","");
@@ -29,7 +33,7 @@ $.fn.datebox.defaults.parser = function(s){
 </script>
 <div class="page-header">
 	<h1>
-		新增商品管理
+		新增活动
 		<small>
 			<i class="icon-double-angle-right"></i>
 		</small>
@@ -146,11 +150,7 @@ $.fn.datebox.defaults.parser = function(s){
 		</div>
 	</div>
 </div>
-<link type="text/css" href="${ctx}/resources/css/demo.css"  rel="stylesheet" />
-<link type="text/css" href="${ctx}/resources/css/easyui.css"  rel="stylesheet" />
 
-<script type="text/javascript" src="${ctx}/resources/js/jquery1.8.3.min.js"></script>
-<script type="text/javascript" src="${ctx}/resources/js/jquery.easyui.min.js"></script>
 <div class="form-group">
 	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="starttimeString">开始时间:</label>
 	<div class="col-xs-12 col-sm-9">

@@ -21,7 +21,7 @@ public class Activitypicture {
 	@FieldMapperAnnotation
 	private String chindenboy;
 	@FieldMapperAnnotation
-	private String monely;
+	private double monely;  //金额
 	@FieldMapperAnnotation
 	private String mood;
 	@FieldMapperAnnotation
@@ -33,7 +33,19 @@ public class Activitypicture {
 	@FieldMapperAnnotation
 	private Integer myld;
 	@FieldMapperAnnotation
-	private Integer number;
+	private Integer number; //总数
+	@FieldMapperAnnotation
+	private double actualamount;  //实际金额
+	@FieldMapperAnnotation
+	private double counterFee;  // 手续费
+	@FieldMapperAnnotation
+	private String ordernumber;  // 订单号
+	@FieldMapperAnnotation
+	private Integer typeMonely;  // 支付方式
+	@FieldMapperAnnotation
+	private Integer typeOrder;  // 订单状态
+	@FieldMapperAnnotation
+	private long newtime;  // 订单状态
 	
 	public Integer getId() {
 		return id;
@@ -96,12 +108,7 @@ public class Activitypicture {
 	public void setChindenboy(String chindenboy) {
 		this.chindenboy = chindenboy;
 	}
-	public String getMonely() {
-		return monely;
-	}
-	public void setMonely(String monely) {
-		this.monely = monely;
-	}
+
 	public String getMood() {
 		return mood;
 	}
@@ -120,6 +127,52 @@ public class Activitypicture {
 	}
 	public void setInsure(String[] insure) {
 		this.insure = insure;
+	}
+
+	
+	public double getMonely() {
+		return monely;
+	}
+	public void setMonely(double monely) {
+		this.monely = monely;
+	}
+	public double getActualamount() {
+		return actualamount;
+	}
+	public void setActualamount(double actualamount) {
+		this.actualamount = actualamount;
+	}
+	public double getCounterFee() {
+		return counterFee;
+	}
+	public void setCounterFee(double counterFee) {
+		this.counterFee = counterFee;
+	}
+	public Integer getTypeMonely() {
+		return typeMonely;
+	}
+	public void setTypeMonely(Integer typeMonely) {
+		this.typeMonely = typeMonely;
+	}
+	public String getOrdernumber() {
+		return ordernumber;
+	}
+	public void setOrdernumber(String ordernumber) {
+		this.ordernumber = ordernumber;
+	}
+	
+	public Integer getTypeOrder() {
+		return typeOrder;
+	}
+	public void setTypeOrder(Integer typeOrder) {
+		this.typeOrder = typeOrder;
+	}
+	
+	public long getNewtime() {
+		return newtime;
+	}
+	public void setNewtime(long newtime) {
+		this.newtime = newtime;
 	}
 	@Override
 	public String toString() {

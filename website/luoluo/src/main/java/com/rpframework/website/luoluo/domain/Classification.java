@@ -17,6 +17,8 @@ public class Classification {
 	private Integer seqn;
 	@FieldMapperAnnotation
 	private String bigImg;
+	@FieldMapperAnnotation
+	private int procedures;
 	public Integer getId() {
 		return id;
 	}
@@ -46,6 +48,13 @@ public class Classification {
 	}
 	public void setBigImg(String bigImg) {
 		this.bigImg = bigImg;
+	}
+	
+	public int getProcedures() {
+		return procedures;
+	}
+	public void setProcedures(int procedures) {
+		this.procedures = procedures;
 	}
 	@Override
 	public String toString() {

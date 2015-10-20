@@ -52,6 +52,8 @@ public class User {
 	@FieldMapperAnnotation
 	private long ctiontime;//注册时间
 	@FieldMapperAnnotation
+	private double personalMany;     //余额
+	@FieldMapperAnnotation
 	private Integer type;     //状态
 	
 	
@@ -200,6 +202,18 @@ public class User {
 	public void setNamePic(String namePic) {
 		this.namePic = namePic;
 	}
+	
+
+	public double getPersonalMany() {
+		return personalMany;
+	}
+	public void setPersonalMany(double personalMany) {
+		this.personalMany = personalMany;
+	}
+	public void setCtiontime(long ctiontime) {
+		this.ctiontime = ctiontime;
+	}
+	
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", acnumber=" + acnumber

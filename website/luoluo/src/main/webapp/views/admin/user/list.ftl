@@ -15,6 +15,7 @@
 						<th>用户性别</th>
 						<th>用户电话</th>
 						<th>用户密码</th>
+						<th>余额</th>
 						<th>状态</th>
 						<th></th>
 						
@@ -39,6 +40,7 @@
 						<td><span class="gray center">${u.phone!}</span></td>
 					
 						<th><span class="gray center">${u.password!}</span></th>
+						<td><span class="gray center">￥${u.personalMany!}</span></td>
 						<td>
 						<#if u.type == 0 >
 						<span class="gray center" style="color:Green"><b>允许</b></span>

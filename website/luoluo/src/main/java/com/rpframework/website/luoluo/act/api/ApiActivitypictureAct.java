@@ -16,11 +16,17 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.rpframework.core.BaseAct;
+import com.rpframework.utils.DateUtils;
+import com.rpframework.utils.NumberUtils;
 import com.rpframework.utils.Pager;
+import com.rpframework.website.luoluo.domain.Activity;
 import com.rpframework.website.luoluo.domain.Activitypicture;
+import com.rpframework.website.luoluo.domain.Classification;
 import com.rpframework.website.luoluo.domain.User;
 import com.rpframework.website.luoluo.exception.APICodeException;
+import com.rpframework.website.luoluo.service.ActivityService;
 import com.rpframework.website.luoluo.service.ActivitypictureSercice;
+import com.rpframework.website.luoluo.service.ClassificationService;
 
 
 @Controller
@@ -28,7 +34,8 @@ import com.rpframework.website.luoluo.service.ActivitypictureSercice;
 public class ApiActivitypictureAct extends BaseAct{
 		Gson gson = new Gson();
 	@Resource ActivitypictureSercice activitypictureSercice;
-	
+	@Resource ActivityService   activityService ;
+	@Resource ClassificationService   classiftionservice;
 	/**
 	 * 添加报名信息
 	 * @param name
@@ -52,9 +59,10 @@ public class ApiActivitypictureAct extends BaseAct{
 			@RequestParam(required=false) String emergencyname,
 			@RequestParam(required=false) String oldboy,
 			@RequestParam(required=false) String chindenboy,
-			@RequestParam(required=false) String monely,
+			@RequestParam(required=false) double monely,
 			@RequestParam(required=false) String mood,
 			@RequestParam(required=false) String[] insure,
+			@RequestParam(required=false) Integer typeMonely,
 			@RequestParam(required=false) Integer type,
 			HttpSession session
 			)throws Exception{
@@ -62,7 +70,9 @@ public class ApiActivitypictureAct extends BaseAct{
 			if(currUser == null){
 				throw new APICodeException(-4, "你还没登陆!");
 			}	
+			Activity activity = activityService.selectcal(sponsorld);
 				Activitypicture Activitypi=new Activitypicture();
+				Activitypi.setOrdernumber(DateUtils.nowDate(DateUtils.YYYYMMDDHHMMSS) + NumberUtils.random(5));
 				Activitypi.setSponsorld(sponsorld);
 				Activitypi.setMyld(currUser.getId());
 				Activitypi.setName(name);
@@ -72,9 +82,21 @@ public class ApiActivitypictureAct extends BaseAct{
 				Activitypi.setOldboy(oldboy);
 				Activitypi.setChindenboy(chindenboy);
 				Activitypi.setMonely(monely);
+				double cc=monely;
+				double counterFee=0;
+				if(activity.getType()==1){
+					Classification cole=classiftionservice.selectcal(activity.getActivitycategory());
+					counterFee=(int) (cc*cole.getProcedures()/100);
+				}
+				double actualamount=cc-counterFee;
+				Activitypi.setCounterFee(counterFee);
+				Activitypi.setActualamount(actualamount);
 				Activitypi.setMood(mood);
 				Activitypi.setInsure(insure);
-				Activitypi.setType(type);
+				Activitypi.setTypeMonely(typeMonely);
+				Activitypi.setNewtime(System.currentTimeMillis()/1000);
+				Activitypi.setType(activity.getType());
+				Activitypi.setTypeOrder(1);
 		boolean activi=activitypictureSercice.insertdo(Activitypi);
 		JsonObject json=new JsonObject();
 		if(activi==true){
@@ -84,6 +106,11 @@ public class ApiActivitypictureAct extends BaseAct{
 		}
 		return json;
 	}
+	
+	
+	
+	
+	
 	@RequestMapping("list")
 	public @ResponseBody JsonElement list(@RequestParam Integer id,@RequestParam(value="pager",required=false) Pager<Activitypicture> pager 
 			) throws ParserException, InterruptedException{

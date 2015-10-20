@@ -49,6 +49,14 @@
 		</div>
 	</div>
 </div>
+<div class="form-group">
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="url">设置手续费:</label>
+	<div class="col-xs-12 col-sm-9">
+		<div class="clearfix">
+			<input type="text" name="proced" id="proced" value="${(classificationDO.procedures)!''}">%
+		</div>
+	</div>
+</div>
 
 <div class="form-group">
 	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">排序:</label>

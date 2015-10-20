@@ -46,6 +46,8 @@ public class Activity {
 	@FieldMapperAnnotation
 	private long nowforetime;   //现在时间
 	@FieldMapperAnnotation
+	private long allmonly;   //总金额
+	@FieldMapperAnnotation
 	private Integer type;  //类型
 	@FieldMapperAnnotation
 	private Integer typeok;  //举办是否成功
@@ -206,6 +208,13 @@ public class Activity {
 		this.typeok = typeok;
 	}
 	
+	public long getAllmonly() {
+		return allmonly;
+	}
+	public void setAllmonly(long allmonly) {
+		this.allmonly = allmonly;
+	}
+
 	public List<String> getPhotoPathList(){
 		if(StringUtils.isBlank(getActivitypicture())) {
 			return null;
@@ -221,19 +230,19 @@ public class Activity {
 
 	@Override
 	public String toString() {
-		return "Activity [id=" + id + ", sponsorid=" + sponsorid + ", Cover="
+		return "Activity [id=" + id + ", sponsorid=" + sponsorid + ", cover="
 				+ cover + ", activitynumber=" + activitynumber
 				+ ", activityname=" + activityname + ", activitycategory="
 				+ activitycategory + ", activitylocation=" + activitylocation
 				+ ", number=" + number + ", children_expense="
 				+ children_expense + ", old_expense=" + old_expense
 				+ ", activitypicture=" + activitypicture + ", activitycontent="
-				+ activitycontent + ", Starttime=" + starttime + ", Outtime="
-				+ outtime + ", nowtime=, type=" + type
-				+ ", typeok=" + typeok + ", classList=]";
+				+ activitycontent + ", starttime=" + starttime + ", outtime="
+				+ outtime + ", nowforetime=" + nowforetime + ", type=" + type
+				+ ", typeok=" + typeok + ", lng=" + lng + ", lat=" + lat + "]";
 	}
-	
-	
+
+
 	
 	
 	

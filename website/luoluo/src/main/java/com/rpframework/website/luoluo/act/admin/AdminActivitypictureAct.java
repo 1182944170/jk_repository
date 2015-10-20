@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.rpframework.core.exception.AdminIllegalArgumentException;
 import com.rpframework.utils.Pager;
 import com.rpframework.website.luoluo.domain.Activitypicture;
 import com.rpframework.website.luoluo.service.ActivitypictureSercice;
@@ -37,4 +38,28 @@ public class AdminActivitypictureAct extends AdminAct{
 		model.put("pager", pager);
 		return this.doPackageURI("activity/userlist");
 	}
+	
+	
+	@RequestMapping("/list")
+	public String alllist(
+			@RequestParam(value="pager", required=false) Pager<Activitypicture> pager, Map<Object, Object> model, RedirectAttributes attr){
+		if(pager==null){
+			pager=new Pager<Activitypicture>();
+		}
+		pager=activitypictureSercice.getpager(pager);
+		model.put("pager", pager);
+		return this.doPackageURI("management/list");
+	}
+	
+	@RequestMapping("/{id}/edit")
+	public String edit(@PathVariable (value="id") int id ,Map<Object, Object> model){
+		Activitypicture activitypicture=activitypictureSercice.selectone(id);
+		if(activitypicture == null) {
+			throw new AdminIllegalArgumentException("不存在的ID:" + id);
+		}
+		model.put("acp", activitypicture);
+		return this.doPackageURI("management/edit");
+	}
+	
+	
 }

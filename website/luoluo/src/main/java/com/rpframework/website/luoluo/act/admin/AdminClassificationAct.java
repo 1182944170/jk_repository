@@ -93,8 +93,20 @@ public class AdminClassificationAct extends AdminAct{
  * @return
  */
 	@RequestMapping("/dosave")
-	public String doSaveOrUpdate(@ModelAttribute Classification classificationDO,@RequestParam(value="iconFile", required=false) CommonsMultipartFile iconFile, 
+	public String doSaveOrUpdate(@RequestParam String proced,
+			@ModelAttribute Classification classificationDO,@RequestParam(value="iconFile", required=false) CommonsMultipartFile iconFile, 
 			RedirectAttributes attr,@RequestParam(value="mainFile", required=false) CommonsMultipartFile mainFile){
+			//判断是否是数字
+		for(int i = proced.length(); --i >= 0;){
+				if (!Character.isDigit(proced.charAt(i))) {  
+					throw new IllegalArgumentException("请输入正确的数字");
+		         }
+			}  	
+		if("".equals(proced)){
+				classificationDO.setProcedures(0);
+			}else{
+				classificationDO.setProcedures(Integer.parseInt(proced));
+			}
 		if(iconFile.getSize() > 0 &&  mainFile.getSize()>0) { // 判断 icon 大小是否大于0
 			try {
 				String relativelyPath = "/fenl/" + NumberUtils.random(3) + iconFile.getOriginalFilename(); // new 随即产生随即4位数开头的一个相对路径文件名

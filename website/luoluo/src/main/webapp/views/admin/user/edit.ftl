@@ -1,7 +1,7 @@
 <title>修改用户信息</title>
 <div class="page-header">
 	<h1>
-		修改用户信息
+		查看用户信息
 		<small>
 			<i class="icon-double-angle-right"></i>
 		</small>
@@ -12,6 +12,36 @@
 
 <fieldset>
 	<input type="hidden" name="id" value="${user.id}">
+	<div class="form-group">
+		<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="nickName">头像:</label>
+		<div class="col-xs-12 col-sm-9">
+			<div class="clearfix">
+				<img src="${tagUtils.getFileFullPath(user.namePic!)}">
+			</div>
+		</div>
+	</div>
+	<div class="form-group">
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="nickName">账号:</label>
+	<div class="col-xs-12 col-sm-9">
+		<div class="clearfix">
+			<span class="block input-icon width-40">
+				<input type="text" name="name" id="name" value="${user.acnumber!}"  maxlength="32" class="form-control" placeholder="账号"/>
+				<i class="icon-user"></i>
+			</span>
+		</div>
+	</div>
+</div>
+	<div class="form-group">
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="nickName">姓名:</label>
+	<div class="col-xs-12 col-sm-9">
+		<div class="clearfix">
+			<span class="block input-icon width-40">
+				<input type="text" name="name" id="name" value="${user.name!}"  maxlength="32" class="form-control" placeholder="用户姓名"/>
+				<i class="icon-user"></i>
+			</span>
+		</div>
+	</div>
+</div>
 	<div class="form-group">
 		<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="phone">电话号码:</label>
 		<div class="col-xs-12 col-sm-9">
@@ -24,17 +54,41 @@
 		</div>
 	</div>
 
+
 <div class="form-group">
-	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="nickName">姓名:</label>
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="nickName">年龄:</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<span class="block input-icon width-40">
-				<input type="text" name="name" id="name" value="${user.name!}"  maxlength="32" class="form-control" placeholder="用户姓名"/>
+				<input type="text" name="name" id="name" value="${user.age!}"  maxlength="32" class="form-control" placeholder="年龄"/>
 				<i class="icon-user"></i>
 			</span>
 		</div>
 	</div>
 </div>
+<div class="form-group">
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="nickName">工作单位:</label>
+	<div class="col-xs-12 col-sm-9">
+		<div class="clearfix">
+			<span class="block input-icon width-40">
+				<input type="text" name="name" id="name" value="${user.company!}"  maxlength="32" class="form-control" placeholder="工作单位"/>
+				<i class="icon-user"></i>
+			</span>
+		</div>
+	</div>
+</div>
+<div class="form-group">
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="nickName">qq:</label>
+	<div class="col-xs-12 col-sm-9">
+		<div class="clearfix">
+			<span class="block input-icon width-40">
+				<input type="text" name="name" id="name" value="${user.qqaccount!}"  maxlength="32" class="form-control" placeholder="联系方式"/>
+				<i class="icon-user"></i>
+			</span>
+		</div>
+	</div>
+</div>
+
 
 	<div class="form-group">
 		<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="passWord">密码:</label>
@@ -42,6 +96,17 @@
 			<div class="clearfix">
 				<span class="block input-icon width-40">
 					<input type="passWord" name="password" id="password" value="${user.password!}" maxlength="32" class="form-control" placeholder="密码"/>
+					<i class="icon-user"></i>
+				</span>
+			</div>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="passWord">余额:</label>
+		<div class="col-xs-12 col-sm-9">
+			<div class="clearfix">
+				<span class="block input-icon width-40">
+					<input type="text" name="password" id="password" value="￥${user.personalMany!}" maxlength="32" class="form-control" placeholder="余额"/>
 					<i class="icon-user"></i>
 				</span>
 			</div>
@@ -62,9 +127,10 @@
 
 <div class="form-group">
 	<div class="col-md-offset-3 col-md-9">
-		<button class="btn btn-info" type="submit"><i class="icon-ok bigger-110"></i>提  交</button>
+		<a href="${ctx}/admin/user/list${suffix}"><i class="icon-ok bigger-110">返回</i></a>
+		<!--<button class="btn btn-info" type="submit"><i class="icon-ok bigger-110"></i>提  交</button>
 		&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
-		<button class="btn" type="reset"><i class="icon-undo bigger-110"></i>重  置</button>
+		<button class="btn" type="reset"><i class="icon-undo bigger-110"></i>重  置</button>-->
 	</div>
 </div>
 

@@ -3,10 +3,7 @@ package com.rpframework.website.luoluo.act.admin;
 
 import java.util.List;
 import java.util.Map;
-
 import javax.annotation.Resource;
-
-import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import com.rpframework.core.api.FileService;
 import com.rpframework.core.exception.AdminIllegalArgumentException;
 import com.rpframework.utils.DateUtils;
@@ -102,6 +98,7 @@ public class AdminActivityAct extends AdminAct{
 	public String dosave(@ModelAttribute Activity activity, Map<Object, Object> model,
 			@RequestParam(value="iconFile", required=false) CommonsMultipartFile iconFile,
 			RedirectAttributes attr){
+		activity=activityService.selectcal(activity.getId());
 		if(activity.getType()==1){
 			activity.setType(0);
 			activityService.updatedo(activity);
@@ -127,12 +124,14 @@ public class AdminActivityAct extends AdminAct{
 	 */
 	@RequestMapping("/addsave")
 	public String addsave(@ModelAttribute Activity activity,
-
+			@RequestParam(value="starttimeString")String starttimeString,
+			@RequestParam(value="outtimeString")String outtimeString,
 			Map<Object, Object> model, RedirectAttributes attr,
 			@RequestParam(value="iconFile", required=false) CommonsMultipartFile iconFile
 			)throws Exception{
 		
-		
+		activity.setStarttime(DateUtils.parse(starttimeString).getTime()/1000);
+		activity.setOuttime(DateUtils.parse(outtimeString).getTime()/1000);
 		if(iconFile.getSize() > 0 ) { // 判断 icon 大小是否大于0
 			try {
 				String relativelyPath = "/fenl/" + NumberUtils.random(3) + iconFile.getOriginalFilename(); // new 随即产生随即4位数开头的一个相对路径文件名

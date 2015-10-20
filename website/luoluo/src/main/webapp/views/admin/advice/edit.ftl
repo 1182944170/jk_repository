@@ -1,7 +1,7 @@
 <title>修改用户信息</title>
 <div class="page-header">
 	<h1>
-		修改用户信息
+		查看意见建议信息
 		<small>
 			<i class="icon-double-angle-right"></i>
 		</small>
