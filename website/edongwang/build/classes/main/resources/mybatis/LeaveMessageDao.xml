@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.website.edongwang.dao.ILeaveMessageDao">
+
+	<resultMap type="com.rpframework.website.edongwang.domain.LeaveMessage" id="mLeaveMessage" autoMapping="true">
+		<id property="id" column="id" />
+		<result property="userId" column="userId"/>
+		<association property="user" column="userId" select="com.rpframework.website.edongwang.dao.IUserDao.select" />
+	</resultMap>
+	
+	<select id="doPager" parameterType="map" resultMap="mLeaveMessage">
+		select m.* from e_leave_msg m
+			left join user u on u.id=m.userId
+			
+		where 1=1
+		<if test="page.searchMap.userId != null">
+			and m.userId = #{page.searchMap.userId} 
+		</if>
+		
+		<if test="page.searchMap.realName != null">
+			and u.realName like "%"#{page.searchMap.realName}"%" 
+		</if>
+		
+		<if test="page.searchMap.contact != null">
+			and u.contact like "%"#{page.searchMap.contact}"%" 
+		</if>
+		order by m.recordCreateTime desc
+	</select>
+	
+	<update id="update" parameterType="com.rpframework.website.edongwang.domain.LeaveMessage" />
+	<insert id="insert" parameterType="com.rpframework.website.edongwang.domain.LeaveMessage" useGeneratedKeys="true" keyProperty="id"/>
+	<delete id="delete" parameterType="com.rpframework.website.edongwang.domain.LeaveMessage" />
+	<select id="select" parameterType="Integer" resultMap="mLeaveMessage">
+		select * from e_leave_msg where id=#{id}
+	</select>
+</mapper>

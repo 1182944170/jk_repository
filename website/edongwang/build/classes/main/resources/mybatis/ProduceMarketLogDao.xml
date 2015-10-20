@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.website.edongwang.dao.IProduceMarketLogDao">
+
+	<resultMap type="com.rpframework.website.edongwang.domain.ProduceMarketLog" id="mProduceMarketLog" autoMapping="true">
+		<id property="id" column="id" />
+		<association property="produce" column="produceId" select="com.rpframework.website.edongwang.dao.IProduceMarketDao.select"/>
+		<association property="user" column="userId" select="com.rpframework.website.edongwang.dao.IUserDao.select" />
+		<association property="detail" column="detailId" select="com.rpframework.website.edongwang.dao.IOrderDetailDao.select"/>
+	</resultMap>
+
+	<select id="doPager" parameterType="map" resultMap="mProduceMarketLog">
+		SELECT m.*,
+			u.realName,
+			u.contact,
+			u.sex
+		FROM produce_market_log m 
+			LEFT OUTER JOIN USER u ON u.id = m.userId 
+			LEFT OUTER JOIN produce_market p ON p.id = m.produceId 
+			LEFT OUTER JOIN t_order_detail o ON o.id = m.detailId 
+		where 1=1 
+			<if test="page.searchMap.produceId != null">
+				and m.produceId = #{page.searchMap.produceId} 
+			</if>
+			
+			<if test="page.searchMap.state != null">
+				and state = #{page.searchMap.state} 
+			</if>
+			
+			<if test="page.searchMap.proType != null">
+				and p.type = #{page.searchMap.proType} 
+			</if>
+			
+			<if test="page.searchMap.sendShopState != null">
+				and m.sendShopState = #{page.searchMap.sendShopState} 
+			</if>
+			
+			<if test="page.searchMap.realName != null">
+				and u.realName like "%"#{page.searchMap.realName}"%" 
+			</if>
+			
+			<if test="page.searchMap.orderNo != null">
+				and o.orderNo like "%"#{page.searchMap.orderNo}"%" 
+			</if>
+			
+			<if test="page.searchMap.contact != null">
+				and u.contact like "%"#{page.searchMap.contact}"%" 
+			</if>
+
+		order by id desc
+	</select> 
+	
+	<update id="update" parameterType="com.rpframework.website.edongwang.domain.ProduceMarketLog" />
+	<insert id="insert" parameterType="com.rpframework.website.edongwang.domain.ProduceMarketLog" useGeneratedKeys="true" keyProperty="id"/>
+	<delete id="delete" parameterType="com.rpframework.website.edongwang.domain.ProduceMarketLog" />
+	<select id="select" parameterType="Integer" resultMap="mProduceMarketLog">
+		select m.*,
+			u.realName,
+			u.contact,
+			u.sex
+		from produce_market_log m 
+			left outer join user u on u.id = m.userId
+		where m.id=#{id}
+	</select> 
+</mapper>

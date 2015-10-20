@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.website.edongwang.dao.IOrderDetailDao">
+
+	<resultMap type="com.rpframework.website.edongwang.domain.OrderDetail" id="mOrderDetail" autoMapping="true">
+		<id property="id" column="id" />
+		<association property="order" column="orderId" select="com.rpframework.website.edongwang.dao.IOrderDao.select" />
+	</resultMap>
+
+	<select id="doPager" parameterType="map" resultMap="mOrderDetail">
+		SELECT d.*,
+			o.userId,
+			o.produceId,
+			u.realName,
+			u.contact,
+			u.sex
+			FROM t_order_detail d 
+				LEFT OUTER JOIN t_order o ON o.id = d.orderId 
+				LEFT OUTER JOIN user u ON u.id = o.userId
+		WHERE 1=1 
+			<if test="page.searchMap.orderId != null">
+				and d.orderId = #{page.searchMap.orderId} 
+			</if>
+			
+			<if test="page.searchMap.produceId != null">
+				and o.produceId = #{page.searchMap.produceId} 
+			</if>
+			
+			<if test="page.searchMap.state != null">
+				and o.state = #{page.searchMap.state} 
+			</if>
+			
+			<if test="page.searchMap.flowNo != null">
+				and d.flowNo like "%"#{page.searchMap.flowNo}"%" 
+			</if>
+			
+			<if test="page.searchMap.orderNo != null">
+				and d.orderNo like "%"#{page.searchMap.orderNo}"%" 
+			</if>
+			
+			<if test="page.searchMap.userId != null">
+				and o.userId = #{page.searchMap.userId} 
+			</if>
+			
+			<if test="page.searchMap.realName != null">
+				and u.realName like "%"#{page.searchMap.realName}"%" 
+			</if>
+			
+			<if test="page.searchMap.contact != null">
+				and u.contact like "%"#{page.searchMap.contact}"%" 
+			</if>
+						
+			<if test="page.searchMap.recordCreateTime != null">
+				<![CDATA[and o.recordCreateTime <= #{page.searchMap.recordCreateTime}]]>
+			</if>
+		
+			<if test="page.searchMap.loadingTime != null">
+				<![CDATA[and o.loadingTime <= #{page.searchMap.loadingTime}]]>
+			</if>
+		 		
+		order by id desc
+	</select> 
+	
+	<select id="doLoadingPager" parameterType="map" resultMap="mOrderDetail">
+		SELECT d.*,
+			o.userId,
+			o.produceId,
+			u.realName,
+			u.contact,
+			u.sex
+			FROM t_order_detail d 
+				LEFT OUTER JOIN t_order o ON o.id = d.orderId 
+				LEFT OUTER JOIN user u ON u.id = o.userId
+		WHERE o.state = 2 OR o.state = 3
+			<if test="page.searchMap.userId != null">
+				and o.userId = #{page.searchMap.userId} 
+			</if>
+	</select>
+	
+	<select id="findOrderDetailByOrderId" parameterType="Integer" resultMap="mOrderDetail">
+		SELECT * FROM t_order_detail where orderId = #{orderId} 
+	</select>
+	
+	
+	<select id="findUserIsBuyProduce" parameterType="map" resultMap="mOrderDetail">
+		SELECT d.*,
+			o.userId,
+			o.produceId,
+			u.realName,
+			u.contact,
+			u.sex
+			FROM t_order_detail d 
+				LEFT OUTER JOIN t_order o ON o.id = d.orderId 
+				LEFT OUTER JOIN user u ON u.id = o.userId
+		WHERE o.userId = #{param1} and o.produceId = #{param2}
+	</select>
+	
+	<select id="findUserOrderDetail" parameterType="map" resultMap="mOrderDetail">
+		SELECT d.*,
+			o.userId,
+			o.produceId,
+			u.realName,
+			u.contact,
+			u.sex
+			FROM t_order_detail d 
+				LEFT OUTER JOIN t_order o ON o.id = d.orderId 
+				LEFT OUTER JOIN user u ON u.id = o.userId
+		where d.id = #{param1} and o.userId = #{param2} and o.state = 0
+	</select>
+	
+	<update id="update" parameterType="com.rpframework.website.edongwang.domain.OrderDetail" />
+	<insert id="insert" parameterType="com.rpframework.website.edongwang.domain.OrderDetail" useGeneratedKeys="true" keyProperty="id"/>
+	<delete id="delete" parameterType="com.rpframework.website.edongwang.domain.OrderDetail" />
+	<select id="select" parameterType="Integer" resultMap="mOrderDetail">
+		SELECT d.* FROM t_order_detail d 
+			LEFT OUTER JOIN t_order o ON o.id = d.orderId 
+		where d.id=#{id}
+	</select> 
+</mapper>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.website.edongwang.dao.IProduceMarketDao">
+
+	<resultMap type="com.rpframework.website.edongwang.domain.ProduceMarket" id="mProduceMarket" autoMapping="true">
+		<id property="id" column="id" />
+	</resultMap>
+
+	<select id="doPager" parameterType="map" resultMap="mProduceMarket">
+		select * from produce_market where 1 = 1 
+			
+			<if test="page.searchMap.type != null">
+				and type = #{page.searchMap.type} 
+			</if>
+			
+			<if test="page.searchMap.state != null">
+				and state = #{page.searchMap.state} 
+			</if>
+		
+			<if test="page.searchMap.name != null">
+				and name like "%"#{page.searchMap.name}"%" 
+			</if>
+		order by saleNumber desc
+	</select> 
+	
+	<update id="update" parameterType="com.rpframework.website.edongwang.domain.ProduceMarket" />
+	<insert id="insert" parameterType="com.rpframework.website.edongwang.domain.ProduceMarket" useGeneratedKeys="true" keyProperty="id"/>
+	<delete id="delete" parameterType="com.rpframework.website.edongwang.domain.ProduceMarket" />
+	<select id="select" parameterType="Integer" resultMap="mProduceMarket">
+		select * from produce_market where id=#{id} and 1 = 1
+	</select> 
+</mapper>

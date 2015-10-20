@@ -1,0 +1,51 @@
+/* CSS Document */
+
+/*banner*/
+.swiper-slide, .swiper-wrapper {height: 100%; position: relative; transform-style: preserve-3d; width: 100%;}
+.swiper-wrapper {-webkit-transform: translate3d(0, 0, 0)}
+.swiper-container {	margin: 0 auto;	position: relative;	overflow: hidden; z-index: 1}
+.swiper-container-vertical>.swiper-wrapper {-webkit-box-orient: vertical; -moz-box-orient: vertical; -ms-flex-direction: column; -webkit-flex-direction: column;flex-direction: column;}
+.swiper-wrapper {z-index: 1; display: -webkit-box; display: -moz-box; display: -ms-flexbox;	display: -webkit-flex; display: flex; -webkit-transition-property: -webkit-transform; -moz-transition-property: -moz-transform; -o-transition-property: -o-transform; -ms-transition-property: -ms-transform; transition-property: transform;-moz-transform: translate3d(0, 0, 0); -o-transform: translate(0, 0); -ms-transform: translate3d(0, 0, 0); transform: translate3d(0, 0, 0);	-webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box}
+.swiper-slide, .swiper-wrapper {-ms-transform-style: preserve-3d; -moz-transform-style: preserve-3d; -webkit-transform-style: preserve-3d;}
+.swiper-container-multirow>.swiper-wrapper {-webkit-box-lines: multiple; -moz-box-lines: multiple; -ms-fles-wrap: wrap; -webkit-flex-wrap: wrap; flex-wrap: wrap}
+.swiper-container-free-mode>.swiper-wrapper {-webkit-transition-timing-function: ease-out; -moz-transition-timing-function: ease-out;-ms-transition-timing-function: ease-out; -o-transition-timing-function: ease-out; transition-timing-function: ease-out; margin: 0 auto}
+.swiper-slide { -webkit-flex-shrink: 0;	-ms-flex: 0 0 auto;	flex-shrink: 0; width:100%;}
+.swiper-slide img{ width:100%;}
+.swiper-container-horizontal>.swiper-pagination { bottom: 6px; left: 0; width: 100%;}
+.swiper-pagination { position: absolute; text-align: center; -webkit-transition: 300ms; -moz-transition: 300ms; -o-transition: 300ms; transition: 300ms; -webkit-transform: translate3d(0,0,0); -ms-transform: translate3d(0,0,0); -o-transform: translate3d(0,0,0); transform: translate3d(0,0,0); z-index: 10;
+}
+.swiper-container-horizontal>.swiper-pagination .swiper-pagination-bullet { margin: 0 5px;}
+.swiper-pagination-bullet { width: 8px; height: 8px; display: inline-block; border-radius: 100%; background: #fff;}
+.swiper-container-horizontal>.swiper-pagination .swiper-pagination-bullet { margin: 0 5px;}
+.swiper-pagination-bullet-active { opacity: 1; background: #ff4a00;}
+
+/*文字*/
+.mm_wenzi{ width:94%; margin:10px auto;}
+.mm_wenzi p{ font-size:12px; line-height:22px; font-weight:normal; color:#666;}
+
+/*二维码*/
+.mm_er{ width:94%; margin:0 auto;}
+.mm_er dl{ float:left; width:45%; border:1px solid #e1e1e1; text-align:center; padding-bottom:20px;}
+.mm_er dl:first-child{ margin-right:8%}
+.mm_er dl dt{ padding:10px;}
+.mm_er dl dt img{ width:100%; height:auto;}
+.mm_er dl dd{ font-size:24px; font-weight:normal; color:#666;}
+/*一键安装*/
+.mm_an a{ display:block; width:94%; margin:20px auto; border:1px solid #f75100; background:#f75100; height:46px; line-height:46px; text-align:center; color:#fff;}
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+

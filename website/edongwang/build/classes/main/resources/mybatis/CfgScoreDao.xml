@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.website.edongwang.dao.ICfgScoreDao">
+
+	<resultMap type="com.rpframework.website.edongwang.domain.CfgScore" id="mCfgScore" autoMapping="true">
+		<id property="level" column="level" />
+	</resultMap>
+
+	<select id="queryAll" resultMap="mCfgScore">
+		select * from cfg_score where 1=1
+	</select>
+	
+	<update id="update" parameterType="com.rpframework.website.edongwang.domain.CfgScore" />
+	<insert id="insert" parameterType="com.rpframework.website.edongwang.domain.CfgScore" useGeneratedKeys="true" keyProperty="level"/>
+	<delete id="delete" parameterType="com.rpframework.website.edongwang.domain.CfgScore" />
+	<select id="select" parameterType="Integer" resultMap="mCfgScore">
+		select * from cfg_score where level=#{level}
+	</select> 
+</mapper>

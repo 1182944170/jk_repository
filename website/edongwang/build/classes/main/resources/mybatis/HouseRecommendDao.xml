@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.website.edongwang.dao.IHouseRecommendDao">
+
+	<resultMap type="com.rpframework.website.edongwang.domain.HouseRecommend" id="mHouseRecommend" autoMapping="true">
+		<id property="id" column="id" />
+		<result property="acceptSalesmanId" column="acceptSalesmanId" />
+		<result property="recommendUserId" column="recommendUserId" />
+		<result property="houseId" column="houseId" />
+		
+		<association property="acceptSalesman" column="acceptSalesmanId" select="com.rpframework.website.edongwang.dao.IUserDao.select" />
+		<association property="recommendUser" column="recommendUserId" select="com.rpframework.website.edongwang.dao.IUserDao.select" />
+		<association property="house" column="houseId" select="com.rpframework.website.edongwang.dao.IHouseDao.select" />
+		<collection property="progresses" column="id" select="com.rpframework.website.edongwang.dao.IHouseRecommendProgressDao.getProgressByHouseRecommendId" />
+	</resultMap>
+	
+	<select id="getAcceptSalesmanCustomerUnfinishedCount" parameterType="map" resultType="int">
+		select 
+			count(*) 
+		from e_house_recommend 
+		where acceptSalesmanId=#{0} and 
+			contact=#{1} and 
+			state != 8
+	</select>
+	
+	<select id="getCustomerCurrDayCount" parameterType="map" resultType="int">
+		<![CDATA[
+			select 
+				count(*) 
+			from e_house_recommend 
+			where recommendUserId=#{0} and 
+				contact=#{1} and
+				recordCreateTime >= #{2} and
+				recordCreateTime <= #{3}
+		]]>
+	</select>
+	
+	<select id="getCustomerUnfinishedCount" parameterType="map" resultType="int">
+		<![CDATA[
+			select 
+				count(*) 
+			from e_house_recommend 
+			where recommendUserId=#{0} and 
+				contact=#{1} and
+				houseId=#{2} and
+				state != 8 
+		]]>
+	</select>
+	
+	<select id="doOverPager" parameterType="map" resultMap="mHouseRecommend">
+		select u2.* from (
+			select u.*, count(1) pCount from e_house_recommend u
+				left join e_house_recommend_progress m on m.houseRecommendId=u.id
+				left join user user on user.id=u.acceptSalesmanId 
+				where m.state=1
+				<if test="page.searchMap.state != null">
+					and u.state = #{page.searchMap.state} 
+				</if>
+				<if test="page.searchMap.acceptSalesmanId != null">
+					and u.acceptSalesmanId = #{page.searchMap.acceptSalesmanId} 
+				</if>
+				<if test="page.searchMap.acceptSalesmanName != null">
+					and user.realName like "%"#{page.searchMap.acceptSalesmanName}"%" 
+				</if>
+				group by u.id
+				order by u.state
+				) as u2 
+		where u2.pCount>2
+	</select>
+	
+	<select id="doPager" parameterType="map" resultMap="mHouseRecommend">
+		select m.* 
+		
+		from e_house_recommend m
+			left outer join e_house house on house.id=m.houseId
+		<if test="page.searchMap.recommendUserRealName != null">
+			left outer join user u on u.id=m.recommendUserId
+		</if>
+		
+		<if test="page.searchMap.acceptSalesmanRealName != null">
+			left outer join user u2 on u2.id=m.acceptSalesmanId 
+		</if>
+		
+		where 1=1
+		
+		<if test="page.searchMap.queryNotOpenData != null">
+			and m.state>1
+		</if>
+		
+		<if test="page.searchMap.state != null">
+			and m.state = #{page.searchMap.state} 
+		</if>
+		<if test="page.searchMap.areaCode != null">
+			and m.areaCode = #{page.searchMap.areaCode} 
+		</if>
+		<if test="page.searchMap.houseId != null">
+			and m.houseId = #{page.searchMap.houseId} 
+		</if>
+		<if test="page.searchMap.houseName != null">
+			and house.name like "%"#{page.searchMap.houseName}"%"
+		</if>
+		<if test="page.searchMap.recommendUserId != null">
+			and m.recommendUserId = #{page.searchMap.recommendUserId} 
+		</if>
+		<if test="page.searchMap.acceptSalesmanId != null">
+			and m.acceptSalesmanId = #{page.searchMap.acceptSalesmanId} 
+		</if>
+		
+		<if test="page.searchMap.recommendUserRealName != null">
+			and u.realName like "%"#{page.searchMap.recommendUserRealName}"%" 
+		</if>
+		
+		<if test="page.searchMap.acceptSalesmanRealName != null">
+			and u2.realName like "%"#{page.searchMap.acceptSalesmanRealName}"%" 
+		</if>
+		<if test="page.searchMap.order != null">
+			 order by ${page.searchMap.order}
+		</if>
+		<if test="page.searchMap.order == null">
+			 order by m.id desc
+		</if>
+	</select>
+	
+	<update id="update" parameterType="com.rpframework.website.edongwang.domain.HouseRecommend" />
+	<insert id="insert" parameterType="com.rpframework.website.edongwang.domain.HouseRecommend" useGeneratedKeys="true" keyProperty="id"/>
+	<delete id="delete" parameterType="com.rpframework.website.edongwang.domain.HouseRecommend" />
+	<select id="select" parameterType="Integer" resultMap="mHouseRecommend">
+		select * from e_house_recommend where id=#{id}
+	</select>
+</mapper>

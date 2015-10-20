@@ -38,6 +38,7 @@ public class ApiActivitypictureAct extends BaseAct{
 	@Resource ClassificationService   classiftionservice;
 	/**
 	 * 添加报名信息
+	 * 提交订单
 	 * @param name
 	 * @param phone
 	 * @param emergencyphone
@@ -64,8 +65,8 @@ public class ApiActivitypictureAct extends BaseAct{
 			@RequestParam(required=false) String[] insure,
 			@RequestParam(required=false) Integer typeMonely,
 			@RequestParam(required=false) Integer type,
-			HttpSession session
-			)throws Exception{
+			HttpSession session      )throws Exception{
+			boolean bFlag = false;
 			User currUser = getSessionUser(session);
 			if(currUser == null){
 				throw new APICodeException(-4, "你还没登陆!");
@@ -97,9 +98,22 @@ public class ApiActivitypictureAct extends BaseAct{
 				Activitypi.setNewtime(System.currentTimeMillis()/1000);
 				Activitypi.setType(activity.getType());
 				Activitypi.setTypeOrder(1);
-		boolean activi=activitypictureSercice.insertdo(Activitypi);
+		activitypictureSercice.insertdo(Activitypi);
+		
+		if(NumberUtils.isValid(typeMonely)){
+			if(typeMonely == 1){
+				throw new APICodeException(-99, "支付宝支付 正在建设中...");
+			} else if (typeMonely == 2) {
+				bFlag = activitypictureSercice.bagPay(currUser.getId(), Activitypi.getId());
+			} else {
+				throw new APICodeException(-1, "支付类型错误...");
+			}
+		} else {
+			throw new APICodeException(-2, "请选择支付类型...");
+		}
+		
 		JsonObject json=new JsonObject();
-		if(activi==true){
+		if(bFlag){
 			json.addProperty("succ", true);
 		} else { // 添加失败
 			json.addProperty("error", false);
@@ -107,7 +121,7 @@ public class ApiActivitypictureAct extends BaseAct{
 		return json;
 	}
 	
-	
+
 	
 	
 	

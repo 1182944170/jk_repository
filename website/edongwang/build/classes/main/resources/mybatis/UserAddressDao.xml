@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.website.edongwang.dao.IUserAddressDao">
+
+	<resultMap type="com.rpframework.website.edongwang.domain.UserAddress" id="mUserAddress" autoMapping="true">
+		<id property="id" column="id" />
+	</resultMap>
+
+	<select id="getAddressByUserId" parameterType="Integer" resultMap="mUserAddress">
+		select * from user_address where userId=#{userId} and status != -1
+	</select> 
+
+	<select id="isCurrUserAddress" parameterType="map" resultMap="mUserAddress">
+		select * from user_address where userId=#{param1} and id=#{param2} and status != -1
+	</select> 
+	
+	<update id="update" parameterType="com.rpframework.website.edongwang.domain.UserAddress" />
+	<insert id="insert" parameterType="com.rpframework.website.edongwang.domain.UserAddress" useGeneratedKeys="true" keyProperty="id"/>
+	<delete id="delete" parameterType="com.rpframework.website.edongwang.domain.UserAddress" />
+	<select id="select" parameterType="Integer" resultMap="mUserAddress">
+		select * from user_address where id=#{id}
+	</select> 
+</mapper>

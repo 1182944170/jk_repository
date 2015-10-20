@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.website.edongwang.dao.IScoreShopDao">
+
+	<resultMap type="com.rpframework.website.edongwang.domain.ScoreShop" id="mScoreShop" autoMapping="true">
+		<id property="id" column="id" />
+	</resultMap>
+
+	<select id="doPager" parameterType="map" resultMap="mScoreShop">
+		select * from score_shop where 1=1
+		<if test="page.searchMap.state != null">
+			and state = #{page.searchMap.state} 
+		</if>
+		
+		<if test="page.searchMap.checkVaildTime != null">
+			<![CDATA[and startTime <= #{page.searchMap.checkVaildTime} and endTime > #{page.searchMap.checkVaildTime}]]>
+		</if>
+		
+		order by id desc
+	</select>
+	
+	<update id="update" parameterType="com.rpframework.website.edongwang.domain.ScoreShop" />
+	<insert id="insert" parameterType="com.rpframework.website.edongwang.domain.ScoreShop" useGeneratedKeys="true" keyProperty="userId"/>
+	<delete id="delete" parameterType="com.rpframework.website.edongwang.domain.ScoreShop" />
+	<select id="select" parameterType="Integer" resultMap="mScoreShop">
+		select * from score_shop where id=#{id}
+	</select> 
+</mapper>
