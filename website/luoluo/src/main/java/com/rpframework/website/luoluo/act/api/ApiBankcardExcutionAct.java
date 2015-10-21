@@ -1,6 +1,5 @@
 package com.rpframework.website.luoluo.act.api;
 
-import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -10,24 +9,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.druid.sql.parser.ParserException;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.rpframework.core.BaseAct;
-import com.rpframework.utils.Pager;
 import com.rpframework.website.luoluo.domain.BankcardExcution;
+import com.rpframework.website.luoluo.domain.Monlyjournals;
 import com.rpframework.website.luoluo.domain.User;
 import com.rpframework.website.luoluo.exception.APICodeException;
 import com.rpframework.website.luoluo.service.BankcardExcutionService;
+import com.rpframework.website.luoluo.service.MonlyjournalsService;
 
 @Controller
 @RequestMapping("api/bankection")
 public class ApiBankcardExcutionAct extends BaseAct{
 	@Resource BankcardExcutionService banservier;
+	@Resource MonlyjournalsService monlyjournalsService;
 	Gson gson = new Gson();
-	@RequestMapping("forward")
+	
+	@RequestMapping("Reflect")
 	public @ResponseBody JsonElement add(	
 			@RequestParam(required=false) Integer type,
 			@RequestParam(required=false) String name,
@@ -52,6 +52,14 @@ public class ApiBankcardExcutionAct extends BaseAct{
 			bank.setNowtime(System.currentTimeMillis()/1000);
 			bank.setState(1);
 			banservier.insertdo(bank);
+			
+			Monlyjournals mysope=new Monlyjournals();
+			mysope.setMonly(-extractionMonly);
+			mysope.setNewtime(System.currentTimeMillis()/1000);
+			mysope.setType(1);
+			mysope.setUserid(user.getId());
+			mysope.setRemark("提现");
+			monlyjournalsService.insertdo(mysope);
 		 // 修改成功
 			json.addProperty("succ", true);
 		} else { // 修改失败
@@ -60,7 +68,7 @@ public class ApiBankcardExcutionAct extends BaseAct{
 		return json;
 	}
 	
-	@RequestMapping("/myall")
+	/*@RequestMapping("/myall")
 	public @ResponseBody JsonElement myall(@RequestParam(value="pager",required=false) Pager<BankcardExcution> pager,HttpSession session 
 			) throws ParserException, InterruptedException{
 		if(pager==null){
@@ -85,6 +93,6 @@ public class ApiBankcardExcutionAct extends BaseAct{
 		}
 		System.out.println("user_list: "+json.toString());
 		return json;
-	}
+	}*/
 
 }

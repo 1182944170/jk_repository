@@ -1,21 +1,31 @@
 package com.rpframework.website.luoluo.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
 import com.rpframework.core.BaseService;
+import com.rpframework.module.common.pay.wxpay.api.WXpayApi;
 import com.rpframework.utils.Pager;
 import com.rpframework.website.luoluo.dao.IActivitypictureDao;
+import com.rpframework.website.luoluo.domain.Activity;
 import com.rpframework.website.luoluo.domain.Activitypicture;
+import com.rpframework.website.luoluo.domain.Classification;
+import com.rpframework.website.luoluo.domain.Monlyjournals;
 import com.rpframework.website.luoluo.domain.User;
 
 @Service
 public class ActivitypictureSercice extends BaseService{
 	@Resource IActivitypictureDao tActivitypictureDao;
 	@Resource UserService userService;
+	@Resource SponsorService sponsorService;
+	@Resource MonlyjournalsService monlyjournalsService;
+	@Resource ClassificationService classfica;
+
 	
 	public boolean updatedo(Activitypicture activitypi) {
 		// TODO Auto-generated method stub
@@ -35,6 +45,7 @@ public class ActivitypictureSercice extends BaseService{
 		// TODO Auto-generated method stub
 		return tActivitypictureDao.insert(activitypi);
 	}
+	
 	public Pager<Activitypicture> getpager(Pager<Activitypicture> pager){
 		long startTime = System.currentTimeMillis();
 		List<Activitypicture> list = tActivitypictureDao.doPager(this.packageMyBatisParam(pager));
@@ -48,8 +59,11 @@ public class ActivitypictureSercice extends BaseService{
 	 * @param detailId
 	 * @return
 	 */
-	public boolean bagPay(Integer userId , Integer detailId){
-		User userMoney = userService.select(userId);
+	public boolean bagPay(Integer userId , Integer detailId,Activity activity){
+		User userMoney = userService.selectOnlyOne(userId);
+		Classification cc=classfica.selectcal(activity.getActivitycategory());
+		
+		User tooMoney = userService.selectmonly(activity.getSponsorid());
 		if(userMoney == null){
 			throw new IllegalArgumentException("不存在的用户.");
 		}
@@ -60,10 +74,69 @@ public class ActivitypictureSercice extends BaseService{
 			tActivitypictureDao.update(detail);
 			//减去余额宝金额
 			userMoney.setPersonalMany(userMoney.getPersonalMany() - detail.getMonely());
-			userService.update(userMoney);
-	
+			userService.updatedo(userMoney);
+			//添加支付方日志文件
+			Monlyjournals mysope=new Monlyjournals();
+			mysope.setMonly(-detail.getMonely());
+			mysope.setNewtime(System.currentTimeMillis()/1000);
+			mysope.setType(1);
+			mysope.setUserid(userMoney.getId());
+			mysope.setRemark(cc.getClaName()+"-  支付");
+			monlyjournalsService.insertdo(mysope);
+			
+			
+			tooMoney.setPersonalMany(tooMoney.getPersonalMany()+ detail.getActualamount());
+			boolean bfgl=userService.updatedo(tooMoney);
+			//添加收款方日志文件
+			Monlyjournals weifu=new Monlyjournals();
+			weifu.setMonly(+detail.getActualamount());
+			weifu.setNewtime(System.currentTimeMillis()/1000);
+			weifu.setType(1);
+			weifu.setUserid(tooMoney.getId());
+			weifu.setRemark(userMoney.getNameNick()+"- 汇款");
+			monlyjournalsService.insertdo(weifu);
+			if(bfgl){
+				return true;
+			}else{
+				return false;
+			}
 		}
 		throw new IllegalArgumentException("余额不足.");
 	}
-	
+
+	public boolean baggo(User currUser, Activitypicture cc,Activity activity) {
+		User tooMoney = userService.selectmonly(activity.getSponsorid());
+		Classification cdd=classfica.selectcal(activity.getActivitycategory());
+		
+		if(tooMoney.getPersonalMany() - cc.getMonely() >= 0){
+		//用户要求退款
+		currUser.setPersonalMany(currUser.getPersonalMany()+cc.getMonely());
+		userService.updatedo(currUser);
+		Monlyjournals mysope=new Monlyjournals();
+		mysope.setMonly(+cc.getMonely());
+		mysope.setNewtime(System.currentTimeMillis()/1000);
+		mysope.setType(1);
+		mysope.setUserid(currUser.getId());
+		mysope.setRemark(cdd.getClaName()+"退款成功");
+		monlyjournalsService.insertdo(mysope);
+		//主办活动方退款
+		tooMoney.setPersonalMany(currUser.getPersonalMany()+cc.getActualamount());
+		boolean bfgl=userService.updatedo(tooMoney);
+		Monlyjournals weifu=new Monlyjournals();
+		weifu.setMonly(+cc.getActualamount());
+		weifu.setNewtime(System.currentTimeMillis()/1000);
+		weifu.setType(1);
+		weifu.setUserid(tooMoney.getId());
+		weifu.setRemark(currUser.getNameNick()+"- 退款");
+		monlyjournalsService.insertdo(weifu);
+		if(bfgl){
+			return true;
+		}else{
+			return false;
+		}
+	}
+		throw new IllegalArgumentException("请等待。。");
+	}
+
+
 }

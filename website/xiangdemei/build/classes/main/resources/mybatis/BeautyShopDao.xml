@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.website.xiangdemei.dao.IBeautyShopDao">
+	<resultMap type="com.rpframework.website.xiangdemei.domain.BeautyShop" id="mBeautyShop" autoMapping="true">
+		<id property="id" column="id"/>
+	</resultMap>
+	
+	<sql id="mColumnsSql"> 
+		_beauty_shop.id _beauty_shop_id,
+		_beauty_shop.name _beauty_shop_name,
+		_beauty_shop.areaCode _beauty_shop_areaCode,
+		_beauty_shop.address _beauty_shop_address,
+		_beauty_shop.longitude _beauty_shop_longitude,
+		_beauty_shop.dimensions _beauty_shop_dimensions,
+		_beauty_shop.thumbImg _beauty_shop_thumbImg,
+		_beauty_shop.imgs _beauty_shop_imgs,
+		_beauty_shop.descImgs _beauty_shop_descImgs,
+		_beauty_shop.rootUserId _beauty_shop_rootUserId,
+		_beauty_shop.commentCount _beauty_shop_commentCount,
+		_beauty_shop.experienceNumber _beauty_shop_experienceNumber,
+		_beauty_shop.contacts _beauty_shop_contacts,
+		_beauty_shop.recordCreateTime _beauty_shop_recordCreateTime,
+		_beauty_shop.state _beauty_shop_state
+	</sql>
+	
+	<sql id="mBaseSql"> 
+		select 
+		* 
+		from beauty_shop _beauty_shop 
+	</sql>
+	
+			
+    <select id="doPager" resultMap="mBeautyShop">
+		<include refid="mBaseSql" />
+		where 1=1
+		
+		<if test="page.searchMap.name != null">
+			and _beauty_shop.name like "%${page.searchMap.name}%" 
+		</if>
+		<if test="page.searchMap.areaCode != null">
+			and _beauty_shop.areaCode like "%${page.searchMap.areaCode}%" 
+		</if>
+		<if test="page.searchMap.rootUserId != null">
+			and _beauty_shop.rootUserId = #{page.searchMap.rootUserId}
+		</if>
+		
+		<if test="page.searchMap.state != null">
+			and _beauty_shop.state = #{page.searchMap.state}
+		</if>
+		
+		order by _beauty_shop.id desc
+    </select>
+    <update id="upadteWithField" />
+	<update id="update" parameterType="com.rpframework.website.xiangdemei.domain.BeautyShop" />
+	<insert id="insert" parameterType="com.rpframework.website.xiangdemei.domain.BeautyShop" useGeneratedKeys="true" keyProperty="id"/>
+	<delete id="delete" parameterType="com.rpframework.website.xiangdemei.domain.BeautyShop" />
+	<select id="select" parameterType="Integer" resultMap="mBeautyShop">
+		<include refid="mBaseSql" />
+		where _beauty_shop.id=#{id}
+	</select>
+</mapper>

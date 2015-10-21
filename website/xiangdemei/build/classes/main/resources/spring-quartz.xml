@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <bean id="goodsGrabTipQuartzJobTask" class="com.rpframework.website.xiangdemei.job.GoodsGrabTipQuartzJob" />
+    
+    <bean id="goodsGrabTipQuartzJobTaskDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+         <property name="targetObject" ref="goodsGrabTipQuartzJobTask"/>
+         <property name="targetMethod" value="execute"/>
+         <property name="concurrent" value="false"/>
+     </bean>
+
+    <bean id="goodsGrabTipQuartzJobCornTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+       <property name="jobDetail" ref="goodsGrabTipQuartzJobTaskDetail"/>
+       <!-- 每个10秒触发 -->
+       <property name="cronExpression" value="0 0/1 * * * ?"/>
+    </bean> 
+    
+    
+    <bean id="goodsOrderQueueJobTask" class="com.rpframework.website.xiangdemei.job.GoodsOrderQueueJob" />
+    <bean id="goodsOrderQueueJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+         <property name="targetObject" ref="goodsOrderQueueJobTask"/>
+         <property name="targetMethod" value="execute"/>
+         <property name="concurrent" value="false"/>
+     </bean>
+    <bean id="goodsOrderQueueJobCornTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+       <property name="jobDetail" ref="goodsOrderQueueJobDetail"/>
+       <!-- 每个1秒触发 -->
+       <property name="cronExpression" value="0/1 * * * * ?"/>
+    </bean> 
+    
+    <bean id="userMoneyRankJobTask" class="com.rpframework.website.xiangdemei.job.UserMoneyRankJob" />
+    <bean id="userMoneyRankJobTaskDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+         <property name="targetObject" ref="userMoneyRankJobTask"/>
+         <property name="targetMethod" value="execute"/>
+         <property name="concurrent" value="false"/>
+     </bean>
+    <bean id="userMoneyRankJobCornTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+       <property name="jobDetail" ref="userMoneyRankJobTaskDetail"/>
+       <property name="cronExpression" value="0 0/1 * * * ?"/>
+    </bean> 
+    
+    <bean id="userPopularityScoreRankJobTask" class="com.rpframework.website.xiangdemei.job.UserPopularityScoreRankJob" />
+    <bean id="userPopularityScoreRankJobTaskDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+         <property name="targetObject" ref="userPopularityScoreRankJobTask"/>
+         <property name="targetMethod" value="execute"/>
+         <property name="concurrent" value="false"/>
+     </bean>
+    <bean id="userPopularityScoreRankJobCornTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+       <property name="jobDetail" ref="userPopularityScoreRankJobTaskDetail"/>
+       <property name="cronExpression" value="0 0/1 * * * ?"/>
+    </bean> 
+    
+    
+    <bean id="orderReceiveTimeoutJobTask" class="com.rpframework.website.xiangdemei.job.OrderReceiveTimeoutJob" />
+    <bean id="orderReceiveTimeoutJobTaskDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+         <property name="targetObject" ref="orderReceiveTimeoutJobTask"/>
+         <property name="targetMethod" value="execute"/>
+         <property name="concurrent" value="false"/>
+     </bean>
+    <bean id="orderReceiveTimeoutJobCornTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+       <property name="jobDetail" ref="orderReceiveTimeoutJobTaskDetail"/>
+       <property name="cronExpression" value="0 0 23 * * ?"/>
+    </bean> 
+    
+    <bean id="wmsOrderSuccLoopJobTask" class="com.rpframework.website.xiangdemei.job.WMSOrderSuccLoopJob" />
+    <bean id="wmsOrderSuccLoopJobTaskDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+         <property name="targetObject" ref="wmsOrderSuccLoopJobTask"/>
+         <property name="targetMethod" value="execute"/>
+         <property name="concurrent" value="false"/>
+     </bean>
+    <bean id="wmsOrderSuccLoopJobCornTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+       <property name="jobDetail" ref="wmsOrderSuccLoopJobTaskDetail"/>
+       <property name="cronExpression" value="0 0/30 * * * ?"/>
+    </bean> 
+    
+     <bean id="schedulerFactory" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+         <property name="triggers">
+             <list>
+                 <ref local="goodsGrabTipQuartzJobCornTrigger"/>
+                 <ref local="goodsOrderQueueJobCornTrigger"/>
+                 <ref local="userMoneyRankJobCornTrigger"/>
+                 <ref local="userPopularityScoreRankJobCornTrigger"/>
+                 <ref local="orderReceiveTimeoutJobCornTrigger"/>
+                 <ref local="wmsOrderSuccLoopJobCornTrigger"/>
+             </list>
+         </property>
+    </bean>
+    
+    <!-- 
+    	"0 0 12 * * ?"  每天中午 12 点触发      
+		"0 15 10 ? * *"  每天上午 10 : 15 触发      
+		"0 15 10 * * ?"  每天上午 10 : 15 触发      
+		"0 15 10 * * ? *"  每天上午 10 : 15 触发      
+		"0 15 10 * * ? 2005"   2005 年的每天上午 10 : 15 触发      
+		"0 * 14 * * ?"  在每天下午 2 点到下午 2 : 59 期间的每 1 分钟触发      
+		"0 0/5 14 * * ?"  在每天下午 2 点到下午 2 : 55 期间的每 5 分钟触发      
+		"0 0/5 14,18 * * ?"  在每天下午 2 点到 2 : 55 期间和下午 6 点到 6 : 55 期间的每 5 分钟触发      
+		"0 0-5 14 * * ?"  在每天下午 2 点到下午 2 : 05 期间的每 1 分钟触发      
+		"0 10,44 14 ? 3 WED"  每年三月的星期三的下午 2 : 10 和 2 : 44 触发      
+		"0 15 10 ? * MON-FRI"  周一至周五的上午 10 : 15 触发      
+		"0 15 10 15 * ?"  每月 15 日上午 10 : 15 触发      
+		"0 15 10 L * ?"  每月最后一日的上午 10 : 15 触发      
+		"0 15 10 ? * 6L"  每月的最后一个星期五上午 10 : 15 触发      
+		"0 15 10 ? * 6L 2002-2005"   2002 年至 2005 年的每月的最后一个星期五上午 10 : 15 触发      
+		"0 15 10 ? * 6#3"  每月的第三个星期五上午 10 : 15 触发      
+		每天早上6 点      
+		0   6  * * *      
+		每两个小时      
+		0  */ 2  * * *      
+		晚上11 点到早上 8 点之间每两个小时，早上八点      
+		0   23 - 7 / 2 ， 8  * * *      
+		每个月的4 号和每个礼拜的礼拜一到礼拜三的早上 11 点      
+		0   11   4  *  1 - 3       
+		1 月 1 日早上 4 点      
+		0   4   1   1  *   
+     -->
+</beans>

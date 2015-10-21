@@ -14,6 +14,36 @@ $(function (){
 	$("#Allmanny").html(num.toFixed(2));
 })
 </script>
+<script>
+$(function (){
+	var num = 0;
+	<#list pager.itemList as u>
+		$(".ff").each(function(i){
+			if(i==${u_index}){
+				fmt =parseFloat("${pager.itemList[u_index].actualamount}");
+				num +=fmt;
+				return;
+			}
+		})
+	</#list>
+	$("#Allactualamount").html(num.toFixed(2));
+})
+</script>
+<script>
+$(function (){
+	var num = 0;
+	<#list pager.itemList as u>
+		$(".ff").each(function(i){
+			if(i==${u_index}){
+				fmt =parseFloat("${pager.itemList[u_index].counterFee}");
+				num +=fmt;
+				return;
+			}
+		})
+	</#list>
+	$("#AllcounterFee").html(num.toFixed(2));
+})
+</script>
 
 </h5>
 <div class="row">
@@ -52,8 +82,12 @@ $(function (){
 					</tr>
 				</#list>
 				<tr>
-					<th colspan="10" >活动总金额：￥<span id="Allmanny"class="gray center red"></span></th>
-				</tr>
+						 <td  colspan="6"><span class="gray center" ></span></td>
+				       	  <th >总支付金额：￥<span id="Allmanny"class="gray center red"></span></th>
+				          <th>总实际金额：￥<span id="Allactualamount"class="gray center red"></span></th>
+				          <th>总手续：￥<span id="AllcounterFee"class="gray center red"></span></th>
+				         
+					</tr>
 				</tbody>
 			</table>
 		</div><!-- /.table-responsive -->

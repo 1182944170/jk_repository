@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.website.xiangdemei.dao.IUserContactDao">
+
+	<resultMap type="com.rpframework.website.xiangdemei.domain.UserContact" id="mUserContact" autoMapping="true">
+		<id property="userId" column="userId" />
+	</resultMap>
+	
+	<select id="findUserContactByContact" parameterType="String" resultMap="mUserContact">
+		select 
+			*
+		from user_contact
+		where contact=#{contact}
+	</select>
+	
+	<select id="findUserContactByUserId" parameterType="Integer" resultMap="mUserContact">
+		select 
+			*
+		from user_contact
+		where userId=#{userId}
+	</select>
+	
+	<select id="doPager" parameterType="map" resultMap="mUserContact">
+		select * from user_contact m where 1=1
+		<if test="page.searchMap.userId != null">
+			and m.userId = #{page.searchMap.userId} 
+		</if>
+		
+		<if test="page.searchMap.contact != null">
+			and m.contact = #{page.searchMap.contact} 
+		</if>
+		<if test="page.searchMap.isRoot != null">
+			and m.isRoot = #{page.searchMap.isRoot} 
+		</if>
+		
+		<if test="page.searchMap.order != null">
+			order by ${page.searchMap.order} 
+		</if>
+	</select>
+	
+	
+	<update id="batchUpdateUserMoneyStat">   
+          update user_contact   
+          <trim prefix="set" suffixOverrides=",">  
+           <trim prefix="myRank =case" suffix="end,">  
+               <foreach collection="list" item="i"  index="index">  
+                   <if test="i.myRank!=null">  
+                    when (userId=#{i.userId}) then #{i.myRank}  
+                   </if>  
+               </foreach>  
+            </trim>  
+            
+            <trim prefix="preRankUserId =case" suffix="end,">  
+               <foreach collection="list" item="i"  index="index">  
+                   <if test="i.myRank!=null">  
+                    when (userId=#{i.userId}) then #{i.preRankUserId}  
+                   </if>  
+               </foreach>  
+            </trim> 
+            
+           </trim>   
+          where   
+          <foreach collection="list" separator="or" item="i" index="index" >  
+           (userId=#{i.userId})  
+       </foreach>  
+	</update>  
+	
+	<update id="batchUpdateUserPopularityScoreStat">   
+          update user_contact   
+          <trim prefix="set" suffixOverrides=",">  
+           <trim prefix="myPSRank =case" suffix="end,">  
+               <foreach collection="list" item="i"  index="index">  
+                   <if test="i.myPSRank!=null">  
+                    when (userId=#{i.userId}) then #{i.myPSRank}  
+                   </if>  
+               </foreach>  
+            </trim>  
+            
+            <trim prefix="prePSRankUserId =case" suffix="end,">  
+               <foreach collection="list" item="i"  index="index">  
+                   <if test="i.prePSRankUserId!=null">  
+                    when (userId=#{i.userId}) then #{i.prePSRankUserId}  
+                   </if>  
+               </foreach>  
+            </trim> 
+            
+           </trim>   
+          where   
+          <foreach collection="list" separator="or" item="i" index="index" >  
+           (userId=#{i.userId})  
+       </foreach>  
+	</update>  
+	
+	<update id="upadteWithField" />
+	<update id="update" parameterType="com.rpframework.website.xiangdemei.domain.UserContact" />
+	<insert id="insert" parameterType="com.rpframework.website.xiangdemei.domain.UserContact" useGeneratedKeys="true" keyProperty="userId"/>
+	<delete id="delete" parameterType="com.rpframework.website.xiangdemei.domain.UserContact" />
+	<select id="select" parameterType="Integer" resultMap="mUserContact">
+		select * from user_contact where userId=#{userId}
+	</select>
+</mapper>

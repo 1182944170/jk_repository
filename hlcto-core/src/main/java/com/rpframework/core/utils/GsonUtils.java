@@ -17,7 +17,7 @@ public class GsonUtils extends BaseRegistFreemarker {
 		JsonElement jsonElement = jsonObject.get(key);
 		if(jsonElement == null) {
 			return defaultValue;
-		}
+			}
 		
 		return jsonElement.getAsLong();
 	}

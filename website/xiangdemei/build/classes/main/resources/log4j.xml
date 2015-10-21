@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j='http://jakarta.apache.org/log4j/'>
+	
+	<appender name="consoleAppend" class="org.apache.log4j.RollingFileAppender">
+		<!-- log out file path and name -->
+		<param name="File" value="${catalina.home}/logs/info.log" />
+		<!-- is append while reboot -->
+		<param name="Append" value="true" />
+		
+		<layout class="org.apache.log4j.PatternLayout">
+			<!-- log console style -->
+			<param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} [%p] [%c] - %m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMin" value="DEBUG" />
+			<param name="LevelMax" value="INFO" />
+		</filter>
+	</appender>
+	
+	<appender name="errorConsoleAppend" class="org.apache.log4j.RollingFileAppender">
+		<!-- log out file path and name -->
+		<param name="File" value="${catalina.home}/logs/warn.log" />
+		<!-- is append while reboot -->
+		<param name="Append" value="true" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<!-- log console style -->
+			<param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} [%p] [%l] - %m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMin" value="WARN" />
+		</filter>
+	</appender>
+
+	<appender name="fileAppend" class="org.apache.log4j.RollingFileAppender">
+		<!-- log out file path and name -->
+		<param name="File" value="${catalina.home}/logs/exception.log" />
+		<!-- is append while reboot -->
+		<param name="Append" value="true" />
+		<param name="MaxFileSize" value="10MB" />
+		<param name="MaxBackupIndex" value="10" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<!-- log out file print style -->
+			<param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} [%p] [%l] - %m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMin" value="ERROR" />
+		</filter>
+	</appender>
+	
+	<appender name="ASYNC" class="org.apache.log4j.AsyncAppender">
+		<appender-ref ref="consoleAppend" />
+		<appender-ref ref="errorConsoleAppend" />
+		<appender-ref ref="fileAppend" />
+	</appender>
+	
+	<!-- print mybatis sql -->
+	<logger name="org.apache.ibatis" additivity="true">
+		<level value="INFO" />
+	</logger>
+	<logger name="com.opensymphony.xwork2.conversion" additivity="true">
+		<level value="INFO" />
+	</logger>
+	
+	<appender name="TASK" class="org.apache.log4j.DailyRollingFileAppender"> 
+		<param name="File" value="${catalina.home}/logs/task/task.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd" />
+		<param name="Encoding" value="utf-8" />
+
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%m%n" />
+		</layout>
+	</appender>
+	
+	<appender name="TIMEOUT" class="org.apache.log4j.DailyRollingFileAppender"> 
+		<param name="File" value="${catalina.home}/timeout/timeout.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd" />
+		<param name="Encoding" value="utf-8" />
+
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%m%n" />
+		</layout>
+	</appender>
+	
+	<appender name="ORDER" class="org.apache.log4j.DailyRollingFileAppender"> 
+		<param name="File" value="${catalina.home}/logs/order/order.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd" />
+		<param name="Encoding" value="utf-8" />
+
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%m%n" />
+		</layout>
+	</appender>
+	
+	<appender name="WMSLOOP" class="org.apache.log4j.DailyRollingFileAppender"> 
+		<param name="File" value="${catalina.home}/logs/wmsLoop/wmsLoop.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd" />
+		<param name="Encoding" value="utf-8" />
+
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%m%n" />
+		</layout>
+	</appender>
+	
+	<appender name="EXCEPTION" class="org.apache.log4j.DailyRollingFileAppender"> 
+		<param name="File" value="${catalina.home}/logs/exception/exception.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd" />
+		<param name="Encoding" value="utf-8" />
+
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%m%n" />
+		</layout>
+	</appender>
+	
+	<root>
+		<level value="INFO" />
+		<appender-ref ref="consoleAppend" />
+		<appender-ref ref="errorConsoleAppend" />
+		<appender-ref ref="fileAppend" />
+	</root>
+	
+	<!-- loggers -->
+	<logger name="order" additivity="false">
+		<level value="info" />
+		<appender-ref ref="ORDER"/>
+	</logger>
+	<logger name="exception" additivity="false">
+		<level value="info" />
+		<appender-ref ref="EXCEPTION"/>
+	</logger>
+	<logger name="wmsLoop" additivity="false">
+		<level value="info" />
+		<appender-ref ref="WMSLOOP"/>
+	</logger>
+	<logger name="task" additivity="false">
+		<level value="info" />
+		<appender-ref ref="TASK"/>
+	</logger>
+	<logger name="timeout" additivity="false">
+		<level value="info" />
+		<appender-ref ref="TIMEOUT"/>
+	</logger>
+</log4j:configuration>

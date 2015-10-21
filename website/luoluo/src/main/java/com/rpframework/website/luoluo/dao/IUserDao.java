@@ -16,4 +16,5 @@ public interface IUserDao extends IDao{
 	List<User> findUserBy(String name);
 	User findUserByPhone(String phone); 
 	User AccoutSelect(String uid);
+	User selectmonly(Integer sponid);
 }

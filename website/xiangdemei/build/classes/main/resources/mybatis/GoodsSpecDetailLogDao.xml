@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.website.xiangdemei.dao.IGoodsSpecDetailLogDao">
+	<resultMap type="com.rpframework.website.xiangdemei.domain.GoodsSpecDetailLog" id="mGoodsSpecDetailLog" autoMapping="true">
+		<id property="id" column="id"/>
+		<result property="goodsSpecDetailId" column="goodsSpecDetailId"/>
+		<result property="goodsId" column="goodsId"/>
+		
+		<association property="goodsSpecDetail" javaType="com.rpframework.website.xiangdemei.domain.GoodsSpecDetail" columnPrefix="_goods_spec_detail_" autoMapping="true">
+			<id property="id" column="id"/>
+		</association>
+		
+		<association property="goods" javaType="com.rpframework.website.xiangdemei.domain.Goods" columnPrefix="_goods_" autoMapping="true">
+			<id property="id" column="id"/>
+		</association>
+	</resultMap>
+	
+	<sql id="mBaseSql">
+		select 
+			_goods_spec_detail_log.*,
+			<include refid="com.rpframework.website.xiangdemei.dao.IGoodsSpecDetailDao.mColumnsSql" />
+			<include refid="com.rpframework.website.xiangdemei.dao.IGoodsDao.mColumnsSql" />
+			 
+		from goods_spec_detail_log _goods_spec_detail_log
+			left outer join goods_spec_detail detail on detail.id = log.goodsSpecDetailId
+			left outer join goods _goods on _goods.id = log.goodsId
+	</sql>
+	
+	<select id="doPager" parameterType="map" resultMap="mGoodsSpecDetailLog">
+		<include refid="mBaseSql" />
+		where 1=1
+		
+		<if test="page.searchMap.goodsId != null">
+			and _goods.id = #{page.searchMap.goodsId} 
+		</if>
+		
+		order by _goods_spec_detail_log.recordCreateTime desc
+	</select>
+	<update id="upadteWithField" />
+	<update id="update" parameterType="com.rpframework.website.xiangdemei.domain.GoodsSpecDetailLog" />
+	<insert id="insert" parameterType="com.rpframework.website.xiangdemei.domain.GoodsSpecDetailLog" useGeneratedKeys="true" keyProperty="id"/>
+	<delete id="delete" parameterType="com.rpframework.website.xiangdemei.domain.GoodsSpecDetailLog" />
+	<select id="select" parameterType="Integer" resultMap="mGoodsSpecDetailLog">
+		<include refid="mBaseSql" />
+		where _goods_spec_detail_log.id=#{id}
+	</select>
+</mapper>

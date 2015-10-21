@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.website.xiangdemei.dao.IUserAreaStatDao">
+
+	<resultMap type="com.rpframework.website.xiangdemei.domain.UserAreaStat" id="mUserAreaStat" autoMapping="true">
+		<id property="id" column="id" />
+	</resultMap>
+	<update id="upadteWithField" />
+	<update id="update" parameterType="com.rpframework.website.xiangdemei.domain.UserAreaStat" />
+	<insert id="insert" parameterType="com.rpframework.website.xiangdemei.domain.UserAreaStat" useGeneratedKeys="true" keyProperty="id"/>
+	<delete id="delete" parameterType="com.rpframework.website.xiangdemei.domain.UserAreaStat" />
+	<select id="select" parameterType="Integer" resultMap="mUserAreaStat">
+		select * from user_area_stat where id=#{id}
+	</select>
+	<select id="findByUserIdAndAreaId" parameterType="map" resultMap="mUserAreaStat">
+		select * from user_area_stat where userId=#{param1} and areaId=#{param2}
+	</select>
+	
+	<select id="getAll"  parameterType="Integer" resultMap="mUserAreaStat">
+		select * from user_area_stat where userId=#{param1}
+	</select>
+</mapper>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.website.xiangdemei.dao.IOrderItemDao">
+	<resultMap type="com.rpframework.website.xiangdemei.domain.OrderItem" id="mOrderItem" autoMapping="true">
+		<id property="id" column="id"/>
+		<id property="orderId" column="orderId" />
+		<id property="goodsId" column="goodsId" />
+		<id property="goodsSpecDetailId" column="goodsSpecDetailId" />
+		
+		<association property="order" javaType="com.rpframework.website.xiangdemei.domain.Order" columnPrefix="_order_" autoMapping="true">
+			<id property="id" column="id"/>
+		</association>
+		
+		<association property="goods" javaType="com.rpframework.website.xiangdemei.domain.Goods" columnPrefix="_goods_" autoMapping="true">
+			<id property="id" column="id"/>
+		</association>
+		
+		<association property="goodsSpecDetail" javaType="com.rpframework.website.xiangdemei.domain.GoodsSpecDetail" columnPrefix="_goods_spec_detail_" autoMapping="true">
+			<id property="id" column="id"/>
+		</association>
+		
+		<collection property="orderItemShipments" column="id" select="com.rpframework.website.xiangdemei.dao.IOrderItemShipmentDao.getOrderItemShipments" />
+		<!-- 
+		<collection property="orderItemShipments" ofType="com.rpframework.website.xiangdemei.domain.OrderItemShipment" columnPrefix="_order_item_shipment_" autoMapping="true">
+		 	<id property="id" column="_order_item_shipment_id"/>
+		</collection> -->
+	</resultMap>
+	
+	<sql id="mColumnsSql"> 
+		_order_item.id as _order_item_id,
+		_order_item.orderId as _order_item_orderId,
+		_order_item.recordCreateTime as _order_item_recordCreateTime,
+		_order_item.currProgress as _order_item_currProgress,
+		_order_item.state as _order_item_state,
+		_order_item.goodsId as _order_item_goodsId,
+		_order_item.goodsSpecDetailId as _order_item_goodsSpecDetailId,
+		_order_item.num as _order_item_num,
+		_order_item.unitPrice as _order_item_unitPrice,
+		_order_item.score as _order_item_score,
+		_order_item.comment as _order_item_comment
+	</sql>
+	
+	<sql id="mBaseSql"> 
+		select 
+			_order_item.*,
+			<include refid="com.rpframework.website.xiangdemei.dao.IOrderDao.mColumnsSql" />,
+			<include refid="com.rpframework.website.xiangdemei.dao.IGoodsDao.mColumnsSql" />,
+			<include refid="com.rpframework.website.xiangdemei.dao.IGoodsSpecDetailDao.mColumnsSql" />
+		from 
+			t_order_item _order_item
+			left outer join t_order _order on _order.id = _order_item.orderId
+			left outer join goods _goods on _goods.id = _order_item.goodsId
+			left outer join goods_spec_detail _goods_spec_detail on _goods_spec_detail.id = _order_item.goodsSpecDetailId
+	</sql>
+	
+	<select id="getOrderItems" parameterType="Long" resultMap="mOrderItem">
+		<include refid="mBaseSql" />
+		where _order_item.orderId=#{orderId}
+	</select>
+	
+	<select id="doPager" parameterType="map" resultMap="mOrderItem">
+		<include refid="mBaseSql" />
+		where 1=1
+		
+		<if test="page.searchMap.goodsId != null">
+			and _order_item.goodsId = #{page.searchMap.goodsId} 
+		</if>
+		<if test="page.searchMap.goodsType != null">
+			and _goods.type = #{page.searchMap.goodsType} 
+		</if>
+		<if test="page.searchMap.goodsName != null">
+			and _goods.name like "%${page.searchMap.goodsName}%" 
+		</if>
+		<if test="page.searchMap.goodsShopName != null">
+			and _goods.shopName like "%${page.searchMap.goodsShopName}%" 
+		</if>
+		
+		<if test="page.searchMap.currProgress != null">
+			and _order_item.currProgress = #{page.searchMap.currProgress} 
+		</if>
+		
+		<if test="page.searchMap.isNullComment != null">
+			and _order_item.comment is null
+		</if>
+		
+		<if test="page.searchMap.notNullComment != null">
+			and _order_item.comment is not null
+		</if>
+		
+		
+		<if test="page.searchMap.gtCreateTime != null">
+			<![CDATA[and _order_item.recordCreateTime >= #{page.searchMap.gtCreateTime}]]>
+		</if>
+		
+		<if test="page.searchMap.ltCreateTime != null">
+			<![CDATA[and _order_item.recordCreateTime <= #{page.searchMap.ltCreateTime}]]>
+		</if>
+		
+		<if test="page.searchMap.orderId != null">
+			and _order_item.orderId = #{page.searchMap.orderId} 
+		</if>
+		
+		<if test="page.searchMap.state != null">
+			and _order_item.state = #{page.searchMap.state} 
+		</if>
+		
+		<if test="page.searchMap.userId != null">
+			and _order.userId = #{page.searchMap.userId} 
+		</if>
+		
+		order by _order_item.id desc
+	</select>
+	
+	<update id="upadteWithField" />
+	<update id="update" parameterType="com.rpframework.website.xiangdemei.domain.OrderItem" />
+	<insert id="insert" parameterType="com.rpframework.website.xiangdemei.domain.OrderItem" useGeneratedKeys="true" keyProperty="id"/>
+	<delete id="delete" parameterType="com.rpframework.website.xiangdemei.domain.OrderItem" />
+	<delete id="deleteByOrderId" parameterType="Long">
+		delete from t_order_item where orderId=#{orderId}
+	</delete>
+	
+	<select id="select" parameterType="Integer" resultMap="mOrderItem">
+		<include refid="mBaseSql" />
+		where _order_item.id=#{id}
+	</select>
+</mapper>

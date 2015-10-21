@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.website.xiangdemei.dao.ISubSpecCfgDao">
+
+	<resultMap type="com.rpframework.website.xiangdemei.domain.SubSpecCfg" id="mSubSpecCfg" autoMapping="true">
+		<id property="code" column="code" />
+	</resultMap>
+	
+	<delete id="deleteSubSpecCfgs" parameterType="String">
+		delete from sub_spec_cfg where specCfgCode=#{specCfgCode}
+	</delete>
+	
+	<delete id="deleteSubSpecCfg" parameterType="map">
+		delete from sub_spec_cfg where code=#{0} and specCfgCode=#{1}
+	</delete>
+	<update id="upadteWithField" />
+	<update id="update" parameterType="com.rpframework.website.xiangdemei.domain.SubSpecCfg" />
+	<insert id="insert" parameterType="com.rpframework.website.xiangdemei.domain.SubSpecCfg" useGeneratedKeys="true" keyProperty="code"/>
+	<delete id="delete" parameterType="com.rpframework.website.xiangdemei.domain.SubSpecCfg" />
+	<select id="select" parameterType="String" resultMap="mSubSpecCfg">
+		select * from sub_spec_cfg where code=#{code}
+	</select>
+	
+	<select id="getListBySpecCode" parameterType="String" resultMap="mSubSpecCfg">
+		select * from sub_spec_cfg where specCfgCode=#{specCfgCode}
+	</select>
+	
+	<select id="getSubSpecCfg" parameterType="map" resultMap="mSubSpecCfg">
+		select * from sub_spec_cfg where code=#{0} and specCfgCode=#{1}
+	</select>
+</mapper>

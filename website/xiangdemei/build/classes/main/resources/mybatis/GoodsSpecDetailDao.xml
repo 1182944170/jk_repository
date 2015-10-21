@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.website.xiangdemei.dao.IGoodsSpecDetailDao">
+	<resultMap type="com.rpframework.website.xiangdemei.domain.GoodsSpecDetail" id="mGoodsSpecDetail" autoMapping="true">
+		<id property="id" column="id"/>
+		<result property="goodsId" column="goodsId" />
+		<association property="goods" column="goodsId" select="com.rpframework.website.xiangdemei.dao.IGoodsDao.select" />
+	</resultMap>
+  	
+  	<sql id="mColumnsSql"> 
+		_goods_spec_detail.id as _goods_spec_detail_id,
+		_goods_spec_detail.goodsId as _goods_spec_detail_goodsId,
+		_goods_spec_detail.specCombinationField1 as _goods_spec_detail_specCombinationField1,
+		_goods_spec_detail.specCombinationField2 as _goods_spec_detail_specCombinationField2,
+		_goods_spec_detail.specCombinationField3 as _goods_spec_detail_specCombinationField3,
+		_goods_spec_detail.specCombinationField4 as _goods_spec_detail_specCombinationField4,
+		_goods_spec_detail.specCombinationField5 as _goods_spec_detail_specCombinationField5,
+		_goods_spec_detail.specCodeField1 as _goods_spec_detail_specCodeField1,
+		_goods_spec_detail.specCodeField2 as _goods_spec_detail_specCodeField2,
+		_goods_spec_detail.specCodeField3 as _goods_spec_detail_specCodeField3,
+		_goods_spec_detail.specCodeField4 as _goods_spec_detail_specCodeField4,
+		_goods_spec_detail.specCodeField5 as _goods_spec_detail_specCodeField5,
+		_goods_spec_detail.virtualStockCount as _goods_spec_detail_virtualStockCount,
+		_goods_spec_detail.realStockCount as _goods_spec_detail_realStockCount,
+		_goods_spec_detail.sellCount as _goods_spec_detail_sellCount,
+		_goods_spec_detail.logisticsNo as _goods_spec_detail_logisticsNo,
+		_goods_spec_detail.businessesCode as _goods_spec_detail_businessesCode
+	</sql>
+  	
+	<select id="findGoodsGroupSpec" parameterType="Integer" resultMap="mGoodsSpecDetail">
+		select 
+			g.specCodeField1,
+			g.specCodeField2,
+			g.specCodeField3,
+			g.specCodeField4,
+			g.specCodeField5,
+			
+			g.`specCombinationField1`,
+			g.`specCombinationField2`,
+			g.`specCombinationField3`,
+			g.`specCombinationField4`,
+			g.`specCombinationField5`
+			
+		from goods_spec_detail g 
+			
+		where 
+			g.goodsId=#{goodsId}
+		group by 
+			g.specCodeField1,
+			g.specCodeField2,
+			g.specCodeField3,
+			g.specCodeField4,
+			g.specCodeField5,
+			g.`specCombinationField1`,
+			g.`specCombinationField2`,
+			g.`specCombinationField3`,
+			g.`specCombinationField4`,
+			g.`specCombinationField5`
+	</select>
+	
+	<select id="findGoodsSpecDetails" parameterType="Integer" resultMap="mGoodsSpecDetail">
+		select 
+			* 
+		from 
+			goods_spec_detail g 
+		where g.goodsId = #{goodsId}
+		
+		order by id desc
+	</select>
+	<select id="getCustomizeSellCountByMoodNo" resultMap="mGoodsSpecDetail">
+		select 
+			detail.specCombinationField2  as specCombinationField2,
+			sum(detail.sellCount)  as sellCount
+		from 
+			goods_spec_detail detail 
+		where detail.goodsId = 1 
+		group by detail.specCombinationField2
+	</select>
+	<select id="doPager" parameterType="map" resultMap="mGoodsSpecDetail">
+		select 
+			* 
+		from 
+			goods_spec_detail g 
+		where 1=1
+		
+		<if test="page.searchMap.goodsId != null">
+			and g.goodsId = #{page.searchMap.goodsId} 
+		</if>
+		
+		order by id desc
+	</select>
+	<select id="findGoodsSpecByDetailCondition" parameterType="map" resultMap="mGoodsSpecDetail">
+		select 
+			* 
+		from 
+			goods_spec_detail g 
+		where 1=1
+		
+		<if test="paramMap.goodsId != null">
+			and g.goodsId = #{paramMap.goodsId} 
+		</if>
+		
+		<if test="paramMap.specCodeField1 != null">
+			and g.specCodeField1 = #{paramMap.specCodeField1} 
+		</if>
+		
+		<if test="paramMap.specCodeField2 != null">
+			and g.specCodeField2 = #{paramMap.specCodeField2} 
+		</if>
+		
+		<if test="paramMap.specCodeField3 != null">
+			and g.specCodeField3 = #{paramMap.specCodeField3} 
+		</if>
+		
+		<if test="paramMap.specCodeField4 != null">
+			and g.specCodeField4 = #{paramMap.specCodeField4} 
+		</if>
+		
+		<if test="paramMap.specCodeField5 != null">
+			and g.specCodeField4 = #{paramMap.specCodeField5} 
+		</if>
+		
+		<if test="paramMap.specCombinationField1 != null">
+			and g.specCombinationField1 = #{paramMap.specCombinationField1} 
+		</if>
+		<if test="paramMap.specCombinationField2 != null">
+			and g.specCombinationField2 = #{paramMap.specCombinationField2} 
+		</if>
+		<if test="paramMap.specCombinationField3 != null">
+			and g.specCombinationField3 = #{paramMap.specCombinationField3} 
+		</if>
+		<if test="paramMap.specCombinationField4 != null">
+			and g.specCombinationField4 = #{paramMap.specCombinationField4} 
+		</if>
+		<if test="paramMap.specCombinationField5 != null">
+			and g.specCombinationField5 = #{paramMap.specCombinationField5} 
+		</if>
+		
+	</select>
+	<update id="upadteWithField" />
+	<update id="update" parameterType="com.rpframework.website.xiangdemei.domain.GoodsSpecDetail" />
+	<insert id="insert" parameterType="com.rpframework.website.xiangdemei.domain.GoodsSpecDetail" useGeneratedKeys="true" keyProperty="id"/>
+	<delete id="delete" parameterType="com.rpframework.website.xiangdemei.domain.GoodsSpecDetail" />
+	<select id="select" parameterType="Integer" resultMap="mGoodsSpecDetail">
+		select 
+			* 
+		from 
+			goods_spec_detail g
+		
+		where g.id=#{id}
+	</select>
+</mapper>

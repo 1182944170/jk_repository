@@ -1,21 +1,23 @@
 package com.rpframework.website.luoluo.act.api;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.alibaba.druid.sql.parser.ParserException;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.rpframework.core.BaseAct;
+import com.rpframework.module.common.pay.wxpay.api.WXpayApi;
+import com.rpframework.module.common.pay.wxpay.util.WXpayCore;
 import com.rpframework.utils.DateUtils;
 import com.rpframework.utils.NumberUtils;
 import com.rpframework.utils.Pager;
@@ -65,13 +67,17 @@ public class ApiActivitypictureAct extends BaseAct{
 			@RequestParam(required=false) String[] insure,
 			@RequestParam(required=false) Integer typeMonely,
 			@RequestParam(required=false) Integer type,
+			@RequestParam(required=false) String osele,  //设备号
 			HttpSession session      )throws Exception{
 			boolean bFlag = false;
 			User currUser = getSessionUser(session);
 			if(currUser == null){
 				throw new APICodeException(-4, "你还没登陆!");
 			}	
+		
+			
 			Activity activity = activityService.selectcal(sponsorld);
+			Classification  classi = classiftionservice.selectcal(sponsorld);
 				Activitypicture Activitypi=new Activitypicture();
 				Activitypi.setOrdernumber(DateUtils.nowDate(DateUtils.YYYYMMDDHHMMSS) + NumberUtils.random(5));
 				Activitypi.setSponsorld(sponsorld);
@@ -98,33 +104,69 @@ public class ApiActivitypictureAct extends BaseAct{
 				Activitypi.setNewtime(System.currentTimeMillis()/1000);
 				Activitypi.setType(activity.getType());
 				Activitypi.setTypeOrder(1);
-		activitypictureSercice.insertdo(Activitypi);
-		
+				activitypictureSercice.insertdo(Activitypi);
+				/*
+				JsonObject orderJson = packageOrder2Json().getAsJsonObject();
+			*/
+				
 		if(NumberUtils.isValid(typeMonely)){
 			if(typeMonely == 1){
 				throw new APICodeException(-99, "支付宝支付 正在建设中...");
+				/*JsonObject alipayCfg = new JsonObject();
+				alipayCfg.addProperty("ali_public_key", AlipayConfig.ali_public_key);
+				alipayCfg.addProperty("input_charset", AlipayConfig.input_charset);
+				alipayCfg.addProperty("notifyURL", InitServlet.DOMAIN + AlipayConfig.notifyURL);
+				alipayCfg.addProperty("partner", AlipayConfig.partner);
+				alipayCfg.addProperty("private_key", AlipayConfig.private_key);
+				alipayCfg.addProperty("seller_email", AlipayConfig.seller_email);
+				alipayCfg.addProperty("sign_type", AlipayConfig.sign_type);
+				
+				String enBase64 = AlgorithmUtils.enBase64(alipayCfg.toString());
+				orderJson.addProperty("alipayInfo", enBase64);*/
+				
 			} else if (typeMonely == 2) {
-				bFlag = activitypictureSercice.bagPay(currUser.getId(), Activitypi.getId());
-			} else {
+				
+				bFlag = activitypictureSercice.bagPay(currUser.getId(), Activitypi.getId(),activity);
+			
+			} else if(typeMonely == 3){
+				throw new APICodeException(-99, "微信支付正在建设中...");
+				/*//微信支付
+				 System.out.println(" =============》预付款开始:");
+			        Map<String, String> retMap = wxzhifu(activity,Activitypi,osele,classi);;
+			        System.out.println(" =============》预付款结束:");
+			        System.out.println(WXpayCore.isRetSuccess(retMap)); // 判断统一下单（预支付）接口是否成功
+			        if (WXpayCore.isRetSuccess(retMap)) {
+			            // 预支付成功，组装真正支付需要的参数，返回给app使用
+			            System.out.println(" =============》组装app使用参数:");
+			            System.out.println(WXpayApi.makePaymentMap(retMap));
+			        } else {
+			            System.out.println(WXpayCore.getErrMsg(retMap));
+			        }*/
+			}else{
 				throw new APICodeException(-1, "支付类型错误...");
 			}
 		} else {
 			throw new APICodeException(-2, "请选择支付类型...");
 		}
 		
-		JsonObject json=new JsonObject();
+		JsonObject orderjson=new JsonObject();
 		if(bFlag){
-			json.addProperty("succ", true);
+			
+			orderjson.addProperty("succ", true);
 		} else { // 添加失败
-			json.addProperty("error", false);
+			orderjson.addProperty("error", false);
 		}
-		return json;
+		return orderjson;
 	}
 	
-
-	
-	
-	
+	/**
+	 * 查询我的订单
+	 * @param id
+	 * @param pager
+	 * @return
+	 * @throws ParserException
+	 * @throws InterruptedException
+	 */
 	@RequestMapping("list")
 	public @ResponseBody JsonElement list(@RequestParam Integer id,@RequestParam(value="pager",required=false) Pager<Activitypicture> pager 
 			) throws ParserException, InterruptedException{
@@ -145,6 +187,36 @@ public class ApiActivitypictureAct extends BaseAct{
 			array.add(jsonObj);
 		}
 		System.out.println("user_list: "+json.toString());
+		return json;
+	}
+	/**
+	 * 取消订单
+	 * @param id
+	 * @param session
+	 * @return
+	 * @throws ParserException
+	 * @throws InterruptedException
+	 */
+	@RequestMapping("outgotu")
+	public @ResponseBody JsonElement quxiao(
+			@RequestParam(required=false) Integer id,HttpSession session
+			) throws ParserException, InterruptedException{
+		User currUser = getSessionUser(session);
+		if(currUser == null){
+			throw new APICodeException(-4, "你还没登陆!");
+		}	
+		
+		Activitypicture cc=activitypictureSercice.selectone(id);
+		Activity activity = activityService.selectcal(cc.getSponsorld());
+		cc.setType(2);
+		boolean bFlag = activitypictureSercice.baggo(currUser,cc,activity);
+		JsonObject json=new JsonObject();
+		if(bFlag){
+			activitypictureSercice.updatedo(cc);
+			json.addProperty("succ", true);
+		} else { // 添加失败
+			json.addProperty("error", false);
+		}
 		return json;
 	}
 	/**
@@ -175,4 +247,48 @@ public class ApiActivitypictureAct extends BaseAct{
 		json.addProperty("monely", cc.getMonely());
 		return json;
 	}
+	
+	
+	public Map<String, String> wxzhifu( Activity activity,Activitypicture activitypi,String osele,Classification classi) {
+		 Map<String, String> testMap = new HashMap<String, String>();
+	        testMap.put("device_info", osele); // 设备号
+	        testMap.put("body",classi.getClaName()); // 商品描述
+	        testMap.put("detail", activity.getActivityname()); // 商品详情
+	        testMap.put("attach", ""); // 附加数据
+	        testMap.put("out_trade_no", activitypi.getOrdernumber()); // 商户订单号
+	        testMap.put("total_fee", activitypi.getMonely()+""); // 总金额
+	        testMap.put("spbill_create_ip", "192.168.0.1"); // 终端IP
+	        testMap.put("time_start", activitypi.getNewtime()+""); // 交易起始时间
+	        testMap.put("time_expire", ""); // 交易结束时间
+	        testMap.put("goods_tag", ""); // 商品标记
+	        testMap.put("notify_url", "https://baidu.com"); // 通知地址
+	        testMap.put("trade_type", "APP"); // 交易类型
+	        testMap.put("product_id", ""); // 商品ID
+	        testMap.put("openid", ""); // 用户标识
+	        Map<String, String> retMap = WXpayApi.unifiedOrderRetMap(testMap);
+
+	  /*      Map<String, String> retMap = WXpayApi.unifiedOrderRetMap(testMap);
+	        System.out.println(" =============》查询订单开始:");
+	        Map<String, String> queRet = testOrderQuery(activitypi.getOrdernumber());
+	        System.out.println(" =============》查询订单结束:");
+	        System.out.println(WXpayCore.isRetSuccess(queRet));
+	        
+	        if (WXpayCore.isRetSuccess(retMap)) {
+	            // 预支付成功，组装真正支付需要的参数，返回给app使用
+	            System.out.println(" =============》组装app使用参数:");
+            System.out.println(WXpayApi.makePaymentMap(retMap));
+	        } else {
+            System.out.println(WXpayCore.getErrMsg(retMap));
+        }*/
+	        return retMap;
+	}
+	 public static Map<String, String> testOrderQuery(String aa) {
+	        Map<String, String> testMap = new HashMap<String, String>();
+	        testMap.put("out_trade_no", aa); // 商户订单号
+	        System.out.println(testMap);
+	        Map<String, String> retMap = WXpayApi.orderQueryRetMap(testMap);
+	        System.out.println(retMap);
+	        boolean retSuccess = WXpayCore.isRetSuccess(retMap);
+	        return retMap;
+	    }
 }

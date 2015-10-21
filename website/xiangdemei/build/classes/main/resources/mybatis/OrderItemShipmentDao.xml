@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.website.xiangdemei.dao.IOrderItemShipmentDao">
+	<resultMap type="com.rpframework.website.xiangdemei.domain.OrderItemShipment" id="mOrderItemShipment" autoMapping="true" >
+	</resultMap>
+	
+	<sql id="mColumnsSql"> 
+		_order_item_shipment.orderItemId as _order_item_shipment_id,
+		_order_item_shipment.progress as _order_item_shipment_progress,
+		_order_item_shipment.state as _order_item_shipment_state,
+		_order_item_shipment.ext as _order_item_shipment_ext,
+		_order_item_shipment.recordCreateTime as _order_item_shipment_recordCreateTime
+	</sql>
+	
+	<sql id="mBaseSql"> 
+		select 
+			_order_item_shipment.*
+		from 
+			t_order_item_shipment _order_item_shipment
+	</sql>
+	
+	<update id="upadteWithField" />
+	<update id="update" parameterType="com.rpframework.website.xiangdemei.domain.OrderItemShipment" />
+	<insert id="insert" parameterType="com.rpframework.website.xiangdemei.domain.OrderItemShipment" useGeneratedKeys="true" keyProperty="id"/>
+	<delete id="delete" parameterType="com.rpframework.website.xiangdemei.domain.OrderItemShipment" />
+	<select id="select" parameterType="Integer" resultMap="mOrderItemShipment">
+		select * from t_order_item_shipment where _order_item_shipment.id=#{id}
+	</select>
+	
+	<select id="getOrderItemShipment" parameterType="map" resultMap="mOrderItemShipment">
+		<include refid="mBaseSql" />
+		where 
+			_order_item_shipment.orderItemId=#{orderItemId} 
+			and _order_item_shipment.progress=#{1}
+	</select>
+	<select id="getOrderItemShipments" parameterType="Integer" resultMap="mOrderItemShipment">
+		<include refid="mBaseSql" />
+		where 
+			_order_item_shipment.orderItemId=#{orderItemId}
+	</select>
+</mapper>

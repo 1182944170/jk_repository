@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.website.xiangdemei.dao.IUserTakeCashDao">
+
+	<resultMap type="com.rpframework.website.xiangdemei.domain.UserTakeCash" id="mUserTakeCash" autoMapping="true">
+		<id property="id" column="id" />
+		<result property="userId" column="userId"/>
+		<association property="user" javaType="com.rpframework.website.xiangdemei.domain.User" autoMapping="true" columnPrefix="user_" />
+		<association property="cfgBank" column="bankId" select="com.rpframework.module.common.dao.ICfgBankDao.select" />
+	</resultMap>
+
+	<sql id="mBaseSql">
+		select _take_cash.*,
+			_user_contact.userId user_userId,
+			_user_contact.realName user_realName,
+			_user_contact.headImg user_headImg,
+			_user_contact.sex user_sex,
+			_user_contact.contact user_contact
+		from u_take_cash _take_cash
+			left outer join user_contact _user_contact on _user_contact.userId = _take_cash.userId
+	</sql>
+	<select id="doPager" parameterType="map" resultMap="mUserTakeCash">
+		<include refid="mBaseSql" />
+		
+		where 1=1
+		<if test="page.searchMap.userId != null">
+			and _take_cash.userId = #{page.searchMap.userId} 
+		</if>
+		<if test="page.searchMap.realName != null">
+			and _user_contact.realName like "%${page.searchMap.realName}%" 
+		</if>
+		
+		<if test="page.searchMap.contact != null">
+			and _user_contact.contact like "%${page.searchMap.contact}%" 
+		</if>
+		
+		<if test="page.searchMap.state != null">
+			and _take_cash.state = #{page.searchMap.state} 
+		</if>
+		<if test="page.searchMap.bankId != null">
+			and _take_cash.bankId = #{page.searchMap.bankId} 
+		</if>
+		
+		 order by _take_cash.id desc
+	</select>
+	<update id="upadteWithField" />
+	<update id="update" parameterType="com.rpframework.website.xiangdemei.domain.UserTakeCash" />
+	<insert id="insert" parameterType="com.rpframework.website.xiangdemei.domain.UserTakeCash" useGeneratedKeys="true" keyProperty="id"/>
+	<delete id="delete" parameterType="com.rpframework.website.xiangdemei.domain.UserTakeCash" />
+	<select id="select" parameterType="Integer" resultMap="mUserTakeCash">
+		<include refid="mBaseSql" />
+		where	
+		_take_cash.id=#{id}
+	</select> 
+</mapper>

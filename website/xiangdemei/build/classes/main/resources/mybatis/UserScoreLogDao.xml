@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.website.xiangdemei.dao.IUserScoreLogDao">
+
+	<resultMap type="com.rpframework.website.xiangdemei.domain.UserScoreLog" id="mUserScoreLog" autoMapping="true">
+		<id property="id" column="id"/>
+		<association property="user" javaType="com.rpframework.website.xiangdemei.domain.User" autoMapping="true" columnPrefix="user_" />
+	</resultMap>
+	
+	<sql id="mBaseSql"> 
+		select m.*,
+			uc.userId user_userId,
+			uc.realName user_realName,
+			uc.headImg user_headImg,
+			uc.sex user_sex,
+			uc.contact user_contact
+		
+		from u_score_log m
+			left outer join user_contact uc on uc.userId = m.userId
+	</sql>
+	
+	<select id="doPager" parameterType="map" resultMap="mUserScoreLog">
+		<include refid="mBaseSql" />
+			
+		where 1=1
+		
+		<if test="page.searchMap.realName != null">
+			and uc.realName like "%${page.searchMap.realName}%" 
+		</if>
+		
+		<if test="page.searchMap.contact != null">
+			and uc.contact like "%${page.searchMap.contact}%" 
+		</if>
+		
+		<if test="page.searchMap.userId != null">
+			and m.userId = #{page.searchMap.userId} 
+		</if>
+		
+		order by id desc
+	</select>
+	<update id="upadteWithField" />
+	<update id="update" parameterType="com.rpframework.website.xiangdemei.domain.UserScoreLog" />
+	<insert id="insert" parameterType="com.rpframework.website.xiangdemei.domain.UserScoreLog" useGeneratedKeys="true" keyProperty="id"/>
+	<delete id="delete" parameterType="com.rpframework.website.xiangdemei.domain.UserScoreLog" />
+	<select id="select" parameterType="Integer" resultMap="mUserScoreLog">
+		<include refid="mBaseSql" />
+		where m.id=#{id}
+	</select> 
+</mapper>

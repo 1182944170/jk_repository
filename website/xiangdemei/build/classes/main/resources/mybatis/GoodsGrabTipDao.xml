@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.website.xiangdemei.dao.IGoodsGrabTipDao">
+
+	<resultMap type="com.rpframework.website.xiangdemei.domain.GoodsGrabTip" id="mGoodsGrabTip" autoMapping="true">
+		<id property="id" column="id" />
+	</resultMap>
+	
+	<update id="upadteWithField" />
+	<update id="update" parameterType="com.rpframework.website.xiangdemei.domain.GoodsGrabTip" />
+	<insert id="insert" parameterType="com.rpframework.website.xiangdemei.domain.GoodsGrabTip" useGeneratedKeys="true" keyProperty="id"/>
+	<delete id="delete" parameterType="com.rpframework.website.xiangdemei.domain.GoodsGrabTip" />
+	<select id="select" parameterType="Integer" resultMap="mGoodsGrabTip">
+		select * from goods_grab_tip where id=#{id}
+	</select>
+	
+	<select id="getGoodsGrabTips" parameterType="Integer" resultMap="mGoodsGrabTip">
+		select * from goods_grab_tip where goodsId=#{goodsId}
+	</select>
+	
+	<select id="getEffectiveGoodsGrabTipsByUserId" parameterType="Integer" resultMap="mGoodsGrabTip">
+		select * from goods_grab_tip where state=0 and userId=#{goodsId}
+	</select>
+	
+	<select id="getGoodsGrabTipByUserId" parameterType="map" resultMap="mGoodsGrabTip">
+		select * from goods_grab_tip where goodsId=#{0} and userId=#{1}
+	</select>
+		
+</mapper>

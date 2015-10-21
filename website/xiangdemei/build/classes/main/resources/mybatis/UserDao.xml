@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.website.xiangdemei.dao.IUserDao">
+
+	<resultMap type="com.rpframework.website.xiangdemei.domain.User" id="mUser" autoMapping="true">
+		<id property="id" column="id" />
+	</resultMap>
+	
+	<update id="upadteWithField" />
+	
+	<update id="update" parameterType="map">
+		update user_${param2}
+		set
+			contact = #{param1.contact},
+	  		password = #{param1.password},
+	  		sex = #{param1.sex},
+	  		realName = #{param1.realName},
+	  		headImg = #{param1.headImg},
+	  		countyCode = #{param1.countyCode},
+	  		parentTree = #{param1.parentTree},
+	  		childrenTree = #{param1.childrenTree},
+	  		money = #{param1.money},
+	  		freezeMoney = #{param1.freezeMoney},
+	  		usedMoney = #{param1.usedMoney},
+	  		score = #{param1.score},
+	  		usedScore = #{param1.usedScore},
+	  		popularity = #{param1.popularity},
+	  		state = #{param1.state},
+	  		lastLoginTime = #{param1.lastLoginTime},
+	  		loginTime = #{param1.loginTime},
+	  		loginIp = #{param1.loginIp},
+	  		lastLoginIp = #{param1.lastLoginIp},
+	  		recordCreateTime = #{param1.recordCreateTime}
+		where id=#{param1.id}
+	</update>
+	
+	<insert id="insert" parameterType="map" useGeneratedKeys="true" keyProperty="id">
+  		insert into user_${param2}(
+	  			id,
+		  		contact,
+		  		password,
+		  		sex,
+		  		realName,
+		  		headImg,
+		  		countyCode,
+		  		parentTree,
+		  		childrenTree,
+		  		money,
+		  		freezeMoney,
+		  		usedMoney,
+		  		score,
+		  		usedScore,
+		  		popularity,
+		  		state,
+		  		lastLoginTime,
+		  		loginTime,
+		  		loginIp,
+		  		lastLoginIp,
+		  		recordCreateTime
+	  		)
+  		values (		
+  				#{param1.id},
+		  		#{param1.contact},
+		  		#{param1.password},
+		  		#{param1.sex},
+		  		#{param1.realName},
+		  		#{param1.headImg},
+		  		#{param1.countyCode},
+		  		#{param1.parentTree},
+		  		#{param1.childrenTree},
+		  		#{param1.money},
+		  		#{param1.freezeMoney},
+		  		#{param1.usedMoney},
+		  		#{param1.score},
+		  		#{param1.usedScore},
+		  		#{param1.popularity},
+		  		#{param1.state},
+		  		#{param1.lastLoginTime},
+		  		#{param1.loginTime},
+		  		#{param1.loginIp},
+		  		#{param1.lastLoginIp},
+		  		#{param1.recordCreateTime}
+	  		)
+	</insert>
+	<select id="select" parameterType="map" resultMap="mUser">
+		select * from user_${param2} where id=#{param1}
+	</select>
+</mapper>

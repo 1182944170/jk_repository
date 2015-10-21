@@ -50,6 +50,16 @@ public class UserService extends BaseService{
 	}
 	
 	/**
+	 * 查询用户
+	 * @param id
+	 * @return
+	 */
+	public User selectmonly(Integer id){
+		User c=iuserdao.selectmonly(id);
+		return c;
+	}
+	
+	/**
 	 *修改用户
 	 * @param user
 	 * @return

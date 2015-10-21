@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.website.xiangdemei.dao.ISignDao">
+
+	<resultMap type="com.rpframework.website.xiangdemei.domain.Sign" id="mSign" autoMapping="true">
+		<id property="id" column="id" />
+	</resultMap>
+	
+<!-- 	<select id="findSignTime" parameterType="int" resultMap="mSign">
+		select 
+			*
+		from sign 
+		
+		where userId=#{userId}
+		
+		order by signTime desc
+		
+		limit 1
+	</select> -->
+	<update id="upadteWithField" />
+	<update id="update" parameterType="com.rpframework.website.xiangdemei.domain.Sign" />
+	<insert id="insert" parameterType="com.rpframework.website.xiangdemei.domain.Sign" useGeneratedKeys="true" keyProperty="id"/>
+	<delete id="delete" parameterType="com.rpframework.website.xiangdemei.domain.Sign" />
+	<select id="select" parameterType="Integer" resultMap="mSign">
+		select * from sign where id=#{id}
+	</select>
+	<select id="selectByUserId" parameterType="Integer" resultMap="mSign">
+		select * from sign where userId=#{userId}
+	</select>
+	
+
+	<select id="selectMaxSignDate" parameterType="int" resultType="int">
+		select maxSignDate from sign where userId=#{userId}
+	</select>
+	
+</mapper>

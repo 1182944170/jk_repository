@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.website.xiangdemei.dao.ISpecCfgDao">
+
+	<resultMap type="com.rpframework.website.xiangdemei.domain.SpecCfg" id="mSpecCfg" autoMapping="true">
+		<id property="code" column="code" />
+		<collection property="subSpecCfgs" column="code" select="com.rpframework.website.xiangdemei.dao.ISubSpecCfgDao.getListBySpecCode" />
+	</resultMap>
+	<update id="upadteWithField" />
+	<update id="update" parameterType="com.rpframework.website.xiangdemei.domain.SpecCfg" />
+	<insert id="insert" parameterType="com.rpframework.website.xiangdemei.domain.SpecCfg" useGeneratedKeys="true" keyProperty="code"/>
+	<delete id="delete" parameterType="com.rpframework.website.xiangdemei.domain.SpecCfg" />
+	<select id="select" parameterType="String" resultMap="mSpecCfg">
+		select * from spec_cfg where code=#{code}
+	</select>
+	
+	<select id="doPager" parameterType="map" resultMap="mSpecCfg">
+		select * from spec_cfg where 1=1
+	</select>
+</mapper>

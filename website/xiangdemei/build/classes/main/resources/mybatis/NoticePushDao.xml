@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.website.xiangdemei.dao.INoticePushDao">
+
+	<resultMap type="com.rpframework.website.xiangdemei.domain.NoticePush" id="mNoticePush" autoMapping="true">
+		<id property="id" column="id" />
+	</resultMap>
+	<update id="upadteWithField" />
+	<update id="update" parameterType="com.rpframework.website.xiangdemei.domain.NoticePush" />
+	<insert id="insert" parameterType="com.rpframework.website.xiangdemei.domain.NoticePush" useGeneratedKeys="true" keyProperty="id"/>
+	<delete id="delete" parameterType="com.rpframework.website.xiangdemei.domain.NoticePush" />
+	<select id="select" parameterType="Integer" resultMap="mNoticePush">
+		select * from notice_push where id=#{id}
+	</select>
+	
+	<select id="doPager" parameterType="map" resultMap="mNoticePush">
+		select * from notice_push where 1=1 order by id desc
+	</select>
+</mapper>

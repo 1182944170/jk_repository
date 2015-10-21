@@ -42,4 +42,8 @@
 	<select id="select" parameterType="Integer" resultMap="user">
 		select * from user where id=#{id} order by id
 	</select>
+	
+	<select id="selectmonly"  resultMap="user">
+		 SElECT * FROM user WHERE id IN ( SELECT userid  FROM sponsor  where id=#{sponid} )
+	</select>
 </mapper>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.website.xiangdemei.dao.IUserAddressDao">
+
+	<resultMap type="com.rpframework.website.xiangdemei.domain.UserAddress" id="mUserAddress" autoMapping="true">
+		<id property="id" column="id" />
+	</resultMap>
+	<update id="upadteWithField" />
+	<update id="update" parameterType="com.rpframework.website.xiangdemei.domain.UserAddress" />
+	<insert id="insert" parameterType="com.rpframework.website.xiangdemei.domain.UserAddress" useGeneratedKeys="true" keyProperty="id"/>
+	<delete id="delete" parameterType="com.rpframework.website.xiangdemei.domain.UserAddress" />
+	<select id="select" parameterType="Integer" resultMap="mUserAddress">
+		select * from user_address where id=#{id}
+	</select>
+	
+	<select id="selectByUserId" parameterType="Integer" resultMap="mUserAddress">
+		select * from user_address where userId=#{userId}
+	</select>
+	
+    <select id="getAllActivatedAddress" parameterType="Integer" resultMap="mUserAddress" >
+		select * from user_address where userId=#{userId} and status=1
+	</select>
+</mapper>

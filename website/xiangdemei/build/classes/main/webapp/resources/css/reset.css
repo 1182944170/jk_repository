@@ -1,0 +1,86 @@
+@charset "utf-8";
+/* reset */
+html{height:100%;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;-webkit-font-smoothing:antialiased}
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,textarea,p,blockquote,th,td,input,select,textarea,button,p{ font-family:"微软雅黑";margin:0;padding:0}  /* 初始化标签在所有浏览器中的margin、padding值 */
+fieldset,img {border:0 none;}  /* 重置fieldset（表单分组）、图片的边框为0*/
+dl,ul,ol,menu,li {list-style-type:none;}   /* 重置类表前导符号为onne,menu在HTML5中有效 */
+blockquote, q {quotes: none}   /* 重置嵌套引用的引号类型 */
+blockquote:before, blockquote:after,q:before, q:after {content:'';content:none}  /* 重置嵌套引用*/
+input,select,textarea,button {vertical-align:middle;}  /* 重置表单控件垂直居中*/
+button {border:0 none;background-color:transparent;cursor:pointer;}  /* 重置表单button按钮效果 */
+body { width:100%; background:url(../images/bg.jpg); font-family:"微软雅黑";}   /* 重置body 页面背景为白色 */
+body,th,td,input,select,textarea,button {font-size:12px;line-height:1 ;font-family:"微软雅黑", "黑体";color:#000;} /* 重置页面文字属性 */
+a {color:#666;text-decoration:none; font-family:"微软雅黑";}  /* 重置链接a标签 */ 
+a:active, a:hover {text-decoration:none;}   /* 重置链接a标签的鼠标滑动效果 */
+address,caption,cite,code,dfn,em,var {font-style:normal;font-weight:normal;}  /* 重置样式标签的样式 */
+caption {display:none;}    /* 重置表格标题为隐藏 */
+table {width:100%;border-collapse:collapse;border-spacing:0;table-layout:fixed;}    /* 重置table属性 */
+img{vertical-align:middle;}  /* 图片在当前行内的垂直位置 */
+/* 取消a标签点击后的虚线框 */
+a {outline: none;}  
+a:active{star:expression(this.onFocus=this.blur());}
+/*清除浮动*/
+.clearfix:after {
+	content: '';
+	display: block;
+	overflow: hidden;
+	visibility: hidden;
+	clear: both;
+}
+h1,h2,h3,h4,h5,h6{ font-weight:normal; font-family:"微软雅黑";}
+.clear{clear:both;height:0;line-height:0;font-size:0;visibility:hidden;overflow:hidden}
+.fl{ float:left;}
+.fr{ float:right;}
+.cl{ clear:both;}
+.l{float:left;}
+.r{float:right;}
+
+
+
+
+
+
+
+/*2015-6-10*/
+.mf_denglu{ width:670px; margin:0 auto;}
+.mf_top{ width:666px; height:360px; margin:0 auto;}
+.mf_top img{ width:666px; height:360px;}
+.mf_con{ width:666px; height:408px; margin:0 auto; background:url(../images/con_bg.png) no-repeat;padding-top:35px;}
+.mf_title{ width:666px; height:50px; text-align:center;  background:url(../images/line.png) no-repeat bottom center;}
+.mf_input{ width:328px; margin:0 auto; padding-top:31px;}
+.mf_input li{ width:328px; height:48px; background:url(../images/input_chang.png) no-repeat; margin-bottom:17px;}
+.mf_input li.mf_li01 label{ float:left; width:49px; height:48px; background:url(../images/user.png) no-repeat center center;}
+.mf_input li.mf_li02 label{ float:left; width:49px; height:48px; background:url(../images/mima.png) no-repeat center center;}
+.mf_input li input.mf_input01{ float:left; width:270px; height:36px; line-height:36px; margin-top:6px; background:none; border:none; outline:none; color:#fff; font-size:14px; font-family:"微软雅黑";}
+.mf_input li.mf_li03{ width:328px; height:48px; background:none; margin-bottom:24px;}
+.mf_div{ float:left; width:208px; height:48px; background:url(../images/input_duan.png) no-repeat;}
+.mf_div input.mf_input02{ width:182px; height:36px; margin-left:18px; margin-top:6px; background:none; border:none; outline:none; font-size:14px; font-family:"微软雅黑";}
+.mf_yan{ float:left; width:100px; height:40px; margin-top:4px; margin-left:16px;}
+.mf_yan img{ border-radius:5px;}
+.mf_li04{ width:320px; height:48px; margin:0 auto; background:url(../images/sub_bg.png) no-repeat !important; text-align:center;margin-bottom: 0px !important}
+.mf_li04 input.mf_input03{ width:54px; height:42px; line-height:42px; text-align:right; font-size:14px; color:#fff; background:url(../images/sub.png) no-repeat left center; border:none; font-family:"微软雅黑";}
+
+@media (max-width:1680px) {
+.mf_top{ width:666px; height:310px; margin:0 auto;}
+.mf_top img{ width:666px; height:360px;margin-top:-50px;}
+	
+	}
+
+
+
+
+@media (max-width:1440px) {
+.mf_top{ width:666px; height:260px; margin:0 auto;}
+.mf_top img{ width:666px; height:360px; margin-top:-100px;}
+	
+	}
+
+
+
+
+
+
+
+
+
+

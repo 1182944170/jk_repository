@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.website.xiangdemei.dao.IGoodsDao">
+	<resultMap type="com.rpframework.website.xiangdemei.domain.Goods" id="mGoods" autoMapping="true" />
+	
+	<sql id="mColumnsSql"> 
+		_goods.id as _goods_id,
+		_goods.name as _goods_name,
+		_goods.thumbImg as _goods_thumbImg,
+		_goods.imgs as _goods_imgs,
+		_goods.type as _goods_type,
+		_goods.attrs as _goods_attrs,
+		_goods.attrsDescImgs as _goods_attrsDescImgs,
+		_goods.contacts as _goods_contacts,
+		_goods.ext as _goods_ext,
+		_goods.descImgs as _goods_descImgs,
+		_goods.shopName as _goods_shopName,
+		_goods.salesNumber as _goods_salesNumber,
+		_goods.virtualStockCount as _goods_virtualStockCount,
+		_goods.realStockCount as _goods_realStockCount,
+		_goods.rule as _goods_rule,
+		_goods.recordCreateTime as _goods_recordCreateTime,
+		_goods.score as _goods_score,
+		_goods.money as _goods_money,
+		_goods.totalMoney as _goods_totalMoney,
+		_goods.totalScore as _goods_totalScore,
+		_goods.discountMoney as _goods_discountMoney,
+		_goods.oneLevelMoney as _goods_oneLevelMoney,
+		_goods.twoLevelMoney as _goods_twoLevelMoney,
+		_goods.rootLevelMoney as _goods_rootLevelMoney,
+		_goods.state as _goods_state,
+		_goods.startTime as _goods_startTime,
+		_goods.endTime as _goods_endTime,
+		_goods.sortIndex as _goods_sortIndex,
+		_goods.factoryId as _goods_factoryId,
+		_goods.groupIds as _goods_groupIds
+	</sql>
+	
+	<sql id="mBaseSql"> 
+		select 
+			_goods.*
+		from 
+			goods _goods
+	</sql>
+	
+	<select id="doPager" parameterType="map" resultMap="mGoods">
+		<include refid="mBaseSql" />
+		where 1=1
+		
+		<if test="page.searchMap.type != null">
+			and _goods.type = #{page.searchMap.type} 
+		</if>
+		
+		<if test="page.searchMap.name != null">
+			and _goods.name like "%${page.searchMap.name}%" 
+		</if>
+		
+		<if test="page.searchMap.shopName != null">
+			and _goods.shopName like "%${page.searchMap.shopName}%" 
+		</if>
+		
+		<if test="page.searchMap.state != null">
+			and _goods.state = #{page.searchMap.state} 
+		</if>
+		
+		order by _goods.id desc
+	</select>
+	<update id="upadteWithField" />
+	<update id="update" parameterType="com.rpframework.website.xiangdemei.domain.Goods" />
+	<insert id="insert" parameterType="com.rpframework.website.xiangdemei.domain.Goods" useGeneratedKeys="true" keyProperty="id"/>
+	<delete id="delete" parameterType="com.rpframework.website.xiangdemei.domain.Goods" />
+	<select id="select" parameterType="Integer" resultMap="mGoods">
+		<include refid="mBaseSql" />
+		where _goods.id=#{id}
+	</select>
+</mapper>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.website.xiangdemei.dao.IGoodsCustomizeCfgDao">
+	<resultMap type="com.rpframework.website.xiangdemei.domain.GoodsCustomizeCfg" id="mGoodsCustomizeCfg" autoMapping="true" />
+	
+	<select id="getAll" resultMap="mGoodsCustomizeCfg">
+		select * from goods_customize_cfg
+	</select>
+	<update id="upadteWithField" />
+	<update id="update" parameterType="com.rpframework.website.xiangdemei.domain.GoodsCustomizeCfg" />
+	<insert id="insert" parameterType="com.rpframework.website.xiangdemei.domain.GoodsCustomizeCfg" useGeneratedKeys="true" keyProperty="id"/>
+	<delete id="delete" parameterType="com.rpframework.website.xiangdemei.domain.GoodsCustomizeCfg" />
+	<select id="select" parameterType="Integer" resultMap="mGoodsCustomizeCfg">
+		select * from goods_customize_cfg where id=#{id}
+	</select>
+</mapper>

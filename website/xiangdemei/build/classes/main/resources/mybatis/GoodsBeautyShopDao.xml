@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.website.xiangdemei.dao.IGoodsBeautyShopDao">
+	<resultMap type="com.rpframework.website.xiangdemei.domain.GoodsBeautyShop" id="mGoodsBeautyShop" autoMapping="true" >
+		<id property="id" column="id"/>
+		<result property="beautyShopId" column="beautyShopId" />
+		
+		<association property="beautyShop" javaType="com.rpframework.website.xiangdemei.domain.BeautyShop" columnPrefix="_beauty_shop_" autoMapping="true">
+			<id property="id" column="id"/>
+		</association>
+	</resultMap>
+  
+  	<sql id="mBaseSql"> 
+		select 
+			_goods_beauty_shop.*,
+			<include refid="com.rpframework.website.xiangdemei.dao.IBeautyShopDao.mColumnsSql" />
+		from 
+			goods_beauty_shop _goods_beauty_shop
+			left outer join beauty_shop _beauty_shop on _beauty_shop.id = _goods_beauty_shop.beautyShopId
+	</sql>
+	
+	
+	<select id="findListByGoodsId" parameterType="Integer" resultMap="mGoodsBeautyShop">
+		<include refid="mBaseSql" />
+			
+		where _goods_beauty_shop.goodsId=#{goodsId}
+	</select>
+	
+	<select id="getByGoodsIdAndBeautyShopId" parameterType="map" resultMap="mGoodsBeautyShop">
+		<include refid="mBaseSql" />
+		 where _goods_beauty_shop.goodsId=#{0} and _goods_beauty_shop.beautyShopId=#{1}
+	</select>
+	
+	<delete id="deleteGoodsBeautyShop" parameterType="Integer">
+		delete from goods_beauty_shop where goodsId=#{goodsId}
+	</delete>
+	
+	<delete id="deleteGoodsBeautyShopId" parameterType="map">
+		delete from goods_beauty_shop where goodsId=#{0} and beautyShopId=#{1}
+	</delete>
+	<update id="upadteWithField" />
+	<update id="update" parameterType="com.rpframework.website.xiangdemei.domain.GoodsBeautyShop" />
+	<insert id="insert" parameterType="com.rpframework.website.xiangdemei.domain.GoodsBeautyShop" useGeneratedKeys="true" keyProperty="id"/>
+	<delete id="delete" parameterType="com.rpframework.website.xiangdemei.domain.GoodsBeautyShop" />
+	<select id="select" parameterType="Integer" resultMap="mGoodsBeautyShop">
+		<include refid="mBaseSql" />
+		where _goods_beauty_shop.id=#{id}
+	</select>
+</mapper>

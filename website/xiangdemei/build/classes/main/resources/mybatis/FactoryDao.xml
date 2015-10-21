@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.website.xiangdemei.dao.IFactoryDao">
+
+	<resultMap type="com.rpframework.website.xiangdemei.domain.Factory" id="mFactory" autoMapping="true">
+		<id property="id" column="id" />
+	</resultMap>
+	
+	<sql id="mColumnsSql"> 
+		_factory.id as _factory_id,
+		_factory.factoryName as _factory_factoryName
+	</sql>
+	
+	<sql id="mBaseSql"> 
+		select 
+		* 
+		from factory _factory 
+	</sql>
+	
+	<update id="upadteWithField" />
+	<update id="update" parameterType="com.rpframework.website.xiangdemei.domain.Factory" />
+	<insert id="insert" parameterType="com.rpframework.website.xiangdemei.domain.Factory" useGeneratedKeys="true" keyProperty="id"/>
+	<delete id="delete" parameterType="com.rpframework.website.xiangdemei.domain.Factory" />
+	<select id="select" parameterType="Integer" resultMap="mFactory">
+		<include refid="mBaseSql" />
+		where _factory.id=#{id}
+	</select>
+	
+	<select id="doPager" parameterType="map" resultMap="mFactory">
+		<include refid="mBaseSql" />
+		
+		where 1=1 order by _factory.id desc
+	</select>
+</mapper>

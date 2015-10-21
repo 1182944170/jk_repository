@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.website.xiangdemei.dao.IInvitationCodeDao">
+
+	<resultMap type="com.rpframework.website.xiangdemei.domain.InvitationCode" id="mInvitationCode" autoMapping="true">
+		<id property="id" column="id" />
+		
+		<result property="factoryId" column="factoryId" />
+		<association property="registUser" javaType="com.rpframework.website.xiangdemei.domain.User" columnPrefix="_user_" autoMapping="true">
+			<id property="id" column="userId" />
+		</association>
+		
+		<association property="factory" resultMap="com.rpframework.website.xiangdemei.dao.IFactoryDao.mFactory" columnPrefix="_factory_"/>
+		<association property="parent" column="parentId" select="select" />
+	</resultMap>
+	
+	<sql id="mColumnsSql"> 
+		_invitation_code.id as invitationCode_id,
+		_invitation_code.code as invitationCode_code,
+		_invitation_code.parentId as invitationCode_parentId,
+		_invitation_code.factoryId as invitationCode_factoryId,
+		_invitation_code.state as invitationCode_state,
+		_invitation_code.registUserId as invitationCode_registUserId
+	</sql>
+
+	<sql id="mBaseSql"> 
+		select 
+			_invitation_code.*,
+			<include refid="com.rpframework.website.xiangdemei.dao.IFactoryDao.mColumnsSql" />,
+			uc.userId _user_userId,
+			uc.realName _user_realName,
+			uc.headImg _user_headImg,
+			uc.sex _user_sex,
+			uc.contact _user_contact
+		from 
+			invitation_code _invitation_code
+			left outer join factory _factory on _factory.id = _invitation_code.factoryId
+			left outer join user_contact uc on uc.userId = _invitation_code.registUserId
+	</sql>
+	
+	<select id="getListByParentId" parameterType="Integer" resultMap="mInvitationCode">
+		<include refid="mBaseSql" />
+		
+		where 1=1 
+		<choose>
+            <when test="_parameter>0">
+				and _invitation_code.parentId=#{parentId}
+            </when>
+            <otherwise>
+				and _invitation_code.parentId is NULL
+            </otherwise>
+        </choose>
+        
+        order by _invitation_code.id desc
+	</select>
+	
+	<select id="getByRegistUserId" parameterType="Integer" resultMap="mInvitationCode">
+		<include refid="mBaseSql" />
+		where 
+			_invitation_code.registUserId=#{registUserId}
+	</select>
+	
+	<select id="findGroupByFactoryId" parameterType="Integer" resultMap="mInvitationCode">
+		<include refid="mBaseSql" />
+		where 
+			_invitation_code.parentId is NULL and
+			_invitation_code.factoryId=#{factoryId}
+	</select>
+	
+	<select id="getByCode" parameterType="String" resultMap="mInvitationCode">
+		<include refid="mBaseSql" />
+		where 
+			_invitation_code.code=#{code}
+	</select>
+	
+	<select id="doParentPager" parameterType="map" resultMap="mInvitationCode">
+		<include refid="mBaseSql" />
+		where 
+			parentId is NULL
+		<if test="page.searchMap.factoryId != null">
+			and _invitation_code.factoryId = #{page.searchMap.factoryId} 
+		</if>
+		<if test="page.searchMap.registUserId != null">
+			and _invitation_code.registUserId = #{page.searchMap.registUserId} 
+		</if>
+		
+		order by _invitation_code.id desc,_invitation_code.id
+	</select>
+	<update id="upadteWithField" />
+	
+	<update id="updateChildrenToFactoryId" parameterType="map">
+		update invitation_code set factoryId=#{param2} where parentId=#{param1}
+	</update>
+	<update id="update" parameterType="com.rpframework.website.xiangdemei.domain.InvitationCode" />
+	<insert id="insert" parameterType="com.rpframework.website.xiangdemei.domain.InvitationCode" useGeneratedKeys="true" keyProperty="id"/>
+	<delete id="delete" parameterType="com.rpframework.website.xiangdemei.domain.InvitationCode" />
+	<select id="select" parameterType="Integer" resultMap="mInvitationCode">
+		<include refid="mBaseSql" />
+		where _invitation_code.id=#{id}
+	</select>
+</mapper>
