@@ -6,18 +6,23 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.alibaba.druid.sql.parser.ParserException;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.rpframework.core.BaseAct;
+import com.rpframework.core.InitServlet;
+import com.rpframework.module.common.pay.alipay.config.AlipayConfig;
 import com.rpframework.module.common.pay.wxpay.api.WXpayApi;
 import com.rpframework.module.common.pay.wxpay.util.WXpayCore;
+import com.rpframework.utils.AlgorithmUtils;
 import com.rpframework.utils.DateUtils;
 import com.rpframework.utils.NumberUtils;
 import com.rpframework.utils.Pager;
@@ -64,7 +69,8 @@ public class ApiActivitypictureAct extends BaseAct{
 			@RequestParam(required=false) String chindenboy,
 			@RequestParam(required=false) double monely,
 			@RequestParam(required=false) String mood,
-			@RequestParam(required=false) String[] insure,
+			@RequestParam(required=false) String insure, //投保证件
+			@RequestParam(required=false) String insurename, //投保姓名
 			@RequestParam(required=false) Integer typeMonely,
 			@RequestParam(required=false) Integer type,
 			@RequestParam(required=false) String osele,  //设备号
@@ -100,6 +106,7 @@ public class ApiActivitypictureAct extends BaseAct{
 				Activitypi.setActualamount(actualamount);
 				Activitypi.setMood(mood);
 				Activitypi.setInsure(insure);
+				Activitypi.setInsurenName(insurename);
 				Activitypi.setTypeMonely(typeMonely);
 				Activitypi.setNewtime(System.currentTimeMillis()/1000);
 				Activitypi.setType(activity.getType());
@@ -111,8 +118,8 @@ public class ApiActivitypictureAct extends BaseAct{
 				
 		if(NumberUtils.isValid(typeMonely)){
 			if(typeMonely == 1){
-				throw new APICodeException(-99, "支付宝支付 正在建设中...");
-				/*JsonObject alipayCfg = new JsonObject();
+				///支付宝支付
+				JsonObject alipayCfg = new JsonObject();
 				alipayCfg.addProperty("ali_public_key", AlipayConfig.ali_public_key);
 				alipayCfg.addProperty("input_charset", AlipayConfig.input_charset);
 				alipayCfg.addProperty("notifyURL", InitServlet.DOMAIN + AlipayConfig.notifyURL);
@@ -120,17 +127,18 @@ public class ApiActivitypictureAct extends BaseAct{
 				alipayCfg.addProperty("private_key", AlipayConfig.private_key);
 				alipayCfg.addProperty("seller_email", AlipayConfig.seller_email);
 				alipayCfg.addProperty("sign_type", AlipayConfig.sign_type);
-				
 				String enBase64 = AlgorithmUtils.enBase64(alipayCfg.toString());
-				orderJson.addProperty("alipayInfo", enBase64);*/
+				System.out.println(enBase64);
+				alipayCfg.addProperty("alipayInfo", enBase64);
 				
+				return alipayCfg;
 			} else if (typeMonely == 2) {
 				
 				bFlag = activitypictureSercice.bagPay(currUser.getId(), Activitypi.getId(),activity);
 			
 			} else if(typeMonely == 3){
-				throw new APICodeException(-99, "微信支付正在建设中...");
-				/*//微信支付
+			
+				//微信支付
 				 System.out.println(" =============》预付款开始:");
 			        Map<String, String> retMap = wxzhifu(activity,Activitypi,osele,classi);;
 			        System.out.println(" =============》预付款结束:");
@@ -141,7 +149,7 @@ public class ApiActivitypictureAct extends BaseAct{
 			            System.out.println(WXpayApi.makePaymentMap(retMap));
 			        } else {
 			            System.out.println(WXpayCore.getErrMsg(retMap));
-			        }*/
+			        }
 			}else{
 				throw new APICodeException(-1, "支付类型错误...");
 			}
@@ -151,7 +159,6 @@ public class ApiActivitypictureAct extends BaseAct{
 		
 		JsonObject orderjson=new JsonObject();
 		if(bFlag){
-			
 			orderjson.addProperty("succ", true);
 		} else { // 添加失败
 			orderjson.addProperty("error", false);
@@ -245,6 +252,18 @@ public class ApiActivitypictureAct extends BaseAct{
 		json.addProperty("oldboy", cc.getOldboy());
 		json.addProperty("chindenboy", cc.getChindenboy());
 		json.addProperty("monely", cc.getMonely());
+		json.addProperty("type", cc.getType());
+		String [] arr = cc.getInsure().split(",");
+		String [] forname = cc.getInsurenName().split(",");
+	
+
+		for(String orr:arr){
+			json.addProperty("insure", orr);
+		}
+		for(String foreal:forname){
+			json.addProperty("insureName", foreal);
+		}
+		
 		return json;
 	}
 	
@@ -256,7 +275,7 @@ public class ApiActivitypictureAct extends BaseAct{
 	        testMap.put("detail", activity.getActivityname()); // 商品详情
 	        testMap.put("attach", ""); // 附加数据
 	        testMap.put("out_trade_no", activitypi.getOrdernumber()); // 商户订单号
-	        testMap.put("total_fee", activitypi.getMonely()+""); // 总金额
+	        testMap.put("total_fee", 0.1+""); // 总金额
 	        testMap.put("spbill_create_ip", "192.168.0.1"); // 终端IP
 	        testMap.put("time_start", activitypi.getNewtime()+""); // 交易起始时间
 	        testMap.put("time_expire", ""); // 交易结束时间
@@ -291,4 +310,8 @@ public class ApiActivitypictureAct extends BaseAct{
 	        boolean retSuccess = WXpayCore.isRetSuccess(retMap);
 	        return retMap;
 	    }
+	 
+	 
+	 
 }
+

@@ -31,4 +31,10 @@
 	<select id="select" parameterType="Integer" resultMap="Activity">
 		select * from release_activity where id=#{activiid} order by id
 	</select>
+	<select id="selectname" resultMap="Activity">
+		select * from release_activity where activityname LIKE '%' #{name} '%' order by id
+	</select>
+	<select id="selectnumbers" resultMap="Activity">
+		select * from release_activity where activitynumber LIKE '%' #{tole} '%' order by id
+	</select>
 </mapper>

@@ -27,7 +27,9 @@ public class Activitypicture {
 	@FieldMapperAnnotation
 	private Integer type;
 	@FieldMapperAnnotation
-	private String[] insure;
+	private String insure; //投保证件
+	@FieldMapperAnnotation
+	private String insurenName; //投保姓名
 	@FieldMapperAnnotation
 	private Integer sponsorld;
 	@FieldMapperAnnotation
@@ -122,14 +124,21 @@ public class Activitypicture {
 		this.type = type;
 	}
 	
-	public String[] getInsure() {
-		return insure;
+
+	public String getInsurenName() {
+		return insurenName;
 	}
-	public void setInsure(String[] insure) {
+	public void setInsurenName(String insurenName) {
+		this.insurenName = insurenName;
+	}
+	public void setInsure(String insure) {
 		this.insure = insure;
 	}
-
 	
+	
+	public String getInsure() {
+		return insure;
+	}
 	public double getMonely() {
 		return monely;
 	}

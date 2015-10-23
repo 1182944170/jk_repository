@@ -55,6 +55,10 @@ public class User {
 	private double personalMany;     //余额
 	@FieldMapperAnnotation
 	private Integer type;     //状态
+	@FieldMapperAnnotation
+	private String lng; //经度
+	@FieldMapperAnnotation
+	private String lat; //纬度
 	
 	
 	//get  set方法
@@ -214,6 +218,18 @@ public class User {
 		this.ctiontime = ctiontime;
 	}
 	
+	public String getLng() {
+		return lng;
+	}
+	public void setLng(String lng) {
+		this.lng = lng;
+	}
+	public String getLat() {
+		return lat;
+	}
+	public void setLat(String lat) {
+		this.lat = lat;
+	}
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", acnumber=" + acnumber

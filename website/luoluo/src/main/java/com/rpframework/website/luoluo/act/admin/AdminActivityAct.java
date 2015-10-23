@@ -3,7 +3,10 @@ package com.rpframework.website.luoluo.act.admin;
 
 import java.util.List;
 import java.util.Map;
+
 import javax.annotation.Resource;
+
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import com.rpframework.core.api.FileService;
 import com.rpframework.core.exception.AdminIllegalArgumentException;
 import com.rpframework.utils.DateUtils;
@@ -130,6 +134,9 @@ public class AdminActivityAct extends AdminAct{
 			@RequestParam(value="iconFile", required=false) CommonsMultipartFile iconFile
 			)throws Exception{
 		
+		if(StringUtils.isBlank(starttimeString) ||StringUtils.isBlank(outtimeString)){
+			throw new AdminIllegalArgumentException("请选择时间");
+		}
 		activity.setStarttime(DateUtils.parse(starttimeString).getTime()/1000);
 		activity.setOuttime(DateUtils.parse(outtimeString).getTime()/1000);
 		if(iconFile.getSize() > 0 ) { // 判断 icon 大小是否大于0
@@ -144,6 +151,7 @@ public class AdminActivityAct extends AdminAct{
 		} else {
 			
 		}
+		activity.setSponsorid(1);
 		activity.setNowforetime(System.currentTimeMillis()/1000);
 		activity.setType(0);
 		activity.setTypeok(0);

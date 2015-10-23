@@ -1,4 +1,5 @@
 <title>订单管理</title>
+
 <link  type="text/css" href="${ctx}/resources/css/css.css" rel=stylesheet>
 		<div class="bdbg">
 			<table width="100%" border="0" cellspacing="0" cellpadding="0"  class="cont_ab" >
@@ -50,6 +51,7 @@
                     <td width="41%" >￥${acp.monely}</td>  
 				 </tr>
              </table>
+               <br>
              <table  width="99%" border="0" align="center" cellpadding="0" cellspacing="0" class="list_t_03">
             	<tr>
                     <th colspan="16">
@@ -81,7 +83,7 @@
 	            </tr>
 	       
             </table>
-          
+            <br>
              <table  width="99%" border="0" align="center" cellpadding="0" cellspacing="0" class="list_t_03">
             	<tr>
                     <th colspan="16">
@@ -107,9 +109,39 @@
 			        </#if>
 	            </tr>
             </table>
+            <br>
+             <table  width="99%" border="0" align="center" cellpadding="0" cellspacing="0" class="list_t_03">
+            	<tr>
+                    <th colspan="16">
+                        <div align="left"><div class="title_pic"></div>
+                        <font class="text2">保单详情</font></div>
+                    </th>
+                </tr>
+            	<tr>
+            		<td>
+	                   <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="list_t_03">
+	                   		<tr><th>保险姓名</th></tr>
+	                   		<#list name as o>
+		                   		<tr>
+		                   			<td align="center">${o}</td>
+		                   		</tr>
+	                   		</#list>
+	                   </table>
+                   </td>
+            		<td>
+	                   <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="list_t_03">
+	                   		<tr><th>保险证件</th></tr>
+	                   		<#list num as z>
+	                   			<tr>
+	                   				<td align="center">${z}</td>
+	                   			</tr>
+	                   		</#list>
+	                   </table>
+                   </td>
+                </tr>
+            
+            </table>
           
-           
-  
 	       <table border="0" cellspacing="0" cellpadding="0"  class="back_menu" align="center" >
 	        <tr>
 	            <td><input id="btn2"  type="button" onclick="returnlist();" value="返  回"/></td>

@@ -2,9 +2,13 @@
 <script type="text/javascript" src="${ctx}/resources/js/tool.js"></script>
 <script type="text/javascript">
 	function checkSub(){
-		var names = "usernowlive,居住地址;userphone,领队手机号码";
-		return checkCommit(names);
-
+		if($("#userSex").val()==1){
+			var names = "usernowlive,居住地址;username,领队名字;userphone,领队手机号码";
+			return checkCommit(names);
+		}else{
+			var names = "usernowlive,居住地址;username,领队名字;userphone,领队手机号码;companyname,公司姓名;responname,负责人姓名;usertelephone,负责人手机号;";
+			return checkCommit(names);
+		}
 	}
 </script>
 <script>
@@ -35,7 +39,7 @@ function selectMap(){
 		<span class="pink">${infoMsg}</span>
 	</h4>
 </#if>
-	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">真实头像上传</label>
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="cardFrontPage">真实头像上传</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			 <span>
@@ -238,7 +242,7 @@ $(document).ready(function(){
 		errorClass: 'help-block',
 		focusInvalid: true,
 		rules: {
-			title: {
+			cardFrontPage: {
 				required: true
 			},
 			imgAddress:{
@@ -254,7 +258,7 @@ $(document).ready(function(){
 		},
 	
 		messages: {
-			title: {
+			cardFrontPage: {
 				required: "请输入图片标题."
 			},
 			state: {

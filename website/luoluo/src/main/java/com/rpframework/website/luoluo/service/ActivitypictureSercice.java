@@ -1,15 +1,12 @@
 package com.rpframework.website.luoluo.service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
 import com.rpframework.core.BaseService;
-import com.rpframework.module.common.pay.wxpay.api.WXpayApi;
 import com.rpframework.utils.Pager;
 import com.rpframework.website.luoluo.dao.IActivitypictureDao;
 import com.rpframework.website.luoluo.domain.Activity;

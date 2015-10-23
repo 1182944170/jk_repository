@@ -4,6 +4,7 @@ package com.rpframework.website.luoluo.act.api;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,6 +37,9 @@ public class ApiBankcardExcutionAct extends BaseAct{
 			@RequestParam(required=false) double extractionMonly,HttpSession session){
 			User user=getSessionUser(session);
 			boolean bFlag = false;
+			if(StringUtils.isBlank(name) || StringUtils.isBlank(phone) ||StringUtils.isBlank(monlycard)){
+				throw new APICodeException(-88, "为了确保您的提现，请务必将信息填写完整!");
+			}
 		if(user==null){
 			throw new APICodeException(-4, "你还没登陆!");
 		}

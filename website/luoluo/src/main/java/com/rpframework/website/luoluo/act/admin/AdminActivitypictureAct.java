@@ -57,7 +57,11 @@ public class AdminActivitypictureAct extends AdminAct{
 		if(activitypicture == null) {
 			throw new AdminIllegalArgumentException("不存在的ID:" + id);
 		}
+		String [] arr = activitypicture.getInsure().split(",");
+		String [] forname = activitypicture.getInsurenName().split(",");
 		model.put("acp", activitypicture);
+		model.put("num", arr);
+		model.put("name", forname);
 		return this.doPackageURI("management/edit");
 	}
 	

@@ -3,11 +3,7 @@ package com.rpframework.website.luoluo.service;
 import java.util.List;
 
 import javax.annotation.Resource;
-
 import org.springframework.stereotype.Service;
-
-
-
 import com.rpframework.core.BaseService;
 import com.rpframework.utils.Pager;
 import com.rpframework.website.luoluo.dao.IActivityDao;
@@ -49,5 +45,21 @@ public class ActivityService extends BaseService{
 		 activity.setActivitynumber("100000"+activity.getId());
 		 return iactivitydao.update(activity);
 	}
+	/**
+	 * 查询名字 或者 编号
+	 * @param search
+	 */
+	public List<Activity> selectname(String search) {
+		List<Activity> fore=iactivitydao.selectname(search);
+		
+		return fore;
+	}
+	public List<Activity> selectnumbers(String search) {
+			List<Activity> loge=iactivitydao.selectnumbers(search);
+			return loge;
+	}
+		
+		
+	
 
 }

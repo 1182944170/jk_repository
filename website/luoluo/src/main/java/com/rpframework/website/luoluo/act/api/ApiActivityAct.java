@@ -1,5 +1,6 @@
 package com.rpframework.website.luoluo.act.api;
 
+
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -68,6 +69,42 @@ public class ApiActivityAct extends BaseAct{
 		}
 		System.out.println("user_list: "+json.toString());
 		return json;
+	}
+	/**
+	 * 通过名字，编号查询
+	 * @param pager
+	 * @return
+	 * @throws ParserException
+	 * @throws InterruptedException
+	 */
+	@RequestMapping("/earch_list")
+	public @ResponseBody JsonElement earchlist(@RequestParam String search 
+			) throws ParserException, InterruptedException{
+		 List<Activity> atcuname=activityService.selectname(search);
+		 JsonArray array = new JsonArray();
+		 JsonObject json=new JsonObject();
+		 json.add("arrays", array);
+		 if(atcuname.size()==0){
+			 List<Activity> atcunumber=activityService.selectnumbers(search);
+			 if(atcunumber.size()==0){
+				 json.addProperty("error", false);
+				 return json;
+			 }else{
+				 for (Activity act : atcunumber) {
+						JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
+						array.add(jsonObj);
+					} 
+				 System.out.println("user_list: "+json.toString());
+				 return json;
+			 }
+		 }else{
+			 for (Activity act : atcuname) {
+					JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
+					array.add(jsonObj);
+				}
+			 System.out.println("user_list: "+json.toString());
+			 return json;
+		 }
 	}
 	/**
 	 * 查询详细
@@ -240,6 +277,55 @@ public class ApiActivityAct extends BaseAct{
 		} else { // 添加失败
 			json.addProperty("error", false);
 		} 
+		return json;
+	}
+	/*
+	 * 筛选
+	 */
+	@RequestMapping("/lete")
+	public @ResponseBody JsonElement lete(@RequestParam(value="pager",required=false) Pager<Activity> pager,
+			@RequestParam(required=false) Integer day, //天数
+			@RequestParam(required=false) long idtime//今天 明天 后天
+			){
+		if(pager==null){
+ 			pager=new Pager<Activity>();
+ 		}
+		pager.getSearchMap().put("type", String.valueOf(1));
+		activityService.getpager(pager);
+		JsonObject json = new JsonObject();
+		json.addProperty("totalPages", pager.getTotalPages());
+		json.addProperty("currentPage", pager.getCurrentPage());
+		json.addProperty("totalCount", pager.getTotalCount());
+		List<Activity> list = pager.getItemList();
+		JsonArray array = new JsonArray();
+		json.add("arrays", array);
+		for (Activity act : list) {
+			
+		int ss=(int) Math.abs((act.getOuttime()-act.getStarttime())/(60*60*24));
+		int ff=(int) Math.abs((act.getStarttime()-idtime)/(60*60*24));
+		//筛选信息
+			if(ff==0){
+				if(ss==day){
+					JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
+					array.add(jsonObj);
+					}
+			}else if(ff==1){
+				if(ss==day){
+					JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
+					array.add(jsonObj);
+					}
+			}else if(ff==2){
+				if(ss==day){
+					JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
+					array.add(jsonObj);
+					}
+			}else{
+				if(ss==day){
+					JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
+					array.add(jsonObj);
+				}
+			}
+		}
 		return json;
 	}
 }

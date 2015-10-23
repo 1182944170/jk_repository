@@ -8,4 +8,6 @@ import com.rpframework.website.luoluo.domain.Activity;
 
 public interface IActivityDao extends IDao{
 	List<Activity> doPager(Map<?, ?> map);
+	List<Activity> selectname(String name);
+	List<Activity> selectnumbers(String tole);
 }
