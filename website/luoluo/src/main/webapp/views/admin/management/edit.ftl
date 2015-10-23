@@ -94,17 +94,17 @@
             	<tr>
             		<th width="10%">支付金额</th>
             		<th width="10%">支付时间</th>
-            		<th width="10%">支付账号</th>
             		<th width="10%">支付来源</th>
             	</tr>
 	            <tr>
-			        <td style="text-align:center">￥${acp.actualamount}</td>
+			        <td style="text-align:center">￥${acp.monely}</td>
 			        <td style="text-align:center">${tagUtils.formatDate(acp.newtime)}</td>
 			        
-			        <td style="text-align:center"></td>
 			        <#if acp.typeMonely==1>
 			        <td style="text-align:center">支付宝</td>
 			        <#elseif acp.typeMonely==2>
+			        <td style="text-align:center">余额宝</td>
+			        <#elseif acp.typeMonely==3>
 			        <td style="text-align:center">微信</td>
 			        </#if>
 	            </tr>
@@ -117,6 +117,7 @@
                         <font class="text2">保单详情</font></div>
                     </th>
                 </tr>
+  
             	<tr>
             		<td>
 	                   <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="list_t_03">

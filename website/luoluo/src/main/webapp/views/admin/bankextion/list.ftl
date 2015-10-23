@@ -1,4 +1,4 @@
-<title>分类管理</title>
+<title>提现管理</title>
 <script language="javascript">
 	function returnlist(){
 		window.location.href="${ctx}/admin/bankextion/1/onelist/";
@@ -40,13 +40,14 @@
 						<#if u.state == 1 >
 						<td><span class="gray center" style="color:red"><b>未审核</b></span></td>
 						</#if>
+						<#if u.state==1>
 						<td>
 							<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
-							<#if u.state==1>
-								<a class="green" href="${ctx}/admin/bankextion/${u.id}/edit${suffix}" alt="Edit">
+							
+								<a class="green" href="${ctx}/admin/bankextion/${u.id}/edit${suffix}" onclick="return confirm('你确定提现处理么?');"alt="Edit">
 									<i class="icon-pencil bigger-130">提现处理</i>
 								</a>
-							</#if>	
+						
 							</div>
 	
 							<div class="visible-xs visible-sm hidden-md hidden-lg">
@@ -63,17 +64,18 @@
 											</a>
 										</li>
 	
-										<!--<li>
-											<a href="${ctx}/admin/cal/${u.id}/delete${suffix}" onclick="return confirm('你确定删除么?');" class="tooltip-error" data-rel="tooltip" title="删除" data-original-title="Delete">
+										<li>
+											<a href="${ctx}/admin/bankextion/${u.id}/edit${suffix}" onclick="return confirm('你确定提现处理么');" class="tooltip-error" data-rel="tooltip" title="删除" data-original-title="Delete">
 												<span class="red">
 													<i class="icon-trash bigger-120"></i>
 												</span>
 											</a>
-										</li>-->
+										</li>
 									</ul>
 								</div>
 							</div>
 						</td>
+						</#if>	
 					</tr>
 				</#list>
 				</tbody>
@@ -81,7 +83,7 @@
 		</div><!-- /.table-responsive -->
 		
 		<div class="hr hr-18 dotted hr-double"></div>
-		<@h.page pager=pager action="${ctx}/admin/lable/list" />
+		<@h.page pager=pager action="${ctx}/admin/bankextion/list" />
 	</div><!-- /span -->
 </div><!-- /row -->
 

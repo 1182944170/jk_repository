@@ -117,7 +117,7 @@ $(document).ready(function(){
 		errorClass: 'help-block',
 		focusInvalid: true,
 		rules: {
-		    claName: {
+		    proced: {
 				required: true
 			},
 			iconFile: {
@@ -129,8 +129,8 @@ $(document).ready(function(){
 		},
 	
 		messages: {
-		    claName: {
-				required: "请输入分类名称."
+		    proced: {
+				required: "请输入手续费 最低为0."
 			},
 			iconFile: {
 				required: "请输入分类图标."

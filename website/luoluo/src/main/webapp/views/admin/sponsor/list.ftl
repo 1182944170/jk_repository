@@ -102,7 +102,16 @@
 		</div><!-- /.table-responsive -->
 		
 		<div class="hr hr-18 dotted hr-double"></div>
-		<@h.page pager=pager action="${ctx}/admin/good/list" />
+		<#list pager.itemList as s>
+			<#if s.type==1>
+				<@h.page pager=pager action="${ctx}/admin/individuallist/list" />
+			</#if>
+		</#list>
+		<#list pager.itemList as f>
+			<#if f.type==2>
+				<@h.page pager=pager action="${ctx}/admin/companylist/list" />
+			</#if>
+		</#list>
 	</div><!-- /span -->
 </div><!-- /row -->
 

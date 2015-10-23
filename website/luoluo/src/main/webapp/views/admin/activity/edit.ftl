@@ -88,7 +88,7 @@ function selectMap(){
 		<div class="clearfix">
 			<span class="block input-icon width-40">
 				<input type="text" name="number" id="name" value="${(oop.number)!''}" maxlength="32" class="form-control" />
-				<!--<i class="icon-user"></i>-->
+				<i class="icon-user"></i>
 			</span>
 		</div>
 	</div>
@@ -107,11 +107,11 @@ function selectMap(){
 </div>
 <div class="form-group">
 	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">成人费用:</label>
-	<div class="col-xs-12 col-sm-9">
-		<div class="clearfix">
+	<div class="col-xs-12 col-sm-9" >
+		<div class="clearfix" >
 			<span class="block input-icon width-40">
 				<input type="text" name="old_expense" id="name" value="${(oop.old_expense)!''}" maxlength="32" class="form-control" />
-				<!--<i class="icon-user"></i>-->
+				<i class="icon-user"></i>
 			</span>
 		</div>
 	</div>

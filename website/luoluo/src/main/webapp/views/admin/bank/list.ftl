@@ -61,7 +61,7 @@
 		</div><!-- /.table-responsive -->
 		
 		<div class="hr hr-18 dotted hr-double"></div>
-		<@h.page pager=pager action="${ctx}/admin/lable/list" />
+		<@h.page pager=pager action="${ctx}/admin/bank/list" />
 	</div><!-- /span -->
 </div><!-- /row -->
 

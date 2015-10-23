@@ -28,11 +28,11 @@ public class AdminInterceptor implements HandlerInterceptor {
 //		logger.info("preHandle....");
 		Object adminUserObj = request.getSession().getAttribute(AdminBaseAct.SESSION_ADMIN_USER_KEY);
 		if(adminUserObj == null) {
-			AdminUser adminUser = adminUserService.findAdminUserByName("admin");
+			/*AdminUser adminUser = adminUserService.findAdminUserByName("admin");
 			request.getSession().setAttribute(AdminBaseAct.SESSION_ADMIN_USER_KEY, adminUser);
-			adminUserObj = adminUser;
-			/*response.sendRedirect(InitServlet.CTX + "/admin/login");
-			return false;*/
+			adminUserObj = adminUser;*/
+			response.sendRedirect(InitServlet.CTX + "/admin/login");
+			return false;
 		}
 		
 		//登陆的用户做鉴权操作

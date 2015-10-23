@@ -95,7 +95,7 @@
 		</div><!-- /.table-responsive -->
 		
 		<div class="hr hr-18 dotted hr-double"></div>
-		<@h.page pager=pager action="${ctx}/admin/good/list" />
+		<@h.page pager=pager action="${ctx}/admin/actcy/list" />
 	</div><!-- /span -->
 </div><!-- /row -->
 
