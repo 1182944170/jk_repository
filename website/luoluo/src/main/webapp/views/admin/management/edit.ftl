@@ -1,5 +1,26 @@
 <title>订单管理</title>
+<script type="text/javascript">
+function preview(oper)
+{
+if (oper < 10){
+bdhtml=window.document.body.innerHTML;	//获取当前页的html代码
+sprnstr="<!--startprint"+oper+"-->";	//设置打印开始区域
+eprnstr="<!--endprint"+oper+"-->";	//设置打印结束区域
+prnhtml=bdhtml.substring(bdhtml.indexOf(sprnstr)+18); //从开始代码向后取html
+prnhtml=prnhtml.substring(0,prnhtml.indexOf(eprnstr));//从结束代码向前取html
+window.document.body.innerHTML=prnhtml;
+window.print();
+window.document.body.innerHTML=bdhtml;
+} else {
+window.print();
+}
+}
 
+function xx(){
+window.print();
+}
+</script>
+<!--startprint1-->
 <link  type="text/css" href="${ctx}/resources/css/css.css" rel=stylesheet>
 		<div class="bdbg">
 			<table width="100%" border="0" cellspacing="0" cellpadding="0"  class="cont_ab" >
@@ -144,12 +165,16 @@
             </table>
           
 	       <table border="0" cellspacing="0" cellpadding="0"  class="back_menu" align="center" >
-	        <tr>
-	            <td><input id="btn2"  type="button" onclick="returnlist();" value="返  回"/></td>
+	        <tr> 
+	        	<td>
+		         	<input type=button name='button_export' title='打印1' onclick=preview(1) value=打印页面>&nbsp;&nbsp;
+		           <input id="btn2"  type="button" onclick="returnlist();" value="返  回"/>
+		         </td>
 	        </tr>
 	      </table>
      </div>
-<script src="${ctx}/resources/js/jquery.form.js"></script>
+  <!--endprint1-->   
+
 <script language="javascript">
 	function returnlist(){
 		window.location.href="${ctx}/admin/actcyitypic/list/";
