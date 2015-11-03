@@ -12,6 +12,8 @@ public class Sponsorlis {
 	@FieldMapperAnnotation
 	private Integer userid;  // 用户id
 	@FieldMapperAnnotation
+	private String name; //主办方姓名
+	@FieldMapperAnnotation
 	private String username; //领队姓名
 	@FieldMapperAnnotation
 	private String userpicture;  //真实头像
@@ -145,6 +147,12 @@ public class Sponsorlis {
 	}
 	public void setActivityTime(long activityTime) {
 		this.activityTime = activityTime;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	

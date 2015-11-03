@@ -3,10 +3,10 @@
 <script type="text/javascript">
 	function checkSub(){
 		if($("#userSex").val()==1){
-			var names = "usernowlive,居住地址;username,领队名字;userphone,领队手机号码";
+			var names = "name,主办方;usernowlive,居住地址;username,领队名字;userphone,领队手机号码";
 			return checkCommit(names);
 		}else{
-			var names = "usernowlive,居住地址;username,领队名字;userphone,领队手机号码;companyname,公司姓名;responname,负责人姓名;usertelephone,负责人手机号;";
+			var names = "name,主办方;usernowlive,居住地址;username,领队名字;userphone,领队手机号码;companyname,公司姓名;responname,负责人姓名;usertelephone,负责人手机号;";
 			return checkCommit(names);
 		}
 	}
@@ -67,7 +67,19 @@ function selectMap(){
 		</div>
 	</div>
 </div>
-
+<div class="form-group">
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">主办方名字:</label>
+	<div class="col-xs-12 col-sm-9">
+		<div class="clearfix">
+			<span class="block input-icon width-40">
+				<input type="text" name="name" id="name" maxlength="32" class="form-control" />
+				<b class="classerror" id="showss"></b>
+				<!--<i class="icon-user"></i>-->
+			</span>
+			 <b id="cue" style="color:red ;align:center"> </b>  
+		</div>
+	</div>
+</div>
 
 <div class="form-group"style="position:relative;">
 	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">居住地点:</label>
