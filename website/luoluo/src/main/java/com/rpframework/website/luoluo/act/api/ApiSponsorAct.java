@@ -1,5 +1,4 @@
 package com.rpframework.website.luoluo.act.api;
-import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -7,13 +6,11 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.alibaba.druid.sql.parser.ParserException;
 import com.google.gson.JsonElement;
@@ -86,6 +83,8 @@ public class ApiSponsorAct extends BaseAct{
 		if(currUser == null){
 			throw new APICodeException(-4, "你还没登陆!");
 		}
+		Sponsorlis ss=sponsorService.seletOne(currUser.getId());
+		if(ss==null){
 		Sponsorlis sponsor=new Sponsorlis();
 		sponsor.setName(name);
 		sponsor.setUserid(currUser.getId());
@@ -140,6 +139,61 @@ public class ApiSponsorAct extends BaseAct{
 			sponsorService.insertsponsor(sponsor);
 			json.addProperty("succ", "添加成功");
 			return json;
+		}else{
+			ss.setName(name);
+			ss.setUserid(currUser.getId());
+			ss.setUsername(username);
+			ss.setUsernowlive(usernowlive);
+			ss.setUserphone(userphone);
+			ss.setUserinformation(userinformation);
+			ss.setUsertelephone(usertelephone);
+			ss.setTelephone(telephone);
+			ss.setCompanyname(companyname);
+			ss.setResponsibility(responsibility);
+			ss.setResponname(responname);
+			ss.setEntintroduction(entintroduction);
+			//头像图片		
+			if(myFile.getSize() > 0) {
+				try {
+					String relativelyCardFrontPhoto = "/luoluo/user/userPic/" + DateUtils.nowDate(DateUtils.YYYYMMDDHHMMSS) + NumberUtils.random() + "." + FilenameUtils.getExtension(iconFile.getOriginalFilename());
+					fileService.saveFile(myFile.getInputStream(), relativelyCardFrontPhoto); 
+					ss.setUserpicture(relativelyCardFrontPhoto);
+					ss.setActivityTime(System.currentTimeMillis()/1000);
+				} catch (Exception e) {
+					throw new IllegalArgumentException("文件上传失败，原因:" + e.getLocalizedMessage());
+				}
+			} 
+			//公司图片
+			if(apicture.getSize() > 0) {
+				try {
+					String relativelyCardFrontPhoto = "/luoluo/user/userPic/" + DateUtils.nowDate(DateUtils.YYYYMMDDHHMMSS) + NumberUtils.random() + "." + FilenameUtils.getExtension(apicture.getOriginalFilename());
+					fileService.saveFile(apicture.getInputStream(), relativelyCardFrontPhoto); 
+					ss.setResponsibility(relativelyCardFrontPhoto);
+					ss.setActivityTime(System.currentTimeMillis()/1000);
+				} catch (Exception e) {
+					throw new IllegalArgumentException("文件上传失败，原因:" + e.getLocalizedMessage());
+				}
+			} 
+				if(StringUtils.isBlank(usertelephone) || StringUtils.isBlank(responsibility) ){
+					json.addProperty("error", "信息不为空");
+					return json;
+				}
+				//领队图片
+				if(iconFile.getSize() > 0) {
+					try {
+						String relativelyCardFrontPhoto = "/luoluo/user/userPic/" + DateUtils.nowDate(DateUtils.YYYYMMDDHHMMSS) + NumberUtils.random() + "." + FilenameUtils.getExtension(iconFile.getOriginalFilename());
+						fileService.saveFile(iconFile.getInputStream(), relativelyCardFrontPhoto); 
+						
+						ss.setUserinformation(relativelyCardFrontPhoto);
+						ss.setActivityTime(System.currentTimeMillis()/1000);
+					} catch (Exception e) {
+						throw new IllegalArgumentException("文件上传失败，原因:" + e.getLocalizedMessage());
+					}
+				}			
+				sponsorService.insertsponsor(ss);
+				json.addProperty("succ", "添加成功");
+				return json;
+		}
 	}
 	//个人
 	@RequestMapping("/addone")
@@ -160,42 +214,80 @@ public class ApiSponsorAct extends BaseAct{
 		if(currUser == null){
 			throw new APICodeException(-4, "你还没登陆!");
 		}
-		Sponsorlis sponsor=new Sponsorlis();
-		
-		sponsor.setName(name);
-		sponsor.setUserid(currUser.getId());
-		sponsor.setUsername(username);
-		sponsor.setUsernowlive(usernowlive);
-		sponsor.setUserphone(userphone);
+		Sponsorlis ss=sponsorService.seletOne(currUser.getId());
+		if(ss==null){
+			Sponsorlis sponsor=new Sponsorlis();
+			sponsor.setName(name);
+			sponsor.setUserid(currUser.getId());
+			sponsor.setUsername(username);
+			sponsor.setUsernowlive(usernowlive);
+			sponsor.setUserphone(userphone);
+			sponsor.setEntintroduction(entintroduction);
+	//头像图片		
+			if(myFile.getSize() > 0) {
+				try {
+					String relativelyCardFrontPhoto = "/luoluo/user/userPic/" + DateUtils.nowDate(DateUtils.YYYYMMDDHHMMSS) + NumberUtils.random() + "." + FilenameUtils.getExtension(iconFile.getOriginalFilename());
+					fileService.saveFile(myFile.getInputStream(), relativelyCardFrontPhoto); 
+					sponsor.setUserpicture(relativelyCardFrontPhoto);
+					sponsor.setActivityTime(System.currentTimeMillis()/1000);
+				} catch (Exception e) {
+					throw new IllegalArgumentException("文件上传失败，原因:" + e.getLocalizedMessage());
+				}
+			} 
 	
-		sponsor.setEntintroduction(entintroduction);
-		
-//头像图片		
-		if(myFile.getSize() > 0) {
-			try {
-				String relativelyCardFrontPhoto = "/luoluo/user/userPic/" + DateUtils.nowDate(DateUtils.YYYYMMDDHHMMSS) + NumberUtils.random() + "." + FilenameUtils.getExtension(iconFile.getOriginalFilename());
-				fileService.saveFile(myFile.getInputStream(), relativelyCardFrontPhoto); 
-				sponsor.setUserpicture(relativelyCardFrontPhoto);
-				sponsor.setActivityTime(System.currentTimeMillis()/1000);
-			} catch (Exception e) {
-				throw new IllegalArgumentException("文件上传失败，原因:" + e.getLocalizedMessage());
-			}
-		} 
-
-//个人信息图片
-		if(iconFile.getSize() > 0) {
-			try {
-				String relativelyCardFrontPhoto = "/luoluo/user/userPic/" + DateUtils.nowDate(DateUtils.YYYYMMDDHHMMSS) + NumberUtils.random() + "." + FilenameUtils.getExtension(iconFile.getOriginalFilename());
-				fileService.saveFile(iconFile.getInputStream(), relativelyCardFrontPhoto); 
-				sponsor.setUserinformation(relativelyCardFrontPhoto);
-				sponsor.setActivityTime(System.currentTimeMillis()/1000);
-			} catch (Exception e) {
-				throw new IllegalArgumentException("文件上传失败，原因:" + e.getLocalizedMessage());
-			}
-		}			
-		sponsorService.insertsponsor(sponsor);
-		json.addProperty("succ", "添加成功");
-		return json;
+	//个人信息图片
+			if(iconFile.getSize() > 0) {
+				try {
+					String relativelyCardFrontPhoto = "/luoluo/user/userPic/" + DateUtils.nowDate(DateUtils.YYYYMMDDHHMMSS) + NumberUtils.random() + "." + FilenameUtils.getExtension(iconFile.getOriginalFilename());
+					fileService.saveFile(iconFile.getInputStream(), relativelyCardFrontPhoto); 
+					sponsor.setUserinformation(relativelyCardFrontPhoto);
+					sponsor.setActivityTime(System.currentTimeMillis()/1000);
+				} catch (Exception e) {
+					throw new IllegalArgumentException("文件上传失败，原因:" + e.getLocalizedMessage());
+				}
+			}			
+			sponsorService.updatedo(sponsor);
+			json.addProperty("succ", "添加成功");
+			return json;
+		}else{
+			//修改用户
+			ss.setName(name);
+			ss.setUserid(currUser.getId());
+			ss.setUsername(username);
+			ss.setUsernowlive(usernowlive);
+			ss.setUserphone(userphone);
+			ss.setEntintroduction(entintroduction);
+	//头像图片		
+			if(myFile.getSize() > 0) {
+				try {
+					String relativelyCardFrontPhoto = "/luoluo/user/userPic/" + DateUtils.nowDate(DateUtils.YYYYMMDDHHMMSS) + NumberUtils.random() + "." + FilenameUtils.getExtension(iconFile.getOriginalFilename());
+					fileService.saveFile(myFile.getInputStream(), relativelyCardFrontPhoto); 
+					ss.setUserpicture(relativelyCardFrontPhoto);
+					ss.setActivityTime(System.currentTimeMillis()/1000);
+				} catch (Exception e) {
+					throw new IllegalArgumentException("文件上传失败，原因:" + e.getLocalizedMessage());
+				}
+			} 
+	
+	//个人信息图片
+			if(iconFile.getSize() > 0) {
+				try {
+					String relativelyCardFrontPhoto = "/luoluo/user/userPic/" + DateUtils.nowDate(DateUtils.YYYYMMDDHHMMSS) + NumberUtils.random() + "." + FilenameUtils.getExtension(iconFile.getOriginalFilename());
+					fileService.saveFile(iconFile.getInputStream(), relativelyCardFrontPhoto); 
+					ss.setUserinformation(relativelyCardFrontPhoto);
+					ss.setActivityTime(System.currentTimeMillis()/1000);
+				} catch (Exception e) {
+					throw new IllegalArgumentException("文件上传失败，原因:" + e.getLocalizedMessage());
+				}
+			}			
+			sponsorService.updatedo(ss);
+			json.addProperty("succ", "修改成功");
+			return json;
+			
+		}
 	}
+	
+	
+	
 	
 }
