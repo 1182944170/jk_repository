@@ -79,8 +79,8 @@ public class ApiUserAct extends BaseAct{
 		if(currUser == null){
 			throw new APICodeException(-4, "你还没登陆!");
 		}	
-		pager.getSearchMap().put("se", String.valueOf(userid));
-		userservice.Userpager(pager);
+		pager.getSearchMap().put("se", String.valueOf(currUser.getId()));
+		pager=userservice.Userpager(pager);
 		JsonObject json = new JsonObject();
 		List<User> list = pager.getItemList();
 		JsonArray array = new JsonArray();
@@ -90,6 +90,49 @@ public class ApiUserAct extends BaseAct{
 			array.add(o);
 		}
 		System.out.println("user_list: "+json.toString());
+		return json;
+	}
+	/**
+	 * 通过电话查询用户
+	 * @param pager
+	 * @return
+	 * @throws ParserException
+	 * @throws InterruptedException
+	 */
+	@RequestMapping("/user_listphone")
+	public @ResponseBody JsonElement userlistphone(@RequestParam(required=false) String phone,HttpSession session
+			) throws ParserException, InterruptedException{
+
+		User currUser = getSessionUser(session);
+		if(currUser == null){
+			throw new APICodeException(-4, "你还没登陆!");
+		}	
+		User user = userservice.findUserByPhone(phone);
+		JsonObject json = new JsonObject();
+		json.addProperty("id", user.getId());
+		json.addProperty("name", user.getName());
+		json.addProperty("nameNick", user.getNameNick());
+		json.addProperty("phone", user.getPhone());
+		json.addProperty("sex", user.getSex());
+		json.addProperty("age", user.getAge());
+		json.addProperty("marriage", user.getMarriage());
+		json.addProperty("hobbues", user.getHobbues());
+		json.addProperty("constellation", user.getConstellation());
+		json.addProperty("company", user.getCompany());
+		json.addProperty("nowlive", user.getNowlive());
+		json.addProperty("hometown", user.getHometown());
+		json.addProperty("qqaccount", user.getQqaccount());
+		json.addProperty("loveStar", user.getLoveStar());
+		json.addProperty("lovemuice", user.getLovemuice());
+		json.addProperty("loveDeliciousfood", user.getLoveDeliciousfood());
+		json.addProperty("signature", user.getSignature());
+		json.addProperty("ctiontime", TagUtils.formatDate(user.getCtiontime()));
+		json.addProperty("loveFilm", user.getLoveFilm());
+		json.addProperty("acnumber", user.getAcnumber());
+		json.addProperty("namePic", TagUtils.getFileFullPath(user.getNamePic()));
+		json.addProperty("personalMany", user.getPersonalMany());
+		json.addProperty("lng", user.getLng());
+		json.addProperty("lat", user.getLat());
 		return json;
 	}
 	
@@ -214,7 +257,6 @@ public class ApiUserAct extends BaseAct{
 				fileService.saveFile(userPic.getInputStream(), relativelyPath);
 				boolean bFlag = userservice.changeUserPic(user, relativelyPath);
 				JsonObject json = new JsonObject();
-				
 				if(bFlag){
 					json.addProperty("succ", bFlag);
 					json.addProperty("userPic", TagUtils.getFileFullPath(relativelyPath));

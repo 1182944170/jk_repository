@@ -48,10 +48,10 @@ function selectMap(){
 <div class="form-group">
 	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="url">封面图片:</label>
 	<div class="col-xs-12 col-sm-9">
-		<div class="clearfix">
+		<div class="clearfix" >
 			
 		
-				<img src="${tagUtils.getFileFullPath(oop.cover)!''}">
+				<img src="${tagUtils.getFileFullPath(oop.cover)!''}"width="400px">
 			
 			<small>* 已经存在的icon如果不修改则不需要填写</small>
 		</div>

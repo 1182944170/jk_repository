@@ -22,4 +22,7 @@
 	<select id="selectole" parameterType="Integer" resultMap="Activitypicture" >
 		select * from activity_registration where sponsorld=#{activiid} 
 	</select>
+	<select id="selecttradeorled" resultMap="Activitypicture" >
+		select * from activity_registration where ordernumber=#{out_trade_no} 
+	</select>
 </mapper>

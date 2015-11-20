@@ -135,5 +135,10 @@ public class ActivitypictureSercice extends BaseService{
 		throw new IllegalArgumentException("请等待。。");
 	}
 
+	public Activitypicture selecttrade(String out_trade_no) {
+		// TODO Auto-generated method stub
+		return tActivitypictureDao.selecttradeorled(out_trade_no);
+	}
+
 
 }

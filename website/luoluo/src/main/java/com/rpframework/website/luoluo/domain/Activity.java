@@ -34,6 +34,8 @@ public class Activity {
 	@FieldMapperAnnotation
 	private Integer children_expense;    //儿童费用
 	@FieldMapperAnnotation
+	private Integer gril_expense;    //儿童费用
+	@FieldMapperAnnotation
 	private Integer old_expense;  //成年人费用
 	@FieldMapperAnnotation
 	private String activitypicture;  //活动图片
@@ -126,6 +128,14 @@ public class Activity {
 
 	public void setActivitylocation(String activitylocation) {
 		this.activitylocation = activitylocation;
+	}
+
+	public Integer getGril_expense() {
+		return gril_expense;
+	}
+
+	public void setGril_expense(Integer gril_expense) {
+		this.gril_expense = gril_expense;
 	}
 
 	public Integer getNumber() {

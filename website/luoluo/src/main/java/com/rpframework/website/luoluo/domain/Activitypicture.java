@@ -19,6 +19,8 @@ public class Activitypicture {
 	@FieldMapperAnnotation
 	private String oldboy;
 	@FieldMapperAnnotation
+	private String grilexpense;
+	@FieldMapperAnnotation
 	private String chindenboy;
 	@FieldMapperAnnotation
 	private double monely;  //金额
@@ -49,6 +51,12 @@ public class Activitypicture {
 	@FieldMapperAnnotation
 	private long newtime;  // 订单状态
 	
+	public String getGrilexpense() {
+		return grilexpense;
+	}
+	public void setGrilexpense(String grilexpense) {
+		this.grilexpense = grilexpense;
+	}
 	public Integer getId() {
 		return id;
 	}

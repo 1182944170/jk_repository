@@ -1,10 +1,18 @@
 package com.rpframework.website.luoluo.service;
 
+import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.Resource;
+
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.rpframework.core.BaseService;
+import com.rpframework.core.api.FileService;
+import com.rpframework.utils.DateUtils;
+import com.rpframework.utils.NumberUtils;
 import com.rpframework.utils.Pager;
 import com.rpframework.website.luoluo.dao.IActivityDao;
 import com.rpframework.website.luoluo.domain.Activity;
@@ -13,6 +21,7 @@ import com.rpframework.website.luoluo.domain.Activity;
 @Service
 public class ActivityService extends BaseService{
 	@Resource IActivityDao iactivitydao;
+	@Resource FileService fileService;
 	
 	
 	
@@ -59,7 +68,42 @@ public class ActivityService extends BaseService{
 			return loge;
 	}
 		
-		
+	public String uploadImg(MultipartFile file, String name) {
+		StringBuilder all = new StringBuilder();
+		try {
+			StringBuilder str = new StringBuilder();
+			
+			str.append("/dmqh/" + name + "/" + DateUtils.nowDate(DateUtils.YYYYMMDDHHMMSS) +  NumberUtils.random() + "." + FilenameUtils.getExtension(file.getOriginalFilename()));
+			this.fileService.saveFile(file.getInputStream(), str.toString());
+			all.append(str);
+		} catch (Exception e) {
+			throw new IllegalArgumentException("文件上传失败，原因:" + e.getLocalizedMessage());
+		}
+		return all.toString();
+	}
+	
+	
+	public String addPhotos(MultipartFile arr[]) {
+		StringBuilder all =new StringBuilder();
+		boolean flag = true;
+		for(int i=0; i<arr.length; i++){
+			try {
+				StringBuilder str =new StringBuilder();
+				str.append("/luoluo/user/photos/" + DateUtils.nowDate(DateUtils.YYYYMMDDHHMMSS) + NumberUtils.random() + "." + FilenameUtils.getExtension(arr[i].getOriginalFilename()));
+				fileService.saveFile(arr[i].getInputStream(), str.toString());
+				if(flag){
+					all.append("\""+str+"\"");
+					flag  = !flag;
+				}else 
+					
+					all.append(","+"\""+str+"\"");
+								
+			} catch (Exception e) {
+				throw new IllegalArgumentException("文件上传失败，原因:" + e.getLocalizedMessage());
+			}
+		}
+		return all.toString();
+	}
 	
 
 }

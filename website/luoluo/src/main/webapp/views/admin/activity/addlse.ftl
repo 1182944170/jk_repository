@@ -11,7 +11,7 @@ function selectMap(){
 </script>
 <script type="text/javascript">
 	function checkSub(){
-		var names = "activityname,活动名称;d-input-file-2,封面图片;activitylocation,活动地点;number,活动人数;children_expense,儿童费用;old_expense,成人费用";
+		var names = "activityname,活动名称;d-input-file-2,封面图片;activitylocation,活动地点;number,活动人数;old_expense,成人费用";
 		return checkCommit(names);
 	}
 	
@@ -113,17 +113,6 @@ $.fn.datebox.defaults.parser = function(s){
 	</div>
 </div>
 <div class="form-group">
-	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">儿童费用:</label>
-	<div class="col-xs-12 col-sm-9">
-		<div class="clearfix">
-			<span class="block input-icon width-40">
-				<input type="text" name="children_expense" id="children_expense" value="" maxlength="32" class="form-control" />/元
-				<!--<i class="icon-user"></i>-->
-			</span>
-		</div>
-	</div>
-</div>
-<div class="form-group">
 	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">成人费用:</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
@@ -134,6 +123,27 @@ $.fn.datebox.defaults.parser = function(s){
 		</div>
 	</div>
 </div>
+<div class="form-group">
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">（儿童费用）:</label>
+	<div class="col-xs-12 col-sm-9">
+		<div class="clearfix">
+			<span class="block input-icon width-40">
+				<input type="text" name="children_expense" id="children_expense" value="" maxlength="32" class="form-control" placeholder="（备选）"/>/元
+				<!--<i class="icon-user"></i>-->
+			</span>
+		</div>
+	</div>
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">（女孩费用）:</label>
+	<div class="col-xs-12 col-sm-9">
+		<div class="clearfix">
+			<span class="block input-icon width-40">
+				<input type="text" name="gril_expense" id="gril_expense" value="" maxlength="32" class="form-control" placeholder="（备选）"/>/元
+				<!--<i class="icon-user"></i>-->
+			</span>
+		</div>
+	</div>
+</div>
+
 <#assign fieldName="activitypicture" />
 <#assign fieldLabel="活动图片" />
 <#include "/common-admin/upload/upload_field_pre.ftl" />

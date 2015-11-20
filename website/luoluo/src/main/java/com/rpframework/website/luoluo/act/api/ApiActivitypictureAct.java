@@ -1,10 +1,13 @@
 package com.rpframework.website.luoluo.act.api;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Iterator;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -18,11 +21,11 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.rpframework.core.BaseAct;
-import com.rpframework.core.InitServlet;
 import com.rpframework.module.common.pay.alipay.config.AlipayConfig;
+import com.rpframework.module.common.pay.alipay.sign.RSA;
+import com.rpframework.module.common.pay.alipay.util.AlipayNotify;
 import com.rpframework.module.common.pay.wxpay.api.WXpayApi;
 import com.rpframework.module.common.pay.wxpay.util.WXpayCore;
-import com.rpframework.utils.AlgorithmUtils;
 import com.rpframework.utils.DateUtils;
 import com.rpframework.utils.NumberUtils;
 import com.rpframework.utils.Pager;
@@ -58,35 +61,34 @@ public class ApiActivitypictureAct extends BaseAct{
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("add")
+	@RequestMapping("/add")
 	public  @ResponseBody JsonElement add(
-			@RequestParam(required=false) Integer sponsorld,
+			@RequestParam(required=false) String sponsorld,
 			@RequestParam(required=false) String name,
 			@RequestParam(required=false) String phone,
 			@RequestParam(required=false) String emergencyphone,
 			@RequestParam(required=false) String emergencyname,
 			@RequestParam(required=false) String oldboy,
 			@RequestParam(required=false) String chindenboy,
+			@RequestParam(required=false) String grilexpense,
 			@RequestParam(required=false) double monely,
 			@RequestParam(required=false) String mood,
 			@RequestParam(required=false) String insure, //投保证件
 			@RequestParam(required=false) String insurename, //投保姓名
 			@RequestParam(required=false) Integer typeMonely,
 			@RequestParam(required=false) Integer type,
-			@RequestParam(required=false) String osele,  //设备号
-			HttpSession session      )throws Exception{
+			HttpSession session )throws Exception{
 			boolean bFlag = false;
 			User currUser = getSessionUser(session);
 			if(currUser == null){
 				throw new APICodeException(-4, "你还没登陆!");
 			}	
 		
-			
-			Activity activity = activityService.selectcal(sponsorld);
-			Classification  classi = classiftionservice.selectcal(sponsorld);
+			int sponsorlds=Integer.parseInt(sponsorld);
+			Activity activity = activityService.selectcal(sponsorlds);
+			Classification  classi = classiftionservice.selectcal(activity.getActivitycategory());
 				Activitypicture Activitypi=new Activitypicture();
-				Activitypi.setOrdernumber(DateUtils.nowDate(DateUtils.YYYYMMDDHHMMSS) + NumberUtils.random(5));
-				Activitypi.setSponsorld(sponsorld);
+				Activitypi.setSponsorld(sponsorlds);
 				Activitypi.setMyld(currUser.getId());
 				Activitypi.setName(name);
 				Activitypi.setPhone(phone);
@@ -94,6 +96,7 @@ public class ApiActivitypictureAct extends BaseAct{
 				Activitypi.setEmergencyphone(emergencyphone);
 				Activitypi.setOldboy(oldboy);
 				Activitypi.setChindenboy(chindenboy);
+				Activitypi.setGrilexpense(grilexpense);
 				Activitypi.setMonely(monely);
 				double cc=monely;
 				double counterFee=0;
@@ -112,32 +115,23 @@ public class ApiActivitypictureAct extends BaseAct{
 				Activitypi.setType(activity.getType());
 				Activitypi.setTypeOrder(1);
 				activitypictureSercice.insertdo(Activitypi);
-				/*
-				JsonObject orderJson = packageOrder2Json().getAsJsonObject();
-			*/
+				Activitypi.setOrdernumber(DateUtils.nowDate(DateUtils.YYYYMMDDHHMMSS) + NumberUtils.random(5)+Activitypi.getId());
+				activitypictureSercice.updatedo(Activitypi);
+			
 				
 		if(NumberUtils.isValid(typeMonely)){
 			if(typeMonely == 1){
+				TestPayAct ss=new TestPayAct();
+				String memo = null;
+				bFlag = activitypictureSercice.bagPay(currUser.getId(), Activitypi.getId(),activity);
+				return ss.orderList(Activitypi.getOrdernumber() , activity.getActivityname(),classi.getClaName(), counterFee,memo);
 				///支付宝支付
-				JsonObject alipayCfg = new JsonObject();
-				alipayCfg.addProperty("ali_public_key", AlipayConfig.ali_public_key);
-				alipayCfg.addProperty("input_charset", AlipayConfig.input_charset);
-				alipayCfg.addProperty("notifyURL", InitServlet.DOMAIN + AlipayConfig.notifyURL);
-				alipayCfg.addProperty("partner", AlipayConfig.partner);
-				alipayCfg.addProperty("private_key", AlipayConfig.private_key);
-				alipayCfg.addProperty("seller_email", AlipayConfig.seller_email);
-				alipayCfg.addProperty("sign_type", AlipayConfig.sign_type);
-				String enBase64 = AlgorithmUtils.enBase64(alipayCfg.toString());
-				System.out.println(enBase64);
-				alipayCfg.addProperty("alipayInfo", enBase64);
-				
-				return alipayCfg;
 			} else if (typeMonely == 2) {
 				
 				bFlag = activitypictureSercice.bagPay(currUser.getId(), Activitypi.getId(),activity);
 			
 			} else if(typeMonely == 3){
-			
+			/*
 				//微信支付
 				 System.out.println(" =============》预付款开始:");
 			        Map<String, String> retMap = wxzhifu(activity,Activitypi,osele,classi);;
@@ -147,10 +141,11 @@ public class ApiActivitypictureAct extends BaseAct{
 			            // 预支付成功，组装真正支付需要的参数，返回给app使用
 			            System.out.println(" =============》组装app使用参数:");
 			            System.out.println(WXpayApi.makePaymentMap(retMap));
+			            bFlag = activitypictureSercice.bagPay(currUser.getId(), Activitypi.getId(),activity);
 			        } else {
 			            System.out.println(WXpayCore.getErrMsg(retMap));
 			        }
-			}else{
+*/			}else{
 				throw new APICodeException(-1, "支付类型错误...");
 			}
 		} else {
@@ -268,6 +263,53 @@ public class ApiActivitypictureAct extends BaseAct{
 	}
 	
 	
+	//支付宝返回参数
+	@SuppressWarnings("rawtypes")
+	@RequestMapping("/test_pay_succ")
+	public @ResponseBody String TestPaySucc(HttpServletRequest request) throws UnsupportedEncodingException{
+		String ret = "";
+		//获取支付宝POST过来反馈信息
+		Map<String,String> params = new HashMap<String,String>();
+		Map requestParams = request.getParameterMap();
+		for (Iterator iter = requestParams.keySet().iterator(); iter.hasNext();) {
+			String name = (String) iter.next();
+			String[] values = (String[]) requestParams.get(name);
+			String valueStr = "";
+			for (int i = 0; i < values.length; i++) {
+				valueStr = (i == values.length - 1) ? valueStr + values[i]
+						: valueStr + values[i] + ",";
+			}
+			//乱码解决，这段代码在出现乱码时使用。如果mysign和sign不相等也可以使用这段代码转化
+			//valueStr = new String(valueStr.getBytes("ISO-8859-1"), "gbk");
+			params.put(name, valueStr);
+		}
+		String out_trade_no = new String(request.getParameter("out_trade_no").getBytes("ISO-8859-1"),"UTF-8");
+		//支付宝交易号
+		//交易状态
+		String trade_status = new String(request.getParameter("trade_status").getBytes("ISO-8859-1"),"UTF-8");
+		//获取支付宝的通知返回参数，可参考技术文档中页面跳转同步通知参数列表(以上仅供参考)//
+		if(AlipayNotify.verify(params)){//验证成功
+			//////////////////////////////////////////////////////////////////////////////////////////
+			//请在这里加上商户的业务逻辑程序代码
+			Activitypicture apfoled = activitypictureSercice.selecttrade(out_trade_no);
+			apfoled.setTypeOrder(2);
+			activitypictureSercice.updatedo(apfoled);
+		
+			ret = "success";	//请不要修改或删除
+			//////////////////////////////////////////////////////////////////////////////////////////
+		}else{//验证失败
+			ret = "fail";
+		}
+		return ret;
+	} 
+	/**
+	 * 微信支付
+	 * @param activity
+	 * @param activitypi
+	 * @param osele
+	 * @param classi
+	 * @return
+	 */
 	public Map<String, String> wxzhifu( Activity activity,Activitypicture activitypi,String osele,Classification classi) {
 		 Map<String, String> testMap = new HashMap<String, String>();
 	        testMap.put("device_info", osele); // 设备号
@@ -307,7 +349,8 @@ public class ApiActivitypictureAct extends BaseAct{
 	        System.out.println(testMap);
 	        Map<String, String> retMap = WXpayApi.orderQueryRetMap(testMap);
 	        System.out.println(retMap);
-	        boolean retSuccess = WXpayCore.isRetSuccess(retMap);
+	        WXpayCore.isRetSuccess(retMap);
+	      //  boolean retSuccess = WXpayCore.isRetSuccess(retMap);
 	        return retMap;
 	    }
 	 

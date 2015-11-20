@@ -4,7 +4,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -75,8 +74,8 @@ public class ApiSponsorAct extends BaseAct{
 			@RequestParam(required= false)String entintroduction,
 			@RequestParam(required= false)Integer type,
 			@RequestParam(value="myFile", required=false) CommonsMultipartFile myFile,
-			@RequestParam(value="iconFile", required=false) MultipartFile iconFile,
-			@RequestParam(value="apicture", required=false) MultipartFile apicture,HttpSession session){
+			@RequestParam(value="iconFile[]", required=false) MultipartFile iconFile[],
+			@RequestParam(value="apicture[]", required=false) MultipartFile apicture[],HttpSession session){
 	
 		JsonObject json = new JsonObject();
 		User currUser = getSessionUser(session);
@@ -101,7 +100,7 @@ public class ApiSponsorAct extends BaseAct{
 		//头像图片		
 		if(myFile.getSize() > 0) {
 			try {
-				String relativelyCardFrontPhoto = "/luoluo/user/userPic/" + DateUtils.nowDate(DateUtils.YYYYMMDDHHMMSS) + NumberUtils.random() + "." + FilenameUtils.getExtension(iconFile.getOriginalFilename());
+				String relativelyCardFrontPhoto = "/luoluo/user/userPic/" + DateUtils.nowDate(DateUtils.YYYYMMDDHHMMSS) + NumberUtils.random() + "." + FilenameUtils.getExtension(myFile.getOriginalFilename());
 				fileService.saveFile(myFile.getInputStream(), relativelyCardFrontPhoto); 
 				sponsor.setUserpicture(relativelyCardFrontPhoto);
 				sponsor.setActivityTime(System.currentTimeMillis()/1000);
@@ -109,33 +108,15 @@ public class ApiSponsorAct extends BaseAct{
 				throw new IllegalArgumentException("文件上传失败，原因:" + e.getLocalizedMessage());
 			}
 		} 
-		//公司图片
-		if(apicture.getSize() > 0) {
-			try {
-				String relativelyCardFrontPhoto = "/luoluo/user/userPic/" + DateUtils.nowDate(DateUtils.YYYYMMDDHHMMSS) + NumberUtils.random() + "." + FilenameUtils.getExtension(apicture.getOriginalFilename());
-				fileService.saveFile(apicture.getInputStream(), relativelyCardFrontPhoto); 
-				sponsor.setResponsibility(relativelyCardFrontPhoto);
-				sponsor.setActivityTime(System.currentTimeMillis()/1000);
-			} catch (Exception e) {
-				throw new IllegalArgumentException("文件上传失败，原因:" + e.getLocalizedMessage());
-			}
-		} 
-			if(StringUtils.isBlank(usertelephone) || StringUtils.isBlank(responsibility) ){
-				json.addProperty("error", "信息不为空");
-				return json;
-			}
+			//公司图片
+			String corle=sponsorService.addPhotos(apicture);
+			sponsor.setResponsibility("["+corle+"]");
+			sponsor.setActivityTime(System.currentTimeMillis()/1000);
+			
 			//领队图片
-			if(iconFile.getSize() > 0) {
-				try {
-					String relativelyCardFrontPhoto = "/luoluo/user/userPic/" + DateUtils.nowDate(DateUtils.YYYYMMDDHHMMSS) + NumberUtils.random() + "." + FilenameUtils.getExtension(iconFile.getOriginalFilename());
-					fileService.saveFile(iconFile.getInputStream(), relativelyCardFrontPhoto); 
+			String iconFiletrl=sponsorService.addPhotos(iconFile);
+			sponsor.setUserinformation("["+iconFiletrl+"]");
 					
-					sponsor.setUserinformation(relativelyCardFrontPhoto);
-					sponsor.setActivityTime(System.currentTimeMillis()/1000);
-				} catch (Exception e) {
-					throw new IllegalArgumentException("文件上传失败，原因:" + e.getLocalizedMessage());
-				}
-			}			
 			sponsorService.insertsponsor(sponsor);
 			json.addProperty("succ", "添加成功");
 			return json;
@@ -155,7 +136,7 @@ public class ApiSponsorAct extends BaseAct{
 			//头像图片		
 			if(myFile.getSize() > 0) {
 				try {
-					String relativelyCardFrontPhoto = "/luoluo/user/userPic/" + DateUtils.nowDate(DateUtils.YYYYMMDDHHMMSS) + NumberUtils.random() + "." + FilenameUtils.getExtension(iconFile.getOriginalFilename());
+					String relativelyCardFrontPhoto = "/luoluo/user/userPic/" + DateUtils.nowDate(DateUtils.YYYYMMDDHHMMSS) + NumberUtils.random() + "." + FilenameUtils.getExtension(myFile.getOriginalFilename());
 					fileService.saveFile(myFile.getInputStream(), relativelyCardFrontPhoto); 
 					ss.setUserpicture(relativelyCardFrontPhoto);
 					ss.setActivityTime(System.currentTimeMillis()/1000);
@@ -164,32 +145,13 @@ public class ApiSponsorAct extends BaseAct{
 				}
 			} 
 			//公司图片
-			if(apicture.getSize() > 0) {
-				try {
-					String relativelyCardFrontPhoto = "/luoluo/user/userPic/" + DateUtils.nowDate(DateUtils.YYYYMMDDHHMMSS) + NumberUtils.random() + "." + FilenameUtils.getExtension(apicture.getOriginalFilename());
-					fileService.saveFile(apicture.getInputStream(), relativelyCardFrontPhoto); 
-					ss.setResponsibility(relativelyCardFrontPhoto);
-					ss.setActivityTime(System.currentTimeMillis()/1000);
-				} catch (Exception e) {
-					throw new IllegalArgumentException("文件上传失败，原因:" + e.getLocalizedMessage());
-				}
-			} 
-				if(StringUtils.isBlank(usertelephone) || StringUtils.isBlank(responsibility) ){
-					json.addProperty("error", "信息不为空");
-					return json;
-				}
-				//领队图片
-				if(iconFile.getSize() > 0) {
-					try {
-						String relativelyCardFrontPhoto = "/luoluo/user/userPic/" + DateUtils.nowDate(DateUtils.YYYYMMDDHHMMSS) + NumberUtils.random() + "." + FilenameUtils.getExtension(iconFile.getOriginalFilename());
-						fileService.saveFile(iconFile.getInputStream(), relativelyCardFrontPhoto); 
-						
-						ss.setUserinformation(relativelyCardFrontPhoto);
-						ss.setActivityTime(System.currentTimeMillis()/1000);
-					} catch (Exception e) {
-						throw new IllegalArgumentException("文件上传失败，原因:" + e.getLocalizedMessage());
-					}
-				}			
+			String corle=sponsorService.addPhotos(apicture);
+			ss.setResponsibility("["+corle+"]");
+			ss.setActivityTime(System.currentTimeMillis()/1000);
+			
+			//领队图片
+			String iconFiletrl=sponsorService.addPhotos(iconFile);
+			ss.setUserinformation("["+iconFiletrl+"]");
 				sponsorService.insertsponsor(ss);
 				json.addProperty("succ", "添加成功");
 				return json;
@@ -204,7 +166,7 @@ public class ApiSponsorAct extends BaseAct{
 			@RequestParam(required= false)String userphone,
 			@RequestParam(required= false)String userinformation,
 			@RequestParam(value="myFile", required=false) CommonsMultipartFile myFile,
-			@RequestParam(value="iconFile", required=false) MultipartFile iconFile,
+			@RequestParam(value="iconFile[]", required=false) MultipartFile iconFile[],
 			@RequestParam(required= false)String entintroduction,
 			@RequestParam(required= false)Integer type,
 		HttpSession session){
@@ -226,7 +188,7 @@ public class ApiSponsorAct extends BaseAct{
 	//头像图片		
 			if(myFile.getSize() > 0) {
 				try {
-					String relativelyCardFrontPhoto = "/luoluo/user/userPic/" + DateUtils.nowDate(DateUtils.YYYYMMDDHHMMSS) + NumberUtils.random() + "." + FilenameUtils.getExtension(iconFile.getOriginalFilename());
+					String relativelyCardFrontPhoto = "/luoluo/user/userPic/" + DateUtils.nowDate(DateUtils.YYYYMMDDHHMMSS) + NumberUtils.random() + "." + FilenameUtils.getExtension(myFile.getOriginalFilename());
 					fileService.saveFile(myFile.getInputStream(), relativelyCardFrontPhoto); 
 					sponsor.setUserpicture(relativelyCardFrontPhoto);
 					sponsor.setActivityTime(System.currentTimeMillis()/1000);
@@ -236,16 +198,11 @@ public class ApiSponsorAct extends BaseAct{
 			} 
 	
 	//个人信息图片
-			if(iconFile.getSize() > 0) {
-				try {
-					String relativelyCardFrontPhoto = "/luoluo/user/userPic/" + DateUtils.nowDate(DateUtils.YYYYMMDDHHMMSS) + NumberUtils.random() + "." + FilenameUtils.getExtension(iconFile.getOriginalFilename());
-					fileService.saveFile(iconFile.getInputStream(), relativelyCardFrontPhoto); 
-					sponsor.setUserinformation(relativelyCardFrontPhoto);
-					sponsor.setActivityTime(System.currentTimeMillis()/1000);
-				} catch (Exception e) {
-					throw new IllegalArgumentException("文件上传失败，原因:" + e.getLocalizedMessage());
-				}
-			}			
+			//公司图片
+			String corle=sponsorService.addPhotos(iconFile);
+			sponsor.setUserinformation("["+corle+"]");
+			sponsor.setActivityTime(System.currentTimeMillis()/1000);
+			
 			sponsorService.updatedo(sponsor);
 			json.addProperty("succ", "添加成功");
 			return json;
@@ -260,7 +217,7 @@ public class ApiSponsorAct extends BaseAct{
 	//头像图片		
 			if(myFile.getSize() > 0) {
 				try {
-					String relativelyCardFrontPhoto = "/luoluo/user/userPic/" + DateUtils.nowDate(DateUtils.YYYYMMDDHHMMSS) + NumberUtils.random() + "." + FilenameUtils.getExtension(iconFile.getOriginalFilename());
+					String relativelyCardFrontPhoto = "/luoluo/user/userPic/" + DateUtils.nowDate(DateUtils.YYYYMMDDHHMMSS) + NumberUtils.random() + "." + FilenameUtils.getExtension(myFile.getOriginalFilename());
 					fileService.saveFile(myFile.getInputStream(), relativelyCardFrontPhoto); 
 					ss.setUserpicture(relativelyCardFrontPhoto);
 					ss.setActivityTime(System.currentTimeMillis()/1000);
@@ -270,16 +227,9 @@ public class ApiSponsorAct extends BaseAct{
 			} 
 	
 	//个人信息图片
-			if(iconFile.getSize() > 0) {
-				try {
-					String relativelyCardFrontPhoto = "/luoluo/user/userPic/" + DateUtils.nowDate(DateUtils.YYYYMMDDHHMMSS) + NumberUtils.random() + "." + FilenameUtils.getExtension(iconFile.getOriginalFilename());
-					fileService.saveFile(iconFile.getInputStream(), relativelyCardFrontPhoto); 
-					ss.setUserinformation(relativelyCardFrontPhoto);
-					ss.setActivityTime(System.currentTimeMillis()/1000);
-				} catch (Exception e) {
-					throw new IllegalArgumentException("文件上传失败，原因:" + e.getLocalizedMessage());
-				}
-			}			
+			String corle=sponsorService.addPhotos(iconFile);
+			ss.setUserinformation("["+corle+"]");
+			ss.setActivityTime(System.currentTimeMillis()/1000);		
 			sponsorService.updatedo(ss);
 			json.addProperty("succ", "修改成功");
 			return json;
