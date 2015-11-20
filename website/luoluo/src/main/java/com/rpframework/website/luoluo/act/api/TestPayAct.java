@@ -31,9 +31,9 @@ public class TestPayAct {
 		@RequestMapping(value="/test_pay",produces = "application/json; charset=utf-8")
 		public @ResponseBody JsonElement orderList(
 				@RequestParam(value="orderId",required=true) String orderId,//订单id
-				@RequestParam(value="orderId",required=true) String ClaName,//订单名
-				@RequestParam(value="orderId",required=true) String Activityname,//订单内容
-				@RequestParam(value="orderId",required=true) Double counterFee,//订单价格
+				@RequestParam(value="ClaName",required=true) String ClaName,//订单名
+				@RequestParam(value="Activityname",required=true) String Activityname,//订单内容
+				@RequestParam(value="money",required=true) Double money,//订单价格
 				
 				
 				
@@ -61,7 +61,7 @@ public class TestPayAct {
 						json.addProperty("out_trade_no", orderId);//订单号
 						json.addProperty("subject", ClaName);//订单名
 						json.addProperty("body", Activityname);//订单内容
-						json.addProperty("total_fee",counterFee);//订单价格
+						json.addProperty("total_fee",money);//订单价格
 					
 						if(memo!=null && "YES".equals(memo.toUpperCase())){
 							json.addProperty("public_key=","支付宝公钥");

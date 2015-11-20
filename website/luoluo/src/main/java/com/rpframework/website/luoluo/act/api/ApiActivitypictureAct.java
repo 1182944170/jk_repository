@@ -71,7 +71,7 @@ public class ApiActivitypictureAct extends BaseAct{
 			@RequestParam(required=false) String oldboy,
 			@RequestParam(required=false) String chindenboy,
 			@RequestParam(required=false) String grilexpense,
-			@RequestParam(required=false) double monely,
+			@RequestParam(required=false) double money,
 			@RequestParam(required=false) String mood,
 			@RequestParam(required=false) String insure, //投保证件
 			@RequestParam(required=false) String insurename, //投保姓名
@@ -97,8 +97,8 @@ public class ApiActivitypictureAct extends BaseAct{
 				Activitypi.setOldboy(oldboy);
 				Activitypi.setChindenboy(chindenboy);
 				Activitypi.setGrilexpense(grilexpense);
-				Activitypi.setMonely(monely);
-				double cc=monely;
+				Activitypi.setMonely(money);
+				double cc=money;
 				double counterFee=0;
 				if(activity.getType()==1){
 					Classification cole=classiftionservice.selectcal(activity.getActivitycategory());
@@ -124,7 +124,7 @@ public class ApiActivitypictureAct extends BaseAct{
 				TestPayAct ss=new TestPayAct();
 				String memo = null;
 				bFlag = activitypictureSercice.bagPay(currUser.getId(), Activitypi.getId(),activity);
-				return ss.orderList(Activitypi.getOrdernumber() , activity.getActivityname(),classi.getClaName(), counterFee,memo);
+				return ss.orderList(Activitypi.getOrdernumber() , activity.getActivityname(),classi.getClaName(), money,memo);
 				///支付宝支付
 			} else if (typeMonely == 2) {
 				
