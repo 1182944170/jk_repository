@@ -1,29 +1,20 @@
 package com.rpframework.website.luoluo.act.api;
 
-import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Iterator;
-
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.alibaba.druid.sql.parser.ParserException;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.rpframework.core.BaseAct;
-import com.rpframework.module.common.pay.alipay.config.AlipayConfig;
-import com.rpframework.module.common.pay.alipay.sign.RSA;
-import com.rpframework.module.common.pay.alipay.util.AlipayNotify;
 import com.rpframework.module.common.pay.wxpay.api.WXpayApi;
 import com.rpframework.module.common.pay.wxpay.util.WXpayCore;
 import com.rpframework.utils.DateUtils;
@@ -262,46 +253,7 @@ public class ApiActivitypictureAct extends BaseAct{
 		return json;
 	}
 	
-	
-	//支付宝返回参数
-	@SuppressWarnings("rawtypes")
-	@RequestMapping("/test_pay_succ")
-	public @ResponseBody String TestPaySucc(HttpServletRequest request) throws UnsupportedEncodingException{
-		String ret = "";
-		//获取支付宝POST过来反馈信息
-		Map<String,String> params = new HashMap<String,String>();
-		Map requestParams = request.getParameterMap();
-		for (Iterator iter = requestParams.keySet().iterator(); iter.hasNext();) {
-			String name = (String) iter.next();
-			String[] values = (String[]) requestParams.get(name);
-			String valueStr = "";
-			for (int i = 0; i < values.length; i++) {
-				valueStr = (i == values.length - 1) ? valueStr + values[i]
-						: valueStr + values[i] + ",";
-			}
-			//乱码解决，这段代码在出现乱码时使用。如果mysign和sign不相等也可以使用这段代码转化
-			//valueStr = new String(valueStr.getBytes("ISO-8859-1"), "gbk");
-			params.put(name, valueStr);
-		}
-		String out_trade_no = new String(request.getParameter("out_trade_no").getBytes("ISO-8859-1"),"UTF-8");
-		//支付宝交易号
-		//交易状态
-		String trade_status = new String(request.getParameter("trade_status").getBytes("ISO-8859-1"),"UTF-8");
-		//获取支付宝的通知返回参数，可参考技术文档中页面跳转同步通知参数列表(以上仅供参考)//
-		if(AlipayNotify.verify(params)){//验证成功
-			//////////////////////////////////////////////////////////////////////////////////////////
-			//请在这里加上商户的业务逻辑程序代码
-			Activitypicture apfoled = activitypictureSercice.selecttrade(out_trade_no);
-			apfoled.setTypeOrder(2);
-			activitypictureSercice.updatedo(apfoled);
-		
-			ret = "success";	//请不要修改或删除
-			//////////////////////////////////////////////////////////////////////////////////////////
-		}else{//验证失败
-			ret = "fail";
-		}
-		return ret;
-	} 
+
 	/**
 	 * 微信支付
 	 * @param activity
