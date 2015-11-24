@@ -342,6 +342,9 @@ public class ApiActivityAct extends BaseAct{
 					activity.setGril_expense(gril_expense);
 					activity.setChildren_expense(children_expense);
 					activity.setOld_expense(old_expense);
+					activity.setNowforetime(System.currentTimeMillis()/1000);
+					activity.setStarttime(DateUtils.parse(starttime).getTime()/1000);
+					activity.setOuttime(DateUtils.parse(outtime).getTime()/1000);
 					
 					String corle=activityService.addPhotos(iconFile);
 					activity.setActivitypicture("["+corle+"]");
