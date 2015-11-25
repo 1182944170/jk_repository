@@ -224,6 +224,7 @@ public class UserloginApiAct extends BaseAct{
 		boolean bFlag = userService.userLogin(lUser);
 		
 		if(bFlag){
+			json.addProperty("id", lUser.getId());
 			session.setAttribute(SESSION_USER_KEY, lUser);
 			json.addProperty("succ", true);
 		} else {

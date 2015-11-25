@@ -13,6 +13,7 @@ import com.rpframework.website.luoluo.domain.Activity;
 import com.rpframework.website.luoluo.domain.Activitypicture;
 import com.rpframework.website.luoluo.domain.Classification;
 import com.rpframework.website.luoluo.domain.Monlyjournals;
+import com.rpframework.website.luoluo.domain.Sponsorlis;
 import com.rpframework.website.luoluo.domain.User;
 
 @Service
@@ -59,8 +60,8 @@ public class ActivitypictureSercice extends BaseService{
 	public boolean bagPay(Integer userId , Integer detailId,Activity activity){
 		User userMoney = userService.selectOnlyOne(userId);
 		Classification cc=classfica.selectcal(activity.getActivitycategory());
-		
-		User tooMoney = userService.selectmonly(activity.getSponsorid());
+		Sponsorlis zzle=sponsorService.seletOne(activity.getSponsorid());
+		User tooMoney = userService.selectmonly(zzle.getUserid());
 		if(userMoney == null){
 			throw new IllegalArgumentException("不存在的用户.");
 		}

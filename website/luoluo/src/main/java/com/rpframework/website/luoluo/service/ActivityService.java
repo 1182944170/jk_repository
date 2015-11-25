@@ -1,14 +1,10 @@
 package com.rpframework.website.luoluo.service;
 
-import java.util.Iterator;
 import java.util.List;
-
 import javax.annotation.Resource;
-
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.rpframework.core.BaseService;
 import com.rpframework.core.api.FileService;
 import com.rpframework.utils.DateUtils;
@@ -81,8 +77,6 @@ public class ActivityService extends BaseService{
 		}
 		return all.toString();
 	}
-	
-	
 	public String addPhotos(MultipartFile arr[]) {
 		StringBuilder all =new StringBuilder();
 		boolean flag = true;
@@ -95,7 +89,6 @@ public class ActivityService extends BaseService{
 					all.append("\""+str+"\"");
 					flag  = !flag;
 				}else 
-					
 					all.append(","+"\""+str+"\"");
 								
 			} catch (Exception e) {
