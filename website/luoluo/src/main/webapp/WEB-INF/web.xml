@@ -130,7 +130,7 @@
  		<session-timeout>0</session-timeout>
    </session-config>
    <mime-mapping>
-      <extension>apk</extension>
+    <extension>apk</extension>
         <mime-type>application/vnd.android.package-archive</mime-type>
    </mime-mapping>
  

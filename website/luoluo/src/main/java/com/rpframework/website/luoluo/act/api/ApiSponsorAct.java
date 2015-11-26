@@ -152,7 +152,7 @@ public class ApiSponsorAct extends BaseAct{
 			//领队图片
 			String iconFiletrl=sponsorService.addPhotos(iconFile);
 			ss.setUserinformation("["+iconFiletrl+"]");
-				sponsorService.insertsponsor(ss);
+				sponsorService.updatedo(ss);
 				json.addProperty("succ", "添加成功");
 				return json;
 		}
@@ -203,7 +203,7 @@ public class ApiSponsorAct extends BaseAct{
 			sponsor.setUserinformation("["+corle+"]");
 			sponsor.setActivityTime(System.currentTimeMillis()/1000);
 			
-			sponsorService.updatedo(sponsor);
+			sponsorService.insertsponsor(sponsor);
 			json.addProperty("succ", "添加成功");
 			return json;
 		}else{
