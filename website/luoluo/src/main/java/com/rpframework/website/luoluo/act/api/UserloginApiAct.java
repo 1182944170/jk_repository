@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.rpframework.core.BaseAct;
 import com.rpframework.core.utils.DictionarySettingUtils;
 import com.rpframework.core.utils.MessageFormatter;
+import com.rpframework.core.utils.TagUtils;
 import com.rpframework.module.common.service.SMSService;
 import com.rpframework.utils.AlgorithmEnum;
 import com.rpframework.utils.AlgorithmUtils;
@@ -224,7 +224,35 @@ public class UserloginApiAct extends BaseAct{
 		boolean bFlag = userService.userLogin(lUser);
 		
 		if(bFlag){
-			json.addProperty("id", lUser.getId());
+			
+			
+			JsonObject jsonObj =new JsonObject();
+			jsonObj.addProperty("id", lUser.getId());
+			jsonObj.addProperty("id", lUser.getId());
+			jsonObj.addProperty("name", lUser.getName());
+			jsonObj.addProperty("nameNick", lUser.getNameNick());
+			jsonObj.addProperty("phone", lUser.getPhone());
+			jsonObj.addProperty("sex", lUser.getSex());
+			jsonObj.addProperty("age", lUser.getAge());
+			jsonObj.addProperty("marriage", lUser.getMarriage());
+			jsonObj.addProperty("hobbues", lUser.getHobbues());
+			jsonObj.addProperty("constellation", lUser.getConstellation());
+			jsonObj.addProperty("company", lUser.getCompany());
+			jsonObj.addProperty("nowlive", lUser.getNowlive());
+			jsonObj.addProperty("hometown", lUser.getHometown());
+			jsonObj.addProperty("qqaccount", lUser.getQqaccount());
+			jsonObj.addProperty("loveStar", lUser.getLoveStar());
+			jsonObj.addProperty("lovemuice", lUser.getLovemuice());
+			jsonObj.addProperty("loveDeliciousfood", lUser.getLoveDeliciousfood());
+			jsonObj.addProperty("signature", lUser.getSignature());
+			jsonObj.addProperty("ctiontime", TagUtils.formatDate(lUser.getCtiontime()));
+			jsonObj.addProperty("loveFilm", lUser.getLoveFilm());
+			jsonObj.addProperty("acnumber", lUser.getAcnumber());
+			jsonObj.addProperty("namePic", TagUtils.getFileFullPath(lUser.getNamePic()));
+			jsonObj.addProperty("personalMany", lUser.getPersonalMany());
+			jsonObj.addProperty("lng", lUser.getLng());
+			jsonObj.addProperty("lat", lUser.getLat());
+			json.add("user", jsonObj);
 			session.setAttribute(SESSION_USER_KEY, lUser);
 			json.addProperty("succ", true);
 		} else {

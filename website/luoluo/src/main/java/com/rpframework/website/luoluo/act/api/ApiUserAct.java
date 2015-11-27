@@ -70,26 +70,38 @@ public class ApiUserAct extends BaseAct{
  * @throws InterruptedException
  */
 	@RequestMapping("/user_listid")
-	public @ResponseBody JsonElement userlistid(@RequestParam(value="pager",required=false) Pager<User> pager, @RequestParam(required=false) String userid,HttpSession session
+	public @ResponseBody JsonElement userlistid( @RequestParam(required=false) Integer userid,HttpSession session
 			) throws ParserException, InterruptedException{
-		if(pager==null){
- 			pager=new Pager<User>();
- 		}
 		User currUser = getSessionUser(session);
 		if(currUser == null){
 			throw new APICodeException(-4, "你还没登陆!");
 		}	
-		pager.getSearchMap().put("se", String.valueOf(currUser.getId()));
-		pager=userservice.Userpager(pager);
+		User user = userservice.selectOnlyOne(userid);
 		JsonObject json = new JsonObject();
-		List<User> list = pager.getItemList();
-		JsonArray array = new JsonArray();
-		json.add("arrays", array);
-		for (User User : list) {
-			JsonObject o = gson.toJsonTree(User).getAsJsonObject();
-			array.add(o);
-		}
-		System.out.println("user_list: "+json.toString());
+		json.addProperty("id", user.getId());
+		json.addProperty("name", user.getName());
+		json.addProperty("nameNick", user.getNameNick());
+		json.addProperty("phone", user.getPhone());
+		json.addProperty("sex", user.getSex());
+		json.addProperty("age", user.getAge());
+		json.addProperty("marriage", user.getMarriage());
+		json.addProperty("hobbues", user.getHobbues());
+		json.addProperty("constellation", user.getConstellation());
+		json.addProperty("company", user.getCompany());
+		json.addProperty("nowlive", user.getNowlive());
+		json.addProperty("hometown", user.getHometown());
+		json.addProperty("qqaccount", user.getQqaccount());
+		json.addProperty("loveStar", user.getLoveStar());
+		json.addProperty("lovemuice", user.getLovemuice());
+		json.addProperty("loveDeliciousfood", user.getLoveDeliciousfood());
+		json.addProperty("signature", user.getSignature());
+		json.addProperty("ctiontime", TagUtils.formatDate(user.getCtiontime()));
+		json.addProperty("loveFilm", user.getLoveFilm());
+		json.addProperty("acnumber", user.getAcnumber());
+		json.addProperty("namePic", TagUtils.getFileFullPath(user.getNamePic()));
+		json.addProperty("personalMany", user.getPersonalMany());
+		json.addProperty("lng", user.getLng());
+		json.addProperty("lat", user.getLat());
 		return json;
 	}
 	/**

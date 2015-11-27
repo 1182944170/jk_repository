@@ -31,7 +31,7 @@ public class ApiSponsorAct extends BaseAct{
 	@Resource SponsorService sponsorService;
 	@Resource FileService fileService;
 	/**
-	 * 查询添加主办方的信息
+	 * 通过id查询主办方的信息
 	 * @param sponsorid
 	 * @param session
 	 * @return
@@ -40,9 +40,9 @@ public class ApiSponsorAct extends BaseAct{
 	 */
 	@RequestMapping("listone")
 	public @ResponseBody JsonElement listone(
-			@RequestParam(required= false)Integer sponsorid,
+			@RequestParam(required= false)Integer userid,
 			HttpSession session) throws ParserException, InterruptedException{
-		Sponsorlis sponsor=sponsorService.seletOnesponsor(sponsorid);
+		Sponsorlis sponsor=sponsorService.seletOnesponsor(userid);
 		User currUser = getSessionUser(session);	
 		if(currUser == null){
 			throw new APICodeException(-4, "你还没登陆!");
@@ -56,6 +56,26 @@ public class ApiSponsorAct extends BaseAct{
 		json.addProperty("Userinformation", TagUtils.getFileFullPath(sponsor.getUserinformation()));
 		json.addProperty("entintroduction", sponsor.getEntintroduction());
  		return json;
+	}
+	//通过主办方id 查询
+	@RequestMapping("listonetoone")
+	public @ResponseBody JsonElement listonetoone(
+			@RequestParam(required= false)Integer sponsorid,
+			HttpSession session) throws ParserException, InterruptedException{
+		Sponsorlis sponsor=sponsorService.seletOne(sponsorid);
+		User currUser = getSessionUser(session);	
+		if(currUser == null){
+			throw new APICodeException(-4, "你还没登陆!");
+		}
+		JsonObject json=new JsonObject();
+		json.addProperty("Userphone", sponsor.getUserphone());
+		json.addProperty("Username", sponsor.getUsername());
+		json.addProperty("responname", sponsor.getResponname());
+		json.addProperty("usertelephone", sponsor.getUsertelephone());
+		json.addProperty("responsibility", TagUtils.getFileFullPath(sponsor.getResponsibility()));
+		json.addProperty("Userinformation", TagUtils.getFileFullPath(sponsor.getUserinformation()));
+		json.addProperty("entintroduction", sponsor.getEntintroduction());
+		return json;
 	}
 	//添加公司
 	
