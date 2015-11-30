@@ -48,6 +48,8 @@ public class ApiSponsorAct extends BaseAct{
 			throw new APICodeException(-4, "你还没登陆!");
 		}
 		JsonObject json=new JsonObject();
+		
+		json.addProperty("id", sponsor.getId());
 		json.addProperty("Userphone", sponsor.getUserphone());
 		json.addProperty("Username", sponsor.getUsername());
 		json.addProperty("responname", sponsor.getResponname());
@@ -68,6 +70,7 @@ public class ApiSponsorAct extends BaseAct{
 			throw new APICodeException(-4, "你还没登陆!");
 		}
 		JsonObject json=new JsonObject();
+		json.addProperty("id", sponsor.getId());
 		json.addProperty("Userphone", sponsor.getUserphone());
 		json.addProperty("Username", sponsor.getUsername());
 		json.addProperty("responname", sponsor.getResponname());
@@ -172,6 +175,7 @@ public class ApiSponsorAct extends BaseAct{
 			//领队图片
 			String iconFiletrl=sponsorService.addPhotos(iconFile);
 			ss.setUserinformation("["+iconFiletrl+"]");
+			ss.setTypeopp(0);
 				sponsorService.updatedo(ss);
 				json.addProperty("succ", "添加成功");
 				return json;
@@ -184,7 +188,6 @@ public class ApiSponsorAct extends BaseAct{
 			@RequestParam(required= false)String username,
 			@RequestParam(required= false)String usernowlive,
 			@RequestParam(required= false)String userphone,
-			@RequestParam(required= false)String userinformation,
 			@RequestParam(value="myFile", required=false) CommonsMultipartFile myFile,
 			@RequestParam(value="iconFile[]", required=false) MultipartFile iconFile[],
 			@RequestParam(required= false)String entintroduction,
@@ -249,7 +252,8 @@ public class ApiSponsorAct extends BaseAct{
 	//个人信息图片
 			String corle=sponsorService.addPhotos(iconFile);
 			ss.setUserinformation("["+corle+"]");
-			ss.setActivityTime(System.currentTimeMillis()/1000);		
+			ss.setActivityTime(System.currentTimeMillis()/1000);	
+			ss.setTypeopp(0);
 			sponsorService.updatedo(ss);
 			json.addProperty("succ", "修改成功");
 			return json;

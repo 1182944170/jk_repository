@@ -68,6 +68,16 @@ public class ApiActivityAct extends BaseAct{
 		JsonArray array = new JsonArray();
 		json.add("arrays", array);
 		for (Activity act : list) {
+			
+			List<Activitypicture>  cc=activitypictureSercice.selectlist(act.getId());
+			int bm_num=0;
+			int i=0;
+			for (Activitypicture tt : cc) {
+				i=Integer.parseInt(tt.getGrilexpense())+Integer.parseInt(tt.getChindenboy())+Integer.parseInt(tt.getOldboy());
+				bm_num+=i;
+				
+			}
+			act.setBm_num(bm_num);
 			JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
 			array.add(jsonObj);
 		}
@@ -103,6 +113,16 @@ public class ApiActivityAct extends BaseAct{
 			 }
 		 }else{
 			 for (Activity act : atcuname) {
+			
+					List<Activitypicture>  cc=activitypictureSercice.selectlist(act.getId());
+					int bm_num=0;
+					int i=0;
+					for (Activitypicture tt : cc) {
+						i=Integer.parseInt(tt.getGrilexpense())+Integer.parseInt(tt.getChindenboy())+Integer.parseInt(tt.getOldboy());
+						bm_num+=i;
+						
+					}
+					act.setBm_num(bm_num);
 					JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
 					array.add(jsonObj);
 				}
@@ -192,6 +212,16 @@ public class ApiActivityAct extends BaseAct{
 		JsonArray array = new JsonArray();
 		json.add("arrays", array);
 		for (Activity act : list) {
+			
+			List<Activitypicture>  cc=activitypictureSercice.selectlist(act.getId());
+			int bm_num=0;
+			int i=0;
+			for (Activitypicture tt : cc) {
+				i=Integer.parseInt(tt.getGrilexpense())+Integer.parseInt(tt.getChindenboy())+Integer.parseInt(tt.getOldboy());
+				bm_num+=i;
+				
+			}
+			act.setBm_num(bm_num);
 			JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
 			array.add(jsonObj);
 		}
@@ -219,6 +249,16 @@ public class ApiActivityAct extends BaseAct{
 		JsonArray array = new JsonArray();
 		json.add("arrays", array);
 		for (Activity act : list) {
+			
+			List<Activitypicture>  cc=activitypictureSercice.selectlist(act.getId());
+			int bm_num=0;
+			int i=0;
+			for (Activitypicture tt : cc) {
+				i=Integer.parseInt(tt.getGrilexpense())+Integer.parseInt(tt.getChindenboy())+Integer.parseInt(tt.getOldboy());
+				bm_num+=i;
+				
+			}
+			act.setBm_num(bm_num);
 			JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
 			array.add(jsonObj);
 		}

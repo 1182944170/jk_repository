@@ -81,8 +81,6 @@ public class ActivitypictureSercice extends BaseService{
 			mysope.setUserid(userMoney.getId());
 			mysope.setRemark(cc.getClaName()+"-  支付");
 			monlyjournalsService.insertdo(mysope);
-			
-			
 			tooMoney.setPersonalMany(tooMoney.getPersonalMany()+ detail.getActualamount());
 			boolean bfgl=userService.updatedo(tooMoney);
 			//添加收款方日志文件

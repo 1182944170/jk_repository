@@ -51,6 +51,9 @@ public class Activitypicture {
 	@FieldMapperAnnotation
 	private long newtime;  // 订单状态
 	
+	
+	private Integer bm_num;  // 订单状态
+	
 	public String getGrilexpense() {
 		return grilexpense;
 	}
@@ -133,6 +136,12 @@ public class Activitypicture {
 	}
 	
 
+	public Integer getBm_num() {
+		return bm_num;
+	}
+	public void setBm_num(Integer bm_num) {
+		this.bm_num = bm_num;
+	}
 	public String getInsurenName() {
 		return insurenName;
 	}

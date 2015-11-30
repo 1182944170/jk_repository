@@ -1,11 +1,19 @@
 package com.rpframework.website.luoluo.act.api;
 import java.io.UnsupportedEncodingException;
-
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
 
+
+
+
+
+
+
+
+
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
@@ -14,18 +22,36 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 
+
+
+
+
+
+
+
+
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.rpframework.module.common.pay.alipay.config.AlipayConfig;
-
 import com.rpframework.module.common.pay.alipay.util.AlipayNotify;
 import com.rpframework.utils.NumberUtils;
+import com.rpframework.website.luoluo.domain.Activity;
+import com.rpframework.website.luoluo.domain.Activitypicture;
+import com.rpframework.website.luoluo.domain.Sponsorlis;
+import com.rpframework.website.luoluo.domain.User;
+import com.rpframework.website.luoluo.service.ActivitypictureSercice;
+import com.rpframework.website.luoluo.service.SponsorService;
+import com.rpframework.website.luoluo.service.UserService;
 /****
  * 订单
  * ***/
 @Controller
 @RequestMapping("/api/order")
 public class TestPayAct {
+	@Resource ActivitypictureSercice activitypictureSercice;
+	@Resource UserService userService;
+	@Resource SponsorService sponsorService;
+	
 		//支付
 		@RequestMapping(value="/test_pay",produces = "application/json; charset=utf-8")
 		public @ResponseBody JsonElement orderList(
@@ -124,7 +150,12 @@ public class TestPayAct {
 				//////////////////////////////////////////////////////////////////////////////////////////
 				if (trade_status.equals("TRADE_FINISHED")|| trade_status.equals("TRADE_SUCCESS")) {
 					//请在这里加上商户的业务逻辑程序代码
-					//boolean flag= orderPageService.updateOrder(out_trade_no);
+					Activitypicture  cc= activitypictureSercice.selecttrade(out_trade_no);
+					Sponsorlis sp = sponsorService.seletOne(cc.getSponsorld());
+					User uman=userService.selectmonly(sp.getUserid());
+					uman.setPersonalMany(uman.getPersonalMany()*1+total_fee);
+					userService.updatedo(uman);
+				
 				}
 				ret = "success";	//请不要修改或删除
 				//////////////////////////////////////////////////////////////////////////////////////////

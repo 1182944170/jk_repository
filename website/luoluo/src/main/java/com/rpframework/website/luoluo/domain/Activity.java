@@ -57,7 +57,17 @@ public class Activity {
 	private String lng; //经度
 	@FieldMapperAnnotation
 	private String lat; //纬度
+	
+	private Integer bm_num; //纬度
 
+
+	public Integer getBm_num() {
+		return bm_num;
+	}
+
+	public void setBm_num(Integer bm_num) {
+		this.bm_num = bm_num;
+	}
 
 	public Integer getId() {
 		return id;
