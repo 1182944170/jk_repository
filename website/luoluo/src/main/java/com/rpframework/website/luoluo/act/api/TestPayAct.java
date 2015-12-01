@@ -13,6 +13,12 @@ import java.util.Map;
 
 
 
+
+
+
+
+
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
@@ -30,6 +36,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 
 
+
+
+
+
+
+
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.rpframework.module.common.pay.alipay.config.AlipayConfig;
@@ -37,9 +49,14 @@ import com.rpframework.module.common.pay.alipay.util.AlipayNotify;
 import com.rpframework.utils.NumberUtils;
 import com.rpframework.website.luoluo.domain.Activity;
 import com.rpframework.website.luoluo.domain.Activitypicture;
+import com.rpframework.website.luoluo.domain.Classification;
+import com.rpframework.website.luoluo.domain.Monlyjournals;
 import com.rpframework.website.luoluo.domain.Sponsorlis;
 import com.rpframework.website.luoluo.domain.User;
+import com.rpframework.website.luoluo.service.ActivityService;
 import com.rpframework.website.luoluo.service.ActivitypictureSercice;
+import com.rpframework.website.luoluo.service.ClassificationService;
+import com.rpframework.website.luoluo.service.MonlyjournalsService;
 import com.rpframework.website.luoluo.service.SponsorService;
 import com.rpframework.website.luoluo.service.UserService;
 /****
@@ -49,8 +66,11 @@ import com.rpframework.website.luoluo.service.UserService;
 @RequestMapping("/api/order")
 public class TestPayAct {
 	@Resource ActivitypictureSercice activitypictureSercice;
+	@Resource ActivityService   activityService ;
 	@Resource UserService userService;
 	@Resource SponsorService sponsorService;
+	@Resource ClassificationService classfica;
+	@Resource MonlyjournalsService monlyjournalsService;
 	
 		//支付
 		@RequestMapping(value="/test_pay",produces = "application/json; charset=utf-8")
@@ -151,10 +171,30 @@ public class TestPayAct {
 				if (trade_status.equals("TRADE_FINISHED")|| trade_status.equals("TRADE_SUCCESS")) {
 					//请在这里加上商户的业务逻辑程序代码
 					Activitypicture  cc= activitypictureSercice.selecttrade(out_trade_no);
-					Sponsorlis sp = sponsorService.seletOne(cc.getSponsorld());
+					Activity acticity=activityService.selectcal(cc.getSponsorld());
+					Sponsorlis sp = sponsorService.seletOne(acticity.getSponsorid());
 					User uman=userService.selectmonly(sp.getUserid());
+					User myman=userService.selectmonly(cc.getMyld());
+					
+					Classification dd=classfica.selectcal(acticity.getActivitycategory());
 					uman.setPersonalMany(uman.getPersonalMany()*1+total_fee);
 					userService.updatedo(uman);
+					
+					Monlyjournals mysope=new Monlyjournals();
+					mysope.setMonly(+total_fee);
+					mysope.setNewtime(System.currentTimeMillis()/1000);
+					mysope.setType(1);
+					mysope.setUserid(uman.getId());
+					mysope.setRemark(myman.getNameNick()+"-  汇款");
+					monlyjournalsService.insertdo(mysope);
+					
+					Monlyjournals weifu=new Monlyjournals();
+					weifu.setMonly(-total_fee);
+					weifu.setNewtime(System.currentTimeMillis()/1000);
+					weifu.setType(1);
+					weifu.setUserid(myman.getId());
+					weifu.setRemark(dd.getClaName()+"- 支付");
+					monlyjournalsService.insertdo(weifu);
 				
 				}
 				ret = "success";	//请不要修改或删除

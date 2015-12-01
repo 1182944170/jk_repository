@@ -183,6 +183,15 @@ public class ApiActivityAct extends BaseAct{
 			List<Activity> list = pager.getItemList();
 			json.addProperty("size", list.size());
 		for (Activitypicture act : activitypict) {
+			List<Activitypicture>  cc=activitypictureSercice.selectlist(act.getId());
+			int bm_num=0;
+			int i=0;
+			for (Activitypicture tt : cc) {
+				i=Integer.parseInt(tt.getGrilexpense())+Integer.parseInt(tt.getChindenboy())+Integer.parseInt(tt.getOldboy());
+				bm_num+=i;
+				
+			}
+			act.setBm_num(bm_num);
 			JsonObject jsonObj=new JsonObject();
 			jsonObj.addProperty("oldboy", act.getOldboy());
 			jsonObj.addProperty("grilexpense", act.getGrilexpense());
