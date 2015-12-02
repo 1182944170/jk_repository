@@ -1,15 +1,17 @@
 package com.rpframework.website.luoluo.act.api;
 
 import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import com.alibaba.druid.sql.parser.ParserException;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -260,9 +262,13 @@ public class ApiUserAct extends BaseAct{
 	 * @time 2015年7月30日 下午3:39:57
 	 */
 	@RequestMapping("/change_user_img")
-	public @ResponseBody JsonElement changeHeadImg(@RequestParam(required=false) MultipartFile userPic,
+	public @ResponseBody JsonElement changeHeadImg(
+			@RequestParam(value="userPic", required=false) CommonsMultipartFile userPic,
 			HttpSession session, HttpServletRequest request){
 		User user = getSessionUser(session);
+		if(user == null){
+			throw new APICodeException(-4, "你还没登陆!");
+		}	
 		if(userPic != null && !userPic.isEmpty()) {
 			try {
 				String relativelyPath = "luoluo/user/userPic/" + DateUtils.nowDate(DateUtils.YYYYMMDDHHMMSS) + NumberUtils.random() + "." + FilenameUtils.getExtension(userPic.getOriginalFilename());

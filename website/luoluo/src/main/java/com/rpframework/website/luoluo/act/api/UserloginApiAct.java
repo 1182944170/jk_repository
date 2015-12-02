@@ -108,9 +108,9 @@ public class UserloginApiAct extends BaseAct{
 		boolean bFlag = userService.registUser(phone, passWord); // 注册用户
 		User newuser = userService.findUserByPhone(phone);
 		//产生10位数的随机号码
-		String num =RandomStringUtils.random(10, false, true);
+		String num =RandomStringUtils.random(9, false, true);
 		if(userService.seleAccout(num)!=null){
-			 num =RandomStringUtils.random(10, false, true);
+			 num =RandomStringUtils.random(9, false, true);
 			 newuser.setAcnumber(num);
 		}else{
 			newuser.setAcnumber(num);

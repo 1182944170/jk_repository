@@ -3,12 +3,15 @@ package com.rpframework.website.luoluo.act.api;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.alibaba.druid.sql.parser.ParserException;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -74,7 +77,6 @@ public class ApiActivitypictureAct extends BaseAct{
 			if(currUser == null){
 				throw new APICodeException(-4, "你还没登陆!");
 			}	
-		
 			int sponsorlds=Integer.parseInt(sponsorld);
 			Activity activity = activityService.selectcal(sponsorlds);
 			Classification  classi = classiftionservice.selectcal(activity.getActivitycategory());
@@ -105,7 +107,8 @@ public class ApiActivitypictureAct extends BaseAct{
 				Activitypi.setNewtime(System.currentTimeMillis()/1000);
 				Activitypi.setType(activity.getType());
 				Activitypi.setTypeOrder(1);
-				activitypictureSercice.insertdo(Activitypi);
+			activitypictureSercice.insertdo(Activitypi);
+				
 				Activitypi.setOrdernumber(DateUtils.nowDate(DateUtils.YYYYMMDDHHMMSS) + NumberUtils.random(5)+Activitypi.getId());
 				activitypictureSercice.updatedo(Activitypi);
 			
