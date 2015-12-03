@@ -16,16 +16,19 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.rpframework.core.BaseAct;
+import com.rpframework.core.utils.TagUtils;
 import com.rpframework.utils.Pager;
 import com.rpframework.website.luoluo.domain.Myimpression;
 import com.rpframework.website.luoluo.domain.User;
 import com.rpframework.website.luoluo.exception.APICodeException;
 import com.rpframework.website.luoluo.service.MyimpressionService;
+import com.rpframework.website.luoluo.service.UserService;
 @Controller
 @RequestMapping("api/myimp")
 public class ApiMyimpressionAct extends BaseAct{
 	Gson gson = new Gson();
 	@Resource MyimpressionService myimpressionService;
+	@Resource UserService userService;
 	/**
 	 * 好感度添加
 	 * @param findid
@@ -45,8 +48,8 @@ public class ApiMyimpressionAct extends BaseAct{
 			throw new APICodeException(-4, "你还没登陆!");
 		}	
 		Myimpression reporta=new Myimpression();
-		reporta.setUserid(findid);
-		reporta.setFindid(currUser.getId());
+		reporta.setUserid(currUser.getId());
+		reporta.setFindid(findid);
 		reporta.setType(1);
 		boolean bFlag = myimpressionService.insertdo(reporta);
 		if(bFlag == true){ // 修改成功
@@ -81,8 +84,33 @@ public class ApiMyimpressionAct extends BaseAct{
 		JsonArray array = new JsonArray();
 		json.add("arrays", array);
 		for (Myimpression myimpression : list) {
-			JsonObject o = gson.toJsonTree(myimpression).getAsJsonObject();
-			array.add(o);
+			User lUser=userService.selectOnlyOne(myimpression.getFindid());
+			JsonObject jsonObj = gson.toJsonTree(myimpression).getAsJsonObject();
+			jsonObj.addProperty("id", lUser.getId());
+			jsonObj.addProperty("name", lUser.getName());
+			jsonObj.addProperty("nameNick", lUser.getNameNick());
+			jsonObj.addProperty("phone", lUser.getPhone());
+			jsonObj.addProperty("sex", lUser.getSex());
+			jsonObj.addProperty("age", lUser.getAge());
+			jsonObj.addProperty("marriage", lUser.getMarriage());
+			jsonObj.addProperty("hobbues", lUser.getHobbues());
+			jsonObj.addProperty("constellation", lUser.getConstellation());
+			jsonObj.addProperty("company", lUser.getCompany());
+			jsonObj.addProperty("nowlive", lUser.getNowlive());
+			jsonObj.addProperty("hometown", lUser.getHometown());
+			jsonObj.addProperty("qqaccount", lUser.getQqaccount());
+			jsonObj.addProperty("loveStar", lUser.getLoveStar());
+			jsonObj.addProperty("lovemuice", lUser.getLovemuice());
+			jsonObj.addProperty("loveDeliciousfood", lUser.getLoveDeliciousfood());
+			jsonObj.addProperty("signature", lUser.getSignature());
+			jsonObj.addProperty("ctiontime", TagUtils.formatDate(lUser.getCtiontime()));
+			jsonObj.addProperty("loveFilm", lUser.getLoveFilm());
+			jsonObj.addProperty("acnumber", lUser.getAcnumber());
+			jsonObj.addProperty("namePic", TagUtils.getFileFullPath(lUser.getNamePic()));
+			jsonObj.addProperty("personalMany", lUser.getPersonalMany());
+			jsonObj.addProperty("lng", lUser.getLng());
+			jsonObj.addProperty("lat", lUser.getLat());
+			array.add(jsonObj);
 		}
 		System.out.println("user_list: "+json.toString());
 		return json;

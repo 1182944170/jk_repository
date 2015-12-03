@@ -28,7 +28,7 @@ public class ApiBankcardExcutionAct extends BaseAct{
 	@Resource MonlyjournalsService monlyjournalsService;
 	Gson gson = new Gson();
 	
-	@RequestMapping("Reflect")
+	@RequestMapping("reflect")
 	public @ResponseBody JsonElement add(	
 			@RequestParam(required=false) Integer type,
 			@RequestParam(required=false) String name,

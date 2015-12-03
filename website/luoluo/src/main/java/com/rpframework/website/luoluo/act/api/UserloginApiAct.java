@@ -228,7 +228,6 @@ public class UserloginApiAct extends BaseAct{
 			
 			JsonObject jsonObj =new JsonObject();
 			jsonObj.addProperty("id", lUser.getId());
-			jsonObj.addProperty("id", lUser.getId());
 			jsonObj.addProperty("name", lUser.getName());
 			jsonObj.addProperty("nameNick", lUser.getNameNick());
 			jsonObj.addProperty("phone", lUser.getPhone());

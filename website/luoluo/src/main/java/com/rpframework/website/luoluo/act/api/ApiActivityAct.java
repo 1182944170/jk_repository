@@ -73,6 +73,13 @@ public class ApiActivityAct extends BaseAct{
 			int bm_num=0;
 			int i=0;
 			for (Activitypicture tt : cc) {
+				if("".equals(tt.getGrilexpense())){
+					tt.setGrilexpense(0+"");
+				}else if("".equals(tt.getChindenboy())){
+					tt.setChindenboy(0+"");
+				}else if("".equals(tt.getOldboy())){
+					tt.setOldboy(0+"");
+				}
 				i=Integer.parseInt(tt.getGrilexpense())+Integer.parseInt(tt.getChindenboy())+Integer.parseInt(tt.getOldboy());
 				bm_num+=i;
 				

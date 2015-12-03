@@ -31,6 +31,6 @@ public class ApiBanksAct extends BaseAct{
 		json.addProperty("Bankname", Banks.getBankname());
 		json.addProperty("Bankprivice", TagUtils.getFileFullPath(Banks.getBankprivice()));
 		json.addProperty("id", Banks.getId());
-		return null;
+		return json;
 	}
 }

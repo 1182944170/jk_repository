@@ -16,17 +16,23 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.rpframework.core.BaseAct;
+import com.rpframework.core.utils.TagUtils;
 import com.rpframework.utils.Pager;
+import com.rpframework.website.luoluo.domain.Activity;
 import com.rpframework.website.luoluo.domain.MyActivities;
 import com.rpframework.website.luoluo.domain.User;
 import com.rpframework.website.luoluo.exception.APICodeException;
+import com.rpframework.website.luoluo.service.ActivityService;
 import com.rpframework.website.luoluo.service.MyActivitiesSercice;
+import com.rpframework.website.luoluo.service.UserService;
 
 @Controller
 @RequestMapping("api/myactivey")
 public class ApiMyActivitiesAct extends BaseAct{
 	Gson gson = new Gson();
 	@Resource MyActivitiesSercice myactivitiesSercice;
+	@Resource UserService userSercice;
+	@Resource ActivityService   activityService ;
 	
 	/**
 	 * 显示我的收藏页面
@@ -56,7 +62,30 @@ public class ApiMyActivitiesAct extends BaseAct{
 		JsonArray array = new JsonArray();
 		json.add("arrays", array);
 		for (MyActivities act : list) {
+			User user= userSercice.selectOnlyOne(act.getUserid());
+			Activity activity= activityService.selectcal(act.getActivitiesid());
+			
 			JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
+			
+			jsonObj.addProperty("username", user.getNameNick());
+			jsonObj.addProperty("id", activity.getId());
+			jsonObj.addProperty("sponsorid", activity.getSponsorid());
+			jsonObj.addProperty("cover", TagUtils.getFileFullPath(activity.getCover()));
+			jsonObj.addProperty("activitynumber", activity.getActivitynumber());
+			jsonObj.addProperty("activitycategory", activity.getActivitycategory());
+			jsonObj.addProperty("activityname", activity.getActivityname());
+			jsonObj.addProperty("activitylocation", activity.getActivitylocation());
+			jsonObj.addProperty("number", activity.getNumber());
+			jsonObj.addProperty("children_expense", activity.getChildren_expense());
+			jsonObj.addProperty("old_expense", activity.getOld_expense());
+			jsonObj.addProperty("gril_expense", activity.getGril_expense());
+			jsonObj.addProperty("activitycontent", activity.getActivitycontent());
+			jsonObj.addProperty("starttime", activity.getStarttime());
+			jsonObj.addProperty("outtime", activity.getOuttime());
+			jsonObj.addProperty("nowforetime", activity.getNowforetime());
+			jsonObj.addProperty("lat", activity.getLat());
+			jsonObj.addProperty("lng", activity.getLng());
+			jsonObj.addProperty("starttime", activity.getStarttime());
 			array.add(jsonObj);
 		}
 		System.out.println("user_list: "+json.toString());
@@ -112,13 +141,16 @@ public class ApiMyActivitiesAct extends BaseAct{
 		}
 			
 		MyActivities c=myactivitiesSercice.selectone(id);
+		JsonObject json=new JsonObject();
 		if(c.getType()==1){
+			json.addProperty("error", false);
 			c.setType(0);
 		}else if(c.getType()==0){
+			json.addProperty("succ", true);
 			c.setType(1);
 		}
 		myactivitiesSercice.updatedo(c);
-		JsonObject json=new JsonObject();
+	
 		
 		return json;
 	}

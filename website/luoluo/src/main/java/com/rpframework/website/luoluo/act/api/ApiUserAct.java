@@ -227,14 +227,17 @@ public class ApiUserAct extends BaseAct{
 		currUser.setSignature(signature);
 		boolean bFlag = userservice.updatedo(currUser);
 		if(bFlag){
+			
+			json.addProperty("msg", "修改成功");
 			json.addProperty("succ", bFlag);
 		}else{
+			json.addProperty("msg", "修改失败");
 			json.addProperty("error", bFlag);
 		}
-		return packageUpdateDataJson(currUser);
+		return packageUpdateDataJson(currUser ,json);
 	}
-	public JsonElement packageUpdateDataJson(User user) {
-		JsonObject json = new JsonObject();
+	public JsonElement packageUpdateDataJson(User user ,JsonObject json) {
+		
 		json.addProperty("id", user.getId());
 		json.addProperty("userPic", TagUtils.getFileFullPath(user.getNamePic()));
 		json.addProperty("nickName", user.getNameNick());
@@ -337,11 +340,7 @@ public class ApiUserAct extends BaseAct{
 		json.addProperty("Mylabel8", Myperson.getMylabels());
 		json.addProperty("Userid", Myperson.getUserid());
 		return json;
-	}
-	
-	
-	
-	
+	}	
 }
 
 
