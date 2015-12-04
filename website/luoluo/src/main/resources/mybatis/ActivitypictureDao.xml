@@ -25,4 +25,7 @@
 	<select id="selecttradeorled" resultMap="Activitypicture" >
 		select * from activity_registration where ordernumber=#{out_trade_no} 
 	</select>
+	<select id="selecttradeorled" parameterType="map" resultMap="Activitypicture" >
+		select * from activity_registration where myld=#{0} and sponsorld=#{1} 
+	</select>
 </mapper>

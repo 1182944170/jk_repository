@@ -144,8 +144,12 @@ public class ApiActivityAct extends BaseAct{
 	 */
 	@RequestMapping("/activi_seleone")
 	public @ResponseBody JsonElement activiseleone(@RequestParam(value="pager",required=false) Pager<Activity> pager,
-			@RequestParam(required=false) Integer activiid){
+			@RequestParam(required=false) Integer activiid,HttpSession session){
 		JsonObject json=new JsonObject();
+		User currUser = getSessionUser(session);
+		if(currUser == null){
+			throw new APICodeException(-4, "你还没登陆!");
+		}	
 		
 		Activity activity = activityService.selectcal(activiid);
 		json.addProperty("id", activity.getId());
@@ -169,6 +173,11 @@ public class ApiActivityAct extends BaseAct{
 		json.addProperty("lng", activity.getLng());
 		
 		json.addProperty("starttime", activity.getStarttime());
+		
+		Activitypicture activitypic=activitypictureSercice.selecttwo(currUser.getId(),activiid);
+		if(activitypic!=null){
+			json.addProperty("activitypicturetype", activitypic.getTypeOrder());
+		}
 		
 		List<Activitypicture> activitypict=activitypictureSercice.selectlist(activiid);
 		JsonArray array = new JsonArray();

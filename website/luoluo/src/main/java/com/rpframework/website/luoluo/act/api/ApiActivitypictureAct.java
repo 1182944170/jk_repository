@@ -215,6 +215,37 @@ public class ApiActivitypictureAct extends BaseAct{
 		return json;
 	}
 	/**
+	 * 取消详情订单
+	 * @param id
+	 * @param session
+	 * @return
+	 * @throws ParserException
+	 * @throws InterruptedException
+	 */
+	@RequestMapping("outquxiao")
+	public @ResponseBody JsonElement outquxiao(
+			@RequestParam(required=false) Integer activityid,
+			HttpSession session
+			) throws ParserException, InterruptedException{
+		User currUser = getSessionUser(session);
+		if(currUser == null){
+			throw new APICodeException(-4, "你还没登陆!");
+		}	
+		
+		Activitypicture cc=activitypictureSercice.selecttwo(currUser.getId(),activityid);
+		Activity activity = activityService.selectcal(cc.getSponsorld());
+		cc.setType(2);
+		boolean bFlag = activitypictureSercice.baggo(currUser,cc,activity);
+		JsonObject json=new JsonObject();
+		if(bFlag){
+			activitypictureSercice.updatedo(cc);
+			json.addProperty("succ", true);
+		} else { // 添加失败
+			json.addProperty("error", false);
+		}
+		return json;
+	}
+	/**
 	 * 查询详细信息 报名的 
 	 * @param id
 	 * @param pager

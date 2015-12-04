@@ -25,16 +25,16 @@ public class AlipayConfig {
 	
 	//↓↓↓↓↓↓↓↓↓↓请在这里配置您的基本信息↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 	// 合作身份者ID，以2088开头由16位纯数字组成的字符串
-	public static String partner = "";
+	public static String partner = "2088021129818550";
 	// 商户的私钥
-	public static String private_key = "";
+	public static String private_key = "MIICdQIBADANBgkqhkiG9w0BAQEFAASCAl8wggJbAgEAAoGBAO3dgbfgfucz/YzbpqffzPHyOaWzW/wiH9W5JoHuVDuxL8ggBJiPtyrc165mFYhH3FozbD2rn218zb2NAImdyPwddIDZyD5pD0uI+zHLdrp4K9P+5fDLsGxOXMRJZRIvuqQWxcE+D/52BBPZEoxdMSsitJ+weFRKfyojfTkqV6SxAgMBAAECgYAY4jtXyRx9g2ra+X+NwFPoW7a8Ju9QiSFbcmsc3JnjRL4C6ZaRfzdiPIgzrmpCP4JFzWtdaD7dbVj4o2+S9fa4dZkDQ+yJybhGAKvbe58WxxoKXoWHmC+HNqycm/wbI97dEvfP8nMy5e6TQNnbKX47qFqKntfpgA3RsB5cYg7uoQJBAPsOR5gQuVX3z/p4DbjbLIyAXeskzZBV+wIZFpF/PoVtMKqCR6TnNMSce6TxBfCk0r7pmRJMFsHguDQ1D54GWWsCQQDyjLnRtJ47V2sXjb1VbJD5rcvJrTGn0fOa+5C4d+6M9Blw3E8YmAJoKgPDUvZRUBxmjHupumqkIFJZBpNHMLVTAkA2/4DVokxHtfsc3rH63iDbQr/QZIaX6Q4M/pwAEcULi8kOgW3ahT/9Fl7L2nU3q5PzeM8sv/h4Tpdr8HfUYYWzAkB1rt4B57bWaAXn+behmPmGi1LTWZs8J9wgmGqRdm9iKJWnct1Vu3t/etM0lC47Kbl98C+YHIDdfWk3FL+kzPdNAkAMW77vKNGccZcZ7J9Hg1bXUtGjyWWxW7p3Kh9ZBHZ9ModJ8i9BdLpuWNNX/sDcT6eo9O5AfJqsUQOIR5fFFulY";
 	public static String md5key = "";
-	public static String seller_email = "";
+	public static String seller_email = "13713789000@qq.com";
 	
 	// 支付宝的公钥，无需修改该值
-	public static String ali_public_key  = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCnxj/9qwVfgoUh/y2W89L6BkRAFljhNhgPdyPuBV64bfQNN1PjbCzkIM6qRdKBoLPXmKKMiFYnkd6rAoprih3/PrQEB/VsW8OoM8fxn67UDYuyBTqA23MML9q1+ilIZwBC2AQ2UBVOrFXfFl75p6/B5KsiNG9zpgmLCUYuLkxpLQIDAQAB";
+	public static String ali_public_key  = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDt3YG34H7nM/2M26an38zx8jmls1v8Ih/VuSaB7lQ7sS/IIASYj7cq3NeuZhWIR9xaM2w9q59tfM29jQCJncj8HXSA2cg+aQ9LiPsxy3a6eCvT/uXwy7BsTlzESWUSL7qkFsXBPg/+dgQT2RKMXTErIrSfsHhUSn8qI305KleksQIDAQAB";
 
-	public static String notifyURL = "";
+	public static String notifyURL = "http://app.rofor.com:8080/api/order/test_pay_succ";
 	//↑↑↑↑↑↑↑↑↑↑请在这里配置您的基本信息↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 	
 

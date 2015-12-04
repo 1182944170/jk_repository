@@ -139,5 +139,10 @@ public class ActivitypictureSercice extends BaseService{
 		return tActivitypictureDao.selecttradeorled(out_trade_no);
 	}
 
+	public Activitypicture selecttwo(Integer id, Integer activityid) {
+		// TODO Auto-generated method stub
+		return tActivitypictureDao.seletwoe(id,activityid);
+	}
+
 
 }
