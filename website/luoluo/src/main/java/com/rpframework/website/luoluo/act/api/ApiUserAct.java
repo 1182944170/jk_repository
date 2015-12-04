@@ -173,9 +173,9 @@ public class ApiUserAct extends BaseAct{
 			
 		boolean bFlag = userservice.updatedo(currUser);
 		if(bFlag){
-			json.addProperty("succ", bFlag);
+			json.addProperty("succ", true);
 		}else{
-			json.addProperty("error", bFlag);
+			json.addProperty("error", false);
 		}
 		return json;
 	}
@@ -282,10 +282,10 @@ public class ApiUserAct extends BaseAct{
 				boolean bFlag = userservice.changeUserPic(user, relativelyPath);
 				JsonObject json = new JsonObject();
 				if(bFlag){
-					json.addProperty("succ", bFlag);
+					json.addProperty("succ", true);
 					json.addProperty("userPic", TagUtils.getFileFullPath(relativelyPath));
 				}else{
-					json.addProperty("error", bFlag);
+					json.addProperty("error", false);
 				}
 				
 				return json;
