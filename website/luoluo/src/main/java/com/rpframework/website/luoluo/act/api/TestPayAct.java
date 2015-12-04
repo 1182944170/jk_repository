@@ -102,6 +102,7 @@ public class TestPayAct {
 						json.addProperty("sign_type", "RSA");//加密方式 不用更改
 						json.addProperty("service", "mobile.securitypay.pay");//固定接口调用
 						json.addProperty("notify_url", AlipayConfig.notifyURL);//回调服务端地址
+						json.addProperty("code", 0);//回调服务端地址
 						
 						json.addProperty("out_trade_no", orderId);//订单号
 						json.addProperty("subject", ClaName);//订单名
