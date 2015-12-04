@@ -207,9 +207,17 @@ public class ApiUserAct extends BaseAct{
 		if(currUser == null){
 			throw new APICodeException(-4, "你还没登陆!");
 		}
+		
+		if(sex==null){
+			sex="0";
+		}else if(age==null){
+			age="0";
+		}
 		int sexs = Integer.parseInt(sex);
+		
 		int ages=Integer.parseInt(age);
 		
+		currUser.setName("hjejnd");
 		currUser.setNameNick(nameNick);
 		currUser.setSex(sexs);
 		currUser.setAge(ages);
@@ -227,39 +235,34 @@ public class ApiUserAct extends BaseAct{
 		currUser.setSignature(signature);
 		boolean bFlag = userservice.updatedo(currUser);
 		if(bFlag){
-			
-			json.addProperty("msg", "修改成功");
-			json.addProperty("succ", bFlag);
+			json.addProperty("id", currUser.getId());
+			json.addProperty("userPic", TagUtils.getFileFullPath(currUser.getNamePic()));
+			json.addProperty("nickName", currUser.getNameNick());
+			json.addProperty("sex", currUser.getSex());
+			json.addProperty("age", currUser.getAge());
+			json.addProperty("phone", currUser.getPhone());
+			json.addProperty("marriage", currUser.getMarriage());
+			json.addProperty("constellation", currUser.getConstellation());
+			json.addProperty("company", currUser.getCompany());
+			json.addProperty("nowlive", currUser.getNowlive());
+			json.addProperty("hometown", currUser.getHometown());
+			json.addProperty("qqaccount", currUser.getQqaccount());
+			json.addProperty("hobbues", currUser.getHobbues());
+			json.addProperty("loveStar", currUser.getLoveStar());
+			json.addProperty("lovemuice", currUser.getLovemuice());
+			json.addProperty("loveDeliciousfood", currUser.getLoveDeliciousfood());
+			json.addProperty("loveFilm", currUser.getLoveFilm());
+			json.addProperty("signature", currUser.getSignature());
+			json.addProperty("ctiontime", currUser.getCtiontime());
+			json.addProperty("acnumber", currUser.getAcnumber());
+			session.setAttribute(SESSION_USER_KEY, currUser);
+			json.addProperty("succ", true);
 		}else{
-			json.addProperty("msg", "修改失败");
-			json.addProperty("error", bFlag);
+			json.addProperty("succ", false);
 		}
-		return packageUpdateDataJson(currUser ,json);
-	}
-	public JsonElement packageUpdateDataJson(User user ,JsonObject json) {
-		
-		json.addProperty("id", user.getId());
-		json.addProperty("userPic", TagUtils.getFileFullPath(user.getNamePic()));
-		json.addProperty("nickName", user.getNameNick());
-		json.addProperty("sex", user.getSex());
-		json.addProperty("age", user.getAge());
-		json.addProperty("phone", user.getPhone());
-		json.addProperty("marriage", user.getMarriage());
-		json.addProperty("constellation", user.getConstellation());
-		json.addProperty("company", user.getCompany());
-		json.addProperty("nowlive", user.getNowlive());
-		json.addProperty("hometown", user.getHometown());
-		json.addProperty("qqaccount", user.getQqaccount());
-		json.addProperty("hobbues", user.getHobbues());
-		json.addProperty("loveStar", user.getLoveStar());
-		json.addProperty("lovemuice", user.getLovemuice());
-		json.addProperty("loveDeliciousfood", user.getLoveDeliciousfood());
-		json.addProperty("loveFilm", user.getLoveFilm());
-		json.addProperty("signature", user.getSignature());
-		json.addProperty("ctiontime", user.getCtiontime());
-		json.addProperty("acnumber", user.getAcnumber());
 		return json;
 	}
+	
 	/**
 	 * 修改头像
 	 * @time 2015年7月30日 下午3:39:57
