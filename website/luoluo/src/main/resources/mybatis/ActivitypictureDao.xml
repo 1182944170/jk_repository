@@ -6,7 +6,7 @@
 	<resultMap type="com.rpframework.website.luoluo.domain.Activitypicture" id="Activitypicture" autoMapping="true">
 		<id property="id" column="id" />
 	</resultMap>		
-	<select id="doPager" resultMap="Activitypicture">
+	<select id="doPager" parameterType="map" resultMap="Activitypicture">
 		select * from activity_registration where 1=1
 		<if test = "page.searchMap.sponserid != null">
 			and sponsorld = #{page.searchMap.sponserid}
@@ -22,10 +22,10 @@
 	<select id="selectole" parameterType="Integer" resultMap="Activitypicture" >
 		select * from activity_registration where sponsorld=#{activiid} 
 	</select>
-	<select id="selecttradeorled" resultMap="Activitypicture" >
+	<select id="selecttradeorled" parameterType="map" resultMap="Activitypicture" >
 		select * from activity_registration where ordernumber=#{out_trade_no} 
 	</select>
-	<select id="selecttradeorled" parameterType="map" resultMap="Activitypicture" >
+	<select id="seletwoe" parameterType="map" resultMap="Activitypicture" >
 		select * from activity_registration where myld=#{0} and sponsorld=#{1} 
 	</select>
 </mapper>
