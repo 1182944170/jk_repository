@@ -194,7 +194,7 @@ public class ApiActivitypictureAct extends BaseAct{
 	 * @throws InterruptedException
 	 */
 	@RequestMapping("outgotu")
-	public @ResponseBody JsonElement quxiao(
+	public @ResponseBody JsonElement outgotu(
 			@RequestParam(required=false) Integer id,HttpSession session
 			) throws ParserException, InterruptedException{
 		User currUser = getSessionUser(session);
@@ -203,7 +203,13 @@ public class ApiActivitypictureAct extends BaseAct{
 		}	
 		
 		Activitypicture cc=activitypictureSercice.selectone(id);
+		if(cc == null){
+			throw new APICodeException(-7, "订单不存在!");
+		}	
 		Activity activity = activityService.selectcal(cc.getSponsorld());
+		if(activity == null){
+			throw new APICodeException(-8, "活动不存在!");
+		}
 		cc.setType(2);
 		boolean bFlag = activitypictureSercice.baggo(currUser,cc,activity);
 		JsonObject json=new JsonObject();
@@ -223,7 +229,7 @@ public class ApiActivitypictureAct extends BaseAct{
 	 * @throws ParserException
 	 * @throws InterruptedException
 	 */
-	@RequestMapping("outquxiao")
+	@RequestMapping("/outquxiao")
 	public @ResponseBody JsonElement outquxiao(
 			@RequestParam(required=false) Integer activityid,
 			HttpSession session
