@@ -240,6 +240,7 @@ public class ApiActivitypictureAct extends BaseAct{
 		}	
 		
 		Activitypicture  cc=activitypictureSercice.selecttwo(currUser.getId(),activityid);
+		
 		Activity activity = activityService.selectcal(cc.getSponsorld());
 		cc.setType(2);
 		boolean bFlag = activitypictureSercice.baggo(currUser,cc,activity);
