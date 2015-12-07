@@ -147,6 +147,7 @@ public class ApiActivitypictureAct extends BaseAct{
 		
 		JsonObject orderjson=new JsonObject();
 		if(bFlag){
+		
 			orderjson.addProperty("succ", true);
 		} else { // 添加失败
 			orderjson.addProperty("error", false);
@@ -232,7 +233,7 @@ public class ApiActivitypictureAct extends BaseAct{
 			throw new APICodeException(-4, "你还没登陆!");
 		}	
 		
-		Activitypicture cc=activitypictureSercice.selecttwo(currUser.getId(),activityid);
+		Activitypicture  cc=activitypictureSercice.selecttwo(currUser.getId(),activityid);
 		Activity activity = activityService.selectcal(cc.getSponsorld());
 		cc.setType(2);
 		boolean bFlag = activitypictureSercice.baggo(currUser,cc,activity);

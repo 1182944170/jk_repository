@@ -159,7 +159,6 @@ public class ApiActivityAct extends BaseAct{
 		json.addProperty("activitycategory", activity.getActivitycategory());
 		json.addProperty("activityname", activity.getActivityname());
 		json.addProperty("activitylocation", activity.getActivitylocation());
-		
 		json.addProperty("number", activity.getNumber());
 		json.addProperty("children_expense", activity.getChildren_expense());
 		json.addProperty("old_expense", activity.getOld_expense());
@@ -168,7 +167,6 @@ public class ApiActivityAct extends BaseAct{
 		json.addProperty("starttime", activity.getStarttime());
 		json.addProperty("outtime", activity.getOuttime());
 		json.addProperty("nowforetime", activity.getNowforetime());
-		
 		json.addProperty("lat", activity.getLat());
 		json.addProperty("lng", activity.getLng());
 		
@@ -176,7 +174,9 @@ public class ApiActivityAct extends BaseAct{
 		
 		Activitypicture activitypic=activitypictureSercice.selecttwo(currUser.getId(),activiid);
 		if(activitypic!=null){
+			
 			json.addProperty("activitypicturetype", activitypic.getTypeOrder());
+			
 		}
 		
 		List<Activitypicture> activitypict=activitypictureSercice.selectlist(activiid);
