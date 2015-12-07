@@ -229,8 +229,8 @@ public class ApiActivitypictureAct extends BaseAct{
 	 * @throws ParserException
 	 * @throws InterruptedException
 	 */
-	@RequestMapping("/outquxiao")
-	public @ResponseBody JsonElement outquxiao(
+	@RequestMapping("/billcancel")
+	public @ResponseBody JsonElement billcancel(
 			@RequestParam(required=false) Integer activityid,
 			HttpSession session
 			) throws ParserException, InterruptedException{
