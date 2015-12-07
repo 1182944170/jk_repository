@@ -146,10 +146,7 @@ public class ApiActivityAct extends BaseAct{
 	public @ResponseBody JsonElement activiseleone(@RequestParam(value="pager",required=false) Pager<Activity> pager,
 			@RequestParam(required=false) Integer activiid,HttpSession session){
 		JsonObject json=new JsonObject();
-		User currUser = getSessionUser(session);
-		if(currUser == null){
-			throw new APICodeException(-4, "你还没登陆!");
-		}	
+
 		Activity activity = activityService.selectcal(activiid);
 		json.addProperty("id", activity.getId());
 		json.addProperty("sponsorid", activity.getSponsorid());
