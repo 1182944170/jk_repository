@@ -238,19 +238,16 @@ public class ApiActivitypictureAct extends BaseAct{
 		if(currUser == null){
 			throw new APICodeException(-4, "你还没登陆!");
 		}	
-		
-		Activitypicture  cc=activitypictureSercice.selecttwo(currUser.getId(),activityid);
-		
-		Activity activity = activityService.selectcal(cc.getSponsorld());
-		cc.setType(2);
-		boolean bFlag = activitypictureSercice.baggo(currUser,cc,activity);
 		JsonObject json=new JsonObject();
-		if(bFlag){
-			activitypictureSercice.updatedo(cc);
-			json.addProperty("succ", true);
-		} else { // 添加失败
-			json.addProperty("error", false);
+		Activitypicture  cc=activitypictureSercice.selecttwo(currUser.getId(),activityid);
+		if(cc==null){
+			json.addProperty("type",0);
+			json.addProperty("succ", false);
+		}else{
+				json.addProperty("type",1);
+				json.addProperty("succ", true);
 		}
+
 		return json;
 	}
 	/**
