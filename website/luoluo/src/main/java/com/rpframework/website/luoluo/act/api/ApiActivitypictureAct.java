@@ -239,13 +239,19 @@ public class ApiActivitypictureAct extends BaseAct{
 			throw new APICodeException(-4, "你还没登陆!");
 		}	
 		JsonObject json=new JsonObject();
-		Activitypicture  cc=activitypictureSercice.selecttwo(currUser.getId(),activityid);
-		if(cc==null){
-			json.addProperty("type",0);
-			json.addProperty("succ", false);
-		}else{
+		try {
+			Activitypicture  cc=activitypictureSercice.selecttwo(currUser.getId(),activityid);
+			if(cc==null){
+				json.addProperty("type",0);
+				json.addProperty("succ", true);
+			}else{
 				json.addProperty("type",1);
 				json.addProperty("succ", true);
+			}
+		} catch (Exception e) {
+			json.addProperty("succ", false);
+			json.addProperty("msg", e.getMessage());
+			// TODO: handle exception
 		}
 
 		return json;
