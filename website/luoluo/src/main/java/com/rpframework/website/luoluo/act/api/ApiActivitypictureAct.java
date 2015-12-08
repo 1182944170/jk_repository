@@ -107,7 +107,7 @@ public class ApiActivitypictureAct extends BaseAct{
 				Activitypi.setNewtime(System.currentTimeMillis()/1000);
 				Activitypi.setType(activity.getType());
 				Activitypi.setTypeOrder(1);
-			activitypictureSercice.insertdo(Activitypi);
+				activitypictureSercice.insertdo(Activitypi);
 				
 				Activitypi.setOrdernumber(DateUtils.nowDate(DateUtils.YYYYMMDDHHMMSS) + NumberUtils.random(5)+Activitypi.getId());
 				activitypictureSercice.updatedo(Activitypi);

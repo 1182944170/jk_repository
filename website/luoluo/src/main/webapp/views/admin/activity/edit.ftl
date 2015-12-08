@@ -116,6 +116,17 @@ function selectMap(){
 		</div>
 	</div>
 </div>
+<div class="form-group">
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">女孩费用:</label>
+	<div class="col-xs-12 col-sm-9" >
+		<div class="clearfix" >
+			<span class="block input-icon width-40">
+				<input type="text" name="old_expense" id="name" value="${(oop.gril_expense)!''}" maxlength="32" class="form-control" />
+				<i class="icon-user"></i>
+			</span>
+		</div>
+	</div>
+</div>
 <#assign fieldName="activitypicture" />
 <#assign fieldLabel="活动图片" />
 <#include "/common-admin/upload/upload_field_pre.ftl" />

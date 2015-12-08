@@ -80,6 +80,7 @@ window.print();
 						<th>紧急电话</th>
 						<th>小孩</th>
 						<th>成人</th>
+						<th>女孩</th>
 						<th>支付金额</th>
 						<th>实际费用</th>
 						<th>手续费</th>
@@ -97,6 +98,7 @@ window.print();
 				        <td><span class="gray center">${u.emergencyphone!}</span></td>
 				        <td><span class="gray center">${u.oldboy!}</span></td>
 				        <td><span class="gray center">${u.chindenboy!}</span></td>
+				        <td><span class="gray center">${u.grilexpense!}</span></td>
 				        <td>￥<span class="gray center wore">${u.monely!}</span></td>
 				          <td>￥<span class="gray center" >${u.actualamount!}</span></td>
 				          <td>￥<span class="gray center" >${u.counterFee!}</span></td>

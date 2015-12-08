@@ -172,6 +172,10 @@ public class TestPayAct {
 				if (trade_status.equals("TRADE_FINISHED")|| trade_status.equals("TRADE_SUCCESS")) {
 					//请在这里加上商户的业务逻辑程序代码
 					Activitypicture  cc= activitypictureSercice.selecttrade(out_trade_no);
+					cc.setTypeOrder(2);
+					activitypictureSercice.updatedo(cc);
+					
+					
 					Activity acticity=activityService.selectcal(cc.getSponsorld());
 					Sponsorlis sp = sponsorService.seletOne(acticity.getSponsorid());
 					User uman=userService.selectmonly(sp.getUserid());

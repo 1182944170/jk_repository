@@ -34,6 +34,7 @@ public class AdminActivitypictureAct extends AdminAct{
 			pager=new Pager<Activitypicture>();
 		}
 		pager.getSearchMap().put("sponserid", String.valueOf(id));
+		pager.getSearchMap().put("typeOrder", 2+"");
 		pager=activitypictureSercice.getpager(pager);
 		model.put("pager", pager);
 		return this.doPackageURI("activity/userlist");

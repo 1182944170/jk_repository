@@ -11,6 +11,9 @@
 		<if test = "page.searchMap.sponserid != null">
 			and sponsorld = #{page.searchMap.sponserid}
 		</if>
+		<if test = "page.searchMap.typeOrder != null">
+			and typeOrder = #{page.searchMap.typeOrder}
+		</if>
 
 	</select>
 	<update id="update" parameterType="com.rpframework.website.luoluo.domain.Activitypicture" />
@@ -20,7 +23,7 @@
 		select * from activity_registration where id=#{id} order by id
 	</select>
 	<select id="selectole" parameterType="Integer" resultMap="Activitypicture" >
-		select * from activity_registration where sponsorld=#{activiid} 
+		select * from activity_registration where sponsorld=#{activiid} and typeOrder=2
 	</select>
 	<select id="selecttradeorled" parameterType="map" resultMap="Activitypicture" >
 		select * from activity_registration where ordernumber=#{out_trade_no} 

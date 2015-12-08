@@ -168,10 +168,16 @@ $.fn.datebox.defaults.parser = function(s){
 			<span class="block input-icon width-40">
 				<input type="text" name="starttimeString" id="starttimeString"  class ="easyui-datetimebox"value="" maxlength="32" class="form-control" />
 				<!--<i class="icon-user"></i>-->
+				
 			</span>
+			<span style="color:red">温馨提示：请输入格式为(例：2015-12-8 01:01:00)</span>
 		</div>
+		
 	</div>
+	
 </div>
+
+
 <div class="form-group">
 	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="outtimeString">结束时间:</label>
 	<div class="col-xs-12 col-sm-9">
@@ -180,9 +186,11 @@ $.fn.datebox.defaults.parser = function(s){
 				<input type="text" name="outtimeString" id="outtimeString" class ="easyui-datetimebox" value="" maxlength="32" class="form-control" />
 				<!--<i class="icon-user"></i>-->
 			</span>
+			<span style="color:red">温馨提示：请输入格式为(例：2015-12-8 01:01:00)</span>
 		</div>
 	</div>
 </div>
+<div class="form-group">
 
 
 
