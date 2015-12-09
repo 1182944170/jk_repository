@@ -12,12 +12,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import sun.security.krb5.internal.APOptions;
+
 import com.alibaba.druid.sql.parser.ParserException;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.rpframework.core.BaseAct;
+import com.rpframework.core.utils.TagUtils;
 import com.rpframework.module.common.pay.wxpay.api.WXpayApi;
 import com.rpframework.module.common.pay.wxpay.util.WXpayCore;
 import com.rpframework.utils.DateUtils;
@@ -155,8 +158,11 @@ public class ApiActivitypictureAct extends BaseAct{
 		return orderjson;
 	}
 	
+	
+	
+	
 	/**
-	 * 查询我的订单
+	 * 查询活动下的用户
 	 * @param id
 	 * @param pager
 	 * @return
@@ -170,6 +176,7 @@ public class ApiActivitypictureAct extends BaseAct{
  			pager=new Pager<Activitypicture>();
  		}
  		pager.getSearchMap().put("sponserid", String.valueOf(id));
+ 		pager.getSearchMap().put("typeOrder", 2+"");
  		activitypictureSercice.getpager(pager);
 		JsonObject json = new JsonObject();
 		json.addProperty("totalPages", pager.getTotalPages());
@@ -180,6 +187,61 @@ public class ApiActivitypictureAct extends BaseAct{
 		json.add("arrays", array);
 		for (Activitypicture act : list) {
 			JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
+			array.add(jsonObj);
+		}
+		System.out.println("user_list: "+json.toString());
+		return json;
+	}
+	/**
+	 * 查询我的订单
+	 * @param id
+	 * @param pager
+	 * @return
+	 * @throws ParserException
+	 * @throws InterruptedException
+	 */
+	@RequestMapping("listorz")
+	public @ResponseBody JsonElement listorz(@RequestParam(value="pager",required=false) Pager<Activitypicture> pager 
+			,HttpSession session) throws ParserException, InterruptedException{
+		if(pager==null){
+			pager=new Pager<Activitypicture>();
+		}
+		User currUser = getSessionUser(session);
+		if(currUser == null){
+			throw new APICodeException(-4, "你还没登陆!");
+		}	
+		pager.getSearchMap().put("myld", String.valueOf(currUser.getId()));
+		pager.getSearchMap().put("typeOrder", 2+"");
+		activitypictureSercice.getpager(pager);
+		JsonObject json = new JsonObject();
+		json.addProperty("totalPages", pager.getTotalPages());
+		json.addProperty("currentPage", pager.getCurrentPage());
+		json.addProperty("totalCount", pager.getTotalCount());
+		List<Activitypicture> list = pager.getItemList();
+		JsonArray array = new JsonArray();
+		json.add("arrays", array);
+		for (Activitypicture act : list) {
+			JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
+			Activity acc=activityService.selectcal(act.getSponsorld());
+			jsonObj.addProperty("id", acc.getId());
+			jsonObj.addProperty("sponsorid", acc.getSponsorid());
+			jsonObj.addProperty("cover", TagUtils.getFileFullPath(acc.getCover()));
+			jsonObj.addProperty("activitynumber", acc.getActivitynumber());
+			jsonObj.addProperty("activitycategory", acc.getActivitycategory());
+			jsonObj.addProperty("activityname", acc.getActivityname());
+			jsonObj.addProperty("activitylocation", acc.getActivitylocation());
+			jsonObj.addProperty("number", acc.getNumber());
+			jsonObj.addProperty("children_expense", acc.getChildren_expense());
+			jsonObj.addProperty("old_expense", acc.getOld_expense());
+			jsonObj.addProperty("gril_expense", acc.getGril_expense());
+			jsonObj.addProperty("activitycontent", acc.getActivitycontent());
+			jsonObj.addProperty("starttime", acc.getStarttime());
+			jsonObj.addProperty("outtime", acc.getOuttime());
+			jsonObj.addProperty("nowforetime", acc.getNowforetime());
+			jsonObj.addProperty("lat", acc.getLat());
+			jsonObj.addProperty("lng", acc.getLng());
+			jsonObj.addProperty("starttime", acc.getStarttime());
+			
 			array.add(jsonObj);
 		}
 		System.out.println("user_list: "+json.toString());

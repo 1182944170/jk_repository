@@ -11,6 +11,9 @@
 		<if test = "page.searchMap.sponserid != null">
 			and sponsorld = #{page.searchMap.sponserid}
 		</if>
+		<if test = "page.searchMap.myld != null">
+			and myld = #{page.searchMap.myld}
+		</if>
 		<if test = "page.searchMap.typeOrder != null">
 			and typeOrder = #{page.searchMap.typeOrder}
 		</if>
@@ -29,6 +32,6 @@
 		select * from activity_registration where ordernumber=#{out_trade_no} 
 	</select>
 	<select id="seletwoe" parameterType="map" resultMap="Activitypicture" >
-		select * from activity_registration where myld=#{0} and sponsorld=#{1} 
+		select * from activity_registration where myld=#{0} and sponsorld=#{1} and typeOrder=2
 	</select>
 </mapper>

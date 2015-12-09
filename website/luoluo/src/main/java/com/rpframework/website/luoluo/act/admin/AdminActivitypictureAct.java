@@ -39,6 +39,7 @@ public class AdminActivitypictureAct extends AdminAct{
 		model.put("pager", pager);
 		return this.doPackageURI("activity/userlist");
 	}
+
 	
 	
 	@RequestMapping("/list")

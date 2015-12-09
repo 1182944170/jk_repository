@@ -53,7 +53,10 @@
 						<td>
 							<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
 								<a class="green" href="${ctx}/admin/actcy/${u.id}/edit${suffix}" alt="Edit">
-									<i class="icon-pencil bigger-130"></i>
+									<i class="icon-pencil bigger-130">审核</i>
+								</a>
+								<a class="green" href="${ctx}/admin/actcy/${u.id}/zle${suffix}" alt="Edit">
+									<i class="icon-pencil bigger-130">修改</i>
 								</a>
 								<a class="red" href="${ctx}/admin/actcyitypic/${u.id}/list${suffix}"  alt="Delete">
 									<img src="${ctx}/resources/images/xqing.jpg" width="15" height="15" alt="" />

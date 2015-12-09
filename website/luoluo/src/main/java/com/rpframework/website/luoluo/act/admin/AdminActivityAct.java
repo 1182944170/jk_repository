@@ -76,6 +76,20 @@ public class AdminActivityAct extends AdminAct{
 		return this.doPackageURI("activity/edit");
 		//return this.add(attr, model);
 	}
+	//跳转添加页面
+	@RequestMapping("/{id}/zle")
+	public String zle(@PathVariable Integer id, Map<Object, Object> model,RedirectAttributes attr){
+		Activity activity = activityService.selectcal(id);
+		if(activity == null) {
+			throw new AdminIllegalArgumentException("不存在的ID:" + id);
+		}
+		
+		Classification fitlist=classificationService.selectcal(activity.getActivitycategory());
+		model.put("oop", activity);
+		model.put("fitlist", fitlist);
+		return this.doPackageURI("activity/addlesore");
+		//return this.add(attr, model);
+	}
 	
 	@RequestMapping("/add")
 	public String add(@RequestParam(value="pager", required=false) Pager<Classification> pager, Map<Object, Object> model, RedirectAttributes attr){
@@ -117,6 +131,7 @@ public class AdminActivityAct extends AdminAct{
 		}
 		return redirect("list");
 	}
+
 	
 	/**
 	 * 添加用户
@@ -156,6 +171,47 @@ public class AdminActivityAct extends AdminAct{
 		activity.setType(0);
 		activity.setTypeok(0);
 		activityService.insertone(activity);
+		setInfoMsg("添加成功！", attr);
+		return redirect("/admin/actcy/list");
+	}
+	/**
+	 * 添加用户
+	 * @param activity
+	 * @param model
+	 * @param attr
+	 * @param iconFile
+	 * @return
+	 */
+	@RequestMapping("/fffsave")
+	public String fffsave(@ModelAttribute Activity activity,
+			@RequestParam(value="starttimeString")String starttimeString,
+			@RequestParam(value="outtimeString")String outtimeString,
+			Map<Object, Object> model, RedirectAttributes attr,
+			@RequestParam(value="iconFile", required=false) CommonsMultipartFile iconFile
+			)throws Exception{
+		
+		if(StringUtils.isBlank(starttimeString) ||StringUtils.isBlank(outtimeString)){
+			throw new AdminIllegalArgumentException("请选择时间");
+		}
+		activity.setStarttime(DateUtils.parse(starttimeString).getTime()/1000);
+		activity.setOuttime(DateUtils.parse(outtimeString).getTime()/1000);
+		if(iconFile.getSize() > 0 ) { // 判断 icon 大小是否大于0
+			try {
+				String relativelyPath = "/fenl/" + NumberUtils.random(3) + iconFile.getOriginalFilename(); // new 随即产生随即4位数开头的一个相对路径文件名
+				fileService.saveFile(iconFile.getInputStream(), relativelyPath);  // 保存文件
+				activity.setCover(relativelyPath); // 设置相对路径
+			} catch (Exception e) {
+				throw new IllegalArgumentException("文件上传失败，原因:" + e.getLocalizedMessage());
+			}
+			
+		} else {
+			
+		}
+		activity.setSponsorid(1);
+		activity.setNowforetime(System.currentTimeMillis()/1000);
+		activity.setType(0);
+		activity.setTypeok(0);
+		activityService.updatedo(activity);
 		setInfoMsg("添加成功！", attr);
 		return redirect("/admin/actcy/list");
 	}
