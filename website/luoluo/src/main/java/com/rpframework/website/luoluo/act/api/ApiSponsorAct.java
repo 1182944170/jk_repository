@@ -59,6 +59,40 @@ public class ApiSponsorAct extends BaseAct{
 		json.addProperty("entintroduction", sponsor.getEntintroduction());
  		return json;
 	}
+	
+	/**
+	 * 通过id查询主办方的信息
+	 * @param sponsorid
+	 * @param session
+	 * @return
+	 * @throws ParserException
+	 * @throws InterruptedException
+	 */
+	@RequestMapping("listspan")
+	public @ResponseBody JsonElement listspan(
+			@RequestParam(required= false)Integer id,
+			HttpSession session) throws ParserException, InterruptedException{
+		Sponsorlis sponsor=sponsorService.seletOne(id);
+		User currUser = getSessionUser(session);	
+		if(currUser == null){
+			throw new APICodeException(-4, "你还没登陆!");
+		}
+		JsonObject json=new JsonObject();
+		
+		json.addProperty("id", sponsor.getId());
+		json.addProperty("Userphone", sponsor.getUserphone());
+		json.addProperty("Username", sponsor.getUsername());
+		json.addProperty("responname", sponsor.getResponname());
+		json.addProperty("usertelephone", sponsor.getUsertelephone());
+		json.addProperty("responsibility", TagUtils.getFileFullPath(sponsor.getResponsibility()));
+		json.addProperty("Userinformation", TagUtils.getFileFullPath(sponsor.getUserinformation()));
+		json.addProperty("entintroduction", sponsor.getEntintroduction());
+		return json;
+	}
+	
+	
+	
+	
 	//通过主办方id 查询
 	@RequestMapping("listonetoone")
 	public @ResponseBody JsonElement listonetoone(

@@ -2,9 +2,11 @@ package com.rpframework.website.luoluo.act.api;
 
 
 import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
 import com.alibaba.druid.sql.parser.ParserException;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -34,6 +37,7 @@ import com.rpframework.website.luoluo.exception.APICodeException;
 import com.rpframework.website.luoluo.service.ActivityService;
 import com.rpframework.website.luoluo.service.ActivitypictureSercice;
 import com.rpframework.website.luoluo.service.SponsorService;
+import com.rpframework.website.luoluo.service.UserService;
 
 
 
@@ -41,6 +45,8 @@ import com.rpframework.website.luoluo.service.SponsorService;
 @RequestMapping("api/activi")
 public class ApiActivityAct extends BaseAct{
 	Gson gson = new Gson();
+	
+	@Resource UserService   userService ;
 	@Resource ActivityService   activityService ;
 	@Resource ActivitypictureSercice activitypictureSercice;
 	@Resource SponsorService sponsorSercice;
@@ -137,6 +143,7 @@ public class ApiActivityAct extends BaseAct{
 			 return json;
 		 }
 	}
+
 	/**
 	 * 查询详细
 	 * @param activiid
@@ -146,7 +153,6 @@ public class ApiActivityAct extends BaseAct{
 	public @ResponseBody JsonElement activiseleone(@RequestParam(value="pager",required=false) Pager<Activity> pager,
 			@RequestParam(required=false) Integer activiid,HttpSession session){
 		JsonObject json=new JsonObject();
-
 		Activity activity = activityService.selectcal(activiid);
 		json.addProperty("id", activity.getId());
 		json.addProperty("sponsorid", activity.getSponsorid());
@@ -166,44 +172,54 @@ public class ApiActivityAct extends BaseAct{
 		json.addProperty("lat", activity.getLat());
 		json.addProperty("lng", activity.getLng());
 		json.addProperty("starttime", activity.getStarttime());
+		Sponsorlis spon=sponsorSercice.seletOne(activity.getSponsorid());
+		json.addProperty("sponuserphone", spon.getUserphone());
+		List<String> imgList = activity.getPhotoPathList();
+		JsonArray imgArray = new JsonArray();
+		if(CollectionUtils.isNotEmpty(imgList)) {
+			for (String s : imgList) {
+				imgArray.add(new JsonPrimitive(TagUtils.getFileFullPath(s)));
+			}
+		}
+		json.add("imgs", imgArray);
+		List<Activitypicture> activitypict=activitypictureSercice.selectlist(activiid);
+		int bm_num=0;
+		for (Activitypicture act : activitypict) {
+			int i=0;
+				i=Integer.parseInt(act.getGrilexpense())+Integer.parseInt(act.getChindenboy())+Integer.parseInt(act.getOldboy());
+				bm_num+=i;
+			act.setBm_num(bm_num);
+			
+		}
+		json.addProperty("bm_num", bm_num);
+		return json;
+	}
+	/**
+	 * 查询通过活动id查询报名列表
+	 * @param activiid
+	 * @return
+	 */
+	@RequestMapping("/baoming")
+	public @ResponseBody JsonElement baoming(
+			@RequestParam(required=false) Integer activiid,HttpSession session){
+		JsonObject json=new JsonObject();
 		
 		List<Activitypicture> activitypict=activitypictureSercice.selectlist(activiid);
 		JsonArray array = new JsonArray();
 		json.add("arrays", array);
-			List<String> imgList = activity.getPhotoPathList();
-			JsonArray imgArray = new JsonArray();
-			if(CollectionUtils.isNotEmpty(imgList)) {
-				for (String s : imgList) {
-					imgArray.add(new JsonPrimitive(TagUtils.getFileFullPath(s)));
-				}
-			}
-			json.add("imgs", imgArray);
-			if(pager==null){
-	 			pager=new Pager<Activity>();
-	 		}
-			pager.getSearchMap().put("typeok", String.valueOf(2));
-			pager.getSearchMap().put("activiid", String.valueOf(activiid));
-			activityService.getpager(pager);
-			List<Activity> list = pager.getItemList();
-			json.addProperty("size", list.size());
 		for (Activitypicture act : activitypict) {
-			List<Activitypicture>  cc=activitypictureSercice.selectlist(act.getId());
+			User user=userService.selectOnlyOne(act.getMyld());
+			act.setUsrr(user);
 			int bm_num=0;
 			int i=0;
-			for (Activitypicture tt : cc) {
-				i=Integer.parseInt(tt.getGrilexpense())+Integer.parseInt(tt.getChindenboy())+Integer.parseInt(tt.getOldboy());
+				i=Integer.parseInt(act.getGrilexpense())+Integer.parseInt(act.getChindenboy())+Integer.parseInt(act.getOldboy());
 				bm_num+=i;
-				
-			}
 			act.setBm_num(bm_num);
-			JsonObject jsonObj=new JsonObject();
-			jsonObj.addProperty("oldboy", act.getOldboy());
-			jsonObj.addProperty("grilexpense", act.getGrilexpense());
-			jsonObj.addProperty("chindenboy", act.getChindenboy());
-			jsonObj.addProperty("id", act.getId());
-			jsonObj.addProperty("myid", act.getMyld());
+			JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
 			array.add(jsonObj);
+			
 		}
+		
 		return json;
 	}
 	/**

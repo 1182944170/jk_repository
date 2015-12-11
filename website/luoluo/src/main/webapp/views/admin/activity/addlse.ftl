@@ -2,7 +2,7 @@
 <script type="text/javascript" src="${ctx}/resources/js/tool.js"></script>
 <!--<link type="text/css" href="${ctx}/resources/css/demo.css"  rel="stylesheet" />-->
 <link type="text/css" href="${ctx}/resources/css/easyui.css"  rel="stylesheet" />
-<script type="text/javascript" src="${ctx}/resources/js/jquery1.8.3.min.js"></script>
+<script type="text/javascript" src="${ctx}/resources/js/jquery-1.8.3.min.js"></script>
 <script type="text/javascript" src="${ctx}/resources/js/jquery.easyui.min.js"></script>
 <script>
 function selectMap(){
@@ -168,7 +168,6 @@ $.fn.datebox.defaults.parser = function(s){
 			<span class="block input-icon width-40">
 				<input type="text" name="starttimeString" id="starttimeString"  class ="easyui-datetimebox"value="" maxlength="32" class="form-control" />
 				<!--<i class="icon-user"></i>-->
-				
 			</span>
 			<span style="color:red">温馨提示：请输入格式为(例：2015-12-8 01:01:00)</span>
 		</div>
