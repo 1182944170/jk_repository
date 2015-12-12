@@ -93,10 +93,8 @@ public class ApiActivitypictureAct extends BaseAct{
 				Activitypi.setMonely(money);
 				double cc=money;
 				double counterFee=0;
-				if(activity.getType()==1){
-					Classification cole=classiftionservice.selectcal(activity.getActivitycategory());
-					counterFee=(int) (cc*cole.getProcedures()/100);
-				}
+				Classification cole=classiftionservice.selectcal(activity.getActivitycategory());
+				counterFee=(int) (cc*cole.getProcedures()/100);
 				double actualamount=cc-counterFee;
 				Activitypi.setCounterFee(counterFee);
 				Activitypi.setActualamount(actualamount);

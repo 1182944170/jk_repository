@@ -67,7 +67,7 @@ public class ApiSponsorAct extends BaseAct{
 	 * @return
 	 * @throws ParserException
 	 * @throws InterruptedException
-	 */
+	 *//*
 	@RequestMapping("listspan")
 	public @ResponseBody JsonElement listspan(
 			@RequestParam(required= false)Integer id,
@@ -89,7 +89,7 @@ public class ApiSponsorAct extends BaseAct{
 		json.addProperty("entintroduction", sponsor.getEntintroduction());
 		return json;
 	}
-	
+	*/
 	
 	
 	

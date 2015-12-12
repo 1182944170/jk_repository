@@ -16,7 +16,6 @@ import com.google.gson.JsonObject;
 import com.rpframework.core.BaseAct;
 import com.rpframework.core.utils.TagUtils;
 import com.rpframework.utils.Pager;
-import com.rpframework.website.luoluo.domain.Activity;
 import com.rpframework.website.luoluo.domain.Banks;
 import com.rpframework.website.luoluo.service.BanksSercice;
 @Controller
