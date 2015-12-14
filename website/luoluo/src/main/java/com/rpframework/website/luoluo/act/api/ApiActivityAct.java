@@ -321,20 +321,21 @@ public class ApiActivityAct extends BaseAct{
 			@RequestParam(required=false)String lng,
 			@RequestParam(required=false)String lat,HttpSession session){
 		JsonObject json = new JsonObject();
-		Sponsorlis bfgs=sponsorSercice.seletOne(sponsorid);
-		if(bfgs==null){
-			json.addProperty("error", "没有主办方");
-			return json;
-		}
+		
 		
 		User currUser = getSessionUser(session);
 		if(currUser == null){
 			throw new APICodeException(-4, "你还没登陆!");
 		}	
+		Sponsorlis bfgs=sponsorSercice.seletOnesponsor(currUser.getId());
+		if(bfgs==null){
+			json.addProperty("error", "没有主办方");
+			return json;
+		}
 		if(typeok==0){
 			Activity activity=activityService.selectcal(id);
 			activity.setActivityname(activityname);
-			activity.setSponsorid(currUser.getId());
+			activity.setSponsorid(bfgs.getId());
 			activity.setActivitycategory(activitycategory);
 			activity.setActivitylocation(activitylocation);
 			activity.setNumber(number);
@@ -396,15 +397,20 @@ public class ApiActivityAct extends BaseAct{
 			
 			@RequestParam(required=false)String lng,
 			@RequestParam(required=false)String lat,HttpSession session){
-		JsonObject json = new JsonObject();
+			JsonObject json = new JsonObject();
 		
 				User currUser = getSessionUser(session);
 				if(currUser == null){
 					throw new APICodeException(-4, "你还没登陆!");
 				}	
+				Sponsorlis bfgs=sponsorSercice.seletOnesponsor(currUser.getId());
+				if(bfgs==null){
+					json.addProperty("error", "没有主办方");
+					return json;
+				}
 					Activity activity=new Activity();
 					activity.setActivityname(activityname);
-					activity.setSponsorid(currUser.getId());
+					activity.setSponsorid(bfgs.getId());
 					activity.setActivitycategory(activitycategory);
 					activity.setActivitylocation(activitylocation);
 					activity.setNumber(number);

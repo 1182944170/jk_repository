@@ -40,12 +40,19 @@ public class ApiSponsorAct extends BaseAct{
 	 */
 	@RequestMapping("listone")
 	public @ResponseBody JsonElement listone(
-			@RequestParam(required= false)Integer userid,
+		
 			HttpSession session) throws ParserException, InterruptedException{
-		Sponsorlis sponsor=sponsorService.seletOnesponsor(userid);
+		
 		User currUser = getSessionUser(session);	
 		if(currUser == null){
 			throw new APICodeException(-4, "你还没登陆!");
+		}
+		Sponsorlis sponsor=sponsorService.seletOnesponsor(currUser.getId());
+		if(sponsor==null){
+			JsonObject json = new JsonObject();
+			json.addProperty("msg", "主办方不存在");
+			json.addProperty("succ", false);
+			return json;
 		}
 		JsonObject json=new JsonObject();
 		
@@ -60,6 +67,8 @@ public class ApiSponsorAct extends BaseAct{
  		return json;
 	}
 	
+
+
 	/**
 	 * 通过id查询主办方的信息
 	 * @param sponsorid
@@ -122,14 +131,11 @@ public class ApiSponsorAct extends BaseAct{
 			@RequestParam(required= false)String username,
 			@RequestParam(required= false)String usernowlive,
 			@RequestParam(required= false)String userphone,
-			@RequestParam(required= false)String userinformation,
 			@RequestParam(required= false)String usertelephone,
 			@RequestParam(required= false)String telephone,
 			@RequestParam(required= false)String companyname,
-			@RequestParam(required= false)String responsibility,
 			@RequestParam(required= false)String responname,
 			@RequestParam(required= false)String entintroduction,
-			@RequestParam(required= false)Integer type,
 			@RequestParam(value="myFile", required=false) CommonsMultipartFile myFile,
 			@RequestParam(value="iconFile[]", required=false) MultipartFile iconFile[],
 			@RequestParam(value="apicture[]", required=false) MultipartFile apicture[],HttpSession session){
@@ -147,13 +153,12 @@ public class ApiSponsorAct extends BaseAct{
 		sponsor.setUsername(username);
 		sponsor.setUsernowlive(usernowlive);
 		sponsor.setUserphone(userphone);
-		sponsor.setUserinformation(userinformation);
 		sponsor.setUsertelephone(usertelephone);
 		sponsor.setTelephone(telephone);
 		sponsor.setCompanyname(companyname);
-		sponsor.setResponsibility(responsibility);
 		sponsor.setResponname(responname);
 		sponsor.setEntintroduction(entintroduction);
+		sponsor.setType(2);
 		//头像图片		
 		if(myFile.getSize() > 0) {
 			try {
@@ -169,11 +174,9 @@ public class ApiSponsorAct extends BaseAct{
 			String corle=sponsorService.addPhotos(apicture);
 			sponsor.setResponsibility("["+corle+"]");
 			sponsor.setActivityTime(System.currentTimeMillis()/1000);
-			
 			//领队图片
 			String iconFiletrl=sponsorService.addPhotos(iconFile);
 			sponsor.setUserinformation("["+iconFiletrl+"]");
-					
 			sponsorService.insertsponsor(sponsor);
 			json.addProperty("succ", "添加成功");
 			return json;
@@ -183,13 +186,12 @@ public class ApiSponsorAct extends BaseAct{
 			ss.setUsername(username);
 			ss.setUsernowlive(usernowlive);
 			ss.setUserphone(userphone);
-			ss.setUserinformation(userinformation);
 			ss.setUsertelephone(usertelephone);
 			ss.setTelephone(telephone);
 			ss.setCompanyname(companyname);
-			ss.setResponsibility(responsibility);
 			ss.setResponname(responname);
 			ss.setEntintroduction(entintroduction);
+			ss.setType(2);
 			//头像图片		
 			if(myFile.getSize() > 0) {
 				try {
@@ -225,7 +227,6 @@ public class ApiSponsorAct extends BaseAct{
 			@RequestParam(value="myFile", required=false) CommonsMultipartFile myFile,
 			@RequestParam(value="iconFile[]", required=false) MultipartFile iconFile[],
 			@RequestParam(required= false)String entintroduction,
-			@RequestParam(required= false)Integer type,
 		HttpSession session){
 		
 		JsonObject json = new JsonObject();
@@ -242,6 +243,7 @@ public class ApiSponsorAct extends BaseAct{
 			sponsor.setUsernowlive(usernowlive);
 			sponsor.setUserphone(userphone);
 			sponsor.setEntintroduction(entintroduction);
+			sponsor.setType(1);
 	//头像图片		
 			if(myFile.getSize() > 0) {
 				try {
@@ -271,6 +273,7 @@ public class ApiSponsorAct extends BaseAct{
 			ss.setUsernowlive(usernowlive);
 			ss.setUserphone(userphone);
 			ss.setEntintroduction(entintroduction);
+			ss.setType(1);
 	//头像图片		
 			if(myFile.getSize() > 0) {
 				try {
