@@ -2,7 +2,7 @@
 <script type="text/javascript" src="${ctx}/resources/js/tool.js"></script>
 <!--<link type="text/css" href="${ctx}/resources/css/demo.css"  rel="stylesheet" />-->
 <link type="text/css" href="${ctx}/resources/css/easyui.css"  rel="stylesheet" />
-<script type="text/javascript" src="${ctx}/resources/js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="${ctx}/resources/js/jquery1.8.3.min.js"></script>
 <script type="text/javascript" src="${ctx}/resources/js/jquery.easyui.min.js"></script>
 <script>
 function selectMap(){
@@ -11,7 +11,7 @@ function selectMap(){
 </script>
 <script type="text/javascript">
 	function checkSub(){
-		var names = "activityname,活动名称;d-input-file-2,封面图片;activitylocation,活动地点;number,活动人数;old_expense,成人费用";
+		var names = "activityname,活动名称;phone,活动电话;d-input-file-2,封面图片;activitylocation,活动地点;number,活动人数;old_expense,成人费用";
 		return checkCommit(names);
 	}
 	
@@ -98,6 +98,17 @@ $.fn.datebox.defaults.parser = function(s){
 				<input type="hidden" name="lat" id="lat" value="">
 				<input type="text" id="lnglat" name="activitylocation" id="activitylocation" onclick="selectMap();"/>
 				<!--<i class="icon-user"></i>-->
+		</div>
+	</div>
+</div>
+<div class="form-group">
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">活动电话:</label>
+	<div class="col-xs-12 col-sm-9">
+		<div class="clearfix">
+			<span class="block input-icon width-40">
+				<input type="text" name="phone" id="phone" value="" maxlength="32" class="form-control" />
+				<!--<i class="icon-user"></i>-->
+			</span>
 		</div>
 	</div>
 </div>

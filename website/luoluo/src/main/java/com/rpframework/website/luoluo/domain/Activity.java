@@ -57,6 +57,8 @@ public class Activity {
 	private String lng; //经度
 	@FieldMapperAnnotation
 	private String lat; //纬度
+	@FieldMapperAnnotation
+	private String phone; //纬度
 	
 	private Integer bm_num; //纬度
 
@@ -75,6 +77,14 @@ public class Activity {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 	public Integer getSponsorid() {

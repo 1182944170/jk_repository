@@ -172,8 +172,13 @@ public class ApiActivityAct extends BaseAct{
 		json.addProperty("lat", activity.getLat());
 		json.addProperty("lng", activity.getLng());
 		json.addProperty("starttime", activity.getStarttime());
-		Sponsorlis spon=sponsorSercice.seletOne(activity.getSponsorid());
-		json.addProperty("sponuserphone", spon.getUserphone());
+		if("".equals(activity.getPhone())){
+			Sponsorlis spon=sponsorSercice.seletOne(activity.getSponsorid());
+			json.addProperty("sponuserphone", spon.getUserphone());
+		}else{
+			json.addProperty("sponuserphone", activity.getPhone());
+		}
+		
 		List<String> imgList = activity.getPhotoPathList();
 		JsonArray imgArray = new JsonArray();
 		if(CollectionUtils.isNotEmpty(imgList)) {

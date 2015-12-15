@@ -12,7 +12,7 @@ function selectMap(){
 </script>
 <script type="text/javascript">
 	function checkSub(){
-		var names = "activityname,活动名称;d-input-file-2,封面图片;activitylocation,活动地点;number,活动人数;old_expense,成人费用";
+		var names = "activityname,活动名称;phone,活动电话;d-input-file-2,封面图片;activitylocation,活动地点;number,活动人数;old_expense,成人费用";
 		return checkCommit(names);
 	}
 	
@@ -116,6 +116,17 @@ $.fn.datebox.defaults.parser = function(s){
 				<input type="hidden" name="lat" id="lat" value="">
 				<input type="text" id="lnglat" name="activitylocation"  value ="${(oop.activitylocation)!''}"onclick="selectMap();"/>
 				<!--<i class="icon-user"></i>-->
+		</div>
+	</div>
+</div>
+<div class="form-group">
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">活动电话:</label>
+	<div class="col-xs-12 col-sm-9">
+		<div class="clearfix">
+			<span class="block input-icon width-40">
+				<input type="text" name="phone" id="phone" value="${(oop.phone)!''}" maxlength="32" class="form-control" />
+				<i class="icon-user"></i>
+			</span>
 		</div>
 	</div>
 </div>
