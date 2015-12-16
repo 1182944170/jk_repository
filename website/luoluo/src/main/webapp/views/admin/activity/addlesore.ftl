@@ -1,8 +1,7 @@
 <title>查看活动</title>
-<script type="text/javascript" src="${ctx}/resources/js/tool.js"></script>
-<!--<link type="text/css" href="${ctx}/resources/css/demo.css"  rel="stylesheet" />-->
+<link type="text/css" href="${ctx}/resources/css/demo.css"  rel="stylesheet" />
 <link type="text/css" href="${ctx}/resources/css/easyui.css"  rel="stylesheet" />
-<script type="text/javascript" src="${ctx}/resources/js/jquery1.8.3.min.js"></script>
+<script type="text/javascript" src="${ctx}/resources/js/jquery1.9.1.min.js"></script>
 <script type="text/javascript" src="${ctx}/resources/js/jquery.easyui.min.js"></script>
 <script>
 <script>
@@ -237,15 +236,15 @@ $.fn.datebox.defaults.parser = function(s){
 
 <#assign fieldName="activitypicture" />
 <#assign rootPath="jiaju/resource/goodsImg/" />
-<#assign fieldNameValue=(goodsDO.mainImg)!"" />
+<#assign fieldNameValue=(oop.activitypicture)!"" />
 <#assign isSingle=0 />
 <#include "/common-admin/upload/upload_field_after.ftl" />
-
 <#assign fieldName="figureImg" />
 <#assign rootPath="jiaju/resource/goodsImg/" />
 <#assign fieldNameValue=(goodsDO.figureImg)!"" />
 <#assign isSingle=0 />
 <#include "/common-admin/upload/upload_field_after.ftl" />
+
 
 <#if errorMsg??>
 	<div class="hr hr-18 hr-double dotted"></div>

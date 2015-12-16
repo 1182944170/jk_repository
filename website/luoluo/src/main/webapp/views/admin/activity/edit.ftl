@@ -83,17 +83,6 @@ function selectMap(){
 	</div>
 </div>
 <div class="form-group">
-	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">活动电话:</label>
-	<div class="col-xs-12 col-sm-9">
-		<div class="clearfix">
-			<span class="block input-icon width-40">
-				<input type="text" name="phone" id="phone" value="${(oop.phone)!''}" maxlength="32" class="form-control" />
-				<i class="icon-user"></i>
-			</span>
-		</div>
-	</div>
-</div>
-<div class="form-group">
 	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">活动人数:</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">

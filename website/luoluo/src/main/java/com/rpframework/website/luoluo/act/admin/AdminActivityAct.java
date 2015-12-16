@@ -114,19 +114,9 @@ public class AdminActivityAct extends AdminAct{
 	 */
 	@RequestMapping("/dosave")
 	public String dosave(@ModelAttribute Activity activity, Map<Object, Object> model,
-			@RequestParam(value="iconFile", required=false) CommonsMultipartFile iconFile,
 			RedirectAttributes attr){
 		activity=activityService.selectcal(activity.getId());
-		if(iconFile.getSize() > 0 ) { // 判断 icon 大小是否大于0
-			try {
-				String relativelyPath = "/fenl/" + NumberUtils.random(3) + iconFile.getOriginalFilename(); // new 随即产生随即4位数开头的一个相对路径文件名
-				fileService.saveFile(iconFile.getInputStream(), relativelyPath);  // 保存文件
-				activity.setCover(relativelyPath); // 设置相对路径
-			} catch (Exception e) {
-				throw new IllegalArgumentException("文件上传失败，原因:" + e.getLocalizedMessage());
-			}
-			
-		}
+
 		if(activity.getType()==1){
 			activity.setType(0);
 			activityService.updatedo(activity);

@@ -3,7 +3,7 @@
 }
 body {
     font-family:verdana,helvetica,arial,sans-serif;
-    padding:20px;
+    /*padding:20px;*/
     font-size:12px;
     margin:0;
 }
@@ -19,3 +19,36 @@ h2 {
 .demo-tip{
 	display:none;
 }
+._box 
+{ 
+position: relative; 
+width: 119px; 
+height: 37px; 
+background-color: #39b3d7;
+background-image: url(images/bg.png); 
+background-repeat: no-repeat; 
+background-position: 0 0; 
+background-attachment: scroll; 
+line-height: 37px; 
+text-align: center; 
+color: white; 
+cursor: pointer; 
+overflow: hidden; 
+z-index: 1; 
+} 
+._box input 
+{ 
+position: absolute; 
+width: 119px; 
+height: 40px; 
+line-height: 40px; 
+font-size: 23px; 
+opacity: 0; 
+filter: "alpha(opacity=0)"; 
+filter: alpha(opacity=0); 
+-moz-opacity: 0; 
+left: -5px; 
+top: -2px; 
+cursor: pointer; 
+z-index: 2; 
+} 

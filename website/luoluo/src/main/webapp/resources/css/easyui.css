@@ -1903,7 +1903,6 @@
 .datebox .combo-arrow {
   background-image: url('images/datebox_arrow.png');
   background-position: center center;
-  background-size:6px 6px;
 }
 .datebox-button {
   background-color: #F4F4F4;
@@ -1953,7 +1952,7 @@
   opacity: 0.6;
   filter: alpha(opacity=60);
   display: block;
-  font-size: 5px;
+  font-size: 1px;
   width: 18px;
   height: 10px;
   width: 100%;
@@ -1984,12 +1983,10 @@
   filter: alpha(opacity=60);
 }
 .spinner-arrow-up {
-  background: url('images/spinner_arrows.png') no-repeat center;
-  background-size:8px 8px;
+  background: url('images/spinner_arrows.png') no-repeat 1px center;
 }
 .spinner-arrow-down {
-  background: url('images/arrow_down_2.png') no-repeat  center;
-   background-size:8px 8px;
+  background: url('images/spinner_arrows.png') no-repeat -15px center;
 }
 .spinner {
   border-color: #95B8E7;
@@ -2241,8 +2238,8 @@
 .menu-text {
   height: 20px;
   line-height: 20px;
-  float: left;
-  padding-left: 28px;
+  /*float: left;*/
+  padding-left: 0px;
 }
 .menu-icon {
   position: absolute;

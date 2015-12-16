@@ -1,8 +1,12 @@
 <title>新增活动</title>
-<script type="text/javascript" src="${ctx}/resources/js/tool.js"></script>
-<!--<link type="text/css" href="${ctx}/resources/css/demo.css"  rel="stylesheet" />-->
+<#--<script type="text/javascript" src="${ctx}/resources/js/tool.js"></script>
+<!--<link type="text/css" href="${ctx}/resources/css/demo.css"  rel="stylesheet" />
 <link type="text/css" href="${ctx}/resources/css/easyui.css"  rel="stylesheet" />
-<script type="text/javascript" src="${ctx}/resources/js/jquery1.8.3.min.js"></script>
+<script type="text/javascript" src="${ctx}/resources/js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="${ctx}/resources/js/jquery.easyui.min.js"></script>-->
+<link type="text/css" href="${ctx}/resources/css/demo.css"  rel="stylesheet" />
+<link type="text/css" href="${ctx}/resources/css/easyui.css"  rel="stylesheet" />
+<script type="text/javascript" src="${ctx}/resources/js/jquery1.9.1.min.js"></script>
 <script type="text/javascript" src="${ctx}/resources/js/jquery.easyui.min.js"></script>
 <script>
 function selectMap(){
