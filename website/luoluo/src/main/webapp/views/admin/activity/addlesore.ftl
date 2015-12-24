@@ -183,7 +183,7 @@ $.fn.datebox.defaults.parser = function(s){
 		<div class="clearfix">
 			<span class="block input-icon width-40">
 			
-				<@fck value="${(oop.activitycontent)!''}" instanceName="activity_content" inputName="activity_content" height="300px;" toolbarSet="Basic">
+				<@fck value="${(oop.activitycontent)!''}" instanceName="activitycontent" inputName="activitycontent" height="300px;" toolbarSet="Basic">
 		    	${fck_body}
 		    </@fck>
 			</span>
@@ -196,7 +196,7 @@ $.fn.datebox.defaults.parser = function(s){
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<span class="block input-icon width-40">
-				<input type="text" name="starttimeString" id="starttimeString"  class ="easyui-datetimebox"value="" maxlength="32" class="form-control" />
+				<input type="text" name="starttimeString" id="starttimeString"  class ="easyui-datetimebox"value="${(oop.starttime)!''}" maxlength="32" class="form-control" />
 				<!--<i class="icon-user"></i>-->
 				
 			</span>
@@ -213,7 +213,7 @@ $.fn.datebox.defaults.parser = function(s){
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<span class="block input-icon width-40">
-				<input type="text" name="outtimeString" id="outtimeString" class ="easyui-datetimebox" value="" maxlength="32" class="form-control" />
+				<input type="text" name="outtimeString" id="outtimeString" class ="easyui-datetimebox" value="${(oop.outtime)!''}" maxlength="32" class="form-control" />
 				<!--<i class="icon-user"></i>-->
 			</span>
 			<span style="color:red">温馨提示：请输入格式为(例：2015-12-8 01:01:00)</span>

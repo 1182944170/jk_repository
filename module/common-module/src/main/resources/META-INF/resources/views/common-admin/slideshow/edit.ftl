@@ -123,7 +123,8 @@ $(document).ready(function(){
 				required: true
 			},
 			url:{
-				required: true
+				required: true,
+				number:true
 			},
 			type: {
 				required: true

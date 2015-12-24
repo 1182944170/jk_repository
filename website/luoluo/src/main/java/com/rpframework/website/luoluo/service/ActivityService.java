@@ -69,7 +69,7 @@ public class ActivityService extends BaseService{
 		try {
 			StringBuilder str = new StringBuilder();
 			
-			str.append("/dmqh/" + name + "/" + DateUtils.nowDate(DateUtils.YYYYMMDDHHMMSS) +  NumberUtils.random() + "." + FilenameUtils.getExtension(file.getOriginalFilename()));
+			str.append("/luoluo/" + name + "/" + DateUtils.nowDate(DateUtils.YYYYMMDDHHMMSS) +  NumberUtils.random() + "." + FilenameUtils.getExtension(file.getOriginalFilename()));
 			this.fileService.saveFile(file.getInputStream(), str.toString());
 			all.append(str);
 		} catch (Exception e) {
@@ -77,6 +77,8 @@ public class ActivityService extends BaseService{
 		}
 		return all.toString();
 	}
+	
+	
 	public String addPhotos(MultipartFile arr[]) {
 		StringBuilder all =new StringBuilder();
 		boolean flag = true;

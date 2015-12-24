@@ -15,7 +15,7 @@ function selectMap(){
 
 <form action="${ctx}/admin/spons/${user.id}/saveUserda${suffix}" class="form-horizontal" role="form" id="validation-form" method="POST" enctype="multipart/form-data">
 <#if user??>
-	<input type="hidden" name="id" value="${user.id}"/>
+	<input type="hidden" name="id" value="${user.id!}"/>
 </#if>
 <fieldset>
 
@@ -97,7 +97,7 @@ function selectMap(){
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<span class="block input-icon width-40">
-				<input type="text" name="usertelephone" id="oriprice" value="${user.usertelephone}" maxlength="32" class="form-control" />
+				<input type="text" name="usertelephone" id="oriprice" value="${user.usertelephone!}" maxlength="32" class="form-control" />
 				<!--<i class="icon-user"></i>-->
 			</span>
 		</div>
@@ -108,7 +108,7 @@ function selectMap(){
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<span class="block input-icon width-40">
-				<input type="text" name="telephone" id="disprice" value="${user.telephone}" maxlength="32" class="form-control" />
+				<input type="text" name="telephone" id="disprice" value="${user.telephone!}" maxlength="32" class="form-control" />
 				<!--<i class="icon-user"></i>-->
 			</span>
 		</div>

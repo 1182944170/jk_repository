@@ -3,22 +3,16 @@ package com.rpframework.website.luoluo.act.api;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.alibaba.druid.sql.parser.ParserException;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.rpframework.core.BaseAct;
 import com.rpframework.core.api.FileService;
-import com.rpframework.core.utils.TagUtils;
-import com.rpframework.utils.DateUtils;
-import com.rpframework.utils.NumberUtils;
 import com.rpframework.website.luoluo.domain.Sponsorlis;
 import com.rpframework.website.luoluo.domain.User;
 import com.rpframework.website.luoluo.exception.APICodeException;
@@ -51,19 +45,27 @@ public class ApiSponsorAct extends BaseAct{
 		if(sponsor==null){
 			JsonObject json = new JsonObject();
 			json.addProperty("msg", "主办方不存在");
-			json.addProperty("succ", false);
+			json.addProperty("succ", true);
 			return json;
 		}
 		JsonObject json=new JsonObject();
-		
 		json.addProperty("id", sponsor.getId());
+		json.addProperty("name", sponsor.getName());
 		json.addProperty("Userphone", sponsor.getUserphone());
+		json.addProperty("usernowlive", sponsor.getUsernowlive());
+		json.addProperty("telephone", sponsor.getTelephone());
+		json.addProperty("userpicture", sponsor.getUserpicture());
+		
+		json.addProperty("companyname", sponsor.getCompanyname());
 		json.addProperty("Username", sponsor.getUsername());
 		json.addProperty("responname", sponsor.getResponname());
 		json.addProperty("usertelephone", sponsor.getUsertelephone());
-		json.addProperty("responsibility", TagUtils.getFileFullPath(sponsor.getResponsibility()));
-		json.addProperty("Userinformation", TagUtils.getFileFullPath(sponsor.getUserinformation()));
+		json.addProperty("responsibility", sponsor.getResponsibility());
+		json.addProperty("Userinformation", sponsor.getUserinformation());
 		json.addProperty("entintroduction", sponsor.getEntintroduction());
+		json.addProperty("type", sponsor.getType());
+		json.addProperty("typeopp", sponsor.getTypeopp());
+		
  		return json;
 	}
 	
@@ -114,13 +116,21 @@ public class ApiSponsorAct extends BaseAct{
 		}
 		JsonObject json=new JsonObject();
 		json.addProperty("id", sponsor.getId());
+		json.addProperty("name", sponsor.getName());
 		json.addProperty("Userphone", sponsor.getUserphone());
+		json.addProperty("usernowlive", sponsor.getUsernowlive());
+		json.addProperty("telephone", sponsor.getTelephone());
+		json.addProperty("userpicture", sponsor.getUserpicture());
+		
+		json.addProperty("companyname", sponsor.getCompanyname());
 		json.addProperty("Username", sponsor.getUsername());
 		json.addProperty("responname", sponsor.getResponname());
 		json.addProperty("usertelephone", sponsor.getUsertelephone());
-		json.addProperty("responsibility", TagUtils.getFileFullPath(sponsor.getResponsibility()));
-		json.addProperty("Userinformation", TagUtils.getFileFullPath(sponsor.getUserinformation()));
+		json.addProperty("responsibility", sponsor.getResponsibility());
+		json.addProperty("Userinformation", sponsor.getUserinformation());
 		json.addProperty("entintroduction", sponsor.getEntintroduction());
+		json.addProperty("type", sponsor.getType());
+		
 		return json;
 	}
 	//添加公司
@@ -136,16 +146,22 @@ public class ApiSponsorAct extends BaseAct{
 			@RequestParam(required= false)String companyname,
 			@RequestParam(required= false)String responname,
 			@RequestParam(required= false)String entintroduction,
-			@RequestParam(value="myFile", required=false) CommonsMultipartFile myFile,
+			
+			
+			@RequestParam(required= false)String userpicture,
+			@RequestParam(required= false)String userinformation,
+			@RequestParam(required= false)String responsibility,
+			
+			/**@RequestParam(value="myFile", required=false) CommonsMultipartFile myFile,
 			@RequestParam(value="iconFile[]", required=false) MultipartFile iconFile[],
-			@RequestParam(value="apicture[]", required=false) MultipartFile apicture[],HttpSession session){
+			@RequestParam(value="apicture[]", required=false) MultipartFile apicture[],**/HttpSession session){
 	
 		JsonObject json = new JsonObject();
 		User currUser = getSessionUser(session);
 		if(currUser == null){
 			throw new APICodeException(-4, "你还没登陆!");
 		}
-		Sponsorlis ss=sponsorService.seletOne(currUser.getId());
+		Sponsorlis ss=sponsorService.seletOnesponsor(currUser.getId());
 		if(ss==null){
 		Sponsorlis sponsor=new Sponsorlis();
 		sponsor.setName(name);
@@ -159,8 +175,14 @@ public class ApiSponsorAct extends BaseAct{
 		sponsor.setResponname(responname);
 		sponsor.setEntintroduction(entintroduction);
 		sponsor.setType(2);
+		sponsor.setUserpicture(userpicture);
+		sponsor.setActivityTime(System.currentTimeMillis()/1000);
+		sponsor.setResponsibility(responsibility);
+		sponsor.setUserinformation(userinformation);
+		
+		
 		//头像图片		
-		if(myFile.getSize() > 0) {
+		/*if(myFile.getSize() > 0) {
 			try {
 				String relativelyCardFrontPhoto = "/luoluo/user/userPic/" + DateUtils.nowDate(DateUtils.YYYYMMDDHHMMSS) + NumberUtils.random() + "." + FilenameUtils.getExtension(myFile.getOriginalFilename());
 				fileService.saveFile(myFile.getInputStream(), relativelyCardFrontPhoto); 
@@ -176,7 +198,7 @@ public class ApiSponsorAct extends BaseAct{
 			sponsor.setActivityTime(System.currentTimeMillis()/1000);
 			//领队图片
 			String iconFiletrl=sponsorService.addPhotos(iconFile);
-			sponsor.setUserinformation("["+iconFiletrl+"]");
+			sponsor.setUserinformation("["+iconFiletrl+"]");*/
 			sponsorService.insertsponsor(sponsor);
 			json.addProperty("succ", "添加成功");
 			return json;
@@ -192,8 +214,12 @@ public class ApiSponsorAct extends BaseAct{
 			ss.setResponname(responname);
 			ss.setEntintroduction(entintroduction);
 			ss.setType(2);
+			ss.setUserpicture(userpicture);
+			ss.setActivityTime(System.currentTimeMillis()/1000);
+			ss.setResponsibility(responsibility);
+			ss.setUserinformation(userinformation);
 			//头像图片		
-			if(myFile.getSize() > 0) {
+		/*	if(myFile.getSize() > 0) {
 				try {
 					String relativelyCardFrontPhoto = "/luoluo/user/userPic/" + DateUtils.nowDate(DateUtils.YYYYMMDDHHMMSS) + NumberUtils.random() + "." + FilenameUtils.getExtension(myFile.getOriginalFilename());
 					fileService.saveFile(myFile.getInputStream(), relativelyCardFrontPhoto); 
@@ -210,7 +236,7 @@ public class ApiSponsorAct extends BaseAct{
 			
 			//领队图片
 			String iconFiletrl=sponsorService.addPhotos(iconFile);
-			ss.setUserinformation("["+iconFiletrl+"]");
+			ss.setUserinformation("["+iconFiletrl+"]");*/
 			ss.setTypeopp(0);
 				sponsorService.updatedo(ss);
 				json.addProperty("succ", "添加成功");
@@ -224,8 +250,14 @@ public class ApiSponsorAct extends BaseAct{
 			@RequestParam(required= false)String username,
 			@RequestParam(required= false)String usernowlive,
 			@RequestParam(required= false)String userphone,
-			@RequestParam(value="myFile", required=false) CommonsMultipartFile myFile,
-			@RequestParam(value="iconFile[]", required=false) MultipartFile iconFile[],
+			
+			
+			@RequestParam(required= false)String userpicture,
+			@RequestParam(required= false)String userinformation,
+			
+			
+			/*@RequestParam(value="myFile", required=false) CommonsMultipartFile myFile,
+			@RequestParam(value="iconFile[]", required=false) MultipartFile iconFile[],*/
 			@RequestParam(required= false)String entintroduction,
 		HttpSession session){
 		
@@ -234,7 +266,7 @@ public class ApiSponsorAct extends BaseAct{
 		if(currUser == null){
 			throw new APICodeException(-4, "你还没登陆!");
 		}
-		Sponsorlis ss=sponsorService.seletOne(currUser.getId());
+		Sponsorlis ss=sponsorService.seletOnesponsor(currUser.getId());
 		if(ss==null){
 			Sponsorlis sponsor=new Sponsorlis();
 			sponsor.setName(name);
@@ -244,8 +276,10 @@ public class ApiSponsorAct extends BaseAct{
 			sponsor.setUserphone(userphone);
 			sponsor.setEntintroduction(entintroduction);
 			sponsor.setType(1);
+			sponsor.setUserpicture(userpicture);
+			sponsor.setUserinformation(userinformation);
 	//头像图片		
-			if(myFile.getSize() > 0) {
+			/*if(myFile.getSize() > 0) {
 				try {
 					String relativelyCardFrontPhoto = "/luoluo/user/userPic/" + DateUtils.nowDate(DateUtils.YYYYMMDDHHMMSS) + NumberUtils.random() + "." + FilenameUtils.getExtension(myFile.getOriginalFilename());
 					fileService.saveFile(myFile.getInputStream(), relativelyCardFrontPhoto); 
@@ -259,7 +293,7 @@ public class ApiSponsorAct extends BaseAct{
 	//个人信息图片
 			//公司图片
 			String corle=sponsorService.addPhotos(iconFile);
-			sponsor.setUserinformation("["+corle+"]");
+			sponsor.setUserinformation("["+corle+"]");*/
 			sponsor.setActivityTime(System.currentTimeMillis()/1000);
 			
 			sponsorService.insertsponsor(sponsor);
@@ -274,8 +308,10 @@ public class ApiSponsorAct extends BaseAct{
 			ss.setUserphone(userphone);
 			ss.setEntintroduction(entintroduction);
 			ss.setType(1);
+			ss.setUserpicture(userpicture);
+			ss.setUserinformation(userinformation);
 	//头像图片		
-			if(myFile.getSize() > 0) {
+			/*if(myFile.getSize() > 0) {
 				try {
 					String relativelyCardFrontPhoto = "/luoluo/user/userPic/" + DateUtils.nowDate(DateUtils.YYYYMMDDHHMMSS) + NumberUtils.random() + "." + FilenameUtils.getExtension(myFile.getOriginalFilename());
 					fileService.saveFile(myFile.getInputStream(), relativelyCardFrontPhoto); 
@@ -288,7 +324,7 @@ public class ApiSponsorAct extends BaseAct{
 	
 	//个人信息图片
 			String corle=sponsorService.addPhotos(iconFile);
-			ss.setUserinformation("["+corle+"]");
+			ss.setUserinformation("["+corle+"]");*/
 			ss.setActivityTime(System.currentTimeMillis()/1000);	
 			ss.setTypeopp(0);
 			sponsorService.updatedo(ss);

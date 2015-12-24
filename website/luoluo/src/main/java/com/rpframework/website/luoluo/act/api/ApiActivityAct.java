@@ -7,14 +7,12 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.alibaba.druid.sql.parser.ParserException;
 import com.google.gson.Gson;
@@ -27,7 +25,6 @@ import com.rpframework.core.api.FileService;
 import com.rpframework.core.utils.TagUtils;
 import com.rpframework.utils.CollectionUtils;
 import com.rpframework.utils.DateUtils;
-import com.rpframework.utils.NumberUtils;
 import com.rpframework.utils.Pager;
 import com.rpframework.website.luoluo.domain.Activity;
 import com.rpframework.website.luoluo.domain.Activitypicture;
@@ -154,6 +151,11 @@ public class ApiActivityAct extends BaseAct{
 			@RequestParam(required=false) Integer activiid,HttpSession session){
 		JsonObject json=new JsonObject();
 		Activity activity = activityService.selectcal(activiid);
+		if(activity==null){
+			json.addProperty("msg", "活动不存在");
+			json.addProperty("succ", false);
+			return json;
+		}
 		json.addProperty("id", activity.getId());
 		json.addProperty("sponsorid", activity.getSponsorid());
 		json.addProperty("cover", TagUtils.getFileFullPath(activity.getCover()));
@@ -174,11 +176,15 @@ public class ApiActivityAct extends BaseAct{
 		json.addProperty("starttime", activity.getStarttime());
 		if("".equals(activity.getPhone())){
 			Sponsorlis spon=sponsorSercice.seletOne(activity.getSponsorid());
+			if(spon==null){
+				json.addProperty("msg", "活动主办方不存在");
+				json.addProperty("succ", false);
+				return json;
+			}
 			json.addProperty("sponuserphone", spon.getUserphone());
 		}else{
 			json.addProperty("sponuserphone", activity.getPhone());
 		}
-		
 		List<String> imgList = activity.getPhotoPathList();
 		JsonArray imgArray = new JsonArray();
 		if(CollectionUtils.isNotEmpty(imgList)) {
@@ -308,7 +314,9 @@ public class ApiActivityAct extends BaseAct{
 	@RequestMapping("/activi_upou")
 	public @ResponseBody JsonElement activiupou(
 			@RequestParam(required=false)Integer id,
-			@RequestParam(value="iconFile[]", required=false) MultipartFile iconFile[],
+			@RequestParam(required=false)String iconFile,
+			
+			//@RequestParam(value="iconFile[]", required=false) MultipartFile iconFile[],
 			@RequestParam(required=false)Integer sponsorid,
 			@RequestParam(required=false)String activityname,
 			@RequestParam(required=false)Integer activitycategory,
@@ -317,7 +325,9 @@ public class ApiActivityAct extends BaseAct{
 			@RequestParam(required=false)Integer children_expense,
 			@RequestParam(required=false)Integer old_expense,
 			@RequestParam(required=false)Integer gril_expense,
-			@RequestParam(value="apicture", required=false) CommonsMultipartFile apicture,
+			@RequestParam(required=false)String apicture,
+			//@RequestParam(value="apicture", required=false) CommonsMultipartFile apicture,
+			
 			@RequestParam(required=false)String activitycontent,
 			@RequestParam(required=false)String starttime,
 			@RequestParam(required=false)String outtime,
@@ -347,8 +357,9 @@ public class ApiActivityAct extends BaseAct{
 			activity.setGril_expense(gril_expense);
 			activity.setChildren_expense(children_expense);
 			activity.setOld_expense(old_expense);
-			
-			String corle=activityService.addPhotos(iconFile);
+			activity.setActivitypicture(iconFile);
+			activity.setCover(apicture);
+			/*String corle=activityService.addPhotos(iconFile);
 			activity.setActivitypicture("["+corle+"]");
 			if(apicture.getSize() > 0) {
 				try {
@@ -358,7 +369,7 @@ public class ApiActivityAct extends BaseAct{
 				} catch (Exception e) {
 					throw new IllegalArgumentException("文件上传失败，原因:" + e.getLocalizedMessage());
 				}
-			} 
+			} */
 			//缺活动图片
 			activity.setActivitycontent(activitycontent);
 			activity.setType(0);
@@ -385,7 +396,8 @@ public class ApiActivityAct extends BaseAct{
 	 */
 	@RequestMapping("/activi_addsave")
 	public @ResponseBody JsonElement activiaddsave(
-			@RequestParam(value="iconFile[]", required=false) MultipartFile iconFile[],
+			//@RequestParam(value="iconFile[]", required=false) MultipartFile iconFile[],
+			@RequestParam(required=false)String iconFile,
 			@RequestParam(required=false)Integer sponsorid,
 			@RequestParam(required=false)String activityname,
 			@RequestParam(required=false)Integer activitycategory,
@@ -394,12 +406,12 @@ public class ApiActivityAct extends BaseAct{
 			@RequestParam(required=false)Integer children_expense,
 			@RequestParam(required=false)Integer old_expense,
 			@RequestParam(required=false)Integer gril_expense,
-			@RequestParam(value="apicture", required=false) CommonsMultipartFile apicture,
+			@RequestParam(required=false)String apicture,
+			//@RequestParam(value="apicture", required=false) CommonsMultipartFile apicture,
 			@RequestParam(required=false)String activitycontent,
 			@RequestParam(required=false)String starttime,
 			@RequestParam(required=false)String outtime,
 			@RequestParam(required=false)Integer type,
-			
 			@RequestParam(required=false)String lng,
 			@RequestParam(required=false)String lat,HttpSession session){
 			JsonObject json = new JsonObject();
@@ -425,9 +437,11 @@ public class ApiActivityAct extends BaseAct{
 					activity.setNowforetime(System.currentTimeMillis()/1000);
 					activity.setStarttime(DateUtils.parse(starttime).getTime()/1000);
 					activity.setOuttime(DateUtils.parse(outtime).getTime()/1000);
-					
-					String corle=activityService.addPhotos(iconFile);
+					activity.setActivitypicture(iconFile);
+					activity.setCover(apicture);
+					/*String corle=activityService.addPhotos(iconFile);
 					activity.setActivitypicture("["+corle+"]");
+					
 					if(apicture.getSize() > 0) {
 						try {
 							String relativelyCardFrontPhoto = "/luoluo/user/userPic/" + DateUtils.nowDate(DateUtils.YYYYMMDDHHMMSS) + NumberUtils.random() + "." + FilenameUtils.getExtension(apicture.getOriginalFilename());
@@ -436,7 +450,7 @@ public class ApiActivityAct extends BaseAct{
 						} catch (Exception e) {
 							throw new IllegalArgumentException("文件上传失败，原因:" + e.getLocalizedMessage());
 						}
-					} 
+					} */
 					//缺活动图片
 					activity.setActivitycontent(activitycontent);
 					activity.setType(0);
@@ -467,8 +481,27 @@ public class ApiActivityAct extends BaseAct{
 		return json;
 	}
 	
+	@RequestMapping(value="/uploads",produces = "application/json; charset=utf-8")
+	public @ResponseBody String dosave(@RequestParam(value="file[]", required=false) MultipartFile file[] ,//图片对象
+			@RequestParam(value="folder",required=false) String folder,//文件夹名
+			@RequestParam(value="callback",required=false) String callback,//跨域
+			HttpServletRequest request){
+		JsonObject json = new JsonObject();
+		
+			folder = (folder==null || folder == "") ? "folder" : folder;//如果上传的文件夹名为空，则默认为folder
+			String corle=activityService.addPhotos(file);
+			json.addProperty("succ", true);
+			json.addProperty("url", "["+corle+"]");//返回物理存储地址
+		
+		if(StringUtils.isBlank(callback)){
+			return json.toString();
+		}
+		return (callback + "(" + json.toString() + ")");
+	}
+	
+	
 	@RequestMapping(value="/upload",produces = "application/json; charset=utf-8")
-	public @ResponseBody String dosave(@RequestParam(value="file", required=false) MultipartFile file ,//图片对象
+	public @ResponseBody String dosavedo(@RequestParam(value="file", required=false) MultipartFile file ,//图片对象
 			@RequestParam(value="folder",required=false) String folder,//文件夹名
 			@RequestParam(value="callback",required=false) String callback,//跨域
 			HttpServletRequest request){
