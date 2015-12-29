@@ -106,34 +106,24 @@ public class TestPayAct {
 		public @ResponseBody String TestPaySucc(HttpServletRequest request) throws UnsupportedEncodingException{
 			String ret = "";
 			//获取支付宝POST过来反馈信息
-			logger.info("GoodsGrabTipQuartzJob 处1开抢通知数 " );
-			logger.info("GoodsGrabTipQuartzJob 处理商1理商品开抢通知数 " );
-			logger.info("GoodsGrabTipQuartzJob 处理商品11开抢通知数 " );
-			logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
-			logger.info("GoodsGrabTipQuartzJob 处理商品111开抢通知数 " );
-			logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
-			logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
-			logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
-			logger.info("GoodsGrabTipQuartzJob 处理商品开111抢通知数 " );
-			logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
-			logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
-			logger.info("GoodsGrabTipQuartzJob 处理商品开11抢通知数 " );
-			logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
-			logger.info("GoodsGrabTipQuartzJob 处理商品开1抢通知数 " );
-			logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
-			logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
-			logger.info("GoodsGrabTipQuartzJob 处理商品开111抢通知数 " );
-			logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
-			logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
-			logger.info("GoodsGrabTipQuartzJob 处理商品开111抢通知数 " );
-			logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
-			logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
-			logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
-			logger.info("GoodsGrabTipQuartzJob 处理商品开111抢通知数 " );
-			logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
-			logger.info("GoodsGrabTipQuartzJob 处理商品111开抢通知数 " );
-			logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
-			logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
+			logger.info("11111111111111111111111111111111111" );
+			logger.info("11111111111111111111111111111111111" );
+			logger.info("11111111111111111111111111111111111" );
+			logger.info("11111111111111111111111111111111111" );
+			logger.info("11111111111111111111111111111111111" );
+			logger.info("11111111111111111111111111111111111" );
+			logger.info("11111111111111111111111111111111111" );
+			logger.info("11111111111111111111111111111111111" );
+			logger.info("11111111111111111111111111111111111" );
+			logger.info("11111111111111111111111111111111111" );
+			logger.info("11111111111111111111111111111111111" );
+			logger.info("11111111111111111111111111111111111" );
+			logger.info("11111111111111111111111111111111111" );
+			logger.info("11111111111111111111111111111111111" );
+			logger.info("11111111111111111111111111111111111" );
+			logger.info("11111111111111111111111111111111111" );
+			logger.info("11111111111111111111111111111111111" );
+		
 			Map<String,String> params = new HashMap<String,String>();
 			Map requestParams = request.getParameterMap();
 			for (Iterator iter = requestParams.keySet().iterator(); iter.hasNext();) {
@@ -148,20 +138,16 @@ public class TestPayAct {
 				//valueStr = new String(valueStr.getBytes("ISO-8859-1"), "gbk");
 				params.put(name, valueStr);
 			}
-			logger.info("GoodsGrabTipQuartzJob 处理商品开rwerw抢通知数 " +params);
-			logger.info("GoodsGrabTipQuartzJob 处理商品开1抢通知数 " +params );
-			logger.info("GoodsGrabTipQuartzJob 处理商品开rwerew抢通知数 "  +params);
-			logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 "  +params);
-			logger.info("GoodsGrabTipQuartzJob 处理商fdasfd品开fdsafwe抢通知数 " +params );
-			logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 "  +params);
-		
-			String out_trade_no = new String(request.getParameter("out_trade_no").getBytes("ISO-8859-1"),"UTF-8");
-			logger.info("GoodsGrabTipQuartzJob 处理商品开rwerw抢通知数 " +out_trade_no);
-			logger.info("GoodsGrabTipQuartzJob 处理商品开1抢通知数 " +out_trade_no );
-			logger.info("GoodsGrabTipQuartzJob 处理商品开rwerew抢通知数 "  +out_trade_no);
-			logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 "  +out_trade_no);
-					
+			logger.info("222222222222222222222222222222222 ");
+			logger.info("222222222222222222222222222222222 ");
+			logger.info("222222222222222222222222222222222 ");
+			logger.info("222222222222222222222222222222222 ");
+			logger.info("222222222222222222222222222222222 ");
+			logger.info("222222222222222222222222222222222 ");
+			logger.info("222222222222222222222222222222222 ");
+
 			//支付宝交易号
+			String out_trade_no = new String(request.getParameter("out_trade_no").getBytes("ISO-8859-1"),"UTF-8");
 			//交易状态
 			String trade_status = new String(request.getParameter("trade_status").getBytes("ISO-8859-1"),"UTF-8");
 			//获取支付宝的通知返回参数，可参考技术文档中页面跳转同步通知参数列表(以上仅供参考)//
@@ -182,65 +168,30 @@ public class TestPayAct {
 			if(AlipayNotify.verify(params)){//验证成功
 				double total_fee = NumberUtils.parseDouble(request.getParameter("total_fee"));
 				//////////////////////////////////////////////////////////////////////////////////////////
-				logger.info("GoodsGrabTipQuartzJob 处1开抢2知数 " );
-				logger.info("GoodsGrabTipQuartzJob 处理商1理商品开抢通知数 " );
-				logger.info("GoodsGrabTipQuartzJob 处理商品211开抢通知数 " );
-				logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
-				logger.info("GoodsGrabTipQuartzJob 处理商品111开抢通知数 " );
-				logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
-				logger.info("GoodsGrabTipQuartzJob 处理商品开22222抢通知数 " );
-				logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
-				logger.info("GoodsGrabTipQuartzJob 处理商品开111抢通知数 " );
-				logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
-				logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
-				logger.info("GoodsGrabTipQuartzJob 处理商品2222开11抢通知数 " );
-				logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
-				logger.info("GoodsGrabTipQuartzJob 处理商品开1抢通知数 " );
-				logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
-				logger.info("GoodsGrabTipQuartzJob 处理商品开抢222通知数 " );
-				logger.info("GoodsGrabTipQuartzJob 处理商品开111抢通知数 " );
-				logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
-				logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
-				logger.info("GoodsGrabTipQuartzJob 处理商品开111抢通知数 " );
-				logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
-				logger.info("GoodsGrabTipQuartzJob 处理商品开抢222通知数 " );
-				logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
-				logger.info("GoodsGrabTipQuartzJob 处理商品开111抢通知数 " );
-				logger.info("GoodsGrabTipQuartzJob 处理商品开2222抢通知数 " );
-				logger.info("GoodsGrabTipQuartzJob 处理商品111开抢通知数 " );
-				logger.info("GoodsGrabTipQuartzJob 处理商品开222抢通知数 " );
-				logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
+				logger.info("333333333333333333333333333" );
+				logger.info("333333333333333333333333333" );
+				logger.info("333333333333333333333333333" );
+				logger.info("333333333333333333333333333" );
+				logger.info("333333333333333333333333333" );
+				
 				if (trade_status.equals("TRADE_FINISHED")|| trade_status.equals("TRADE_SUCCESS")) {
 					//请在这里加上商户的业务逻辑程序代码
-					logger.info("GoodsGrabTipQuartzJob 处理商3333品开抢通知数 " );
-					logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
-					logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
-					logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
-					logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
-					logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
-					logger.info("GoodsGrabTipQuartzJob 处理商品3333开抢通知数 " );
-					logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
-					logger.info("GoodsGrabTipQuartzJob 处理商品333开抢通知数 " );
-					logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
-					logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
-					logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
-					logger.info("GoodsGrabTipQuartzJob 处理商品333抢通知数 " );
-					logger.info("GoodsGrabTipQuartzJob 处理商品33开抢通知数 " );
-					logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
-					logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
-					logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
-					logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
-					logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
-					logger.info("GoodsGrabTipQuartzJob 处理商品开333抢通知数 " );
-					logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
-					logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
-					logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
-					logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
-					logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
-					logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
-					logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
-					logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
-					logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
+					logger.info("44444444444444444444444444444" );
+					logger.info("44444444444444444444444444444" );
+					logger.info("44444444444444444444444444444" );
+					logger.info("44444444444444444444444444444" );
+					logger.info("44444444444444444444444444444" );
+					logger.info("44444444444444444444444444444" );
+					logger.info("44444444444444444444444444444" );
+					logger.info("44444444444444444444444444444" );
+					logger.info("44444444444444444444444444444" );
+					logger.info("44444444444444444444444444444" );
+					logger.info("44444444444444444444444444444" );
+					logger.info("44444444444444444444444444444" );
+					logger.info("44444444444444444444444444444" );
+					logger.info("44444444444444444444444444444" );
+					logger.info("44444444444444444444444444444" );
+					
 					Activitypicture  cc= activitypictureSercice.selecttrade(out_trade_no);
 					
 					cc.setTypeOrder(2);
