@@ -53,7 +53,15 @@ public class Activitypicture {
 	
 	
 	private Integer bm_num;  // 订单状态
-	private User usrr;
+	private User user;
+	private Activitypicture activitypicture;
+	
+	public Activitypicture getActivitypicture() {
+		return activitypicture;
+	}
+	public void setActivitypicture(Activitypicture activitypicture) {
+		this.activitypicture = activitypicture;
+	}
 	public String getGrilexpense() {
 		return grilexpense;
 	}
@@ -74,11 +82,12 @@ public class Activitypicture {
 		this.number = number;
 	}
 	
-	public User getUsrr() {
-		return usrr;
+	
+	public User getUser() {
+		return user;
 	}
-	public void setUsrr(User usrr) {
-		this.usrr = usrr;
+	public void setUser(User user) {
+		this.user = user;
 	}
 	public Integer getSponsorld() {
 		return sponsorld;

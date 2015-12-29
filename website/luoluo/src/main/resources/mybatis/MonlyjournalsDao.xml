@@ -8,7 +8,7 @@
 	</resultMap>		
 
 	<select id="doPager" resultMap="Monlyjournals">
-         select * from  monlyjournals where 1=1
+         select * from  monlyjournal where 1=1
          <if test = "page.searchMap.type!= null">
 		
 		</if>
@@ -19,6 +19,9 @@
 	<delete id="delete" parameterType="com.rpframework.website.luoluo.domain.Monlyjournals" />
 	
 	<select id="select" parameterType="Integer" resultMap="Monlyjournals">
-         select * from  monlyjournals where id=#{id}
+         select * from  monlyjournal where id=#{id}
+	</select>
+	<select id="selecttole" resultMap="Monlyjournals">
+         select * from  monlyjournal where userid=#{id}
 	</select>
 </mapper>

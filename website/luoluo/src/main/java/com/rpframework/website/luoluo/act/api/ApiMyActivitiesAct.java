@@ -108,17 +108,24 @@ public class ApiMyActivitiesAct extends BaseAct{
 		if(currUser == null){
 			throw new APICodeException(-4, "你还没登陆!");
 		}
+		MyActivities c=myactivitiesSercice.selectpptle(currUser.getId(),activitiesid);
+		JsonObject json=new JsonObject();
+		if(c==null){
 			MyActivities myactivities=new MyActivities();
 			myactivities.setActivitiesid(activitiesid);
 			myactivities.setUserid(currUser.getId());
 			myactivities.setType(type);
 			boolean bFlag=myactivitiesSercice.insertongl(myactivities);
-		JsonObject json=new JsonObject();
-		if(bFlag == true){ // 修改成功
-			json.addProperty("succ", true);
-		} else { // 修改失败
-			json.addProperty("error", false);
-		} 
+			
+			if(bFlag == true){ // 修改成功
+				json.addProperty("succ", true);
+			} else { // 修改失败
+				json.addProperty("succ", false);
+			} 
+		}else{
+			json.addProperty("succ", false);
+		}
+		
 		return json;
 	}
 	/**
@@ -152,6 +159,24 @@ public class ApiMyActivitiesAct extends BaseAct{
 		myactivitiesSercice.updatedo(c);
 	
 		
+		return json;
+	}
+	@RequestMapping("addlist")
+	public @ResponseBody JsonElement addlist(
+			@RequestParam(required= false)Integer type,//0.1
+			@RequestParam(required= false)Integer activitiesid,HttpSession session)throws Exception{
+		User currUser = getSessionUser(session);	
+		if(currUser == null){
+			throw new APICodeException(-4, "你还没登陆!");
+		}
+		
+		MyActivities c=myactivitiesSercice.selectpptle(currUser.getId(),activitiesid);
+		JsonObject json=new JsonObject();
+		if(c==null){
+			json.addProperty("error", false);
+		}else {
+			json.addProperty("succ", true);
+		}
 		return json;
 	}
 }

@@ -42,6 +42,11 @@ public class MyActivitiesSercice extends BaseService{
 		// TODO Auto-generated method stub
 		return iMyActivities.update(c);
 	}
+
+	public MyActivities selectpptle(Integer id, Integer activitiesid) {
+		// TODO Auto-generated method stub
+		return iMyActivities.selectppt(id,activitiesid);
+	}
 	
 
 }

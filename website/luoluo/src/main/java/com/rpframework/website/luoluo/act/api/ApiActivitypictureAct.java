@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.alibaba.druid.sql.parser.ParserException;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -31,6 +32,7 @@ import com.rpframework.website.luoluo.exception.APICodeException;
 import com.rpframework.website.luoluo.service.ActivityService;
 import com.rpframework.website.luoluo.service.ActivitypictureSercice;
 import com.rpframework.website.luoluo.service.ClassificationService;
+import com.rpframework.website.luoluo.service.UserService;
 
 
 @Controller
@@ -40,6 +42,7 @@ public class ApiActivitypictureAct extends BaseAct{
 	@Resource ActivitypictureSercice activitypictureSercice;
 	@Resource ActivityService   activityService ;
 	@Resource ClassificationService   classiftionservice;
+	@Resource UserService  userService;
 	/**
 	 * 添加报名信息
 	 * 提交订单
@@ -106,7 +109,6 @@ public class ApiActivitypictureAct extends BaseAct{
 				Activitypi.setType(activity.getType());
 				Activitypi.setTypeOrder(1);
 				activitypictureSercice.insertdo(Activitypi);
-				
 				Activitypi.setOrdernumber(DateUtils.nowDate(DateUtils.YYYYMMDDHHMMSS) + NumberUtils.random(5)+Activitypi.getId());
 				activitypictureSercice.updatedo(Activitypi);
 			
@@ -172,6 +174,7 @@ public class ApiActivitypictureAct extends BaseAct{
  		}
  		pager.getSearchMap().put("sponserid", String.valueOf(id));
  		pager.getSearchMap().put("typeOrder", 2+"");
+ 		pager.getSearchMap().put("type", 1+"");
  		activitypictureSercice.getpager(pager);
 		JsonObject json = new JsonObject();
 		json.addProperty("totalPages", pager.getTotalPages());
@@ -180,7 +183,12 @@ public class ApiActivitypictureAct extends BaseAct{
 		List<Activitypicture> list = pager.getItemList();
 		JsonArray array = new JsonArray();
 		json.add("arrays", array);
+		
 		for (Activitypicture act : list) {
+			User usr=userService.selectOnlyOne(act.getMyld());
+			Activitypicture activity= activitypictureSercice.selectone(act.getId());
+			act.setActivitypicture(activity);
+			act.setUser(usr);
 			JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
 			array.add(jsonObj);
 		}
@@ -207,6 +215,8 @@ public class ApiActivitypictureAct extends BaseAct{
 		}	
 		pager.getSearchMap().put("myld", String.valueOf(currUser.getId()));
 		pager.getSearchMap().put("typeOrder", 2+"");
+		pager.getSearchMap().put("type", 1+"");
+		
 		activitypictureSercice.getpager(pager);
 		JsonObject json = new JsonObject();
 		json.addProperty("totalPages", pager.getTotalPages());
@@ -218,8 +228,6 @@ public class ApiActivitypictureAct extends BaseAct{
 		for (Activitypicture act : list) {
 			JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
 			Activity acc=activityService.selectcal(act.getSponsorld());
-			jsonObj.addProperty("id", acc.getId());
-			jsonObj.addProperty("sponsorid", acc.getSponsorid());
 			jsonObj.addProperty("cover", TagUtils.getFileFullPath(acc.getCover()));
 			jsonObj.addProperty("activitynumber", acc.getActivitynumber());
 			jsonObj.addProperty("activitycategory", acc.getActivitycategory());

@@ -8,4 +8,6 @@ import com.rpframework.website.luoluo.domain.MyActivities;
 
 public interface IMyActivities extends IDao{
 	List<MyActivities> doPager(Map<?, ?> map);
+
+	MyActivities selectppt(Integer id, Integer activitiesid);
 }

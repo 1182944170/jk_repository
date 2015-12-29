@@ -20,5 +20,8 @@
 	<select id="select" parameterType="Integer" resultMap="MyActivities">
          select * from  myactivities where id=#{id}
 	</select>
+	<select id="selectppt" parameterType="map" resultMap="MyActivities">
+         select * from  myactivities where userid=#{0} and activitiesid=#{1}
+	</select>
 	
 </mapper>

@@ -2,18 +2,15 @@ package com.rpframework.website.luoluo.act.api;
 
 
 import java.util.List;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.alibaba.druid.sql.parser.ParserException;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -22,17 +19,18 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.rpframework.core.BaseAct;
 import com.rpframework.core.api.FileService;
-import com.rpframework.core.utils.TagUtils;
 import com.rpframework.utils.CollectionUtils;
 import com.rpframework.utils.DateUtils;
 import com.rpframework.utils.Pager;
 import com.rpframework.website.luoluo.domain.Activity;
 import com.rpframework.website.luoluo.domain.Activitypicture;
+import com.rpframework.website.luoluo.domain.Classification;
 import com.rpframework.website.luoluo.domain.Sponsorlis;
 import com.rpframework.website.luoluo.domain.User;
 import com.rpframework.website.luoluo.exception.APICodeException;
 import com.rpframework.website.luoluo.service.ActivityService;
 import com.rpframework.website.luoluo.service.ActivitypictureSercice;
+import com.rpframework.website.luoluo.service.ClassificationService;
 import com.rpframework.website.luoluo.service.SponsorService;
 import com.rpframework.website.luoluo.service.UserService;
 
@@ -47,6 +45,7 @@ public class ApiActivityAct extends BaseAct{
 	@Resource ActivityService   activityService ;
 	@Resource ActivitypictureSercice activitypictureSercice;
 	@Resource SponsorService sponsorSercice;
+	@Resource ClassificationService classificationService;
 	@Resource FileService fileService;
 	/**
 	 * api查询所有的活动
@@ -158,7 +157,7 @@ public class ApiActivityAct extends BaseAct{
 		}
 		json.addProperty("id", activity.getId());
 		json.addProperty("sponsorid", activity.getSponsorid());
-		json.addProperty("cover", TagUtils.getFileFullPath(activity.getCover()));
+		json.addProperty("cover", activity.getCover());
 		json.addProperty("activitynumber", activity.getActivitynumber());
 		json.addProperty("activitycategory", activity.getActivitycategory());
 		json.addProperty("activityname", activity.getActivityname());
@@ -172,8 +171,11 @@ public class ApiActivityAct extends BaseAct{
 		json.addProperty("outtime", activity.getOuttime());
 		json.addProperty("nowforetime", activity.getNowforetime());
 		json.addProperty("lat", activity.getLat());
-		json.addProperty("lng", activity.getLng());
+		json.addProperty("type", activity.getType());
+		json.addProperty("typeok", activity.getTypeok());
 		json.addProperty("starttime", activity.getStarttime());
+		Classification classors=classificationService.selectcal(activity.getActivitycategory());
+		json.addProperty("classificationname", classors.getClaName());
 		if("".equals(activity.getPhone())){
 			Sponsorlis spon=sponsorSercice.seletOne(activity.getSponsorid());
 			if(spon==null){
@@ -189,7 +191,7 @@ public class ApiActivityAct extends BaseAct{
 		JsonArray imgArray = new JsonArray();
 		if(CollectionUtils.isNotEmpty(imgList)) {
 			for (String s : imgList) {
-				imgArray.add(new JsonPrimitive(TagUtils.getFileFullPath(s)));
+				imgArray.add(new JsonPrimitive(s));
 			}
 		}
 		json.add("imgs", imgArray);
@@ -220,7 +222,7 @@ public class ApiActivityAct extends BaseAct{
 		json.add("arrays", array);
 		for (Activitypicture act : activitypict) {
 			User user=userService.selectOnlyOne(act.getMyld());
-			act.setUsrr(user);
+			act.setUser(user);
 			int bm_num=0;
 			int i=0;
 				i=Integer.parseInt(act.getGrilexpense())+Integer.parseInt(act.getChindenboy())+Integer.parseInt(act.getOldboy());
@@ -275,7 +277,7 @@ public class ApiActivityAct extends BaseAct{
 	 * @param activiid
 	 * @return
 	 */
-	@RequestMapping("/activi_myseleone")
+	/*@RequestMapping("/activi_myseleone")
 	public @ResponseBody JsonElement activimyseleone(@RequestParam(value="pager",required=false) Pager<Activity> pager,
 			@RequestParam(required=false) Integer activiid){
 		JsonObject json=new JsonObject();
@@ -289,7 +291,38 @@ public class ApiActivityAct extends BaseAct{
 		JsonArray array = new JsonArray();
 		json.add("arrays", array);
 		for (Activity act : list) {
-			
+			List<Activitypicture>  cc=activitypictureSercice.selectlist(act.getId());
+			int bm_num=0;
+			int i=0;
+			for (Activitypicture tt : cc) {
+				i=Integer.parseInt(tt.getGrilexpense())+Integer.parseInt(tt.getChindenboy())+Integer.parseInt(tt.getOldboy());
+				bm_num+=i;
+				
+			}
+			act.setBm_num(bm_num);
+			JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
+			array.add(jsonObj);
+		}
+		System.out.println("user_list: "+json.toString());
+		return json;
+	}*/
+	@RequestMapping("/activi_myseleone")
+	public @ResponseBody JsonElement activimyseleone(@RequestParam(value="pager",required=false) Pager<Activity> pager,HttpSession session){
+		JsonObject json=new JsonObject();
+		if(pager==null){
+			pager=new Pager<Activity>();
+		}
+		User currUser = getSessionUser(session);
+		if(currUser == null){
+			throw new APICodeException(-4, "你还没登陆!");
+		}
+		Sponsorlis span =  sponsorSercice.seletOnesponsor(currUser.getId());
+		pager.getSearchMap().put("activiid", span.getId()+"");
+		activityService.getpager(pager);
+		List<Activity> list = pager.getItemList();
+		JsonArray array = new JsonArray();
+		json.add("arrays", array);
+		for (Activity act : list) {
 			List<Activitypicture>  cc=activitypictureSercice.selectlist(act.getId());
 			int bm_num=0;
 			int i=0;
@@ -332,7 +365,7 @@ public class ApiActivityAct extends BaseAct{
 			@RequestParam(required=false)String starttime,
 			@RequestParam(required=false)String outtime,
 			@RequestParam(required=false)Integer type,
-			@RequestParam(required=false)Integer typeok,
+
 			@RequestParam(required=false)String lng,
 			@RequestParam(required=false)String lat,HttpSession session){
 		JsonObject json = new JsonObject();
@@ -347,8 +380,8 @@ public class ApiActivityAct extends BaseAct{
 			json.addProperty("error", "没有主办方");
 			return json;
 		}
-		if(typeok==0){
-			Activity activity=activityService.selectcal(id);
+		Activity activity=activityService.selectcal(id);
+		if(activity.getTypeok()==0){
 			activity.setActivityname(activityname);
 			activity.setSponsorid(bfgs.getId());
 			activity.setActivitycategory(activitycategory);
@@ -471,13 +504,19 @@ public class ApiActivityAct extends BaseAct{
 	@RequestMapping("/activi_delete")
 	public @ResponseBody JsonElement actividelete(
 			@RequestParam(required=false) Integer id){
-		boolean activity = activityService.deletesell(id);
+		List<Activitypicture> acc =activitypictureSercice.selectlist(id);
 		JsonObject json = new JsonObject();
-		if(activity){ // 添加成功
-			json.addProperty("succ", true);
-		} else { // 添加失败
-			json.addProperty("error", false);
-		} 
+		if(acc.size()==0){
+			boolean activity = activityService.deletesell(id);
+			if(activity){ // 添加成功
+				json.addProperty("succ", true);
+			} else { // 添加失败
+				json.addProperty("succ", false);
+			}
+		}else{
+			json.addProperty("msg", "不能删除活动，已存在报名人员");
+			json.addProperty("succ", false);
+		}
 		return json;
 	}
 	

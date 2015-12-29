@@ -17,6 +17,9 @@
 		<if test = "page.searchMap.typeOrder != null">
 			and typeOrder = #{page.searchMap.typeOrder}
 		</if>
+		<if test = "page.searchMap.type != null">
+			and type = #{page.searchMap.type}
+		</if>
 
 	</select>
 	<update id="update" parameterType="com.rpframework.website.luoluo.domain.Activitypicture" />

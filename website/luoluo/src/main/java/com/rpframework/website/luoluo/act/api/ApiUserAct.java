@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
 import com.alibaba.druid.sql.parser.ParserException;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -23,9 +24,11 @@ import com.rpframework.core.utils.TagUtils;
 import com.rpframework.utils.DateUtils;
 import com.rpframework.utils.NumberUtils;
 import com.rpframework.utils.Pager;
+import com.rpframework.website.luoluo.domain.Monlyjournals;
 import com.rpframework.website.luoluo.domain.Mypersonalitylabel;
 import com.rpframework.website.luoluo.domain.User;
 import com.rpframework.website.luoluo.exception.APICodeException;
+import com.rpframework.website.luoluo.service.MonlyjournalsService;
 import com.rpframework.website.luoluo.service.MypersonalitylabelService;
 import com.rpframework.website.luoluo.service.UserService;
 
@@ -37,6 +40,8 @@ public class ApiUserAct extends BaseAct{
 	@Resource UserService userservice;
 	@Resource FileService fileService;
 	@Resource MypersonalitylabelService mypersonalitylabelService;
+	@Resource MonlyjournalsService monlyjournalsService;
+	
 	/**
 	 * 用户列表
 	 * @date 2015年7月13日 下午5:47:24
@@ -100,7 +105,7 @@ public class ApiUserAct extends BaseAct{
 		json.addProperty("ctiontime", TagUtils.formatDate(user.getCtiontime()));
 		json.addProperty("loveFilm", user.getLoveFilm());
 		json.addProperty("acnumber", user.getAcnumber());
-		json.addProperty("namePic", TagUtils.getFileFullPath(user.getNamePic()));
+		json.addProperty("namePic", user.getNamePic());
 		json.addProperty("personalMany", user.getPersonalMany());
 		json.addProperty("lng", user.getLng());
 		json.addProperty("lat", user.getLat());
@@ -294,6 +299,28 @@ public class ApiUserAct extends BaseAct{
 			}
 		}
 		throw new IllegalArgumentException("参数错误!");
+	}
+	/**
+	 * 日志文件
+	 * @time 2015年7月30日 下午3:39:57
+	 */
+	@RequestMapping("/monlyjournallist")
+	public @ResponseBody JsonElement monlyjournallist(
+			HttpSession session, HttpServletRequest request){
+		User user = getSessionUser(session);
+		if(user == null){
+			throw new APICodeException(-4, "你还没登陆!");
+		}	
+		JsonObject json = new JsonObject();
+		json.addProperty("personalMany", user.getPersonalMany());
+		List<Monlyjournals>  list =monlyjournalsService.selectdoole(user.getId());
+		JsonArray array = new JsonArray();
+		json.add("arrays", array);
+		for(Monlyjournals act :list){
+			JsonObject o = gson.toJsonTree(act).getAsJsonObject();
+			array.add(o);
+		}
+		return json;
 	}
 	
 	/**

@@ -254,7 +254,7 @@ public class UserloginApiAct extends BaseAct{
 			jsonObj.addProperty("ctiontime", TagUtils.formatDate(lUser.getCtiontime()));
 			jsonObj.addProperty("loveFilm", lUser.getLoveFilm());
 			jsonObj.addProperty("acnumber", lUser.getAcnumber());
-			jsonObj.addProperty("namePic", TagUtils.getFileFullPath(lUser.getNamePic()));
+			jsonObj.addProperty("namePic",lUser.getNamePic());
 			jsonObj.addProperty("personalMany", lUser.getPersonalMany());
 			jsonObj.addProperty("lng", lUser.getLng());
 			jsonObj.addProperty("lat", lUser.getLat());
