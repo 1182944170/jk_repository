@@ -9,4 +9,6 @@ import com.rpframework.website.luoluo.domain.Myimpression;
 
 public interface  IMyimpressionDao extends IDao{
 	List<Myimpression> doPager(Map<?, ?> map);
+
+	Myimpression selecttwo(Integer id, Integer myld);
 }

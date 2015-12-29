@@ -19,13 +19,17 @@ import java.util.Map;
 
 
 
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 
 
 
@@ -71,7 +75,7 @@ public class TestPayAct {
 	@Resource SponsorService sponsorService;
 	@Resource ClassificationService classfica;
 	@Resource MonlyjournalsService monlyjournalsService;
-	
+	final Logger logger = LoggerFactory.getLogger(getClass());
 		//支付
 		@RequestMapping(value="/test_pay",produces = "application/json; charset=utf-8")
 		public @ResponseBody JsonElement orderList(
@@ -107,7 +111,8 @@ public class TestPayAct {
 						json.addProperty("out_trade_no", orderId);//订单号
 						json.addProperty("subject", ClaName);//订单名
 						json.addProperty("body", Activityname);//订单内容
-						json.addProperty("total_fee",money);//订单价格
+						//json.addProperty("total_fee",money);//订单价格
+						json.addProperty("total_fee",0.1);//订单价格
 					
 						if(memo!=null && "YES".equals(memo.toUpperCase())){
 							json.addProperty("public_key=","支付宝公钥");
@@ -127,7 +132,7 @@ public class TestPayAct {
 						}
 					return json;
 		}
-		
+
 		@SuppressWarnings("rawtypes")
 		@RequestMapping("/test_pay_succ")
 		public @ResponseBody String TestPaySucc(HttpServletRequest request) throws UnsupportedEncodingException{
@@ -169,9 +174,42 @@ public class TestPayAct {
 			if(AlipayNotify.verify(params)){//验证成功
 				double total_fee = NumberUtils.parseDouble(request.getParameter("total_fee"));
 				//////////////////////////////////////////////////////////////////////////////////////////
+				
 				if (trade_status.equals("TRADE_FINISHED")|| trade_status.equals("TRADE_SUCCESS")) {
 					//请在这里加上商户的业务逻辑程序代码
+				
+					logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
+					logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
+					logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
+					logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
+					
+					logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
+					logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
+					logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
+					logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
+					logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
+					logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
+					logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
+					logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
+					logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
+					logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
+					logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
+					logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
+					logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
+					logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
+					logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
+					logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
+					logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
+					logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
+					logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
+					logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
+					logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
+					logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
+					logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
+					logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
+					logger.info("GoodsGrabTipQuartzJob 处理商品开抢通知数 " );
 					Activitypicture  cc= activitypictureSercice.selecttrade(out_trade_no);
+					
 					cc.setTypeOrder(2);
 					activitypictureSercice.updatedo(cc);
 					

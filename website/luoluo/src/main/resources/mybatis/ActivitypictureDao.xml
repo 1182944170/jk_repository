@@ -31,7 +31,7 @@
 	<select id="selectole" parameterType="Integer" resultMap="Activitypicture" >
 		select * from activity_registration where sponsorld=#{activiid} and typeOrder=2
 	</select>
-	<select id="selecttradeorled" parameterType="map" resultMap="Activitypicture" >
+	<select id="selecttradeorled" parameterType="String" resultMap="Activitypicture" >
 		select * from activity_registration where ordernumber=#{out_trade_no} 
 	</select>
 	<select id="seletwoe" parameterType="map" resultMap="Activitypicture" >

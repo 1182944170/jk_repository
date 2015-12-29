@@ -31,5 +31,9 @@ public class MyimpressionService extends BaseService{
 		pager.setCostTime(System.currentTimeMillis() - startTime);
 		return pager;
 	}
+	public Myimpression selectone(Integer id, Integer myld) {
+		// TODO Auto-generated method stub
+		return iMyimpressionDao.selecttwo(id,myld);
+	}
 	
 }

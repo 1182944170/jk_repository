@@ -63,13 +63,7 @@ public class Activity {
 	private Integer bm_num; //纬度
 
 
-	public Integer getBm_num() {
-		return bm_num;
-	}
 
-	public void setBm_num(Integer bm_num) {
-		this.bm_num = bm_num;
-	}
 
 	public Integer getId() {
 		return id;
@@ -79,35 +73,12 @@ public class Activity {
 		this.id = id;
 	}
 
-	public String getPhone() {
-		return phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-
 	public Integer getSponsorid() {
 		return sponsorid;
 	}
 
 	public void setSponsorid(Integer sponsorid) {
 		this.sponsorid = sponsorid;
-	}
-	public String getLng() {
-		return lng;
-	}
-
-	public void setLng(String lng) {
-		this.lng = lng;
-	}
-
-	public String getLat() {
-		return lat;
-	}
-
-	public void setLat(String lat) {
-		this.lat = lat;
 	}
 
 	public String getCover() {
@@ -150,14 +121,6 @@ public class Activity {
 		this.activitylocation = activitylocation;
 	}
 
-	public Integer getGril_expense() {
-		return gril_expense;
-	}
-
-	public void setGril_expense(Integer gril_expense) {
-		this.gril_expense = gril_expense;
-	}
-
 	public Integer getNumber() {
 		return number;
 	}
@@ -172,6 +135,14 @@ public class Activity {
 
 	public void setChildren_expense(Integer children_expense) {
 		this.children_expense = children_expense;
+	}
+
+	public Integer getGril_expense() {
+		return gril_expense;
+	}
+
+	public void setGril_expense(Integer gril_expense) {
+		this.gril_expense = gril_expense;
 	}
 
 	public Integer getOld_expense() {
@@ -214,6 +185,14 @@ public class Activity {
 		this.outtime = outtime;
 	}
 
+	public long getNowforetime() {
+		return nowforetime;
+	}
+
+	public void setNowforetime(long nowforetime) {
+		this.nowforetime = nowforetime;
+	}
+
 	public Integer getType() {
 		return type;
 	}
@@ -222,16 +201,40 @@ public class Activity {
 		this.type = type;
 	}
 
+	public String getLng() {
+		return lng;
+	}
+
+	public void setLng(String lng) {
+		this.lng = lng;
+	}
+
+	public String getLat() {
+		return lat;
+	}
+
+	public void setLat(String lat) {
+		this.lat = lat;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public Integer getBm_num() {
+		return bm_num;
+	}
+
+	public void setBm_num(Integer bm_num) {
+		this.bm_num = bm_num;
+	}
+
 	public Integer getTypeok() {
 		return typeok;
-	}
-
-	public long getNowforetime() {
-		return nowforetime;
-	}
-
-	public void setNowforetime(long nowforetime) {
-		this.nowforetime = nowforetime;
 	}
 
 	public void setTypeok(Integer typeok) {

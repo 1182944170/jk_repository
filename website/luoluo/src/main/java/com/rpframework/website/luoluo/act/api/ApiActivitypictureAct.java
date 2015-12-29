@@ -27,11 +27,13 @@ import com.rpframework.utils.Pager;
 import com.rpframework.website.luoluo.domain.Activity;
 import com.rpframework.website.luoluo.domain.Activitypicture;
 import com.rpframework.website.luoluo.domain.Classification;
+import com.rpframework.website.luoluo.domain.Myimpression;
 import com.rpframework.website.luoluo.domain.User;
 import com.rpframework.website.luoluo.exception.APICodeException;
 import com.rpframework.website.luoluo.service.ActivityService;
 import com.rpframework.website.luoluo.service.ActivitypictureSercice;
 import com.rpframework.website.luoluo.service.ClassificationService;
+import com.rpframework.website.luoluo.service.MyimpressionService;
 import com.rpframework.website.luoluo.service.UserService;
 
 
@@ -43,6 +45,7 @@ public class ApiActivitypictureAct extends BaseAct{
 	@Resource ActivityService   activityService ;
 	@Resource ClassificationService   classiftionservice;
 	@Resource UserService  userService;
+	@Resource MyimpressionService  myimpressionService;
 	/**
 	 * 添加报名信息
 	 * 提交订单
@@ -167,11 +170,15 @@ public class ApiActivitypictureAct extends BaseAct{
 	 * @throws InterruptedException
 	 */
 	@RequestMapping("list")
-	public @ResponseBody JsonElement list(@RequestParam Integer id,@RequestParam(value="pager",required=false) Pager<Activitypicture> pager 
+	public @ResponseBody JsonElement list(@RequestParam Integer id,@RequestParam(value="pager",required=false) Pager<Activitypicture> pager,HttpSession session 
 			) throws ParserException, InterruptedException{
  		if(pager==null){
  			pager=new Pager<Activitypicture>();
  		}
+ 		User currUser = getSessionUser(session);
+		if(currUser == null){
+			throw new APICodeException(-4, "你还没登陆!");
+		}	
  		pager.getSearchMap().put("sponserid", String.valueOf(id));
  		pager.getSearchMap().put("typeOrder", 2+"");
  		pager.getSearchMap().put("type", 1+"");
@@ -185,7 +192,14 @@ public class ApiActivitypictureAct extends BaseAct{
 		json.add("arrays", array);
 		
 		for (Activitypicture act : list) {
+			Myimpression myimpression =myimpressionService.selectone(currUser.getId(),act.getMyld());
+			
 			User usr=userService.selectOnlyOne(act.getMyld());
+			if(myimpression==null){
+				usr.setType(0);
+			}else{
+				usr.setType(1);
+			}
 			Activitypicture activity= activitypictureSercice.selectone(act.getId());
 			act.setActivitypicture(activity);
 			act.setUser(usr);
