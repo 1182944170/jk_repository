@@ -19,10 +19,9 @@ import com.rpframework.utils.NumberUtils;
 import com.rpframework.utils.Pager;
 import com.rpframework.website.luoluo.domain.Widens;
 import com.rpframework.website.luoluo.service.WidensService;
-
 @Controller
-@RequestMapping("admin/windens")
-public class AdminWidensAct extends AdminAct{
+@RequestMapping("admin/activityadd")
+public class AdminActiciaddAct extends AdminAct{
 	
 	@Resource WidensService widenserivece;
 	@Resource public FileService fileService;
@@ -33,10 +32,10 @@ public class AdminWidensAct extends AdminAct{
 		if(pager==null){
 			pager=new Pager<Widens>();
 		}
-		pager.getSearchMap().put("state", String.valueOf(1));
+		pager.getSearchMap().put("state", String.valueOf(2));
 		pager=widenserivece.widenpager(pager);
 		model.put("pager", pager);
-		return this.doPackageURI("widens/list");
+		return this.doPackageURI("activityadd/list");
 	}
 /*	
 	
@@ -50,7 +49,7 @@ public class AdminWidensAct extends AdminAct{
 	public String edit(@PathVariable(value="id")Integer id,Map<String, Widens> model){
 		Widens userOne=widenserivece.selectOnlyOne(id);
 		model.put("user", userOne);
-		return this.doPackageURI("widens/edit");
+		return this.doPackageURI("activityadd/edit");
 	}
 	/**
 	 * 修改信息
@@ -72,10 +71,10 @@ public class AdminWidensAct extends AdminAct{
 					fileService.saveFile(eoppos.getInputStream(), relativelyVideoPath); 
 					widen.setSyimages(relativelyVideoPath);
 					widen.setSytime(System.currentTimeMillis()/1000);
-					widen.setState(1);
+					widen.setState(2);
 					widenserivece.wideninsert(widen);
 					setInfoMsg("新增操作成功！", attr);
-					return redirect("/admin/windens/list");
+					return redirect("/admin/activityadd/list");
 				} catch(Exception e) {
 					throw new IllegalArgumentException(e.getLocalizedMessage());
 				}
@@ -92,14 +91,14 @@ public class AdminWidensAct extends AdminAct{
 				widen.setSyimages(relativelyVideoPath);
 				widenserivece.updatewiden(widen);
 				setInfoMsg("更新操作成功！", attr);
-				return redirect("/admin/windens/list");
+				return redirect("/admin/activityadd/list");
 			} catch(Exception e) {
 				throw new IllegalArgumentException(e.getLocalizedMessage());
 			}
 		}
 			
 		}
-		return redirect("/admin/windens/list");
+		return redirect("/admin/activityadd/list");
 	}
 	/**
 	 * 禁用用户
@@ -120,7 +119,7 @@ public class AdminWidensAct extends AdminAct{
 			widenserivece.updatewiden(widenOne);
 		}
 		
-		return redirect("/admin/windens/list");
+		return redirect("/admin/activityadd/list");
 	}
 /**
 	 * 删除用户
@@ -132,7 +131,7 @@ public class AdminWidensAct extends AdminAct{
 	public String deletUser(@PathVariable Integer id,RedirectAttributes attr){
 		widenserivece.deletesell(id);
 		setInfoMsg("删除成功！", attr);
-		return redirect("/admin/windens/list");
+		return redirect("/admin/activityadd/list");
 	}
 	/**
 	 * 跳转添加用户
@@ -142,6 +141,6 @@ public class AdminWidensAct extends AdminAct{
 	 */
 	@RequestMapping("/add")
 	public String add(){
-		return this.doPackageURI("widens/add");
+		return this.doPackageURI("activityadd/add");
 	}
 }

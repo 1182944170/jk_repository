@@ -18,7 +18,18 @@ public class Widens {
 	private long sytime;	//系统时间
 	@FieldMapperAnnotation
 	private Integer type;	//状态
+	@FieldMapperAnnotation
+	private Integer state;	//状态
 	
+	public Integer getState() {
+		return state;
+	}
+	public void setState(Integer state) {
+		this.state = state;
+	}
+	public void setSytime(long sytime) {
+		this.sytime = sytime;
+	}
 	public Integer getId() {
 		return id;
 	}
