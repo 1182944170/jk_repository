@@ -53,7 +53,6 @@ public class AdminActivityAct extends AdminAct{
 			}else{
 				act.setBm_num(sponsorlis.getTypeopp());	
 			}
-			
 		}
 		model.put("cal", cal);
 		model.put("pager", pager);
