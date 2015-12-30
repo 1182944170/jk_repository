@@ -64,10 +64,18 @@
 								<a class="green" href="${ctx}/admin/spons/${u.id}/edit${suffix}" alt="Edit">
 									<i class="icon-pencil bigger-130"></i>
 								</a>
-
+							<#if u.id !=1>
 								<a class="red" href="${ctx}/admin/spons/${u.id}/delete${suffix}" onclick="return confirm('你确定删除么?');" alt="Delete">
 									<i class="icon-trash bigger-130"></i>
 								</a>
+							<#else>
+							<a class="red" href="${ctx}/admin/spons/${u.id}/addlis${suffix}" onclick="return confirm('你确定修改么?');" alt="Edit">
+									<i class="icon-trash bigger-130">修改</i>
+								</a>
+							
+							</#if>
+							
+							
 							</div>
 	
 							<div class="visible-xs visible-sm hidden-md hidden-lg">

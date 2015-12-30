@@ -79,6 +79,15 @@ public class AdminSponsorAct extends AdminAct{
 		model.put("user", labelOne);
 		return this.doPackageURI("sponsor/edit");
 	}
+	@RequestMapping("/{id}/addlis")
+	public String addlis(@PathVariable(value="id") Integer id, Map<Object, Object> model, RedirectAttributes attr){
+		if(id==null){
+			throw new AdminIllegalArgumentException("不存在该用户");
+		}
+		Sponsorlis labelOne = sponsorService.seletOne(id);
+		model.put("user", labelOne);
+		return this.doPackageURI("sponsor/addlist");
+	}
 	
 	/**
 	 * 修改用户信息
@@ -100,6 +109,8 @@ public class AdminSponsorAct extends AdminAct{
 		sponsorlis.setEntintroduction(sponsor.getEntintroduction());
 		sponsorlis.setUserinformation(sponsor.getUserinformation());
 		sponsorlis.setResponsibility(sponsor.getResponsibility());
+		sponsorlis.setCompanyname(sponsor.getCompanyname());
+		sponsorlis.setTypeopp(1);
 		sponsorService.updatedo(sponsorlis);
 		if(sponsorlis.getType()==1){
 			setInfoMsg("更新操作成功！", attr);

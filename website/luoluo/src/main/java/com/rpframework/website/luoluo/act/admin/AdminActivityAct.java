@@ -22,8 +22,10 @@ import com.rpframework.utils.NumberUtils;
 import com.rpframework.utils.Pager;
 import com.rpframework.website.luoluo.domain.Activity;
 import com.rpframework.website.luoluo.domain.Classification;
+import com.rpframework.website.luoluo.domain.Sponsorlis;
 import com.rpframework.website.luoluo.service.ActivityService;
 import com.rpframework.website.luoluo.service.ClassificationService;
+import com.rpframework.website.luoluo.service.SponsorService;
 
 @Controller
 @RequestMapping("admin/actcy")
@@ -31,6 +33,7 @@ public class AdminActivityAct extends AdminAct{
 	
 	@Resource FileService fileService;
 	@Resource ActivityService activityService;
+	@Resource SponsorService sponsorlisService;
 	@Resource ClassificationService classificationService;
 
 	
@@ -42,7 +45,16 @@ public class AdminActivityAct extends AdminAct{
 		}
 		List<Classification> cal=classificationService.queryAll();
 		pager=activityService.getpager(pager);
-		
+		List<Activity> list=pager.getItemList();
+		for(Activity act :list){
+			Sponsorlis sponsorlis=sponsorlisService.seletOne(act.getSponsorid());
+			if(sponsorlis==null){
+				act.setBm_num(0);
+			}else{
+				act.setBm_num(sponsorlis.getTypeopp());	
+			}
+			
+		}
 		model.put("cal", cal);
 		model.put("pager", pager);
 		return this.doPackageURI("activity/list");

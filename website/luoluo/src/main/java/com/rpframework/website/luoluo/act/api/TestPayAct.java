@@ -79,8 +79,8 @@ public class TestPayAct {
 						json.addProperty("out_trade_no", orderId);//订单号
 						json.addProperty("subject", ClaName);//订单名
 						json.addProperty("body", Activityname);//订单内容
-						//json.addProperty("total_fee",money);//订单价格
-						json.addProperty("total_fee",0.1);//订单价格
+						json.addProperty("total_fee",money);//订单价格
+						//json.addProperty("total_fee",0.1);//订单价格
 					
 						if(memo!=null && "YES".equals(memo.toUpperCase())){
 							json.addProperty("public_key=","支付宝公钥");
@@ -106,23 +106,7 @@ public class TestPayAct {
 		public @ResponseBody String TestPaySucc(HttpServletRequest request) throws UnsupportedEncodingException{
 			String ret = "";
 			//获取支付宝POST过来反馈信息
-			logger.info("11111111111111111111111111111111111" );
-			logger.info("11111111111111111111111111111111111" );
-			logger.info("11111111111111111111111111111111111" );
-			logger.info("11111111111111111111111111111111111" );
-			logger.info("11111111111111111111111111111111111" );
-			logger.info("11111111111111111111111111111111111" );
-			logger.info("11111111111111111111111111111111111" );
-			logger.info("11111111111111111111111111111111111" );
-			logger.info("11111111111111111111111111111111111" );
-			logger.info("11111111111111111111111111111111111" );
-			logger.info("11111111111111111111111111111111111" );
-			logger.info("11111111111111111111111111111111111" );
-			logger.info("11111111111111111111111111111111111" );
-			logger.info("11111111111111111111111111111111111" );
-			logger.info("11111111111111111111111111111111111" );
-			logger.info("11111111111111111111111111111111111" );
-			logger.info("11111111111111111111111111111111111" );
+	
 		
 			Map<String,String> params = new HashMap<String,String>();
 			Map requestParams = request.getParameterMap();
@@ -135,16 +119,10 @@ public class TestPayAct {
 							: valueStr + values[i] + ",";
 				}
 				//乱码解决，这段代码在出现乱码时使用。如果mysign和sign不相等也可以使用这段代码转化
-				//valueStr = new String(valueStr.getBytes("ISO-8859-1"), "gbk");
+				valueStr = new String(valueStr.getBytes("ISO-8859-1"), "gbk");
 				params.put(name, valueStr);
 			}
-			logger.info("222222222222222222222222222222222 ");
-			logger.info("222222222222222222222222222222222 ");
-			logger.info("222222222222222222222222222222222 ");
-			logger.info("222222222222222222222222222222222 ");
-			logger.info("222222222222222222222222222222222 ");
-			logger.info("222222222222222222222222222222222 ");
-			logger.info("222222222222222222222222222222222 ");
+
 
 			//支付宝交易号
 			String out_trade_no = new String(request.getParameter("out_trade_no").getBytes("ISO-8859-1"),"UTF-8");
@@ -165,32 +143,14 @@ public class TestPayAct {
 			// 买家支付宝账户编号
 			String buyer_id = new String(request.getParameter("buyer_id").getBytes("ISO-8859-1"), "UTF-8");
 			
-			if(AlipayNotify.verify(params)){//验证成功
+			//if(AlipayNotify.verify(params)){//验证成功
 				double total_fee = NumberUtils.parseDouble(request.getParameter("total_fee"));
 				//////////////////////////////////////////////////////////////////////////////////////////
-				logger.info("333333333333333333333333333" );
-				logger.info("333333333333333333333333333" );
-				logger.info("333333333333333333333333333" );
-				logger.info("333333333333333333333333333" );
-				logger.info("333333333333333333333333333" );
+
 				
 				if (trade_status.equals("TRADE_FINISHED")|| trade_status.equals("TRADE_SUCCESS")) {
 					//请在这里加上商户的业务逻辑程序代码
-					logger.info("44444444444444444444444444444" );
-					logger.info("44444444444444444444444444444" );
-					logger.info("44444444444444444444444444444" );
-					logger.info("44444444444444444444444444444" );
-					logger.info("44444444444444444444444444444" );
-					logger.info("44444444444444444444444444444" );
-					logger.info("44444444444444444444444444444" );
-					logger.info("44444444444444444444444444444" );
-					logger.info("44444444444444444444444444444" );
-					logger.info("44444444444444444444444444444" );
-					logger.info("44444444444444444444444444444" );
-					logger.info("44444444444444444444444444444" );
-					logger.info("44444444444444444444444444444" );
-					logger.info("44444444444444444444444444444" );
-					logger.info("44444444444444444444444444444" );
+		
 					
 					Activitypicture  cc= activitypictureSercice.selecttrade(out_trade_no);
 					
@@ -226,9 +186,9 @@ public class TestPayAct {
 				}
 				ret = "success";	//请不要修改或删除
 				//////////////////////////////////////////////////////////////////////////////////////////
-			}else{//验证失败
-				ret = "fail";
-			}
+		//	}else{//验证失败
+		//		ret = "fail";
+		//	}
 			return ret;
 		} 	
 }

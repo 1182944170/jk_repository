@@ -22,7 +22,8 @@
 						<th>活动开始时间</th>
 						<th>活动结束时间</th>
 						<th>申请时间</th>
-						<th>是否成功</th>
+						<th>活动审核</th>
+						<th>主办方审核</th>
 						<th></th>
 						<!--<th>logo</th>-->
 					</tr>
@@ -49,6 +50,16 @@
 						</#if>
 						<#if u.type == 0 >
 						<td><span class="gray center" style="color:red"><b>未审核</b></span></td>
+						</#if>
+						<#if u.bm_num == 1 >
+						<td>
+							<a class="green" href="${ctx}/admin/spons/${u.sponsorid}/edit${suffix}" ><span class="gray center" style="color:Green"><b>已审核</b></span></a>
+						</td>
+						</#if>
+						<#if u.bm_num == 0 >
+						<td>
+							<a class="green" href="${ctx}/admin/spons/${u.sponsorid}/edit${suffix}" ><span class="gray center" style="color:red"><b>未审核</b></span></a>
+						</td>
 						</#if>
 						<td>
 							<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
