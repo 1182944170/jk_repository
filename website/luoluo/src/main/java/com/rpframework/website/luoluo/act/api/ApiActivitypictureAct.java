@@ -86,7 +86,9 @@ public class ApiActivitypictureAct extends BaseAct{
 			int sponsorlds=Integer.parseInt(sponsorld);
 			Activity activity = activityService.selectcal(sponsorlds);
 			Classification  classi = classiftionservice.selectcal(activity.getActivitycategory());
-				Activitypicture Activitypi=new Activitypicture();
+			Activitypicture Activitypi=activitypictureSercice.seletzzle(currUser.getId(), sponsorlds);
+			if(Activitypi==null){
+				Activitypi=new Activitypicture();
 				Activitypi.setSponsorld(sponsorlds);
 				Activitypi.setMyld(currUser.getId());
 				Activitypi.setName(name);
@@ -114,7 +116,7 @@ public class ApiActivitypictureAct extends BaseAct{
 				activitypictureSercice.insertdo(Activitypi);
 				Activitypi.setOrdernumber(DateUtils.nowDate(DateUtils.YYYYMMDDHHMMSS) + NumberUtils.random(5)+Activitypi.getId());
 				activitypictureSercice.updatedo(Activitypi);
-			
+			}
 				
 		if(NumberUtils.isValid(typeMonely)){
 			if(typeMonely == 1){

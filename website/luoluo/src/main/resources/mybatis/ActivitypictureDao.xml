@@ -37,4 +37,7 @@
 	<select id="seletwoe" parameterType="map" resultMap="Activitypicture" >
 		select * from activity_registration where myld=#{0} and sponsorld=#{1} and typeOrder=2
 	</select>
+	<select id="seletzzleorrle" parameterType="map" resultMap="Activitypicture" >
+		select * from activity_registration where myld=#{0} and sponsorld=#{1} and typeOrder=1
+	</select>
 </mapper>

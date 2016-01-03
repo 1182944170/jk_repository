@@ -40,13 +40,16 @@ import com.rpframework.website.luoluo.service.UserService;
 @RequestMapping("api/activi")
 public class ApiActivityAct extends BaseAct{
 	Gson gson = new Gson();
-	
+	private static final double EARTH_RADIUS = 6378137;
 	@Resource UserService   userService ;
 	@Resource ActivityService   activityService ;
 	@Resource ActivitypictureSercice activitypictureSercice;
 	@Resource SponsorService sponsorSercice;
 	@Resource ClassificationService classificationService;
 	@Resource FileService fileService;
+	private static double rad(double d){
+	      return d * Math.PI / 180.0;
+   }
 	/**
 	 * api查询所有的活动
 	 * @param pager
@@ -230,9 +233,52 @@ public class ApiActivityAct extends BaseAct{
 			act.setBm_num(bm_num);
 			JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
 			array.add(jsonObj);
-			
 		}
-		
+		return json;
+	}
+	
+	@RequestMapping("/jintweidu")
+	public @ResponseBody JsonElement jintweidu(@RequestParam(value="pager",required=false) Pager<Activity> pager,
+			@RequestParam(required=false) String lat,
+			@RequestParam(required=false) String lng,
+			HttpSession session){
+		if(pager==null){
+ 			pager=new Pager<Activity>();
+ 		}
+		User currUser = getSessionUser(session);
+		if(currUser == null){
+			throw new APICodeException(-4, "你还没登陆!");
+		}	
+		pager.getSearchMap().put("type", String.valueOf(1));
+		activityService.getpager(pager);
+		JsonObject json = new JsonObject();
+		json.addProperty("totalPages", pager.getTotalPages());
+		json.addProperty("currentPage", pager.getCurrentPage());
+		json.addProperty("totalCount", pager.getTotalCount());
+		List<Activity> list = pager.getItemList();
+		JsonArray array = new JsonArray();
+		json.add("arrays", array);
+		for (Activity act : list) {
+			double c=rad(Double.parseDouble(act.getLat()));
+			double d=rad(Double.parseDouble(act.getLng()));
+			double s=rad(Double.parseDouble(lat));
+			double f=rad(Double.parseDouble(lng));
+			 double a = c - s;
+			 double tow = d - f;
+			 double tt = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a/2),2) + 
+					     Math.cos(c)*Math.cos(d)*Math.pow(Math.sin(tow/2),2)));
+			 tt = tt * EARTH_RADIUS;
+			 tt = Math.round(tt * 10000) / 10000;
+				   for(int i=100 ;i<=500 ;i+=100){
+						if(tt<i){
+							   JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
+							   jsonObj.addProperty("mishu", i+"米以内");
+								array.add(jsonObj);
+								break;
+						 }
+						
+				   }
+		}
 		return json;
 	}
 	/**
@@ -250,6 +296,9 @@ public class ApiActivityAct extends BaseAct{
 		pager.getSearchMap().put("type", String.valueOf(1));
 		activityService.getpager(pager);
 		JsonObject json = new JsonObject();
+		json.addProperty("totalPages", pager.getTotalPages());
+		json.addProperty("currentPage", pager.getCurrentPage());
+		json.addProperty("totalCount", pager.getTotalCount());
 		List<Activity> list = pager.getItemList();
 		JsonArray array = new JsonArray();
 		json.add("arrays", array);

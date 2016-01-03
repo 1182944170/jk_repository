@@ -23,6 +23,7 @@ function selectMap(){
 </#if>
 <fieldset>
 
+
 <div class="form-group">
 	<label class="control-label col-xs-12 col-sm-3 no-padding-right">活动编号</label>
 	<div class="col-xs-12 col-sm-9">
@@ -40,7 +41,6 @@ function selectMap(){
 			<span class="block input-icon width-40">
 				<input type="text" name="activityname" id="name" value="${(oop.activityname)!''}" maxlength="32" class="form-control" />
 				<!--<i class="icon-user"></i>-->
-				
 			</span>
 		</div>
 	</div>

@@ -11,4 +11,5 @@ public interface IActivitypictureDao extends IDao{
 	List<Activitypicture> doPager(Map<?, ?> map);
 	Activitypicture selecttradeorled(String out_trade_no);
 	Activitypicture seletwoe(Integer id, Integer activityid);
+	Activitypicture seletzzleorrle(Integer id, int sponsorlds);
 }

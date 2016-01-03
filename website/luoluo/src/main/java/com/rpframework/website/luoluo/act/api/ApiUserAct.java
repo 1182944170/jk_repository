@@ -37,11 +37,14 @@ import com.rpframework.website.luoluo.service.UserService;
 @RequestMapping("api/user")
 public class ApiUserAct extends BaseAct{
 	Gson gson = new Gson();
+	private static final double EARTH_RADIUS = 6378137;
 	@Resource UserService userservice;
 	@Resource FileService fileService;
 	@Resource MypersonalitylabelService mypersonalitylabelService;
 	@Resource MonlyjournalsService monlyjournalsService;
-	
+	private static double rad(double d){
+	      return d * Math.PI / 180.0;
+ }
 	/**
 	 * 用户列表
 	 * @date 2015年7月13日 下午5:47:24
@@ -184,6 +187,85 @@ public class ApiUserAct extends BaseAct{
 		}
 		return json;
 	}
+	/**
+	 * 经纬度
+	 * @param type
+	 * @param session
+	 * @return
+	 * @throws ParserException
+	 * @throws InterruptedException
+	 */
+	@RequestMapping("/latitude")
+	public @ResponseBody JsonElement latitude(
+			@RequestParam(required=false) String lat,
+			@RequestParam(required=false) String lng,
+			HttpSession session) throws ParserException, InterruptedException{
+		JsonObject json = new JsonObject();
+		User currUser = getSessionUser(session);
+		if(currUser == null){
+			throw new APICodeException(-4, "你还没登陆!");
+		}
+		currUser.setLat(lat);
+		currUser.setLng(lng);
+		boolean bfgl= userservice.updatedo(currUser);
+		if(bfgl){
+			session.setAttribute(SESSION_USER_KEY, currUser);
+			json.addProperty("succ", true);
+		}else{
+			json.addProperty("succ", false);
+		}
+		return json;
+	}
+	/**
+	 * 附近的人
+	 * @param pager
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("/usernearby")
+	public @ResponseBody JsonElement jintweidu(@RequestParam(value="pager",required=false) Pager<User> pager,
+			@RequestParam(required=false) String lat,
+			@RequestParam(required=false) String lng,
+			HttpSession session){
+		if(pager==null){
+ 			pager=new Pager<User>();
+ 		}
+		User currUser = getSessionUser(session);
+		if(currUser == null){
+			throw new APICodeException(-4, "你还没登陆!");
+		}	
+		pager.getSearchMap().put("type", String.valueOf(0));
+		userservice.Userpager(pager);
+		JsonObject json = new JsonObject();
+		json.addProperty("totalPages", pager.getTotalPages());
+		json.addProperty("currentPage", pager.getCurrentPage());
+		json.addProperty("totalCount", pager.getTotalCount());
+		List<User> list = pager.getItemList();
+		JsonArray array = new JsonArray();
+		json.add("arrays", array);
+		for (User act : list) {
+			double c=rad(Double.parseDouble(act.getLat()));
+			double d=rad(Double.parseDouble(act.getLng()));
+			double s=rad(Double.parseDouble(lat));
+			double f=rad(Double.parseDouble(lng));
+			 double a = c - s;
+			 double tow = d - f;
+			 double tt = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a/2),2) + 
+				     Math.cos(c)*Math.cos(d)*Math.pow(Math.sin(tow/2),2)));
+		 tt = tt * EARTH_RADIUS;
+		 tt = Math.round(tt * 10000) / 10000;
+				   for(int i=100 ;i<=500 ;i+=100){
+						if(tt<i){
+							   JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
+							   jsonObj.addProperty("mishu", i+"米以内");
+								array.add(jsonObj);
+								break;
+						 }
+				   }
+		}
+		return json;
+	}
+	
 	
 	/**
 	 * 修改用户资料

@@ -168,10 +168,13 @@ public class TestPayAct {
 					userService.updatedo(uman);
 					
 					Monlyjournals mysope=new Monlyjournals();
-					mysope.setMonly(+total_fee);
+					mysope.setMonly(total_fee);
 					mysope.setNewtime(System.currentTimeMillis()/1000);
 					mysope.setType(1);
 					mysope.setUserid(uman.getId());
+					if("".equals(myman.getNameNick())){
+						mysope.setRemark(myman.getPhone()+"-  汇款");
+					}
 					mysope.setRemark(myman.getNameNick()+"-  汇款");
 					monlyjournalsService.insertdo(mysope);
 					
