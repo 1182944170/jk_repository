@@ -230,10 +230,6 @@ public class ApiUserAct extends BaseAct{
 		if(pager==null){
  			pager=new Pager<User>();
  		}
-		User currUser = getSessionUser(session);
-		if(currUser == null){
-			throw new APICodeException(-4, "你还没登陆!");
-		}	
 		pager.getSearchMap().put("type", String.valueOf(0));
 		userservice.Userpager(pager);
 		JsonObject json = new JsonObject();
@@ -257,7 +253,7 @@ public class ApiUserAct extends BaseAct{
 				   for(int i=100 ;i<=500 ;i+=100){
 						if(tt<i){
 							   JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
-							   jsonObj.addProperty("mishu", i+"米以内");
+							   jsonObj.addProperty("mishu", "1000米以内");
 								array.add(jsonObj);
 								break;
 						 }

@@ -43,6 +43,15 @@ public class Sponsorlis {
 	private Integer goint;  // 成功次数
 	@FieldMapperAnnotation
 	private Integer typeopp;  // 成功次数
+	@FieldMapperAnnotation
+	private String msg;  // 成功次数
+	
+	public String getMsg() {
+		return msg;
+	}
+	public void setMsg(String msg) {
+		this.msg = msg;
+	}
 	public Integer getId() {
 		return id;
 	}

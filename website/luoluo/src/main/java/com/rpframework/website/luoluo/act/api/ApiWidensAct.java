@@ -37,7 +37,7 @@ public class ApiWidensAct extends BaseAct{
 	 * @throws InterruptedException
 	 */
 	@RequestMapping("/widen_list")
-	public @ResponseBody JsonElement widen(@RequestParam(value="pager",required=false) Pager<Widens> pager,HttpSession session ) throws ParserException, InterruptedException{
+	public @ResponseBody JsonElement widen(@RequestParam String state,@RequestParam(value="pager",required=false) Pager<Widens> pager,HttpSession session ) throws ParserException, InterruptedException{
  		if(pager==null){
  			pager=new Pager<Widens>();
  		}
@@ -45,6 +45,7 @@ public class ApiWidensAct extends BaseAct{
 		if(currUser == null){
 			throw new APICodeException(-4, "你还没登陆!");
 		}	
+		pager.getSearchMap().put("state", state);
  		widensService.widenpager(pager);
 		JsonObject json = new JsonObject();
 		json.addProperty("totalPages", pager.getTotalPages());

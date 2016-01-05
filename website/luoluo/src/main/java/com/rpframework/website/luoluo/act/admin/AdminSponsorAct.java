@@ -210,23 +210,19 @@ public class AdminSponsorAct extends AdminAct{
 			 * @param id
 			 * @return
 			 */
-			@RequestMapping("/{id}/saveUserda")
-			public String saveUserda(@PathVariable(value="id")Integer id,RedirectAttributes attr){
-				Sponsorlis userOne=sponsorService.seletOne(id);
-				if(userOne.getTypeopp()==1){
-					userOne.setTypeopp(0);
-					sponsorService.updatedo(userOne);
-				}else if(userOne.getTypeopp()==0){
-					userOne.setTypeopp(1);
-					sponsorService.updatedo(userOne);
-				}
+			@RequestMapping("/saveUserda")
+			public String saveUserda(@ModelAttribute Sponsorlis span,RedirectAttributes attr){
+				Sponsorlis userOne=sponsorService.seletOne(span.getId());
+				userOne.setTypeopp(span.getTypeopp());
+				userOne.setMsg(span.getMsg());
+				sponsorService.updatedo(userOne);
 				if(userOne.getType()==1){
 					setInfoMsg("审核成功！", attr);
-					return redirect("/admin/spons/individuallist");
+					return redirect("/admin/actcy/list");
 				}
 				else{
 					setInfoMsg("审核成功！", attr);
-					return redirect("/admin/spons/companylist");
+					return redirect("/admin/actcy/list");
 				}
 			}
 			

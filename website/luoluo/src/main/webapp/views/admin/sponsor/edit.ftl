@@ -13,7 +13,7 @@ function selectMap(){
 	</h1>
 </div>
 
-<form action="${ctx}/admin/spons/${user.id}/saveUserda${suffix}" class="form-horizontal" role="form" id="validation-form" method="POST" enctype="multipart/form-data">
+<form action="${ctx}/admin/spons/saveUserda${suffix}" class="form-horizontal" role="form" id="validation-form" method="POST" enctype="multipart/form-data">
 <#if user??>
 	<input type="hidden" name="id" value="${user.id!}"/>
 </#if>
@@ -51,9 +51,9 @@ function selectMap(){
 	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">居住地点:</label>
 	<div class="col-xs-12 col-sm-9" >
 				<#include "../baidumap.ftl">
-				<input type="hidden" name="lng" id="lng" value="">
-				<input type="hidden" name="lat" id="lat" value="">
-				<input type="text" id="lnglat" name="usernowlive" value="${user.usernowlive!}" onclick="selectMap();"/>
+				<input type="hidden"  id="lng" value="">
+				<input type="hidden"  id="lat" value="">
+				<input type="text" id="lnglat" value="${user.usernowlive!}" onclick="selectMap();"/>
 				<!--<i class="icon-user"></i>-->
 	</div>
 </div>
@@ -62,7 +62,7 @@ function selectMap(){
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<span class="block input-icon width-40">
-				<input type="text" name="userphone" id="oriprice" value="${user.userphone!}" maxlength="32" class="form-control" />
+				<input type="text"  id="oriprice" value="${user.userphone!}" maxlength="32" class="form-control" />
 				<!--<i class="icon-user"></i>-->
 			</span>
 		</div>
@@ -86,7 +86,7 @@ function selectMap(){
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<span class="block input-icon width-40">
-				<input type="text" name="companyname" id="companyname" value="${user.companyname!}" maxlength="32" class="form-control" />
+				<input type="text"  id="companyname" value="${user.companyname!}" maxlength="32" class="form-control" />
 				<!--<i class="icon-user"></i>-->
 			</span>
 		</div>
@@ -97,7 +97,7 @@ function selectMap(){
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<span class="block input-icon width-40">
-				<input type="text" name="usertelephone" id="oriprice" value="${user.usertelephone!}" maxlength="32" class="form-control" />
+				<input type="text"  id="oriprice" value="${user.usertelephone!}" maxlength="32" class="form-control" />
 				<!--<i class="icon-user"></i>-->
 			</span>
 		</div>
@@ -108,7 +108,7 @@ function selectMap(){
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<span class="block input-icon width-40">
-				<input type="text" name="telephone" id="disprice" value="${user.telephone!}" maxlength="32" class="form-control" />
+				<input type="text"  id="disprice" value="${user.telephone!}" maxlength="32" class="form-control" />
 				<!--<i class="icon-user"></i>-->
 			</span>
 		</div>
@@ -131,7 +131,7 @@ function selectMap(){
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<span class="block input-icon width-40">
-				<@fck value="${(user.entintroduction)!''}" instanceName="entintroduction" inputName="entintroduction" height="300px;" toolbarSet="Basic">
+				<@fck value="${(user.entintroduction)!''}" instanceName="" inputName="" height="300px;" toolbarSet="Basic">
 		    	${fck_body}
 		    </@fck>
 			</span>
@@ -139,17 +139,29 @@ function selectMap(){
 	</div>
 </div>
 </#if>
-
+<div class="form-group">
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">未通过:</label>
+	<div class="col-xs-12 col-sm-9">
+		<div class="clearfix">
+			<span class="block input-icon width-40">
+			<textarea cols="80" rows="10" name="msg"></textarea>
+			</span>
+		</div>
+	</div>
+</div>
+<div class="form-group">
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right">状态:</label>
+	<div class="col-xs-12 col-sm-9">
+		<div class="clearfix">
+		<@ace.radioGroup options=ace.commonStateOptions checkValue=(help.state)!-1 name="typeopp" isWrap=false/>
+		</div>
+	</div>
+</div>
 
 <div class="form-group">
 	<div class="col-md-offset-3 col-md-9">
 		<button class="btn btn-info" type="submit"><i class="icon-ok bigger-110"></i>	
-		<#if user.typeopp==0> 
-		审核
-		</#if>
-		<#if user.typeopp==1> 
-		取消审核
-		</#if>
+	提交
 		</button>
 		&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
 		<button class="btn" type="reset"><i class="icon-undo bigger-110"></i>取消</button>

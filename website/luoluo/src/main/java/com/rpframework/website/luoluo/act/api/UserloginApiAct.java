@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.rpframework.core.BaseAct;
@@ -23,14 +24,17 @@ import com.rpframework.module.common.service.SMSService;
 import com.rpframework.utils.AlgorithmEnum;
 import com.rpframework.utils.AlgorithmUtils;
 import com.rpframework.utils.NumberUtils;
+import com.rpframework.website.luoluo.domain.Sponsorlis;
 import com.rpframework.website.luoluo.domain.User;
 import com.rpframework.website.luoluo.exception.APICodeException;
+import com.rpframework.website.luoluo.service.SponsorService;
 import com.rpframework.website.luoluo.service.UserService;
 
 @Controller
 @RequestMapping("/api/user")
 public class UserloginApiAct extends BaseAct{
 	@Resource UserService userService;
+	@Resource SponsorService sponsorService;
 	@Resource SMSService smsService;
 	
 	/**
@@ -260,6 +264,16 @@ public class UserloginApiAct extends BaseAct{
 			jsonObj.addProperty("lat", lUser.getLat());
 			json.add("user", jsonObj);
 			session.setAttribute(SESSION_USER_KEY, lUser);
+			User uUser = getSessionUser(session);
+			Sponsorlis span =sponsorService.seletOnesponsor(uUser.getId());
+			if(span!=null){
+				if(span.getTypeopp()==0){
+					json.addProperty("type", 0);
+				}else{
+					json.addProperty("type", 1);
+				}
+			}
+			
 			json.addProperty("succ", true);
 		} else {
 			json.addProperty("err", false);

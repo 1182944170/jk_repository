@@ -20,7 +20,7 @@ import com.rpframework.utils.Pager;
 import com.rpframework.website.luoluo.domain.Widens;
 import com.rpframework.website.luoluo.service.WidensService;
 @Controller
-@RequestMapping("admin/activityadd")
+@RequestMapping("admin/activiadd")
 public class AdminActiciaddAct extends AdminAct{
 	
 	@Resource WidensService widenserivece;

@@ -1,4 +1,4 @@
-<title>查看活动</title>
+<title>审核活动</title>
 <script type="text/javascript" src="${ctx}/resources/js/tools.js"></script>
 <script>
 function selectMap(){
@@ -7,7 +7,7 @@ function selectMap(){
 </script>
 <div class="page-header">
 	<h1>
-		查看活动
+		审核活动
 		<small>
 			<i class="icon-double-angle-right"></i>
 		</small>
@@ -29,7 +29,7 @@ function selectMap(){
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 		<span class="block input-icon width-40">
-		<input type="text" name="activitynumber"readonly value="${(oop.activitynumber)!''}" maxlength="32" class="form-control"/>
+		<input type="text" readonly value="${(oop.activitynumber)!''}" maxlength="32" class="form-control"/>
 		</span>
 		</div>
 	</div>
@@ -39,7 +39,7 @@ function selectMap(){
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<span class="block input-icon width-40">
-				<input type="text" name="activityname" id="name" value="${(oop.activityname)!''}" maxlength="32" class="form-control" />
+				<input type="text"  id="name" value="${(oop.activityname)!''}" maxlength="32" class="form-control" />
 				<!--<i class="icon-user"></i>-->
 			</span>
 		</div>
@@ -75,9 +75,9 @@ function selectMap(){
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix" style="position:relative;">
 				<#include "../baidumap.ftl">
-				<input type="hidden" name="lng" id="lng" value="">
-				<input type="hidden" name="lat" id="lat" value="">
-				<input type="text" id="lnglat" name="activitylocation"  value ="${(oop.activitylocation)!''}"onclick="selectMap();"/>
+				<input type="hidden" id="lng" value="">
+				<input type="hidden"  id="lat" value="">
+				<input type="text" id="lnglat" readonly  value ="${(oop.activitylocation)!''}"onclick="selectMap();"/>
 				<!--<i class="icon-user"></i>-->
 		</div>
 	</div>
@@ -87,7 +87,7 @@ function selectMap(){
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<span class="block input-icon width-40">
-				<input type="text" name="number" id="name" value="${(oop.number)!''}" maxlength="32" class="form-control" />
+				<input type="text" readonly id="name" value="${(oop.number)!''}" maxlength="32" class="form-control" />
 				<i class="icon-user"></i>
 			</span>
 		</div>
@@ -98,7 +98,7 @@ function selectMap(){
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<span class="block input-icon width-40">
-				<input type="text" name="children_expense" id="children_expense" onchange="checkInt(this.value,'msgfff')" value="${(oop.children_expense)!''}" maxlength="32" class="form-control" />
+				<input type="text" readonly id="children_expense" onchange="checkInt(this.value,'msgfff')" value="${(oop.children_expense)!''}" maxlength="32" class="form-control" />
 				<i class="icon-user" id="msg"></i>
 				<span class="icon-user" id="msgfff"></span>
 			</span>
@@ -110,7 +110,7 @@ function selectMap(){
 	<div class="col-xs-12 col-sm-9" >
 		<div class="clearfix" >
 			<span class="block input-icon width-40">
-				<input type="text" name="old_expense" id="name" value="${(oop.old_expense)!''}" maxlength="32" class="form-control" />
+				<input type="text" readonly id="name" value="${(oop.old_expense)!''}" maxlength="32" class="form-control" />
 				<i class="icon-user"></i>
 			</span>
 		</div>
@@ -121,7 +121,7 @@ function selectMap(){
 	<div class="col-xs-12 col-sm-9" >
 		<div class="clearfix" >
 			<span class="block input-icon width-40">
-				<input type="text" name="old_expense" id="name" value="${(oop.gril_expense)!''}" maxlength="32" class="form-control" />
+				<input type="text" readonly id="name" value="${(oop.gril_expense)!''}" maxlength="32" class="form-control" />
 				<i class="icon-user"></i>
 			</span>
 		</div>
@@ -135,45 +135,26 @@ function selectMap(){
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<span class="block input-icon width-40">
-			
-				<@fck value="${(oop.activitycontent)!''}" instanceName="activity_content" inputName="activity_content" height="300px;" toolbarSet="Basic">
-		    	${fck_body}
-		    </@fck>
+			<textarea cols="80" rows="10">
+		    ${(oop.activitycontent)!''}
+		    </textarea>
 			</span>
 		</div>
 	</div>
 </div>
 
-<div class="form-group">
-	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">是否成功</label>
-	<div class="col-xs-12 col-sm-9">
-		<div class="clearfix">
-			<span class="block input-icon width-40">
-			<#if oop.typeok==0>
-				<input type="text" readonly value="未成功">
-				</#if><!--<i class="icon-user"></i>-->
-			<#if oop.typeok==1>
-				<input type="text" readonly value="成功">
-				</#if>
-				<input type="hidden" value="${oop.typeok}">
-				<!--<i class="icon-user"></i>-->
-			</span>
-		</div>
-	</div>
-</div>
 
 
 
 <div class="form-group">
 	<div class="col-md-offset-3 col-md-9">
-		<button class="btn btn-info" type="submit"><i class="icon-ok bigger-110"></i>
-		<#if oop.type==0> 
+		<button class="btn btn-info" type="submit"><i class="icon-ok bigger-110"></i>		<#if oop.type==0> 
 		审核
 		</#if>
 		<#if oop.type==1> 
 		取消审核
-		</#if>
-		
+		</#if>交		
+
 		</button>
 		&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
 		<button class="btn" type="reset"><i class="icon-undo bigger-110"></i>重  置</button>

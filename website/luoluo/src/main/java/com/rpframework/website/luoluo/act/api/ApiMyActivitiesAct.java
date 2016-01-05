@@ -116,14 +116,14 @@ public class ApiMyActivitiesAct extends BaseAct{
 			myactivities.setUserid(currUser.getId());
 			myactivities.setType(type);
 			boolean bFlag=myactivitiesSercice.insertongl(myactivities);
-			
 			if(bFlag == true){ // 修改成功
 				json.addProperty("succ", true);
 			} else { // 修改失败
 				json.addProperty("succ", false);
 			} 
 		}else{
-			json.addProperty("succ", false);
+			myactivitiesSercice.delecto(c.getId());
+			json.addProperty("succ", true);
 		}
 		
 		return json;
@@ -156,9 +156,7 @@ public class ApiMyActivitiesAct extends BaseAct{
 			json.addProperty("succ", true);
 			c.setType(1);
 		}
-		myactivitiesSercice.updatedo(c);
-	
-		
+		myactivitiesSercice.delecto(c.getId());
 		return json;
 	}
 	@RequestMapping("addlist")
@@ -173,9 +171,9 @@ public class ApiMyActivitiesAct extends BaseAct{
 		MyActivities c=myactivitiesSercice.selectpptle(currUser.getId(),activitiesid);
 		JsonObject json=new JsonObject();
 		if(c==null){
-			json.addProperty("error", false);
+			json.addProperty("type", 0);
 		}else {
-			json.addProperty("succ", true);
+			json.addProperty("type", 1);
 		}
 		return json;
 	}

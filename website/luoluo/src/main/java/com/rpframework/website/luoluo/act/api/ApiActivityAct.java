@@ -73,7 +73,6 @@ public class ApiActivityAct extends BaseAct{
 		JsonArray array = new JsonArray();
 		json.add("arrays", array);
 		for (Activity act : list) {
-			
 			List<Activitypicture>  cc=activitypictureSercice.selectlist(act.getId());
 			int bm_num=0;
 			int i=0;
@@ -90,8 +89,13 @@ public class ApiActivityAct extends BaseAct{
 				
 			}
 			act.setBm_num(bm_num);
+			Sponsorlis	span= sponsorSercice.seletOne(act.getSponsorid());
+			if(span!=null){
+			if(span.getTypeopp()==1){
 			JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
 			array.add(jsonObj);
+			}
+			}
 		}
 		System.out.println("user_list: "+json.toString());
 		return json;
@@ -135,8 +139,13 @@ public class ApiActivityAct extends BaseAct{
 						
 					}
 					act.setBm_num(bm_num);
-					JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
-					array.add(jsonObj);
+					Sponsorlis	span= sponsorSercice.seletOne(act.getSponsorid());
+					if(span!=null){
+						if(span.getTypeopp()==1){
+						JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
+						array.add(jsonObj);
+						}
+						}
 				}
 			 System.out.println("user_list: "+json.toString());
 			 return json;
@@ -231,6 +240,7 @@ public class ApiActivityAct extends BaseAct{
 				i=Integer.parseInt(act.getGrilexpense())+Integer.parseInt(act.getChindenboy())+Integer.parseInt(act.getOldboy());
 				bm_num+=i;
 			act.setBm_num(bm_num);
+			
 			JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
 			array.add(jsonObj);
 		}
@@ -245,10 +255,6 @@ public class ApiActivityAct extends BaseAct{
 		if(pager==null){
  			pager=new Pager<Activity>();
  		}
-		User currUser = getSessionUser(session);
-		if(currUser == null){
-			throw new APICodeException(-4, "你还没登陆!");
-		}	
 		pager.getSearchMap().put("type", String.valueOf(1));
 		activityService.getpager(pager);
 		JsonObject json = new JsonObject();
@@ -271,9 +277,14 @@ public class ApiActivityAct extends BaseAct{
 			 tt = Math.round(tt * 10000) / 10000;
 				   for(int i=100 ;i<=500 ;i+=100){
 						if(tt<i){
+							Sponsorlis	span= sponsorSercice.seletOne(act.getSponsorid());
+							if(span!=null){
+								if(span.getTypeopp()==1){
 							   JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
-							   jsonObj.addProperty("mishu", i+"米以内");
+							   jsonObj.addProperty("mishu", "1000米以内");
 								array.add(jsonObj);
+							}
+							}
 								break;
 						 }
 						
@@ -313,8 +324,13 @@ public class ApiActivityAct extends BaseAct{
 				
 			}
 			act.setBm_num(bm_num);
-			JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
-			array.add(jsonObj);
+			Sponsorlis	span= sponsorSercice.seletOne(act.getSponsorid());
+			if(span!=null){
+				if(span.getTypeopp()==1){
+				JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
+				array.add(jsonObj);
+				}
+				}
 		}
 		System.out.println("user_list: "+json.toString());
 		return json;
@@ -366,10 +382,18 @@ public class ApiActivityAct extends BaseAct{
 			throw new APICodeException(-4, "你还没登陆!");
 		}
 		Sponsorlis span =  sponsorSercice.seletOnesponsor(currUser.getId());
+		if(span==null){
+			json.addProperty("msg", "活动主办方不存在");
+			json.addProperty("succ", false);
+			return json;
+		}
 		pager.getSearchMap().put("activiid", span.getId()+"");
 		activityService.getpager(pager);
 		List<Activity> list = pager.getItemList();
 		JsonArray array = new JsonArray();
+		json.addProperty("totalPages", pager.getTotalPages());
+		json.addProperty("currentPage", pager.getCurrentPage());
+		json.addProperty("totalCount", pager.getTotalCount());
 		json.add("arrays", array);
 		for (Activity act : list) {
 			List<Activitypicture>  cc=activitypictureSercice.selectlist(act.getId());
@@ -381,8 +405,13 @@ public class ApiActivityAct extends BaseAct{
 				
 			}
 			act.setBm_num(bm_num);
-			JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
-			array.add(jsonObj);
+			Sponsorlis	spantt= sponsorSercice.seletOne(act.getSponsorid());
+			if(spantt!=null){
+				if(span.getTypeopp()==1){
+				JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
+				array.add(jsonObj);
+				}
+				}
 		}
 		System.out.println("user_list: "+json.toString());
 		return json;
@@ -633,25 +662,30 @@ public class ApiActivityAct extends BaseAct{
 		int ss=(int) Math.abs((act.getOuttime()-act.getStarttime())/(60*60*24));
 		int ff=(int) Math.abs((act.getStarttime()-idtime)/(60*60*24));
 		//筛选信息
-			if(ff==0){
-				if(ss==day){
-					JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
-					array.add(jsonObj);
+		Sponsorlis	span= sponsorSercice.seletOne(act.getSponsorid());
+			if(span!=null){
+				if(span.getTypeopp()==1){
+					if(ff==0){
+						if(ss==day){
+							JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
+							array.add(jsonObj);
+							}
+					}else if(ff==1){
+						if(ss==day){
+							JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
+							array.add(jsonObj);
+							}
+					}else if(ff==2){
+							if(ss==day){
+								JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
+								array.add(jsonObj);
+							}
+					}else{
+							if(ss==day){
+									JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
+									array.add(jsonObj);
+							}
 					}
-			}else if(ff==1){
-				if(ss==day){
-					JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
-					array.add(jsonObj);
-					}
-			}else if(ff==2){
-				if(ss==day){
-					JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
-					array.add(jsonObj);
-					}
-			}else{
-				if(ss==day){
-					JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
-					array.add(jsonObj);
 				}
 			}
 		}
