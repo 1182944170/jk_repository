@@ -438,6 +438,7 @@ public class ApiUserAct extends BaseAct{
 		json.addProperty("acnumber", user.getAcnumber());
 		//标签
 		Mypersonalitylabel Myperson=mypersonalitylabelService.selectOnlyOne(userid);
+		
 		json.addProperty("Mylabel1", Myperson.getMylabela());
 		json.addProperty("Mylabel2", Myperson.getMylabelb());
 		json.addProperty("Mylabel3", Myperson.getMylabelc());

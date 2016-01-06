@@ -63,4 +63,13 @@ public class ApiPersonalitylbel extends BaseAct{
 		System.out.println("user_list: "+json.toString());
 		return json;
 	}
+	@RequestMapping("listone")
+	public @ResponseBody JsonElement listone(@RequestParam String pore,HttpSession session)
+			throws ParserException, InterruptedException{
+		JsonObject json = new JsonObject();
+		Personalabel pon= labelService.selectOnlyOne(Integer.parseInt(pore));
+		json.addProperty("ponname", pon.getLabel());
+		json.addProperty("ponid", pon.getId());
+		return json;
+	}
 }

@@ -69,7 +69,6 @@ public class ApiMypersonalitylabelAct extends BaseAct{
 			@RequestParam(required=false) String mylabelh,
 			HttpSession session) throws ParserException, InterruptedException{
 				User currUser = getSessionUser(session);
-				
 					if(currUser == null){
 						throw new APICodeException(-4, "你还没登陆!");
 					}	

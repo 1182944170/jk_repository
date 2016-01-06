@@ -59,10 +59,14 @@ public class ApiActivityAct extends BaseAct{
 	 */
 	@RequestMapping("/activi_list")
 	public @ResponseBody JsonElement activilist(@RequestParam(value="pager",required=false) Pager<Activity> pager 
+			,@RequestParam(required=false) String city,
+			@RequestParam(required=false) String lat,
+			@RequestParam(required=false) String lng
 			) throws ParserException, InterruptedException{
  		if(pager==null){
  			pager=new Pager<Activity>();
  		}
+ 		pager.getSearchMap().put("city", city);
 		pager.getSearchMap().put("type", String.valueOf(1));
 		activityService.getpager(pager);
 		JsonObject json = new JsonObject();
@@ -89,13 +93,29 @@ public class ApiActivityAct extends BaseAct{
 				
 			}
 			act.setBm_num(bm_num);
-			Sponsorlis	span= sponsorSercice.seletOne(act.getSponsorid());
-			if(span!=null){
-			if(span.getTypeopp()==1){
-			JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
-			array.add(jsonObj);
-			}
-			}
+			double c=rad(Double.parseDouble(act.getLat()));
+			double d=rad(Double.parseDouble(act.getLng()));
+			double s=rad(Double.parseDouble(lat));
+			double f=rad(Double.parseDouble(lng));
+			 double a = c - s;
+			 double tow = d - f;
+			 double tt = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a/2),2) + 
+					     Math.cos(c)*Math.cos(d)*Math.pow(Math.sin(tow/2),2)));
+			 tt = tt * EARTH_RADIUS;
+			 tt = Math.round(tt * 10000) / 10000;
+				   for(int ee=100 ;ee<=500 ;ee+=100){
+						if(tt<ee){
+							Sponsorlis	span= sponsorSercice.seletOne(act.getSponsorid());
+							if(span!=null){
+								if(span.getTypeopp()==1){
+							   JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
+							   jsonObj.addProperty("mishu", "1000米以内");
+								array.add(jsonObj);
+							}
+							}
+								break;
+						 }
+				   }
 		}
 		System.out.println("user_list: "+json.toString());
 		return json;
@@ -108,35 +128,37 @@ public class ApiActivityAct extends BaseAct{
 	 * @throws InterruptedException
 	 */
 	@RequestMapping("/earch_list")
-	public @ResponseBody JsonElement earchlist(@RequestParam String search 
+	public @ResponseBody JsonElement earchlist(
+			@RequestParam(value="pager" ,required=false)Pager<Activity> pager,
+			@RequestParam String search 
 			) throws ParserException, InterruptedException{
-		 List<Activity> atcuname=activityService.selectname(search);
-		 JsonArray array = new JsonArray();
+		if(pager==null){
+			pager=new Pager<Activity>();
+		}
 		 JsonObject json=new JsonObject();
-		 json.add("arrays", array);
-		 if(atcuname.size()==0){
-			 List<Activity> atcunumber=activityService.selectnumbers(search);
-			 if(atcunumber.size()==0){
-				 json.addProperty("error", false);
-				 return json;
-			 }else{
-				 for (Activity act : atcunumber) {
-						JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
-						array.add(jsonObj);
-					} 
-				 System.out.println("user_list: "+json.toString());
-				 return json;
-			 }
-		 }else{
-			 for (Activity act : atcuname) {
+		if(StringUtils.isBlank(search)){
 			
-					List<Activitypicture>  cc=activitypictureSercice.selectlist(act.getId());
+		}else{
+		pager.getSearchMap().put("name", search);
+		}
+		activityService.getpager(pager);
+		json.addProperty("totalPages", pager.getTotalPages());
+		json.addProperty("currentPage", pager.getCurrentPage());
+		json.addProperty("totalCount", pager.getTotalCount());
+		List<Activity> list = pager.getItemList();
+		 JsonArray array = new JsonArray();
+		 json.add("arrays", array);
+		if(CollectionUtils.isEmpty(list)){
+			 json.addProperty("msg", "该内容不存在");
+			 return json;
+		}else{
+			 for (Activity act : list) {
+				 List<Activitypicture>  cc=activitypictureSercice.selectlist(act.getId());
 					int bm_num=0;
 					int i=0;
 					for (Activitypicture tt : cc) {
 						i=Integer.parseInt(tt.getGrilexpense())+Integer.parseInt(tt.getChindenboy())+Integer.parseInt(tt.getOldboy());
 						bm_num+=i;
-						
 					}
 					act.setBm_num(bm_num);
 					Sponsorlis	span= sponsorSercice.seletOne(act.getSponsorid());
@@ -145,11 +167,10 @@ public class ApiActivityAct extends BaseAct{
 						JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
 						array.add(jsonObj);
 						}
-						}
-				}
-			 System.out.println("user_list: "+json.toString());
+					}
+				} 
 			 return json;
-		 }
+		}
 	}
 
 	/**
@@ -183,6 +204,7 @@ public class ApiActivityAct extends BaseAct{
 		json.addProperty("outtime", activity.getOuttime());
 		json.addProperty("nowforetime", activity.getNowforetime());
 		json.addProperty("lat", activity.getLat());
+		json.addProperty("lng", activity.getLng());
 		json.addProperty("type", activity.getType());
 		json.addProperty("typeok", activity.getTypeok());
 		json.addProperty("starttime", activity.getStarttime());
@@ -298,11 +320,13 @@ public class ApiActivityAct extends BaseAct{
 	@RequestMapping("/activi_activitycategory")
 	public @ResponseBody JsonElement activiactivitycategory(
 			@RequestParam(required=false) Integer activitycategoryid,
+			@RequestParam(required=false) String city,
 			@RequestParam(value="pager",required=false) Pager<Activity> pager 
 			){
 		if(pager==null){
  			pager=new Pager<Activity>();
  		}
+		pager.getSearchMap().put("city", city);
 		pager.getSearchMap().put("calid", String.valueOf(activitycategoryid));
 		pager.getSearchMap().put("type", String.valueOf(1));
 		activityService.getpager(pager);
@@ -523,6 +547,7 @@ public class ApiActivityAct extends BaseAct{
 			@RequestParam(required=false)String starttime,
 			@RequestParam(required=false)String outtime,
 			@RequestParam(required=false)Integer type,
+			@RequestParam(required=false)String city,
 			@RequestParam(required=false)String lng,
 			@RequestParam(required=false)String lat,HttpSession session){
 			JsonObject json = new JsonObject();
@@ -550,6 +575,7 @@ public class ApiActivityAct extends BaseAct{
 					activity.setOuttime(DateUtils.parse(outtime).getTime()/1000);
 					activity.setActivitypicture(iconFile);
 					activity.setCover(apicture);
+					activity.setCity(city);
 					/*String corle=activityService.addPhotos(iconFile);
 					activity.setActivitypicture("["+corle+"]");
 					

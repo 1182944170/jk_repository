@@ -53,6 +53,20 @@ $.fn.datebox.defaults.parser = function(s){
 <fieldset>
 
 <div class="form-group">
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">城市:</label>
+	<div class="col-xs-12 col-sm-9">
+		<div class="clearfix">
+		
+			<select name="city">
+				<#list bancity as a>
+					<option value="${a.code}">${a.city}</option>
+				</#list>
+			</select>
+			
+		</div>
+	</div>
+</div>
+<div class="form-group">
 	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">活动名称:</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">

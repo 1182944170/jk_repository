@@ -21,9 +21,11 @@ import com.rpframework.utils.DateUtils;
 import com.rpframework.utils.NumberUtils;
 import com.rpframework.utils.Pager;
 import com.rpframework.website.luoluo.domain.Activity;
+import com.rpframework.website.luoluo.domain.Banscity;
 import com.rpframework.website.luoluo.domain.Classification;
 import com.rpframework.website.luoluo.domain.Sponsorlis;
 import com.rpframework.website.luoluo.service.ActivityService;
+import com.rpframework.website.luoluo.service.BanscityService;
 import com.rpframework.website.luoluo.service.ClassificationService;
 import com.rpframework.website.luoluo.service.SponsorService;
 
@@ -31,6 +33,7 @@ import com.rpframework.website.luoluo.service.SponsorService;
 @RequestMapping("admin/actcy")
 public class AdminActivityAct extends AdminAct{
 	
+	@Resource BanscityService banscityService;
 	@Resource FileService fileService;
 	@Resource ActivityService activityService;
 	@Resource SponsorService sponsorlisService;
@@ -43,6 +46,7 @@ public class AdminActivityAct extends AdminAct{
 		if(pager==null){
 			pager=new Pager<Activity>();
 		}
+		
 		List<Classification> cal=classificationService.queryAll();
 		pager=activityService.getpager(pager);
 		List<Activity> list=pager.getItemList();
@@ -80,10 +84,11 @@ public class AdminActivityAct extends AdminAct{
 		if(activity == null) {
 			throw new AdminIllegalArgumentException("不存在的ID:" + id);
 		}
-	
+		List<Banscity> bancity=banscityService.selectall();
 		Classification fitlist=classificationService.selectcal(activity.getActivitycategory());
 		model.put("oop", activity);
 		model.put("fitlist", fitlist);
+		model.put("bancity", bancity);
 		return this.doPackageURI("activity/edit");
 		//return this.add(attr, model);
 	}
@@ -94,10 +99,11 @@ public class AdminActivityAct extends AdminAct{
 		if(activity == null) {
 			throw new AdminIllegalArgumentException("不存在的ID:" + id);
 		}
-		
+		List<Banscity> bancity=banscityService.selectall();
 		Classification fitlist=classificationService.selectcal(activity.getActivitycategory());
 		model.put("oop", activity);
 		model.put("fitlist", fitlist);
+		model.put("bancity", bancity);
 		return this.doPackageURI("activity/addlesore");
 		//return this.add(attr, model);
 	}
@@ -107,8 +113,10 @@ public class AdminActivityAct extends AdminAct{
 		if(pager == null) {
 			pager = new Pager<Classification>();
 		}
+		List<Banscity> bancity=banscityService.selectall();
 		pager = classificationService.getPager(pager);
 		model.put("pager", pager);
+		model.put("bancity", bancity);
 		return this.doPackageURI("activity/addlse");
 	}
 		
@@ -215,9 +223,7 @@ public class AdminActivityAct extends AdminAct{
 				throw new IllegalArgumentException("文件上传失败，原因:" + e.getLocalizedMessage());
 			}
 			
-		} else {
-			
-		}
+		} 
 		activity.setSponsorid(1);
 		activity.setNowforetime(System.currentTimeMillis()/1000);
 		activity.setType(0);

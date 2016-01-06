@@ -23,6 +23,15 @@
 		<if test = "page.searchMap.ssid != null">
 			and id = #{page.searchMap.ssid}
 		</if>
+		<if test = "page.searchMap.city != null">
+			and city = #{page.searchMap.city}
+		</if>
+		<if test = "page.searchMap.name!= null">
+			and activityname like '%${page.searchMap.name}%' 
+	
+			or activitynumber like '%${page.searchMap.name}%'  
+		</if>
+		
 		 order by id desc
 	</select>
 	<update id="update" parameterType="com.rpframework.website.luoluo.domain.Activity" />

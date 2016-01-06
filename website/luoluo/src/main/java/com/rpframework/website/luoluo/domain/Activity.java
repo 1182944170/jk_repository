@@ -59,11 +59,21 @@ public class Activity {
 	private String lat; //纬度
 	@FieldMapperAnnotation
 	private String phone; //纬度
+	@FieldMapperAnnotation
+	private String city; //地址
 	
 	private Integer bm_num; //纬度
 
 
 
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
 
 	public Integer getId() {
 		return id;
