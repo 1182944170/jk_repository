@@ -26,7 +26,7 @@ public class Mypersonalitylabel {
 	@FieldMapperAnnotation
 	private String mylabelg;  //id
 	@FieldMapperAnnotation
-	private String mylabels;  //id
+	private String mylabelh;  //id
 	public Integer getId() {
 		return id;
 	}
@@ -81,12 +81,13 @@ public class Mypersonalitylabel {
 	public void setMylabelg(String mylabelg) {
 		this.mylabelg = mylabelg;
 	}
-	public String getMylabels() {
-		return mylabels;
+	public String getMylabelh() {
+		return mylabelh;
 	}
-	public void setMylabels(String mylabels) {
-		this.mylabels = mylabels;
+	public void setMylabelh(String mylabelh) {
+		this.mylabelh = mylabelh;
 	}
+
 
 	
 	

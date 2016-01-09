@@ -60,7 +60,16 @@ public class User {
 	@FieldMapperAnnotation
 	private String lat; //纬度
 	
+	private Integer juli; //纬度
 	
+	
+	
+	public Integer getJuli() {
+		return juli;
+	}
+	public void setJuli(Integer juli) {
+		this.juli = juli;
+	}
 	//get  set方法
 	public Integer getId() {
 		return id;

@@ -10,4 +10,7 @@ public interface IActivityDao extends IDao{
 	List<Activity> doPager(Map<?, ?> map);
 	List<Activity> selectname(String name);
 	List<Activity> selectnumbers(String tole);
+	List<Activity> selectactivice( String lat, String lng, String city);
+	List<Activity> selectact(String lat, String lng, String city,
+			Integer activitycategoryid);
 }

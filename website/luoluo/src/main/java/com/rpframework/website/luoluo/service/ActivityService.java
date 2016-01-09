@@ -1,10 +1,13 @@
 package com.rpframework.website.luoluo.service;
 
 import java.util.List;
+
 import javax.annotation.Resource;
+
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
 import com.rpframework.core.BaseService;
 import com.rpframework.core.api.FileService;
 import com.rpframework.utils.DateUtils;
@@ -28,6 +31,18 @@ public class ActivityService extends BaseService{
 		pager.setCostTime(System.currentTimeMillis() - startTime);
 		return pager;
 	}
+/*	public Pager<Activity> selectnamejinwei(Pager<Activity> pager, ){
+		long startTime = System.currentTimeMillis();
+		List<Activity> list = iactivitydao.selectactivice(this.packageMyBatisParam(pager),lat,lng,city);
+		pager.setItemList(list);
+		pager.setCostTime(System.currentTimeMillis() - startTime);
+		return pager;
+	}
+*/
+	public List<Activity> selectactivice(String lat, String lng, String city){
+		return iactivitydao.selectactivice(lat, lng, city);
+	}
+	
 	/**
 	 * 查询单个
 	 * @param id
@@ -99,6 +114,12 @@ public class ActivityService extends BaseService{
 		}
 		return all.toString();
 	}
+	public List<Activity> selectacttple(String lat, String lng, String city,
+			Integer activitycategoryid) {
+		// TODO Auto-generated method stub
+		return iactivitydao.selectact(lat, lng, city,activitycategoryid);
+	}
+
 	
 
 }

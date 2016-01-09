@@ -63,9 +63,18 @@ public class Activity {
 	private String city; //地址
 	
 	private Integer bm_num; //纬度
+	private Integer juli; //纬度
 
 
 
+
+	public Integer getJuli() {
+		return juli;
+	}
+
+	public void setJuli(Integer juli) {
+		this.juli = juli;
+	}
 
 	public String getCity() {
 		return city;

@@ -2,15 +2,18 @@ package com.rpframework.website.luoluo.act.api;
 
 
 import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+
 import com.alibaba.druid.sql.parser.ParserException;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -40,16 +43,13 @@ import com.rpframework.website.luoluo.service.UserService;
 @RequestMapping("api/activi")
 public class ApiActivityAct extends BaseAct{
 	Gson gson = new Gson();
-	private static final double EARTH_RADIUS = 6378137;
 	@Resource UserService   userService ;
 	@Resource ActivityService   activityService ;
 	@Resource ActivitypictureSercice activitypictureSercice;
 	@Resource SponsorService sponsorSercice;
 	@Resource ClassificationService classificationService;
 	@Resource FileService fileService;
-	private static double rad(double d){
-	      return d * Math.PI / 180.0;
-   }
+
 	/**
 	 * api查询所有的活动
 	 * @param pager
@@ -63,18 +63,21 @@ public class ApiActivityAct extends BaseAct{
 			@RequestParam(required=false) String lat,
 			@RequestParam(required=false) String lng
 			) throws ParserException, InterruptedException{
- 		if(pager==null){
- 			pager=new Pager<Activity>();
- 		}
- 		pager.getSearchMap().put("city", city);
-		pager.getSearchMap().put("type", String.valueOf(1));
-		activityService.getpager(pager);
+		
+		List<Activity> list = activityService.selectactivice(lat,lng,city);
+		if(pager==null){
+			pager = new Pager<Activity>();
+		}
+		long startTime = System.currentTimeMillis();
+		pager.setItemList(list);
+		pager.setTotalCount(list.size());
+		pager.setCostTime(System.currentTimeMillis() - startTime);
 		JsonObject json = new JsonObject();
 		json.addProperty("totalPages", pager.getTotalPages());
 		json.addProperty("currentPage", pager.getCurrentPage());
 		json.addProperty("totalCount", pager.getTotalCount());
-		List<Activity> list = pager.getItemList();
 		JsonArray array = new JsonArray();
+		
 		json.add("arrays", array);
 		for (Activity act : list) {
 			List<Activitypicture>  cc=activitypictureSercice.selectlist(act.getId());
@@ -90,32 +93,15 @@ public class ApiActivityAct extends BaseAct{
 				}
 				i=Integer.parseInt(tt.getGrilexpense())+Integer.parseInt(tt.getChindenboy())+Integer.parseInt(tt.getOldboy());
 				bm_num+=i;
-				
 			}
 			act.setBm_num(bm_num);
-			double c=rad(Double.parseDouble(act.getLat()));
-			double d=rad(Double.parseDouble(act.getLng()));
-			double s=rad(Double.parseDouble(lat));
-			double f=rad(Double.parseDouble(lng));
-			 double a = c - s;
-			 double tow = d - f;
-			 double tt = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a/2),2) + 
-					     Math.cos(c)*Math.cos(d)*Math.pow(Math.sin(tow/2),2)));
-			 tt = tt * EARTH_RADIUS;
-			 tt = Math.round(tt * 10000) / 10000;
-				   for(int ee=100 ;ee<=500 ;ee+=100){
-						if(tt<ee){
-							Sponsorlis	span= sponsorSercice.seletOne(act.getSponsorid());
-							if(span!=null){
-								if(span.getTypeopp()==1){
-							   JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
-							   jsonObj.addProperty("mishu", "1000米以内");
-								array.add(jsonObj);
-							}
-							}
-								break;
-						 }
-				   }
+			Sponsorlis	span= sponsorSercice.seletOne(act.getSponsorid());
+			if(span!=null){
+				if(span.getTypeopp()==1){
+			   JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
+				array.add(jsonObj);
+				}
+			}
 		}
 		System.out.println("user_list: "+json.toString());
 		return json;
@@ -271,45 +257,32 @@ public class ApiActivityAct extends BaseAct{
 	
 	@RequestMapping("/jintweidu")
 	public @ResponseBody JsonElement jintweidu(@RequestParam(value="pager",required=false) Pager<Activity> pager,
+			@RequestParam(required=false) String city,
 			@RequestParam(required=false) String lat,
 			@RequestParam(required=false) String lng,
 			HttpSession session){
+		
+		List<Activity> list = activityService.selectactivice(lat,lng,city);
 		if(pager==null){
- 			pager=new Pager<Activity>();
- 		}
-		pager.getSearchMap().put("type", String.valueOf(1));
-		activityService.getpager(pager);
+			pager = new Pager<Activity>();
+		}
+		long startTime = System.currentTimeMillis();
+		pager.setItemList(list);
+		pager.setTotalCount(list.size());
+		pager.setCostTime(System.currentTimeMillis() - startTime);
 		JsonObject json = new JsonObject();
 		json.addProperty("totalPages", pager.getTotalPages());
 		json.addProperty("currentPage", pager.getCurrentPage());
 		json.addProperty("totalCount", pager.getTotalCount());
-		List<Activity> list = pager.getItemList();
 		JsonArray array = new JsonArray();
 		json.add("arrays", array);
 		for (Activity act : list) {
-			double c=rad(Double.parseDouble(act.getLat()));
-			double d=rad(Double.parseDouble(act.getLng()));
-			double s=rad(Double.parseDouble(lat));
-			double f=rad(Double.parseDouble(lng));
-			 double a = c - s;
-			 double tow = d - f;
-			 double tt = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a/2),2) + 
-					     Math.cos(c)*Math.cos(d)*Math.pow(Math.sin(tow/2),2)));
-			 tt = tt * EARTH_RADIUS;
-			 tt = Math.round(tt * 10000) / 10000;
-				   for(int i=100 ;i<=500 ;i+=100){
-						if(tt<i){
 							Sponsorlis	span= sponsorSercice.seletOne(act.getSponsorid());
 							if(span!=null){
 								if(span.getTypeopp()==1){
 							   JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
-							   jsonObj.addProperty("mishu", "1000米以内");
 								array.add(jsonObj);
 							}
-							}
-								break;
-						 }
-						
 				   }
 		}
 		return json;
@@ -321,24 +294,26 @@ public class ApiActivityAct extends BaseAct{
 	public @ResponseBody JsonElement activiactivitycategory(
 			@RequestParam(required=false) Integer activitycategoryid,
 			@RequestParam(required=false) String city,
+			@RequestParam(required=false) String lat,
+			@RequestParam(required=false) String lng,
 			@RequestParam(value="pager",required=false) Pager<Activity> pager 
 			){
+		
+		List<Activity> list = activityService.selectacttple(lat,lng,city,activitycategoryid);
 		if(pager==null){
- 			pager=new Pager<Activity>();
- 		}
-		pager.getSearchMap().put("city", city);
-		pager.getSearchMap().put("calid", String.valueOf(activitycategoryid));
-		pager.getSearchMap().put("type", String.valueOf(1));
-		activityService.getpager(pager);
+			pager = new Pager<Activity>();
+		}
+		long startTime = System.currentTimeMillis();
+		pager.setItemList(list);
+		pager.setTotalCount(list.size());
+		pager.setCostTime(System.currentTimeMillis() - startTime);
 		JsonObject json = new JsonObject();
 		json.addProperty("totalPages", pager.getTotalPages());
 		json.addProperty("currentPage", pager.getCurrentPage());
 		json.addProperty("totalCount", pager.getTotalCount());
-		List<Activity> list = pager.getItemList();
 		JsonArray array = new JsonArray();
 		json.add("arrays", array);
 		for (Activity act : list) {
-			
 			List<Activitypicture>  cc=activitypictureSercice.selectlist(act.getId());
 			int bm_num=0;
 			int i=0;
@@ -348,13 +323,14 @@ public class ApiActivityAct extends BaseAct{
 				
 			}
 			act.setBm_num(bm_num);
-			Sponsorlis	span= sponsorSercice.seletOne(act.getSponsorid());
-			if(span!=null){
-				if(span.getTypeopp()==1){
-				JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
-				array.add(jsonObj);
-				}
-				}
+							Sponsorlis	span= sponsorSercice.seletOne(act.getSponsorid());
+							if(span!=null){
+								if(span.getTypeopp()==1){
+							   JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
+								array.add(jsonObj);
+							}
+							
+				   }
 		}
 		System.out.println("user_list: "+json.toString());
 		return json;
@@ -684,7 +660,6 @@ public class ApiActivityAct extends BaseAct{
 		JsonArray array = new JsonArray();
 		json.add("arrays", array);
 		for (Activity act : list) {
-			
 		int ss=(int) Math.abs((act.getOuttime()-act.getStarttime())/(60*60*24));
 		int ff=(int) Math.abs((act.getStarttime()-idtime)/(60*60*24));
 		//筛选信息

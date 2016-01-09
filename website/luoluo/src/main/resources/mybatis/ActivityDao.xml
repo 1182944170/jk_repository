@@ -46,4 +46,16 @@
 	<select id="selectnumbers" resultMap="Activity">
 		select * from release_activity where activitynumber LIKE '%' #{tole} '%' order by id
 	</select>
+	<select id="selectactivice" parameterType="map" resultMap="Activity">
+		SELECT *, ROUND(6378.138*2*ASIN(SQRT(POW(SIN((#{0}*PI()/180-lat*PI()/180)/2),2)+COS(#{0}*PI()/180)*COS(lat*PI()/180)*POW(SIN((#{1}*PI()/180-lng*PI()/180)/2),2)))*1000) AS juli
+		FROM release_activity where city=#{2} and type=1
+		ORDER BY juli 
+		LIMIT 50
+	</select>
+	<select id="selectact" parameterType="map" resultMap="Activity">
+		SELECT *, ROUND(6378.138*2*ASIN(SQRT(POW(SIN((#{0}*PI()/180-lat*PI()/180)/2),2)+COS(#{0}*PI()/180)*COS(lat*PI()/180)*POW(SIN((#{1}*PI()/180-lng*PI()/180)/2),2)))*1000) AS juli
+		FROM release_activity where city=#{2} and type=1 and activitycategory=#{3}
+		ORDER BY juli 
+		LIMIT 50
+	</select>
 </mapper>

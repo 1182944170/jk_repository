@@ -110,10 +110,7 @@ public class ApiSponsorAct extends BaseAct{
 			@RequestParam(required= false)Integer sponsorid,
 			HttpSession session) throws ParserException, InterruptedException{
 		Sponsorlis sponsor=sponsorService.seletOne(sponsorid);
-		User currUser = getSessionUser(session);	
-		if(currUser == null){
-			throw new APICodeException(-4, "你还没登陆!");
-		}
+
 		JsonObject json=new JsonObject();
 		json.addProperty("id", sponsor.getId());
 		json.addProperty("name", sponsor.getName());

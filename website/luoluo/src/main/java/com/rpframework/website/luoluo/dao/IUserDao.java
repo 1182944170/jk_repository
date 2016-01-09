@@ -7,6 +7,7 @@ import java.util.Map;
 
 
 
+
 import com.rpframework.core.IDao;
 import com.rpframework.website.luoluo.domain.User;
 
@@ -17,4 +18,5 @@ public interface IUserDao extends IDao{
 	User findUserByPhone(String phone); 
 	User AccoutSelect(String uid);
 	User selectmonly(Integer sponid);
+	List<User> selectact(String lat, String lng);
 }

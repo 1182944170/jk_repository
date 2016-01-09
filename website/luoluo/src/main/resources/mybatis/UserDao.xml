@@ -46,4 +46,12 @@
 	<select id="selectmonly"  resultMap="user">
 		 SElECT * FROM user WHERE id IN ( SELECT userid  FROM sponsor  where id=#{sponid} )
 	</select>
+	<select id="selectact" parameterType="map" resultMap="user">
+		SELECT *, ROUND(6378.138*2*ASIN(SQRT(POW(SIN((#{0}*PI()/180-lat*PI()/180)/2),2)+COS(#{0}*PI()/180)*COS(lat*PI()/180)*POW(SIN((#{1}*PI()/180-lng*PI()/180)/2),2)))*1000) AS juli
+		FROM user where  type=0 
+		ORDER BY juli 
+		LIMIT 50
+	</select>
+	
+	
 </mapper>

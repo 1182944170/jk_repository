@@ -18,4 +18,8 @@ public class CityService extends BaseService {
 		// TODO Auto-generated method stub
 		return cityDao.searchByCity(provinceCode);
 	}
+	public List<City> searchcity() {
+		// TODO Auto-generated method stub
+		return cityDao.queryAll();
+	}
 }

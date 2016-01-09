@@ -25,7 +25,6 @@ import com.rpframework.utils.DateUtils;
 import com.rpframework.utils.NumberUtils;
 import com.rpframework.utils.Pager;
 import com.rpframework.website.luoluo.domain.Monlyjournals;
-import com.rpframework.website.luoluo.domain.Mypersonalitylabel;
 import com.rpframework.website.luoluo.domain.User;
 import com.rpframework.website.luoluo.exception.APICodeException;
 import com.rpframework.website.luoluo.service.MonlyjournalsService;
@@ -37,14 +36,10 @@ import com.rpframework.website.luoluo.service.UserService;
 @RequestMapping("api/user")
 public class ApiUserAct extends BaseAct{
 	Gson gson = new Gson();
-	private static final double EARTH_RADIUS = 6378137;
 	@Resource UserService userservice;
 	@Resource FileService fileService;
 	@Resource MypersonalitylabelService mypersonalitylabelService;
 	@Resource MonlyjournalsService monlyjournalsService;
-	private static double rad(double d){
-	      return d * Math.PI / 180.0;
- }
 	/**
 	 * 用户列表
 	 * @date 2015年7月13日 下午5:47:24
@@ -82,10 +77,6 @@ public class ApiUserAct extends BaseAct{
 	@RequestMapping("/user_listid")
 	public @ResponseBody JsonElement userlistid( @RequestParam(required=false) Integer userid,HttpSession session
 			) throws ParserException, InterruptedException{
-		User currUser = getSessionUser(session);
-		if(currUser == null){
-			throw new APICodeException(-4, "你还没登陆!");
-		}	
 		User user = userservice.selectOnlyOne(userid);
 		JsonObject json = new JsonObject();
 		json.addProperty("id", user.getId());
@@ -227,37 +218,23 @@ public class ApiUserAct extends BaseAct{
 			@RequestParam(required=false) String lat,
 			@RequestParam(required=false) String lng,
 			HttpSession session){
+		List<User> list = userservice.selectactivice(lat,lng);
 		if(pager==null){
- 			pager=new Pager<User>();
- 		}
-		pager.getSearchMap().put("type", String.valueOf(0));
-		userservice.Userpager(pager);
+			pager = new Pager<User>();
+		}
+		long startTime = System.currentTimeMillis();
+		pager.setItemList(list);
+		pager.setTotalCount(list.size());
+		pager.setCostTime(System.currentTimeMillis() - startTime);
 		JsonObject json = new JsonObject();
 		json.addProperty("totalPages", pager.getTotalPages());
 		json.addProperty("currentPage", pager.getCurrentPage());
 		json.addProperty("totalCount", pager.getTotalCount());
-		List<User> list = pager.getItemList();
 		JsonArray array = new JsonArray();
 		json.add("arrays", array);
 		for (User act : list) {
-			double c=rad(Double.parseDouble(act.getLat()));
-			double d=rad(Double.parseDouble(act.getLng()));
-			double s=rad(Double.parseDouble(lat));
-			double f=rad(Double.parseDouble(lng));
-			 double a = c - s;
-			 double tow = d - f;
-			 double tt = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a/2),2) + 
-				     Math.cos(c)*Math.cos(d)*Math.pow(Math.sin(tow/2),2)));
-		 tt = tt * EARTH_RADIUS;
-		 tt = Math.round(tt * 10000) / 10000;
-				   for(int i=100 ;i<=500 ;i+=100){
-						if(tt<i){
-							   JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
-							   jsonObj.addProperty("mishu", "1000米以内");
-								array.add(jsonObj);
-								break;
-						 }
-				   }
+			JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
+				array.add(jsonObj);
 		}
 		return json;
 	}
@@ -409,10 +386,7 @@ public class ApiUserAct extends BaseAct{
 	public @ResponseBody JsonElement changeUserfind(
 			@RequestParam(required=false) Integer userid,
 			HttpSession session, HttpServletRequest request){
-		User currUser = getSessionUser(session);
-		if(currUser == null){
-			throw new APICodeException(-4, "你还没登陆!");		
-		}
+
 		JsonObject json = new JsonObject();
 		//用户
 		User user=userservice.selectOnlyOne(userid);
@@ -436,18 +410,7 @@ public class ApiUserAct extends BaseAct{
 		json.addProperty("signature", user.getSignature());
 		json.addProperty("ctiontime", user.getCtiontime());
 		json.addProperty("acnumber", user.getAcnumber());
-		//标签
-		Mypersonalitylabel Myperson=mypersonalitylabelService.selectOnlyOne(userid);
-		
-		json.addProperty("Mylabel1", Myperson.getMylabela());
-		json.addProperty("Mylabel2", Myperson.getMylabelb());
-		json.addProperty("Mylabel3", Myperson.getMylabelc());
-		json.addProperty("Mylabel4", Myperson.getMylabeld());
-		json.addProperty("Mylabel5", Myperson.getMylabele());
-		json.addProperty("Mylabel6", Myperson.getMylabelf());
-		json.addProperty("Mylabel7", Myperson.getMylabelg());
-		json.addProperty("Mylabel8", Myperson.getMylabels());
-		json.addProperty("Userid", Myperson.getUserid());
+
 		return json;
 	}	
 }

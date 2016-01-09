@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 
 import org.springframework.util.Assert;
+
 import com.rpframework.core.BaseService;
 import com.rpframework.utils.Pager;
 import com.rpframework.website.luoluo.dao.IUserDao;
@@ -181,5 +182,9 @@ public class UserService extends BaseService{
 			return iuserdao.update(user);
 		}
 		return false;
+	}
+	public List<User> selectactivice(String lat, String lng) {
+		// TODO Auto-generated method stub
+		return iuserdao.selectact(lat,lng);
 	}	
 }
