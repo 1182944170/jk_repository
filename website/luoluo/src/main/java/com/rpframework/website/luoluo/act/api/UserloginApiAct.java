@@ -235,8 +235,6 @@ public class UserloginApiAct extends BaseAct{
 		boolean bFlag = userService.userLogin(lUser);
 		
 		if(bFlag){
-			
-			
 			JsonObject jsonObj =new JsonObject();
 			jsonObj.addProperty("id", lUser.getId());
 			jsonObj.addProperty("name", lUser.getName());
@@ -267,6 +265,7 @@ public class UserloginApiAct extends BaseAct{
 			User uUser = getSessionUser(session);
 			Sponsorlis span =sponsorService.seletOnesponsor(uUser.getId());
 			if(span!=null){
+				json.addProperty("sponsorid", span.getId());
 				if(span.getTypeopp()==0){
 					json.addProperty("type", 0);
 				}else{

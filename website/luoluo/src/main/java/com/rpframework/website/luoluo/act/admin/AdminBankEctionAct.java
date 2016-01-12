@@ -12,13 +12,16 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.rpframework.utils.Pager;
 import com.rpframework.website.luoluo.domain.BankcardExcution;
+import com.rpframework.website.luoluo.domain.User;
 import com.rpframework.website.luoluo.service.BankcardExcutionService;
+import com.rpframework.website.luoluo.service.UserService;
 
 @Controller
 @RequestMapping("admin/bankextion")
 public class AdminBankEctionAct extends AdminAct{
 	
 	@Resource BankcardExcutionService bankcardExcutionService;
+	@Resource UserService userService;
 	
 	
 	@RequestMapping("list")
@@ -55,8 +58,15 @@ public class AdminBankEctionAct extends AdminAct{
 			setInfoMsg("没有该用户！", attr);
 		}else{
 			Bfgl.setState(2);
-			bankcardExcutionService.updatedo(Bfgl);
-			setInfoMsg("处理成功！", attr);
+			boolean bfgl =bankcardExcutionService.updatedo(Bfgl);
+			if(bfgl){
+				setInfoMsg("处理成功！", attr);
+			}else{
+				User user=userService.selectOnlyOne(Bfgl.getUserid());
+				user.setPersonalMany(user.getPersonalMany()*1+Bfgl.getExtractionMonly());
+				userService.updatedo(user);
+			}
+			
 		}
 		
 		return redirect("/admin/bankextion/list");

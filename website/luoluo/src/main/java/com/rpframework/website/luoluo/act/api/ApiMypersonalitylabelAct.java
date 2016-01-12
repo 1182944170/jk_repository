@@ -127,21 +127,21 @@ public @ResponseBody JsonElement mylistlable(
 	JsonObject json = new JsonObject();
 	Mypersonalitylabel Myperson=mypersonalitylabelService.selectOnlyOne(userid);
 	if(StringUtils.isBlank(Myperson.getMylabela())){
-		json.addProperty("Mylabelaia", Myperson.getMylabela());
+		json.addProperty("Mylabelaid", Myperson.getMylabela());
 	}else{
 		Personalabel personalabel= personalabelService.selectOnlyOne(Integer.parseInt(Myperson.getMylabela()));	
 		json.addProperty("Mylabela", personalabel.getLabel());
 		json.addProperty("Mylabelaid", Myperson.getMylabela());
 	}
 	if(StringUtils.isBlank(Myperson.getMylabelb())){
-		json.addProperty("Mylabelbib", Myperson.getMylabelb());
+		json.addProperty("Mylabelbid", Myperson.getMylabelb());
 	}else{
 		Personalabel personalabel= personalabelService.selectOnlyOne(Integer.parseInt(Myperson.getMylabelb()));	
 		json.addProperty("Mylabelb", personalabel.getLabel());
 		json.addProperty("Mylabelbid", Myperson.getMylabelb());
 	}
 	if(StringUtils.isBlank(Myperson.getMylabelc())){
-		json.addProperty("Mylabelcic", Myperson.getMylabelc());
+		json.addProperty("Mylabelcid", Myperson.getMylabelc());
 	}else{
 		Personalabel personalabel= personalabelService.selectOnlyOne(Integer.parseInt(Myperson.getMylabelc()));	
 		json.addProperty("Mylabelc", personalabel.getLabel());
@@ -155,28 +155,28 @@ public @ResponseBody JsonElement mylistlable(
 		json.addProperty("Mylabeldid", Myperson.getMylabeld());
 	}
 	if(StringUtils.isBlank(Myperson.getMylabele())){
-		json.addProperty("Mylabeleie", Myperson.getMylabele());
+		json.addProperty("Mylabeleid", Myperson.getMylabele());
 	}else{
 		Personalabel personalabel= personalabelService.selectOnlyOne(Integer.parseInt(Myperson.getMylabele()));	
 		json.addProperty("Mylabele", personalabel.getLabel());
 		json.addProperty("Mylabeleid", Myperson.getMylabele());
 	}
 	if(StringUtils.isBlank(Myperson.getMylabelf())){
-		json.addProperty("Mylabelfif", Myperson.getMylabelf());
+		json.addProperty("Mylabelfid", Myperson.getMylabelf());
 	}else{
 		Personalabel personalabel= personalabelService.selectOnlyOne(Integer.parseInt(Myperson.getMylabelf()));	
 		json.addProperty("Mylabelf", personalabel.getLabel());
 		json.addProperty("Mylabelfid", Myperson.getMylabelf());
 	}
 	if(StringUtils.isBlank(Myperson.getMylabelg())){
-		json.addProperty("Mylabelgig", Myperson.getMylabelg());
+		json.addProperty("Mylabelgid", Myperson.getMylabelg());
 	}else{
 		Personalabel personalabel= personalabelService.selectOnlyOne(Integer.parseInt(Myperson.getMylabelg()));	
 		json.addProperty("Mylabelg", personalabel.getLabel());
 		json.addProperty("Mylabelgid", Myperson.getMylabelg());
 	}
 	if(StringUtils.isBlank(Myperson.getMylabelh())){
-		json.addProperty("Mylabelhih", Myperson.getMylabelh());
+		json.addProperty("Mylabelhid", Myperson.getMylabelh());
 	}else{
 		Personalabel personalabel= personalabelService.selectOnlyOne(Integer.parseInt(Myperson.getMylabelh()));	
 		json.addProperty("Mylabelh", personalabel.getLabel());

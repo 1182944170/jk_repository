@@ -127,9 +127,22 @@ function selectMap(){
 		</div>
 	</div>
 </div>
-<#assign fieldName="activitypicture" />
-<#assign fieldLabel="活动图片" />
-<#include "/common-admin/upload/upload_field_pre.ftl" />
+<#assign fieldName="activitypicture" />不要超过5张图片
+<#assign fieldLabel="活动图片" />不要超过5张图片
+<#include "/common-admin/upload/upload_field_pre.ftl" />不要超过5张图片
+
+
+
+<div class="form-group">
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name"></label>
+	<div class="col-xs-12 col-sm-9">
+		<div class="clearfix">
+			<span class="block input-icon width-40" style="color:red">
+			(上传图片不要超过5张)
+			</span>
+		</div>
+	</div>
+</div>
 <div class="form-group">
 	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">活动内容:</label>
 	<div class="col-xs-12 col-sm-9">

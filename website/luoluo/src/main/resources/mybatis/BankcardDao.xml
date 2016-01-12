@@ -8,6 +8,10 @@
 	</resultMap>		
 	<select id="doPager" resultMap="Bankcard">
 		select * from bankcard where 1=1
+		<if test = "page.searchMap.userid != null">
+			and userid = #{page.searchMap.userid}
+		</if>
+		
 	</select>
 	<update id="update" parameterType="com.rpframework.website.luoluo.domain.Bankcard" />
 	<insert id="insert" parameterType="com.rpframework.website.luoluo.domain.Bankcard" useGeneratedKeys="true" keyProperty="id"/>
