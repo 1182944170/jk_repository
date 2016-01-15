@@ -65,9 +65,6 @@ public class Activity {
 	private Integer bm_num; //纬度
 	private Integer juli; //纬度
 
-
-
-
 	public Integer getJuli() {
 		return juli;
 	}

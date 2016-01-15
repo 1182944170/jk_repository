@@ -131,9 +131,9 @@ function selectMap(){
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<span class="block input-icon width-40">
-				<@fck value="${(user.entintroduction)!''}" instanceName="" inputName="" height="300px;" toolbarSet="Basic">
+				<@fck value="${(user.entintroduction)!''}" instanceName="entintroduction" inputName="" height="300px;" toolbarSet="Basic">
 		    	${fck_body}
-		    </@fck>
+		   	 </@fck>
 			</span>
 		</div>
 	</div>

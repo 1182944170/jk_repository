@@ -46,7 +46,7 @@ public class AdminActivityAct extends AdminAct{
 		if(pager==null){
 			pager=new Pager<Activity>();
 		}
-		
+		pager.getSearchMap().put("se", "se");
 		List<Classification> cal=classificationService.queryAll();
 		pager=activityService.getpager(pager);
 		List<Activity> list=pager.getItemList();
@@ -69,9 +69,19 @@ public class AdminActivityAct extends AdminAct{
 		if(pager==null){
 			pager=new Pager<Activity>();
 		}
+		pager.getSearchMap().put("se", "se");
 		List<Classification> cal=classificationService.queryAll();
 		pager.getSearchMap().put("calid",  String.valueOf(id));
 		pager=activityService.getpager(pager);
+		List<Activity> list=pager.getItemList();
+		for(Activity act :list){
+			Sponsorlis sponsorlis=sponsorlisService.seletOne(act.getSponsorid());
+			if(sponsorlis==null){
+				act.setBm_num(0);
+			}else{
+				act.setBm_num(sponsorlis.getTypeopp());	
+			}
+		}
 		model.put("cal", cal);
 		model.put("pager", pager);
 		return this.doPackageURI("activity/list");
@@ -240,7 +250,9 @@ public class AdminActivityAct extends AdminAct{
 	 */
 	@RequestMapping("/{id}/deletUser")
 	public String deletUser(@PathVariable Integer id,RedirectAttributes attr){
-		activityService.deletesell(id);
+		Activity activity=activityService.selectcal(id);
+		activity.setTypeok(5);
+		activityService.updatedo(activity);
 		setInfoMsg("删除成功！", attr);
 		return redirect("/admin/actcy/list");
 	}
