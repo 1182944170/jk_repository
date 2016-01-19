@@ -32,6 +32,7 @@ public class AdminUserAct extends AdminBaseAct {
 	@Resource AdminUserService adminUserService;
 	@Resource AdminRoleService adminRoleService;
 	
+	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@RequestMapping("/list")
 	public String list(@RequestParam(value="pager", required=false) Pager pager, Map<Object, Object> model, RedirectAttributes attr){
@@ -99,6 +100,9 @@ public class AdminUserAct extends AdminBaseAct {
 			if(adminUserDB == null) {
 				throw new AdminIllegalArgumentException("更新用户时不存在的ID:" + adminUser.getId());
 			}
+			
+			adminUserDB.setCityCode(adminUser.getCityCode());
+			adminUserDB.setAreaCode(adminUser.getAreaCode());
 			adminUserDB.setAdminRole(adminUser.getAdminRole());
 			adminUserDB.setContact(adminUser.getContact());
 			adminUserDB.setEmail(adminUser.getEmail());

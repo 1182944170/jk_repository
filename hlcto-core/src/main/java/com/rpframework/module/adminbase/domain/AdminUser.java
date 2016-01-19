@@ -85,7 +85,26 @@ public class AdminUser extends Domain {
 	
 	@FieldMapperAnnotation
 	String email;
+	@FieldMapperAnnotation
+	String cityCode;
 	
+	@FieldMapperAnnotation
+	String areaCode;
+	
+	
+	
+	public String getCityCode() {
+		return cityCode;
+	}
+	public void setCityCode(String cityCode) {
+		this.cityCode = cityCode;
+	}
+	public String getAreaCode() {
+		return areaCode;
+	}
+	public void setAreaCode(String areaCode) {
+		this.areaCode = areaCode;
+	}
 	public Integer getId() {
 		return id;
 	}

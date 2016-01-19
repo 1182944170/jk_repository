@@ -8,18 +8,23 @@
 						<th>ID</th>
 						<th>公司人员姓名</th>
 						<th>手机号</th>
+						<th>email</th>
 						<th>角色名称</th>
+						<th>管理城市</th>
 						<th><i class="icon-time bigger-110 hidden-480"></i> 状态</th>
 						<th></th>
 					</tr>
 				</thead>
 				<tbody>
 				<#list pager.itemList as u>
+				<#assign areaJson=commonTag.getCountyPathJson(u.areaCode) />
 					<tr>
 						<td><span class="green center">${u.id}</span></td>
 						<td><span class="gray center">${u.userName}</span></td>
 						<td>${u.contact}</td>
+						<td>${u.email}</td>
 						<td>${u.adminRole.name}</td>
+						<td>${gsonUtils.getDeepValueByJson(areaJson, "city.name")}</td>
 						<td class="hidden-480">
 							<#if u.state == 1>
 								<span class="label label-sm label-success arrowed">正常状态</span>
@@ -29,41 +34,30 @@
 						</td>
 
 						<td>
-						<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
-							<a class="green" href="${ctx}/admin/adminuser/${u.id}/edit${suffix}" alt="Edit">
-								<i class="icon-pencil bigger-130"></i>
-							</a>
-							<!--
-							<a class="red" href="${ctx}/admin/adminuser/${u.id}/delete${suffix}" alt="Delete">
-								<i class="icon-trash bigger-130"></i> 
-								
-							</a>-->
-						</div>
-
-						<div class="visible-xs visible-sm hidden-md hidden-lg">
-							<div class="inline position-relative">
-								<button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown">
-									<i class="icon-caret-down icon-only bigger-120"></i>
-								</button>
-								<ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
-									<li>
-										<a href="${ctx}/admin/adminuser/${u.id}/edit${suffix}" class="tooltip-success" data-rel="tooltip" title="" data-original-title="Edit">
-											<span class="green">
-												<i class="icon-edit bigger-120"></i>
-											</span>
-										</a>
-									</li>
-									<!--
-									<li>
-										<a href="${ctx}/admin/adminuser/${u.id}/delete${suffix}" class="tooltip-error" data-rel="tooltip" title="" data-original-title="Delete">
-											<span class="red">
-												<i class="icon-trash bigger-120"></i>
-											</span>
-										</a>
-									</li>-->
-								</ul>
-							</div>
-						</div>
+							<#if sessionAdminUser.adminRole.id == 1>
+								<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
+									<a class="green" href="${ctx}/admin/adminuser/${u.id}/edit${suffix}" alt="Edit">
+										<i class="icon-pencil bigger-130"></i>
+									</a>
+								</div>
+		
+								<div class="visible-xs visible-sm hidden-md hidden-lg">
+									<div class="inline position-relative">
+										<button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown">
+											<i class="icon-caret-down icon-only bigger-120"></i>
+										</button>
+										<ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
+											<li>
+												<a href="${ctx}/admin/adminuser/${u.id}/edit${suffix}" class="tooltip-success" data-rel="tooltip" title="" data-original-title="Edit">
+													<span class="green">
+														<i class="icon-edit bigger-120"></i>
+													</span>
+												</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</#if>
 						</td>
 					</tr>
 				</#list>

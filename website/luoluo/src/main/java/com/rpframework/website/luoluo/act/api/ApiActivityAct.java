@@ -22,6 +22,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.rpframework.core.BaseAct;
 import com.rpframework.core.api.FileService;
+import com.rpframework.module.common.dao.ICityDao;
+import com.rpframework.module.common.domain.City;
+import com.rpframework.module.common.service.CityService;
 import com.rpframework.utils.CollectionUtils;
 import com.rpframework.utils.DateUtils;
 import com.rpframework.utils.Pager;
@@ -33,6 +36,7 @@ import com.rpframework.website.luoluo.domain.User;
 import com.rpframework.website.luoluo.exception.APICodeException;
 import com.rpframework.website.luoluo.service.ActivityService;
 import com.rpframework.website.luoluo.service.ActivitypictureSercice;
+import com.rpframework.website.luoluo.service.BanscityService;
 import com.rpframework.website.luoluo.service.ClassificationService;
 import com.rpframework.website.luoluo.service.SponsorService;
 import com.rpframework.website.luoluo.service.UserService;
@@ -48,7 +52,11 @@ public class ApiActivityAct extends BaseAct{
 	@Resource ActivitypictureSercice activitypictureSercice;
 	@Resource SponsorService sponsorSercice;
 	@Resource ClassificationService classificationService;
+	@Resource BanscityService banscityService;
+	@Resource ICityDao IcityDao;
+	
 	@Resource FileService fileService;
+	@Resource CityService cityService;
 
 	/**
 	 * api查询所有的活动
@@ -63,8 +71,8 @@ public class ApiActivityAct extends BaseAct{
 			@RequestParam(required=false) String lat,
 			@RequestParam(required=false) String lng
 			) throws ParserException, InterruptedException{
-		
-		List<Activity> list = activityService.selectactivice(lat,lng,city);
+		City cityc=cityService.selectdoBycitycode(city);
+		List<Activity> list = activityService.selectactivice(lat,lng,cityc.getCode());
 		if(pager==null){
 			pager = new Pager<Activity>();
 		}
@@ -106,59 +114,16 @@ public class ApiActivityAct extends BaseAct{
 		System.out.println("user_list: "+json.toString());
 		return json;
 	}
-	/**
-	 * 通过名字，编号查询
-	 * @param pager
-	 * @return
-	 * @throws ParserException
-	 * @throws InterruptedException
-	 */
-	@RequestMapping("/earch_list")
-	public @ResponseBody JsonElement earchlist(
-			@RequestParam(value="pager" ,required=false)Pager<Activity> pager,
-			@RequestParam String search 
-			) throws ParserException, InterruptedException{
-		if(pager==null){
-			pager=new Pager<Activity>();
+/*	@RequestMapping("/activi_listzz")
+	public String activilist() throws ParserException, InterruptedException{
+		List<Banscity> bb=banscityService.selectall();
+		for(Banscity act :bb){
+		City c=	cityService.selectdo(act.getCity());
+		c.setCodycity(act.getCode()+"");
+		IcityDao.update(c);
 		}
-		 JsonObject json=new JsonObject();
-		if(StringUtils.isBlank(search)){
-			
-		}else{
-		pager.getSearchMap().put("name", search);
-		}
-		activityService.getpager(pager);
-		json.addProperty("totalPages", pager.getTotalPages());
-		json.addProperty("currentPage", pager.getCurrentPage());
-		json.addProperty("totalCount", pager.getTotalCount());
-		List<Activity> list = pager.getItemList();
-		 JsonArray array = new JsonArray();
-		 json.add("arrays", array);
-		if(CollectionUtils.isEmpty(list)){
-			 json.addProperty("msg", "该内容不存在");
-			 return json;
-		}else{
-			 for (Activity act : list) {
-				 List<Activitypicture>  cc=activitypictureSercice.selectlist(act.getId());
-					int bm_num=0;
-					int i=0;
-					for (Activitypicture tt : cc) {
-						i=Integer.parseInt(tt.getGrilexpense())+Integer.parseInt(tt.getChindenboy())+Integer.parseInt(tt.getOldboy());
-						bm_num+=i;
-					}
-					act.setBm_num(bm_num);
-					Sponsorlis	span= sponsorSercice.seletOne(act.getSponsorid());
-					if(span!=null){
-						if(span.getTypeopp()==1){
-						JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
-						array.add(jsonObj);
-						}
-					}
-				} 
-			 return json;
-		}
-	}
-
+		return "";
+	}*/
 	/**
 	 * 查询详细
 	 * @param activiid
@@ -261,8 +226,8 @@ public class ApiActivityAct extends BaseAct{
 			@RequestParam(required=false) String lat,
 			@RequestParam(required=false) String lng,
 			HttpSession session){
-		
-		List<Activity> list = activityService.selectactivice(lat,lng,city);
+		City cityc=cityService.selectdoBycitycode(city);
+		List<Activity> list = activityService.selectactivice(lat,lng,cityc.getCode());
 		if(pager==null){
 			pager = new Pager<Activity>();
 		}
@@ -298,8 +263,8 @@ public class ApiActivityAct extends BaseAct{
 			@RequestParam(required=false) String lng,
 			@RequestParam(value="pager",required=false) Pager<Activity> pager 
 			){
-		
-		List<Activity> list = activityService.selectacttple(lat,lng,city,activitycategoryid);
+		City cityc=cityService.selectdoBycitycode(city);
+		List<Activity> list = activityService.selectacttple(lat,lng,cityc.getCode(),activitycategoryid);
 		if(pager==null){
 			pager = new Pager<Activity>();
 		}
@@ -308,7 +273,7 @@ public class ApiActivityAct extends BaseAct{
 		pager.setTotalCount(list.size());
 		pager.setCostTime(System.currentTimeMillis() - startTime);
 		JsonObject json = new JsonObject();
-		json.addProperty("totalPages", pager.getTotalPages());
+		json.addProperty("totalPages" , pager.getTotalPages());
 		json.addProperty("currentPage", pager.getCurrentPage());
 		json.addProperty("totalCount", pager.getTotalCount());
 		JsonArray array = new JsonArray();
@@ -527,7 +492,7 @@ public class ApiActivityAct extends BaseAct{
 			@RequestParam(required=false)String lng,
 			@RequestParam(required=false)String lat,HttpSession session){
 			JsonObject json = new JsonObject();
-		
+			City cityc=cityService.selectdoBycitycode(city);
 				User currUser = getSessionUser(session);
 				if(currUser == null){
 					throw new APICodeException(-4, "你还没登陆!");
@@ -537,6 +502,9 @@ public class ApiActivityAct extends BaseAct{
 					json.addProperty("error", "没有主办方");
 					return json;
 				}
+				
+				
+				
 					Activity activity=new Activity();
 					activity.setActivityname(activityname);
 					activity.setSponsorid(bfgs.getId());
@@ -551,7 +519,7 @@ public class ApiActivityAct extends BaseAct{
 					activity.setOuttime(DateUtils.parse(outtime).getTime()/1000);
 					activity.setActivitypicture(iconFile);
 					activity.setCover(apicture);
-					activity.setCity(city);
+					activity.setCity(cityc.getCode());
 					/*String corle=activityService.addPhotos(iconFile);
 					activity.setActivitypicture("["+corle+"]");
 					

@@ -22,4 +22,12 @@ public class CityService extends BaseService {
 		// TODO Auto-generated method stub
 		return cityDao.queryAll();
 	}
+	public City selectdo(String city) {
+		// TODO Auto-generated method stub
+		return cityDao.selectdo(city);
+	}
+	public City selectdoBycitycode(String city) {
+		// TODO Auto-generated method stub
+		return cityDao.selectdoBycitycode(city);
+	}
 }

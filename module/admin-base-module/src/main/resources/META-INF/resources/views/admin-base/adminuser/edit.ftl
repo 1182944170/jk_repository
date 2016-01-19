@@ -61,7 +61,17 @@
 		</div>
 	</div>
 </div>
+<div class="form-group">
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right">管理城市:</label>
+	<div class="col-xs-12 col-sm-9">
+		<div class="clearfix">
 
+			<select class="width-10" name="provinceSelect" id="provinceSelect"></select>
+			<select class="width-10" name="cityCode" id="citySelect"></select>
+			<select class="width-10" name="areaCode" id="countySelect"></select>
+		</div>
+	</div>
+</div>
 <div class="form-group">
 	<label class="control-label col-xs-12 col-sm-3 no-padding-right">所属角色组:</label>
 	<div class="col-xs-12 col-sm-9">
@@ -142,9 +152,10 @@
 </#if>
 
 <script>
+var country = Object.create(B.Country);
 $(document).ready(function(){
 	RP.addBreadcrumb([{name:"后台基础配置"}, {name:"<#if adminUser??>编辑<#else>新增</#if>后台用户",  active: true}]);
-	
+	country.regist4Select(${(adminUser.areaCode)!-1},"provinceSelect","citySelect","countySelect");
 	$('#validation-form').validate({
 		errorElement: 'div',
 		errorClass: 'help-block',

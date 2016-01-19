@@ -52,17 +52,14 @@ $.fn.datebox.defaults.parser = function(s){
 </#if>
 <fieldset>
 
+
 <div class="form-group">
-	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">城市:</label>
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right">管理城市:</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
-		
-			<select name="city">
-				<#list bancity as a>
-					<option value="${a.code}">${a.city}</option>
-				</#list>
-			</select>
-			
+
+			<select class="width-10" name="" id="provinceSelect"></select>
+			<select class="width-10" name="city" id="citySelect"></select>
 		</div>
 	</div>
 </div>
@@ -268,7 +265,9 @@ $.fn.datebox.defaults.parser = function(s){
 
 
 <script>
+var country = Object.create(B.Country);
 $(document).ready(function(){
+country.regist4Select(${(adminUser.areaCode)!-1},"provinceSelect","citySelect");
 	RP.addBreadcrumb([{name:"基础设置"}, {name:"新增活动",  active: true}]);
 	$('#id-input-file-2').ace_file_input({
 		no_file:'没图片 ...',

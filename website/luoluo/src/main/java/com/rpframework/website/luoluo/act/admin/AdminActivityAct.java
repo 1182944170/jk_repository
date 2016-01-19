@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.rpframework.core.api.FileService;
 import com.rpframework.core.exception.AdminIllegalArgumentException;
+import com.rpframework.module.adminbase.domain.AdminUser;
 import com.rpframework.utils.DateUtils;
 import com.rpframework.utils.NumberUtils;
 import com.rpframework.utils.Pager;
@@ -42,11 +44,15 @@ public class AdminActivityAct extends AdminAct{
 	
 	//显示页面
 	@RequestMapping("/list")
-	public String list(@RequestParam(value="pager", required=false) Pager<Activity> pager, Map<Object, Object> model, RedirectAttributes attr){
+	public String list(@RequestParam(value="pager", required=false) Pager<Activity> pager, Map<Object, Object> model, RedirectAttributes attr,HttpSession session){
 		if(pager==null){
 			pager=new Pager<Activity>();
 		}
-		pager.getSearchMap().put("se", "se");
+		AdminUser admin = (AdminUser) session.getAttribute(SESSION_ADMIN_USER_KEY);
+		if(!admin.getAdminRole().getId().equals(1)){
+			pager.getSearchMap().put("cityoles", admin.getCityCode());
+		}
+	//	pager.getSearchMap().put("se", "se");
 		List<Classification> cal=classificationService.queryAll();
 		pager=activityService.getpager(pager);
 		List<Activity> list=pager.getItemList();
@@ -65,9 +71,13 @@ public class AdminActivityAct extends AdminAct{
 	
 	//查询分类的内容
 	@RequestMapping("/{id}/listOlyeone")
-	public String listOlyeone(@PathVariable Integer id, @RequestParam(value="pager", required=false) Pager<Activity> pager, Map<Object, Object> model, RedirectAttributes attr){
+	public String listOlyeone(@PathVariable Integer id, @RequestParam(value="pager", required=false) Pager<Activity> pager, Map<Object, Object> model, RedirectAttributes attr,HttpSession session){
 		if(pager==null){
 			pager=new Pager<Activity>();
+		}
+		AdminUser admin = (AdminUser) session.getAttribute(SESSION_ADMIN_USER_KEY);
+		if(!admin.getAdminRole().getId().equals(1)){
+			pager.getSearchMap().put("cityCode", admin.getCityCode());
 		}
 		pager.getSearchMap().put("se", "se");
 		List<Classification> cal=classificationService.queryAll();
@@ -144,6 +154,7 @@ public class AdminActivityAct extends AdminAct{
 	@RequestMapping("/dosave")
 	public String dosave(@ModelAttribute Activity activity, Map<Object, Object> model,
 			RedirectAttributes attr){
+	
 		activity=activityService.selectcal(activity.getId());
 
 		if(activity.getType()==1){
@@ -180,6 +191,9 @@ public class AdminActivityAct extends AdminAct{
 		
 		if(StringUtils.isBlank(starttimeString) ||StringUtils.isBlank(outtimeString)){
 			throw new AdminIllegalArgumentException("请选择时间");
+		}
+		if(activity.getCity()==null){
+			throw new AdminIllegalArgumentException("城市不存在");
 		}
 		activity.setStarttime(DateUtils.parse(starttimeString).getTime()/1000);
 		activity.setOuttime(DateUtils.parse(outtimeString).getTime()/1000);
@@ -221,6 +235,9 @@ public class AdminActivityAct extends AdminAct{
 		
 		if(StringUtils.isBlank(starttimeString) ||StringUtils.isBlank(outtimeString)){
 			throw new AdminIllegalArgumentException("请选择时间");
+		}
+		if(activity.getCity()==null){
+			throw new AdminIllegalArgumentException("城市不存在");
 		}
 		activity.setStarttime(DateUtils.parse(starttimeString).getTime()/1000);
 		activity.setOuttime(DateUtils.parse(outtimeString).getTime()/1000);

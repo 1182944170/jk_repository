@@ -18,4 +18,10 @@
 	<select id="select" parameterType="String" resultMap="mCity">
 		select * from city where code=#{code}
 	</select> 
+	<select id="selectdo" parameterType="String" resultMap="mCity">
+		select * from city where name=#{city}
+	</select> 
+	<select id="selectdoBycitycode" parameterType="String" resultMap="mCity">
+		select * from city where codycity=#{city}
+	</select> 
 </mapper>

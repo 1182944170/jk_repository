@@ -36,6 +36,8 @@ public class City extends Domain {
 	Double dimensions;
 	@FieldMapperAnnotation
 	String countryCode;
+	@FieldMapperAnnotation
+	String codycity;
 	
 	public City(){}
 	public City(String code,
@@ -62,6 +64,13 @@ public class City extends Domain {
 		this.longitude = longitude;
 		this.dimensions = dimensions;
 		this.countryCode = countryCode;
+	}
+	
+	public String getCodycity() {
+		return codycity;
+	}
+	public void setCodycity(String codycity) {
+		this.codycity = codycity;
 	}
 	public String getCode() {
 		return code;

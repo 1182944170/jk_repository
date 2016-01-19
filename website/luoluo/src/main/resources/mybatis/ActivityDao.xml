@@ -6,10 +6,13 @@
 	<resultMap type="com.rpframework.website.luoluo.domain.Activity" id="Activity" autoMapping="true">
 		<id property="id" column="id" />
 	</resultMap>		
-	<select id="doPager" resultMap="Activity">
-		select * from release_activity where 1=1
+	<select id="doPager" parameterType="map" resultMap="Activity">
+		select * from release_activity where 1=1		
 		<if test = "page.searchMap.calid != null">
 			and activitycategory = #{page.searchMap.calid}
+		</if>
+		<if test = "page.searchMap.cityoles != null">
+				and city = #{pager.getSearchMap.cityoles}
 		</if>
 		<if test = "page.searchMap.type != null">
 			and type = #{page.searchMap.type}
@@ -31,11 +34,12 @@
 			or activitynumber like '%${page.searchMap.name}%'  
 		</if>
 		<if test = "page.searchMap.se!= null">
-			and typeok=1
-			or typeok=0
+			and typeok!=5 and typeok!=3
 		</if>
 		
 		 order by id desc
+			
+	
 	</select>
 	<update id="update" parameterType="com.rpframework.website.luoluo.domain.Activity" />
 	<insert id="insert" parameterType="com.rpframework.website.luoluo.domain.Activity" useGeneratedKeys="true" keyProperty="id"/>

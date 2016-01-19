@@ -10,6 +10,8 @@ public class Banscity {
 	private Integer code;   //
 	@FieldMapperAnnotation
 	private String city; // 
+	@FieldMapperAnnotation
+	private String cotiye; // 
 	public Integer getCode() {
 		return code;
 	}
@@ -22,5 +24,12 @@ public class Banscity {
 	public void setCity(String city) {
 		this.city = city;
 	}
+	public String getCotiye() {
+		return cotiye;
+	}
+	public void setCotiye(String cotiye) {
+		this.cotiye = cotiye;
+	}
+	
 	
 }
