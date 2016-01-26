@@ -376,7 +376,7 @@ public class ApiActivityAct extends BaseAct{
 				JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
 				array.add(jsonObj);
 				}
-				}
+			}
 		}
 		System.out.println("user_list: "+json.toString());
 		return json;
@@ -502,9 +502,7 @@ public class ApiActivityAct extends BaseAct{
 					json.addProperty("error", "没有主办方");
 					return json;
 				}
-				
-				
-				
+
 					Activity activity=new Activity();
 					activity.setActivityname(activityname);
 					activity.setSponsorid(bfgs.getId());
@@ -555,8 +553,10 @@ public class ApiActivityAct extends BaseAct{
 		List<Activitypicture> acc =activitypictureSercice.selectlist(id);
 		JsonObject json = new JsonObject();
 		if(acc.size()==0){
-			boolean activity = activityService.deletesell(id);
-			if(activity){ // 添加成功
+			Activity activity =activityService.selectcal(id);
+			activity.setTypeok(5);
+			boolean activitys = activityService.updatedo(activity);
+			if(activitys){ // 添加成功
 				json.addProperty("succ", true);
 			} else { // 添加失败
 				json.addProperty("succ", false);
@@ -564,6 +564,45 @@ public class ApiActivityAct extends BaseAct{
 		}else{
 			json.addProperty("msg", "不能删除活动，已存在报名人员");
 			json.addProperty("succ", false);
+		}
+		return json;
+	}
+	@RequestMapping("/search_list")
+	public @ResponseBody JsonElement searchlist(
+			@RequestParam(value="pager",required=false) Pager<Activity> pager,
+			@RequestParam(required=false) String search){
+		if(pager==null){
+			pager=new Pager<Activity>();
+		}
+		if(!StringUtils.isBlank(search)){
+			pager.getSearchMap().put("name", search);
+		}
+		pager.getSearchMap().put("se", "se");
+		activityService.getpager(pager);
+		List<Activity> list = pager.getItemList();
+		JsonArray array = new JsonArray();
+		JsonObject json=new JsonObject();
+		json.addProperty("totalPages", pager.getTotalPages());
+		json.addProperty("currentPage", pager.getCurrentPage());
+		json.addProperty("totalCount", pager.getTotalCount());
+		json.add("arrays", array);
+		for (Activity act : list) {
+			List<Activitypicture>  cc=activitypictureSercice.selectlist(act.getId());
+			int bm_num=0;
+			int i=0;
+			for (Activitypicture tt : cc) {
+				i=Integer.parseInt(tt.getGrilexpense())+Integer.parseInt(tt.getChindenboy())+Integer.parseInt(tt.getOldboy());
+				bm_num+=i;
+				
+			}
+			act.setBm_num(bm_num);
+			Sponsorlis	span= sponsorSercice.seletOne(act.getSponsorid());
+				if(span!=null){
+					if(span.getTypeopp()==1){
+				   JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
+					array.add(jsonObj);
+				}
+			}
 		}
 		return json;
 	}

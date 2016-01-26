@@ -68,7 +68,6 @@ public class ApiMyActivitiesAct extends BaseAct{
 			JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
 			
 			jsonObj.addProperty("username", user.getNameNick());
-			jsonObj.addProperty("id", activity.getId());
 			jsonObj.addProperty("sponsorid", activity.getSponsorid());
 			jsonObj.addProperty("cover", TagUtils.getFileFullPath(activity.getCover()));
 			jsonObj.addProperty("activitynumber", activity.getActivitynumber());

@@ -68,6 +68,16 @@ function selectMap(){
 		</div>
 	</div>
 </div>
+<div class="form-group">
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name"></label>
+	<div class="col-xs-12 col-sm-9">
+		<div class="clearfix">
+			<span class="block input-icon width-50">
+				<b Style="color:red">提示：领队信息图片（第四张为导游证 ，第五张为领队证 必须上传）</b>
+			</span>
+		</div>
+	</div>
+</div>
 <#assign fieldName="userinformation" />
 <#assign fieldLabel="领队信息" />
 <#include "/common-admin/upload/upload_field_pre.ftl" />
@@ -110,6 +120,16 @@ function selectMap(){
 			<span class="block input-icon width-40">
 				<input type="text" name="telephone" id="disprice" value="${user.telephone!}" maxlength="32" class="form-control" />
 				<!--<i class="icon-user"></i>-->
+			</span>
+		</div>
+	</div>
+</div>
+<div class="form-group">
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name"></label>
+	<div class="col-xs-12 col-sm-9">
+		<div class="clearfix">
+			<span class="block input-icon width-40">
+				<b Style="color:red">提示：负责人信息图片（第3张为公司营业执照）</b>
 			</span>
 		</div>
 	</div>

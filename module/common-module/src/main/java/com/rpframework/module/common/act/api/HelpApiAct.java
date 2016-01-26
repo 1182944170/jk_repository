@@ -54,7 +54,15 @@ public class HelpApiAct extends CommonBaseAct {
 		o.addProperty("typeString", DictionarySettingUtils.getParameterValue("help.type." + help.getType()));
 		return o;
 	}
-	
+	@RequestMapping(value="/hrel/{aliasesTitle}" ,produces = "application/json; charset=utf-8")
+	public @ResponseBody String hrel(@PathVariable String aliasesTitle,
+			@RequestParam(value = "callback",required = false ) String callback,
+			Map<String, Object> model){
+		Help help = helpSevice.getHelpByaliasesTitle(aliasesTitle);
+		JsonObject o = gson.toJsonTree(help).getAsJsonObject();
+		o.addProperty("typeString", DictionarySettingUtils.getParameterValue("help.type." + help.getType()));
+		return (callback + "(" + o + ")");
+	}
 	@RequestMapping("/{aliasesTitle}/page")
 	public String viewPage(@PathVariable String aliasesTitle, Map<String, Object> model){
 		Help help = helpSevice.getHelpByaliasesTitle(aliasesTitle);
