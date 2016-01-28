@@ -1,6 +1,7 @@
 package com.rpframework.website.luoluo.act.admin;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -68,6 +69,33 @@ public class AdminActivityAct extends AdminAct{
 		model.put("pager", pager);
 		return this.doPackageURI("activity/list");
 	}
+	@RequestMapping("/listchenggong")
+	public String listchenggong(@RequestParam(value="pager", required=false) Pager<Activity> pager, Map<Object, Object> model, RedirectAttributes attr,HttpSession session){
+		if(pager==null){
+			pager=new Pager<Activity>();
+		}
+		AdminUser admin = (AdminUser) session.getAttribute(SESSION_ADMIN_USER_KEY);
+		if(!admin.getAdminRole().getId().equals(1)){
+			pager.getSearchMap().put("cityoles", admin.getCityCode());
+		}
+		pager.getSearchMap().put("se", "se");
+		List<Classification> cal=classificationService.queryAll();
+		pager=activityService.getpager(pager);
+		List<Activity> list=pager.getItemList();
+		long i=System.currentTimeMillis()/1000;
+		List<Activity> acc=new ArrayList<Activity>();
+		for(Activity act :list){
+			if(act.getOuttime()<=i){
+					acc.add(act);
+			}
+		}
+		model.put("cal", cal);
+		model.put("pager", acc);
+		return this.doPackageURI("activity/jieshulist");
+	}
+	
+	
+	
 	
 	//查询分类的内容
 	@RequestMapping("/{id}/listOlyeone")
@@ -272,5 +300,14 @@ public class AdminActivityAct extends AdminAct{
 		activityService.updatedo(activity);
 		setInfoMsg("删除成功！", attr);
 		return redirect("/admin/actcy/list");
+	}
+	
+	@RequestMapping("/{id}/chenggongUser")
+	public String chenggongUser(@PathVariable Integer id,RedirectAttributes attr){
+		Activity activity=activityService.selectcal(id);
+		activity.setTypeok(6);
+		activityService.updatedo(activity);
+		setInfoMsg("确认成功！", attr);
+		return redirect("/admin/actcy/listchenggong");
 	}
 }

@@ -268,8 +268,11 @@ public class UserloginApiAct extends BaseAct{
 				json.addProperty("sponsorid", span.getId());
 				if(span.getTypeopp()==0){
 					json.addProperty("type", 0);
-				}else{
+				}else if(span.getTypeopp()==1){
+					
 					json.addProperty("type", 1);
+				}else{
+					json.addProperty("type", 2);
 				}
 			}
 			

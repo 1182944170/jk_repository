@@ -119,6 +119,10 @@ public class ActivityService extends BaseService{
 		// TODO Auto-generated method stub
 		return iactivitydao.selectact(lat, lng, city,activitycategoryid);
 	}
+	public List<Activity> selectluist(Integer sponsorid) {
+		// TODO Auto-generated method stub
+		return iactivitydao.selectluist(sponsorid);
+	}
 
 	
 

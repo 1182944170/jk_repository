@@ -87,6 +87,10 @@ public class ApiActivitypictureAct extends BaseAct{
 			Activity activity = activityService.selectcal(sponsorlds);
 			Classification  classi = classiftionservice.selectcal(activity.getActivitycategory());
 			Activitypicture Activitypi=activitypictureSercice.seletzzle(currUser.getId(), sponsorlds);
+			long i=System.currentTimeMillis()/1000;
+			if(activity.getStarttime()<i ||activity.getStarttime()==i){
+				throw new APICodeException(-4, "活动已经开始不允许报名");
+			}
 			if(Activitypi==null){
 				Activitypi=new Activitypicture();
 				Activitypi.setSponsorld(sponsorlds);

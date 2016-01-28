@@ -77,6 +77,7 @@ public class ApiActivityAct extends BaseAct{
 			pager = new Pager<Activity>();
 		}
 		long startTime = System.currentTimeMillis();
+		long z=System.currentTimeMillis()/1000;
 		pager.setItemList(list);
 		pager.setTotalCount(list.size());
 		pager.setCostTime(System.currentTimeMillis() - startTime);
@@ -106,8 +107,13 @@ public class ApiActivityAct extends BaseAct{
 			Sponsorlis	span= sponsorSercice.seletOne(act.getSponsorid());
 			if(span!=null){
 				if(span.getTypeopp()==1){
-			   JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
-				array.add(jsonObj);
+					if(act.getOuttime()<z){
+						
+					}else{
+						JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
+						array.add(jsonObj);
+					}
+			   
 				}
 			}
 		}
@@ -157,6 +163,9 @@ public class ApiActivityAct extends BaseAct{
 		json.addProperty("lat", activity.getLat());
 		json.addProperty("lng", activity.getLng());
 		json.addProperty("type", activity.getType());
+		
+		List<Activity> listseize=activityService.selectluist(activity.getSponsorid());
+		json.addProperty("chenggong", listseize.size());
 		json.addProperty("typeok", activity.getTypeok());
 		json.addProperty("starttime", activity.getStarttime());
 		Classification classors=classificationService.selectcal(activity.getActivitycategory());
@@ -232,6 +241,7 @@ public class ApiActivityAct extends BaseAct{
 			pager = new Pager<Activity>();
 		}
 		long startTime = System.currentTimeMillis();
+		long z=System.currentTimeMillis()/1000;
 		pager.setItemList(list);
 		pager.setTotalCount(list.size());
 		pager.setCostTime(System.currentTimeMillis() - startTime);
@@ -245,8 +255,12 @@ public class ApiActivityAct extends BaseAct{
 							Sponsorlis	span= sponsorSercice.seletOne(act.getSponsorid());
 							if(span!=null){
 								if(span.getTypeopp()==1){
-							   JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
-								array.add(jsonObj);
+										if(act.getOuttime()<z){
+										
+									}else{
+										JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
+										array.add(jsonObj);
+									}
 							}
 				   }
 		}
@@ -269,6 +283,7 @@ public class ApiActivityAct extends BaseAct{
 			pager = new Pager<Activity>();
 		}
 		long startTime = System.currentTimeMillis();
+		long z=System.currentTimeMillis()/1000;
 		pager.setItemList(list);
 		pager.setTotalCount(list.size());
 		pager.setCostTime(System.currentTimeMillis() - startTime);
@@ -291,8 +306,12 @@ public class ApiActivityAct extends BaseAct{
 							Sponsorlis	span= sponsorSercice.seletOne(act.getSponsorid());
 							if(span!=null){
 								if(span.getTypeopp()==1){
-							   JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
-								array.add(jsonObj);
+									if(act.getOuttime()<z){
+										
+									}else{
+										JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
+										array.add(jsonObj);
+									}
 							}
 							
 				   }
@@ -577,6 +596,7 @@ public class ApiActivityAct extends BaseAct{
 		if(!StringUtils.isBlank(search)){
 			pager.getSearchMap().put("name", search);
 		}
+		long z=System.currentTimeMillis()/1000;
 		pager.getSearchMap().put("se", "se");
 		activityService.getpager(pager);
 		List<Activity> list = pager.getItemList();
@@ -599,8 +619,12 @@ public class ApiActivityAct extends BaseAct{
 			Sponsorlis	span= sponsorSercice.seletOne(act.getSponsorid());
 				if(span!=null){
 					if(span.getTypeopp()==1){
-				   JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
-					array.add(jsonObj);
+						if(act.getOuttime()<z){
+							
+						}else{
+							JsonObject jsonObj = gson.toJsonTree(act).getAsJsonObject();
+							array.add(jsonObj);
+						}
 				}
 			}
 		}

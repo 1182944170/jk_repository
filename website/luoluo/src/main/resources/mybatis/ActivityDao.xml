@@ -34,7 +34,7 @@
 			or activitynumber like '%${page.searchMap.name}%'  
 		</if>
 		<if test = "page.searchMap.se!= null">
-			and typeok!=5 and typeok!=3
+			and typeok!=5 and typeok!=3  and typeok!=6
 		</if>
 		
 		 order by id desc
@@ -53,15 +53,18 @@
 	<select id="selectnumbers" resultMap="Activity">
 		select * from release_activity where activitynumber LIKE '%' #{tole} '%' order by id
 	</select>
+	<select id="selectluist" resultMap="Activity">
+		select * from release_activity where sponsorid=#{sponsorid} and typeok=6
+	</select>
 	<select id="selectactivice" parameterType="map" resultMap="Activity">
 		SELECT *, ROUND(6378.138*2*ASIN(SQRT(POW(SIN((#{0}*PI()/180-lat*PI()/180)/2),2)+COS(#{0}*PI()/180)*COS(lat*PI()/180)*POW(SIN((#{1}*PI()/180-lng*PI()/180)/2),2)))*1000) AS juli
-		FROM release_activity where city=#{2} and type=1 and typeok!=3 and typeok!=5 and typeok!=2
+		FROM release_activity where city=#{2} and type=1 and typeok!=3 and typeok!=5 and typeok!=2  and typeok!=6
 		ORDER BY juli 
 		LIMIT 50
 	</select>
 	<select id="selectact" parameterType="map" resultMap="Activity">
 		SELECT *, ROUND(6378.138*2*ASIN(SQRT(POW(SIN((#{0}*PI()/180-lat*PI()/180)/2),2)+COS(#{0}*PI()/180)*COS(lat*PI()/180)*POW(SIN((#{1}*PI()/180-lng*PI()/180)/2),2)))*1000) AS juli
-		FROM release_activity where city=#{2} and type=1 and activitycategory=#{3} and typeok!=3 and typeok!=5 and typeok!=2
+		FROM release_activity where city=#{2} and type=1 and activitycategory=#{3} and typeok!=3 and typeok!=5 and typeok!=2  and typeok!=6
 		ORDER BY juli 
 		LIMIT 50
 	</select>
