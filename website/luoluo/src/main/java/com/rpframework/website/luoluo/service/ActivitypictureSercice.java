@@ -12,7 +12,7 @@ import com.rpframework.website.luoluo.dao.IActivitypictureDao;
 import com.rpframework.website.luoluo.domain.Activity;
 import com.rpframework.website.luoluo.domain.Activitypicture;
 import com.rpframework.website.luoluo.domain.Classification;
-import com.rpframework.website.luoluo.domain.Monlyjournals;
+import com.rpframework.website.luoluo.domain.Monlyjournallist;
 import com.rpframework.website.luoluo.domain.Sponsorlis;
 import com.rpframework.website.luoluo.domain.User;
 
@@ -21,7 +21,7 @@ public class ActivitypictureSercice extends BaseService{
 	@Resource IActivitypictureDao tActivitypictureDao;
 	@Resource UserService userService;
 	@Resource SponsorService sponsorService;
-	@Resource MonlyjournalsService monlyjournalsService;
+	@Resource MonlyjournallistService monlyjournalsService;
 	@Resource ClassificationService classfica;
 
 	
@@ -74,7 +74,7 @@ public class ActivitypictureSercice extends BaseService{
 			userMoney.setPersonalMany(userMoney.getPersonalMany() - detail.getMonely());
 			userService.updatedo(userMoney);
 			//添加支付方日志文件
-			Monlyjournals mysope=new Monlyjournals();
+			Monlyjournallist mysope=new Monlyjournallist();
 			mysope.setMonly(-detail.getMonely());
 			mysope.setNewtime(System.currentTimeMillis()/1000);
 			mysope.setType(1);
@@ -84,7 +84,7 @@ public class ActivitypictureSercice extends BaseService{
 			tooMoney.setPersonalMany(tooMoney.getPersonalMany()+ detail.getActualamount());
 			boolean bfgl=userService.updatedo(tooMoney);
 			//添加收款方日志文件
-			Monlyjournals weifu=new Monlyjournals();
+			Monlyjournallist weifu=new Monlyjournallist();
 			weifu.setMonly(+detail.getActualamount());
 			weifu.setNewtime(System.currentTimeMillis()/1000);
 			weifu.setType(1);
@@ -108,7 +108,7 @@ public class ActivitypictureSercice extends BaseService{
 		//用户要求退款
 		currUser.setPersonalMany(currUser.getPersonalMany()+cc.getMonely());
 		userService.updatedo(currUser);
-		Monlyjournals mysope=new Monlyjournals();
+		Monlyjournallist mysope=new Monlyjournallist();
 		mysope.setMonly(+cc.getMonely());
 		mysope.setNewtime(System.currentTimeMillis()/1000);
 		mysope.setType(1);
@@ -118,7 +118,7 @@ public class ActivitypictureSercice extends BaseService{
 		//主办活动方退款
 		tooMoney.setPersonalMany(currUser.getPersonalMany()+cc.getActualamount());
 		boolean bfgl=userService.updatedo(tooMoney);
-		Monlyjournals weifu=new Monlyjournals();
+		Monlyjournallist weifu=new Monlyjournallist();
 		weifu.setMonly(+cc.getActualamount());
 		weifu.setNewtime(System.currentTimeMillis()/1000);
 		weifu.setType(1);

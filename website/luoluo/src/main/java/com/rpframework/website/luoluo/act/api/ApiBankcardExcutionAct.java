@@ -16,12 +16,12 @@ import com.google.gson.JsonObject;
 import com.rpframework.core.BaseAct;
 import com.rpframework.website.luoluo.domain.Bankcard;
 import com.rpframework.website.luoluo.domain.BankcardExcution;
-import com.rpframework.website.luoluo.domain.Monlyjournals;
+import com.rpframework.website.luoluo.domain.Monlyjournallist;
 import com.rpframework.website.luoluo.domain.User;
 import com.rpframework.website.luoluo.exception.APICodeException;
 import com.rpframework.website.luoluo.service.BankcardExcutionService;
 import com.rpframework.website.luoluo.service.BankcardService;
-import com.rpframework.website.luoluo.service.MonlyjournalsService;
+import com.rpframework.website.luoluo.service.MonlyjournallistService;
 
 @Controller
 @RequestMapping("api/bankection")
@@ -29,7 +29,7 @@ public class ApiBankcardExcutionAct extends BaseAct{
 	@Resource BankcardExcutionService banservier;
 	@Resource BankcardService bandcardService;
 	
-	@Resource MonlyjournalsService monlyjournalsService;
+	@Resource MonlyjournallistService monlyjournalsService;
 	Gson gson = new Gson();
 	
 	@RequestMapping("reflect")
@@ -56,7 +56,7 @@ public class ApiBankcardExcutionAct extends BaseAct{
 			bank.setNowtime(System.currentTimeMillis()/1000);
 			bank.setState(1);
 			banservier.insertdo(bank);
-			Monlyjournals mysope=new Monlyjournals();
+			Monlyjournallist mysope=new Monlyjournallist();
 			mysope.setMonly(-extractionMonly);
 			mysope.setNewtime(System.currentTimeMillis()/1000);
 			mysope.setType(1);

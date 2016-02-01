@@ -9,7 +9,7 @@
 	<select id="doPager" resultMap="Myimpression">
 		select * from myimpression where 1=1
 		<if test = "page.searchMap.type != null">
-			and userid = #{page.searchMap.type}
+			and findid = #{page.searchMap.type}
 		</if>
 		order by id desc
 	</select>

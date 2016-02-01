@@ -5,7 +5,7 @@ import com.rpframework.core.mybatis.plugin.annotation.TableMapperAnnotation;
 import com.rpframework.core.mybatis.plugin.annotation.UniqueKeyType;
 
 @TableMapperAnnotation(tableName="monlyjournal" ,uniqueKeyType = UniqueKeyType.Single, uniqueKey = "id")
-public class Monlyjournals {
+public class Monlyjournallist {
 	@FieldMapperAnnotation
 	private Integer id;   // id
 	@FieldMapperAnnotation

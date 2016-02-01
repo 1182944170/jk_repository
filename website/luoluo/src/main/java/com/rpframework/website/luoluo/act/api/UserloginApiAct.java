@@ -95,24 +95,17 @@ public class UserloginApiAct extends BaseAct{
 		String code = request.getParameter("code");
 		JsonObject json = new JsonObject();
 		if(StringUtils.isBlank(phone) ||StringUtils.isBlank(passWord) ||StringUtils.isBlank(code)) {
-			json.addProperty("msg", "非法参数");
-			json.addProperty("succ", false);
-			return json;
+			throw new APICodeException(-1, "非法参数!");
 		}
 		
 		if(!smsService.checkVerifyCode(1, phone, code)) {
-			json.addProperty("msg", "验证码不正确");
-			json.addProperty("succ", false);
-			return json;
+			throw new APICodeException(-2, "验证码不正确!");
 		}
 		
 		// 查询手机号是否存在
 		User user = userService.findUserByPhone(phone);
 		if(user != null) {
-			json.addProperty("msg", "手机号码已经存在");
-			json.addProperty("succ", false);
-			return json;
-			
+			throw new APICodeException(-3, "手机已经存在!");
 		}
 		// 密码MD5加密
 		passWord = AlgorithmUtils.encodePassword(passWord, AlgorithmEnum.MD5);

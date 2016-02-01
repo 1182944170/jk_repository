@@ -84,8 +84,14 @@ public class ApiMyimpressionAct extends BaseAct{
 		JsonArray array = new JsonArray();
 		json.add("arrays", array);
 		for (Myimpression myimpression : list) {
-			User lUser=userService.selectOnlyOne(myimpression.getFindid());
+			Myimpression myimpressions =myimpressionService.selectone(currUser.getId(),myimpression.getUserid());
 			JsonObject jsonObj = gson.toJsonTree(myimpression).getAsJsonObject();
+			if(myimpressions==null){
+				jsonObj.addProperty("type", 0);
+			}else{
+				jsonObj.addProperty("type", 1);
+			}
+			User lUser=userService.selectOnlyOne(myimpression.getUserid());
 			jsonObj.addProperty("id", lUser.getId());
 			jsonObj.addProperty("name", lUser.getName());
 			jsonObj.addProperty("nameNick", lUser.getNameNick());

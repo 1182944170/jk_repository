@@ -22,13 +22,13 @@ import com.rpframework.utils.NumberUtils;
 import com.rpframework.website.luoluo.domain.Activity;
 import com.rpframework.website.luoluo.domain.Activitypicture;
 import com.rpframework.website.luoluo.domain.Classification;
-import com.rpframework.website.luoluo.domain.Monlyjournals;
+import com.rpframework.website.luoluo.domain.Monlyjournallist;
 import com.rpframework.website.luoluo.domain.Sponsorlis;
 import com.rpframework.website.luoluo.domain.User;
 import com.rpframework.website.luoluo.service.ActivityService;
 import com.rpframework.website.luoluo.service.ActivitypictureSercice;
 import com.rpframework.website.luoluo.service.ClassificationService;
-import com.rpframework.website.luoluo.service.MonlyjournalsService;
+import com.rpframework.website.luoluo.service.MonlyjournallistService;
 import com.rpframework.website.luoluo.service.SponsorService;
 import com.rpframework.website.luoluo.service.UserService;
 /****
@@ -42,7 +42,7 @@ public class TestPayAct {
 	@Resource UserService userService;
 	@Resource SponsorService sponsorService;
 	@Resource ClassificationService classfica;
-	@Resource MonlyjournalsService monlyjournalsService;
+	@Resource MonlyjournallistService monlyjournalsService;
 	final Logger logger = LoggerFactory.getLogger(getClass());
 		//支付
 		@RequestMapping(value="/test_pay",produces = "application/json; charset=utf-8")
@@ -167,7 +167,7 @@ public class TestPayAct {
 					uman.setPersonalMany(uman.getPersonalMany()*1+total_fee);
 					userService.updatedo(uman);
 					
-					Monlyjournals mysope=new Monlyjournals();
+					Monlyjournallist mysope=new Monlyjournallist();
 					mysope.setMonly(total_fee);
 					mysope.setNewtime(System.currentTimeMillis()/1000);
 					mysope.setType(1);
@@ -178,7 +178,7 @@ public class TestPayAct {
 					mysope.setRemark(myman.getNameNick()+"-  汇款");
 					monlyjournalsService.insertdo(mysope);
 					
-					Monlyjournals weifu=new Monlyjournals();
+					Monlyjournallist weifu=new Monlyjournallist();
 					weifu.setMonly(-total_fee);
 					weifu.setNewtime(System.currentTimeMillis()/1000);
 					weifu.setType(1);

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rpframework.website.luoluo.dao.IMonlyjournallistDao">
+
+	<resultMap type="com.rpframework.website.luoluo.domain.Monlyjournallist" id="Monlyjournallist" autoMapping="true">
+		<id property="id" column="id" />
+	</resultMap>		
+
+	<select id="doPager" resultMap="Monlyjournallist">
+         select * from  monlyjournal where 1=1
+         <if test = "page.searchMap.type!= null">
+		
+		</if>
+	</select> 
+
+	<update id="update" parameterType="com.rpframework.website.luoluo.domain.Monlyjournallist" />
+	<insert id="insert" parameterType="com.rpframework.website.luoluo.domain.Monlyjournallist" useGeneratedKeys="true" keyProperty="id"/>
+	<delete id="delete" parameterType="com.rpframework.website.luoluo.domain.Monlyjournallist" />
+	
+	<select id="select" parameterType="Integer" resultMap="Monlyjournallist">
+         select * from  monlyjournal where id=#{id}
+	</select>
+	<select id="selecttole" parameterType="Integer" resultMap="Monlyjournallist">
+         select * from  monlyjournal where userid=#{id}
+	</select>
+</mapper>

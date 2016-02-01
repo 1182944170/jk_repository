@@ -24,10 +24,10 @@ import com.rpframework.core.utils.TagUtils;
 import com.rpframework.utils.DateUtils;
 import com.rpframework.utils.NumberUtils;
 import com.rpframework.utils.Pager;
-import com.rpframework.website.luoluo.domain.Monlyjournals;
+import com.rpframework.website.luoluo.domain.Monlyjournallist;
 import com.rpframework.website.luoluo.domain.User;
 import com.rpframework.website.luoluo.exception.APICodeException;
-import com.rpframework.website.luoluo.service.MonlyjournalsService;
+import com.rpframework.website.luoluo.service.MonlyjournallistService;
 import com.rpframework.website.luoluo.service.MypersonalitylabelService;
 import com.rpframework.website.luoluo.service.UserService;
 
@@ -39,7 +39,7 @@ public class ApiUserAct extends BaseAct{
 	@Resource UserService userservice;
 	@Resource FileService fileService;
 	@Resource MypersonalitylabelService mypersonalitylabelService;
-	@Resource MonlyjournalsService monlyjournalsService;
+	@Resource MonlyjournallistService monlyjournalsService;
 	/**
 	 * 用户列表
 	 * @date 2015年7月13日 下午5:47:24
@@ -368,10 +368,10 @@ public class ApiUserAct extends BaseAct{
 		}	
 		JsonObject json = new JsonObject();
 		json.addProperty("personalMany", user.getPersonalMany());
-		List<Monlyjournals>  list =monlyjournalsService.selectdoole(user.getId());
+		List<Monlyjournallist>  list =monlyjournalsService.selectdoole(user.getId());
 		JsonArray array = new JsonArray();
 		json.add("arrays", array);
-		for(Monlyjournals act :list){
+		for(Monlyjournallist act :list){
 			JsonObject o = gson.toJsonTree(act).getAsJsonObject();
 			array.add(o);
 		}
