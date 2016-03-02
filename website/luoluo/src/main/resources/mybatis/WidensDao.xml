@@ -14,6 +14,7 @@
 		<if test = "page.searchMap.state != null">
 			and state = #{page.searchMap.state}
 		</if>
+		 order by id desc
 	</select>
 	<update id="update" parameterType="com.rpframework.website.luoluo.domain.Widens" />
 	<insert id="insert" parameterType="com.rpframework.website.luoluo.domain.Widens" useGeneratedKeys="true" keyProperty="id"/>

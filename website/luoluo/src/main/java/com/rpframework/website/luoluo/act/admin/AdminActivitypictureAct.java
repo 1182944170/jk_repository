@@ -1,5 +1,6 @@
 package com.rpframework.website.luoluo.act.admin;
 
+
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -49,6 +50,7 @@ public class AdminActivitypictureAct extends AdminAct{
 			pager=new Pager<Activitypicture>();
 		}
 		pager=activitypictureSercice.getpager(pager);
+		
 		model.put("pager", pager);
 		return this.doPackageURI("management/list");
 	}

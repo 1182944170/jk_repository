@@ -121,40 +121,43 @@ public class ApiActivitypictureAct extends BaseAct{
 				Activitypi.setOrdernumber(DateUtils.nowDate(DateUtils.YYYYMMDDHHMMSS) + NumberUtils.random(5)+Activitypi.getId());
 				activitypictureSercice.updatedo(Activitypi);
 			}
-				
-		if(NumberUtils.isValid(typeMonely)){
-			if(typeMonely == 1){
-				TestPayAct ss=new TestPayAct();
-				String memo = null;
-				return ss.orderList(Activitypi.getOrdernumber() , activity.getActivityname(),classi.getClaName(), money,memo);
-				///支付宝支付
-			} else if (typeMonely == 2) {
-				
-				bFlag = activitypictureSercice.bagPay(currUser.getId(), Activitypi.getId(),activity);
-			
-			} else if(typeMonely == 3){
-			/*
-				//微信支付
-				 System.out.println(" =============》预付款开始:");
-			        Map<String, String> retMap = wxzhifu(activity,Activitypi,osele,classi);;
-			        System.out.println(" =============》预付款结束:");
-			        System.out.println(WXpayCore.isRetSuccess(retMap)); // 判断统一下单（预支付）接口是否成功
-			        if (WXpayCore.isRetSuccess(retMap)) {
-			            // 预支付成功，组装真正支付需要的参数，返回给app使用
-			            System.out.println(" =============》组装app使用参数:");
-			            System.out.println(WXpayApi.makePaymentMap(retMap));
-			            bFlag = activitypictureSercice.bagPay(currUser.getId(), Activitypi.getId(),activity);
-			        } else {
-			            System.out.println(WXpayCore.getErrMsg(retMap));
-			        }
-*/			}else{
-				throw new APICodeException(-1, "支付类型错误...");
+			JsonObject orderjson=new JsonObject();
+			if(activity.getZhuangttai()==0){	
+				if(NumberUtils.isValid(typeMonely)){
+					if(typeMonely == 1){
+						TestPayAct ss=new TestPayAct();
+						String memo = null;
+						return ss.orderList(Activitypi.getOrdernumber() , activity.getActivityname(),classi.getClaName(), money,memo);
+						///支付宝支付
+					} else if (typeMonely == 2) {
+						
+						bFlag = activitypictureSercice.bagPay(currUser.getId(), Activitypi.getId(),activity);
+					
+					} else if(typeMonely == 3){
+					/*
+						//微信支付
+						 System.out.println(" =============》预付款开始:");
+					        Map<String, String> retMap = wxzhifu(activity,Activitypi,osele,classi);;
+					        System.out.println(" =============》预付款结束:");
+					        System.out.println(WXpayCore.isRetSuccess(retMap)); // 判断统一下单（预支付）接口是否成功
+					        if (WXpayCore.isRetSuccess(retMap)) {
+					            // 预支付成功，组装真正支付需要的参数，返回给app使用
+					            System.out.println(" =============》组装app使用参数:");
+					            System.out.println(WXpayApi.makePaymentMap(retMap));
+					            bFlag = activitypictureSercice.bagPay(currUser.getId(), Activitypi.getId(),activity);
+					        } else {
+					            System.out.println(WXpayCore.getErrMsg(retMap));
+					        }
+		*/			}else{
+						throw new APICodeException(-1, "支付类型错误...");
+					}
+				} else {
+					throw new APICodeException(-2, "请选择支付类型...");
+				}
+			}else{
+				orderjson.addProperty("zhuangtai", 1);
 			}
-		} else {
-			throw new APICodeException(-2, "请选择支付类型...");
-		}
 		
-		JsonObject orderjson=new JsonObject();
 		if(bFlag){
 		
 			orderjson.addProperty("succ", true);

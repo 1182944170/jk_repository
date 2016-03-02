@@ -163,7 +163,7 @@ public class ApiActivityAct extends BaseAct{
 		json.addProperty("lat", activity.getLat());
 		json.addProperty("lng", activity.getLng());
 		json.addProperty("type", activity.getType());
-		
+		json.addProperty("zhuagnt", activity.getZhuangttai());
 		List<Activity> listseize=activityService.selectluist(activity.getSponsorid());
 		json.addProperty("chenggong", listseize.size());
 		json.addProperty("typeok", activity.getTypeok());
@@ -426,7 +426,7 @@ public class ApiActivityAct extends BaseAct{
 			@RequestParam(required=false)String activitycontent,
 			@RequestParam(required=false)String starttime,
 			@RequestParam(required=false)String outtime,
-			@RequestParam(required=false)Integer type,
+			@RequestParam(required=false)Integer type, //0 收   1 不收   AA费用
 
 			@RequestParam(required=false)String lng,
 			@RequestParam(required=false)String lat,HttpSession session){
@@ -469,6 +469,7 @@ public class ApiActivityAct extends BaseAct{
 			activity.setActivitycontent(activitycontent);
 			activity.setType(0);
 			activity.setTypeok(1);
+			activity.setZhuangttai(type);
 			activity.setLng(lng);
 			activity.setLat(lat);
 			boolean bFlag = activityService.updatedo(activity);
@@ -552,7 +553,7 @@ public class ApiActivityAct extends BaseAct{
 					//缺活动图片
 					activity.setActivitycontent(activitycontent);
 					activity.setType(0);
-					
+					activity.setZhuangttai(type);
 					activity.setLng(lng);
 					activity.setLat(lat);
 					boolean bFlag = activityService.insertone(activity);

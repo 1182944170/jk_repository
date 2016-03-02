@@ -26,7 +26,7 @@
 	</div>
 </div>
 
-<div class="form-group">
+<#--><div class="form-group">
 	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="url">分类图标:</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
@@ -36,9 +36,9 @@
 			<small>* 已经存在的icon如果不修改则不需要填写</small>
 		</div>
 	</div>
-</div>
+</div>-->
 
-<div class="form-group">
+<#--<div class="form-group">
 	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="url">分类主图:</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
@@ -48,7 +48,7 @@
 			<small>* 已经存在的，如果不修改则不需要填写</small>
 		</div>
 	</div>
-</div>
+</div>-->
 <div class="form-group">
 	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="url">设置手续费:</label>
 	<div class="col-xs-12 col-sm-9">
@@ -58,17 +58,17 @@
 	</div>
 </div>
 
-<div class="form-group">
+<#--<div class="form-group">
 	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">排序:</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<span class="block input-icon width-40">
 				<input type="text" name="seqn" id="seqn" value="${(classificationDO.seqn)!''}" maxlength="32" class="form-control" />
-				<!--<i class="icon-user"></i>-->
+				<i class="icon-user"></i>
 			</span>
 		</div>
 	</div>
-</div>
+</div>-->
 
 
 
@@ -120,6 +120,9 @@ $(document).ready(function(){
 		    proced: {
 				required: true
 			},
+		    claName: {
+				required: true
+			},
 			iconFile: {
 				required: true
 			},
@@ -131,6 +134,9 @@ $(document).ready(function(){
 		messages: {
 		    proced: {
 				required: "请输入手续费 最低为0."
+			},
+		    claName: {
+				required: "名字不为空"
 			},
 			iconFile: {
 				required: "请输入分类图标."

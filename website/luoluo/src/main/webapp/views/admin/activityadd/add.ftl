@@ -8,7 +8,7 @@
 	</h1>
 </div>
 
-<form action="${ctx}/admin/activityadd/dosave${suffix}" class="form-horizontal" role="form" id="validation-form" method="POST" enctype="multipart/form-data">
+<form action="${ctx}/admin/activiadd/dosave${suffix}" class="form-horizontal" role="form" id="validation-form" method="POST" enctype="multipart/form-data">
 <fieldset>
 
 <div class="form-group">
@@ -108,7 +108,7 @@
 			errorClass: 'help-block',
 			focusInvalid: true,
 			rules: {
-				nickName: {
+				mainFile: {
 					required: true
 				},
 				phone:{
@@ -119,7 +119,17 @@
 					required: true
 				}
 			},
-		
+		messages: {
+		    mainFile: {
+				required: "请选择分类主图."
+			},
+			iconFile: {
+				required: "请输入分类图标."
+			},
+			mainFile: {
+				required: "请选择分类主图."
+			}
+		},
 			invalidHandler: function (event, validator) { //display error alert on form submit   
 				RP.Form.invalidHandler(event, validator);
 			},

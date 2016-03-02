@@ -305,7 +305,10 @@ public class AdminActivityAct extends AdminAct{
 	@RequestMapping("/{id}/chenggongUser")
 	public String chenggongUser(@PathVariable Integer id,RedirectAttributes attr){
 		Activity activity=activityService.selectcal(id);
+		Sponsorlis sponsorlis=sponsorlisService.seletOnesponsor(activity.getSponsorid());
+		sponsorlis.setGoint(sponsorlis.getGoint()*1+1);
 		activity.setTypeok(6);
+		sponsorlisService.updatedo(sponsorlis);
 		activityService.updatedo(activity);
 		setInfoMsg("确认成功！", attr);
 		return redirect("/admin/actcy/listchenggong");

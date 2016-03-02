@@ -40,12 +40,12 @@
 								</a>
 								<#if u.type == 0 >
 								
-								<a class="red" href="${ctx}/admin/advice/${u.id}/saveUserda${suffix}" onclick="return confirm('你确定允许用户么?');" alt="Delete">
+								<a class="red" href="${ctx}/admin/advice/${u.id}/saveUserda${suffix}" onclick="return confirm('你确定允许用户么?');" title="允许" alt="Delete">
 									<img src="${ctx}/resources/images/jinzhi.jpg" width="15" height="15" alt="" />
 								</a>
 								</#if>
 								<#if u.type == 1 >
-								<a class="red" href="${ctx}/admin/advice/${u.id}/saveUserda${suffix}" onclick="return confirm('你确定禁止用户么?');" alt="Delete">
+								<a class="red" href="${ctx}/admin/advice/${u.id}/saveUserda${suffix}" onclick="return confirm('你确定禁止用户么?');"title="禁止" alt="Delete">
 									<img src="${ctx}/resources/images/zhengque.jpg" width="15" height="15" alt="" />
 								</a>
 								</#if>

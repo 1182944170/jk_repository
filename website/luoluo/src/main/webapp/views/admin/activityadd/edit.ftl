@@ -8,7 +8,7 @@
 	</h1>
 </div>
 
-<form action="${ctx}/admin/activityadd/dosave${suffix}" class="form-horizontal" role="form" id="validation-form" method="POST" enctype="multipart/form-data">
+<form action="${ctx}/admin/activiadd/dosave${suffix}" class="form-horizontal" role="form" id="validation-form" method="POST" enctype="multipart/form-data">
 
 	<input type="hidden" name="id" value="${user.id}"/>
 	

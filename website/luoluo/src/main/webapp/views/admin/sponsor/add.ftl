@@ -282,6 +282,11 @@ $(document).ready(function(){
 			type: {
 				required: true
 			},
+	
+			userphone: {
+				required: true,
+				number:true
+			},
 			state:{
 				required: true,
 				number:true

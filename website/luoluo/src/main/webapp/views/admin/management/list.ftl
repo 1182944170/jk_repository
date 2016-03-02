@@ -72,9 +72,13 @@ $(function (){
 						<td><span class="gray center">${u.ordernumber!}</span></td>
 						
 					<@miactivit cmd="get_miactivit_list" type="${u.sponsorld}" pagerString="1_" pageSize="50">
-						<#list s_pager.itemList as lo>
-						<td><span class="gray center">${lo.activityname}</span></td>
-						</#list>
+						<#if (s_pager.itemList?size > 0)>
+							<#list s_pager.itemList as lo>
+								<td><span class="gray center">${lo.activityname}</span></td>
+							</#list>
+						<#else >
+							<td><span class="gray center"> </span></td>
+						</#if >
  					</@miactivit>
  					
 				        <td>￥<span class="gray center wore">${u.monely!}</span></td>

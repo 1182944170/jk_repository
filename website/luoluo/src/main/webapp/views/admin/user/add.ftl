@@ -35,7 +35,7 @@
 		<div class="clearfix">
 			<span class="block input-icon width-40">
 				<input type="text" name="name" id="name" value=""  maxlength="32" class="form-control" placeholder="用户姓名"/>
-				<i class="icon-user"></i>
+			
 			</span>
 		</div>
 	</div>
@@ -47,13 +47,13 @@
 			<div class="clearfix">
 				<span class="block input-icon width-40">
 					<input type="passWord" name="password" id="password" value="" maxlength="32" class="form-control" placeholder="密码"/>
-					<i class="icon-user"></i>
+					
 				</span>
 			</div>
 		</div>
 	</div>
 
-<div class="form-group">
+<#--<div class="form-group">
 	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="expert">注册时间:</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
@@ -63,7 +63,7 @@
 			</span>
 		</div>
 	</div>
-</div>
+</div>-->
 
 <div class="form-group">
 	<div class="col-md-offset-3 col-md-9">

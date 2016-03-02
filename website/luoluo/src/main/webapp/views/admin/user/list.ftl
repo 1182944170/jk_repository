@@ -65,10 +65,10 @@ window.print();
 						<td><span class="gray center">￥${u.personalMany!}</span></td>
 						<td>
 						<#if u.type == 0 >
-						<span class="gray center" style="color:Green"><b>允许</b></span>
+						<span class="gray center" style="color:Green" ><b title="允许">允许</b></span>
 						</#if>
 						<#if u.type == 1 >
-						<span class="gray center" style="color:red"><b>禁止</b></span>
+						<span class="gray center" style="color:red" ><b>禁止</b></span>
 						</#if>
 						</td>
 				
@@ -78,12 +78,12 @@ window.print();
 									<i class="icon-pencil bigger-130"></i>
 								</a>
 								<#if u.type == 0 >
-								<a class="red" href="${ctx}/admin/user/${u.id}/saveUserda${suffix}" onclick="return confirm('你确定禁止用户么?');" alt="Delete">
+								<a class="red" href="${ctx}/admin/user/${u.id}/saveUserda${suffix}" onclick="return confirm('你确定禁止用户么?');" title="允许" alt="Delete">
 									<img src="${ctx}/resources/images/zhengque.jpg" width="15" height="15" alt="" />
 								</a>
 								</#if>
 								<#if u.type == 1 >
-								<a class="red" href="${ctx}/admin/user/${u.id}/saveUserda${suffix}" onclick="return confirm('你确定允许用户么?');" alt="Delete">
+								<a class="red" href="${ctx}/admin/user/${u.id}/saveUserda${suffix}" onclick="return confirm('你确定允许用户么?');"title="禁止"  alt="Delete">
 									<img src="${ctx}/resources/images/jinzhi.jpg" width="15" height="15" alt="" />
 								</a>
 								</#if>
@@ -157,6 +157,6 @@ window.print();
 <script>
 	$(document).ready(function(){
 		RP.addBreadcrumb([{name:"基础配置"}, {name:"用户", active: true}]);
-		$("#breadcrumbs ul").append('&nbsp;&nbsp;&nbsp;&nbsp;<a href="${ctx}/admin/user/add${suffix}"><i class="icon-zoom-in"></i><span class="label label-warning arrowed-in arrowed-in arrowed-right">添加用户</span></a>');
+		<#--$("#breadcrumbs ul").append('&nbsp;&nbsp;&nbsp;&nbsp;<a href="${ctx}/admin/user/add${suffix}"><i class="icon-zoom-in"></i><span class="label label-warning arrowed-in arrowed-in arrowed-right">添加用户</span></a>');-->
 	});
 </script>

@@ -21,6 +21,7 @@
 		<if test = "page.searchMap.se != null">
 			and id = #{page.searchMap.se}
 		</if>
+		 order by id desc
 	</select>
 	  <select id="findUserBy" resultMap="user">
 		select * from user where phone=#{name} 

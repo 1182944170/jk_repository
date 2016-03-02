@@ -31,20 +31,20 @@
 				
 						<td>
 							<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
-								<a class="green" href="${ctx}/admin/activityadd/${u.id}/edit${suffix}" alt="Edit">
+								<a class="green" href="${ctx}/admin/activiadd/${u.id}/edit${suffix}" alt="Edit">
 									<i class="icon-pencil bigger-130"></i>
 								</a>
 							<#if u.type==0>
-								<a class="red" href="${ctx}/admin/activityadd/${u.id}/saveUserda${suffix}" onclick="return confirm('你确定禁止用户么?');" alt="Delete">
+								<a class="red" href="${ctx}/admin/activiadd/${u.id}/saveUserda${suffix}" onclick="return confirm('你确定禁止用户么?');" alt="Delete">
 									<img src="${ctx}/resources/images/zhengque.jpg" width="15" height="15" alt="" />
 								</a>
 							<#elseif u.type==1>
-								<a class="red" href="${ctx}/admin/activityadd/${u.id}/saveUserda${suffix}" onclick="return confirm('你确定允许用户么?');" alt="Delete">
+								<a class="red" href="${ctx}/admin/activiadd/${u.id}/saveUserda${suffix}" onclick="return confirm('你确定允许用户么?');" alt="Delete">
 									<img src="${ctx}/resources/images/jinzhi.jpg" width="15" height="15" alt="" />
 								</a>
 							</#if>
 								
-								<a class="red" href="${ctx}/admin/activityadd/${u.id}/deletUser${suffix}" onclick="return confirm('你确定删除么?');" alt="Delete">
+								<a class="red" href="${ctx}/admin/activiadd/${u.id}/deletUser${suffix}" onclick="return confirm('你确定删除么?');" alt="Delete">
 									<i class="icon-trash bigger-130"></i>
 								</a>
 							
@@ -78,6 +78,6 @@
 <script>
 	$(document).ready(function(){
 		RP.addBreadcrumb([{name:"基础配置"}, {name:"活动消息", active: true}]);
-		$("#breadcrumbs ul").append('&nbsp;&nbsp;&nbsp;&nbsp;<a href="${ctx}/admin/activityadd/add${suffix}"><i class="icon-zoom-in"></i><span class="label label-warning arrowed-in arrowed-in arrowed-right">添加信息</span></a>');
+		$("#breadcrumbs ul").append('&nbsp;&nbsp;&nbsp;&nbsp;<a href="${ctx}/admin/activiadd/add${suffix}"><i class="icon-zoom-in"></i><span class="label label-warning arrowed-in arrowed-in arrowed-right">添加信息</span></a>');
 	});
 </script>

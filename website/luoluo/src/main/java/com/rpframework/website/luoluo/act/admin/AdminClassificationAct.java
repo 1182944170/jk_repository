@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.rpframework.core.api.FileService;
@@ -94,8 +93,11 @@ public class AdminClassificationAct extends AdminAct{
  */
 	@RequestMapping("/dosave")
 	public String doSaveOrUpdate(@RequestParam String proced,
-			@ModelAttribute Classification classificationDO,@RequestParam(value="iconFile", required=false) CommonsMultipartFile iconFile, 
-			RedirectAttributes attr,@RequestParam(value="mainFile", required=false) CommonsMultipartFile mainFile){
+			@ModelAttribute Classification classificationDO,
+			//@RequestParam(value="iconFile", required=false) CommonsMultipartFile iconFile, 
+			RedirectAttributes attr
+			//@RequestParam(value="mainFile", required=false) CommonsMultipartFile mainFile
+			){
 			//判断是否是数字
 		for(int i = proced.length(); --i >= 0;){
 				if (!Character.isDigit(proced.charAt(i))) {  
@@ -107,15 +109,15 @@ public class AdminClassificationAct extends AdminAct{
 			}else{
 				classificationDO.setProcedures(Integer.parseInt(proced));
 			}
-		if(iconFile.getSize() > 0 &&  mainFile.getSize()>0) { // 判断 icon 大小是否大于0
+		/*if(iconFile.getSize() > 0 &&  mainFile.getSize()>0) { // 判断 icon 大小是否大于0
 			try {
 				String relativelyPath = "/fenl/" + NumberUtils.random(3) + iconFile.getOriginalFilename(); // new 随即产生随即4位数开头的一个相对路径文件名
 				fileService.saveFile(iconFile.getInputStream(), relativelyPath);  // 保存文件
 				classificationDO.setClaImg(relativelyPath); // 设置相对路径
 			} catch (Exception e) {
 				throw new IllegalArgumentException("文件上传失败，原因:" + e.getLocalizedMessage());
-			}
-			try {
+			}*/
+			/*try {
 				String relaPath = "/fenl/" + NumberUtils.random(3) + mainFile.getOriginalFilename(); // new 随即产生随即4位数开头的一个相对路径文件名
 				fileService.saveFile(mainFile.getInputStream(), relaPath);  // 保存文件
 				classificationDO.setBigImg(relaPath);
@@ -124,7 +126,7 @@ public class AdminClassificationAct extends AdminAct{
 			}
 		} else {
 			
-		}
+		}*/
 		classificationService.doSaveOrUpdate(classificationDO);
 		if(NumberUtils.isValid(classificationDO.getId())) {//update
 			setInfoMsg("更新操作成功！", attr);

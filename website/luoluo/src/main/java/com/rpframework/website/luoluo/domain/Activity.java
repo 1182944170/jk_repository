@@ -61,6 +61,8 @@ public class Activity {
 	private String phone; //纬度
 	@FieldMapperAnnotation
 	private String city; //地址
+	@FieldMapperAnnotation
+	private Integer zhuangttai; //地址
 	
 	private Integer bm_num; //纬度
 	private Integer juli; //纬度
@@ -71,6 +73,14 @@ public class Activity {
 
 	public void setJuli(Integer juli) {
 		this.juli = juli;
+	}
+
+	public Integer getZhuangttai() {
+		return zhuangttai;
+	}
+
+	public void setZhuangttai(Integer zhuangttai) {
+		this.zhuangttai = zhuangttai;
 	}
 
 	public String getCity() {

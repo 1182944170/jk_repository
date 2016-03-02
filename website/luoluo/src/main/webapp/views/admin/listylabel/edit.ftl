@@ -18,7 +18,7 @@
 			<div class="clearfix">
 				<span class="block input-icon width-40">
 					<input type="text" name="id" readonly id="phone" value="${user.id}" maxlength="20" class="form-control" placeholder="id" onblur="onblurs()"/>
-					<i class="icon-user"></i><font color="red" id="cue" name="cue"></font>
+					<i class="icon-user"></i>
 				</span>
 			</div>
 		</div>
@@ -57,27 +57,6 @@
 </#if>
 
 <script>
-	function onblurs(){
-		var phone=$("#phone").val();
-			
-	    if(!(/^1[3|4|5|8][0-9]\d{4,8}$/.test(phone))){ 
-	        document.getElementById("cue").innerHTML = "请输入正确的手机号码";
-	        return false; 
-	    } else {
-			document.getElementById("cue").innerHTML = "";
-		}
-		
-		var url = "${ctx}/api/user/val_phone/"+phone;
-		var param = {};
-		$.getJSON(url, param, function(data){
-			if(data.succ == true){
-			
-			}else{
-				document.getElementById("cue").innerHTML = "该手机号码已被占用 ";
-				return false;
-			}
-		});
-	}
 
 	$(document).ready(function(){
 		RP.addBreadcrumb([{name:"基础设置"}, {name:"新增标签",  active: true}]);

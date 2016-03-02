@@ -75,7 +75,7 @@ public class AdminActiciaddAct extends AdminAct{
 					widen.setState(2);
 					widenserivece.wideninsert(widen);
 					setInfoMsg("新增操作成功！", attr);
-					return redirect("/admin/activityadd/list");
+					return redirect("/admin/activiadd/list");
 				} catch(Exception e) {
 					throw new IllegalArgumentException(e.getLocalizedMessage());
 				}
@@ -92,14 +92,14 @@ public class AdminActiciaddAct extends AdminAct{
 				widen.setSyimages(relativelyVideoPath);
 				widenserivece.updatewiden(widen);
 				setInfoMsg("更新操作成功！", attr);
-				return redirect("/admin/activityadd/list");
+				return redirect("/admin/activiadd/list");
 			} catch(Exception e) {
 				throw new IllegalArgumentException(e.getLocalizedMessage());
 			}
 		}
 			
 		}
-		return redirect("/admin/activityadd/list");
+		return redirect("/admin/activiadd/list");
 	}
 	/**
 	 * 禁用用户
@@ -120,7 +120,7 @@ public class AdminActiciaddAct extends AdminAct{
 			widenserivece.updatewiden(widenOne);
 		}
 		
-		return redirect("/admin/activityadd/list");
+		return redirect("/admin/activiadd/list");
 	}
 /**
 	 * 删除用户
@@ -132,7 +132,7 @@ public class AdminActiciaddAct extends AdminAct{
 	public String deletUser(@PathVariable Integer id,RedirectAttributes attr){
 		widenserivece.deletesell(id);
 		setInfoMsg("删除成功！", attr);
-		return redirect("/admin/activityadd/list");
+		return redirect("/admin/activiadd/list");
 	}
 	/**
 	 * 跳转添加用户
@@ -143,5 +143,6 @@ public class AdminActiciaddAct extends AdminAct{
 	@RequestMapping("/add")
 	public String add(){
 		return this.doPackageURI("activityadd/add");
+		
 	}
 }

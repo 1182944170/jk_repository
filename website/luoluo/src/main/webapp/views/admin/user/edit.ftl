@@ -25,8 +25,8 @@
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<span class="block input-icon width-40">
-				<input type="text" name="name" id="name" value="${user.acnumber!}"  maxlength="32" class="form-control" placeholder="账号"/>
-				<i class="icon-user"></i>
+				<input type="text" name="name" id="name"readonly value="${user.acnumber!}"  maxlength="32" class="form-control" placeholder="账号"/>
+				
 			</span>
 		</div>
 	</div>
@@ -36,8 +36,8 @@
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<span class="block input-icon width-40">
-				<input type="text" name="name" id="name" value="${user.name!}"  maxlength="32" class="form-control" placeholder="用户姓名"/>
-				<i class="icon-user"></i>
+				<input type="text" name="name" id="name"readonly value="${user.name!}"  maxlength="32" class="form-control" placeholder="用户姓名"/>
+				
 			</span>
 		</div>
 	</div>
@@ -48,7 +48,7 @@
 			<div class="clearfix">
 				<span class="block input-icon width-40">
 					<input type="text" name="phone" readonly id="phone" value="${user.phone!}" maxlength="20" class="form-control" placeholder="电话号码" onblur="onblurs()"/>
-					<i class="icon-user"></i><font color="red" id="cue" name="cue"></font>
+					<font color="red" id="cue" name="cue"></font>
 				</span>
 			</div>
 		</div>
@@ -60,8 +60,8 @@
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<span class="block input-icon width-40">
-				<input type="text" name="name" id="name" value="${user.age!}"  maxlength="32" class="form-control" placeholder="年龄"/>
-				<i class="icon-user"></i>
+				<input type="text" name="name" id="name"readonly value="${user.age!}"  maxlength="32" class="form-control" placeholder="年龄"/>
+				
 			</span>
 		</div>
 	</div>
@@ -71,8 +71,8 @@
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<span class="block input-icon width-40">
-				<input type="text" name="name" id="name" value="${user.company!}"  maxlength="32" class="form-control" placeholder="工作单位"/>
-				<i class="icon-user"></i>
+				<input type="text" name="name" id="name"readonly value="${user.company!}"  maxlength="32" class="form-control" placeholder="工作单位"/>
+				
 			</span>
 		</div>
 	</div>
@@ -82,8 +82,8 @@
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<span class="block input-icon width-40">
-				<input type="text" name="name" id="name" value="${user.qqaccount!}"  maxlength="32" class="form-control" placeholder="联系方式"/>
-				<i class="icon-user"></i>
+				<input type="text" name="name" id="name"readonly value="${user.qqaccount!}"  maxlength="32" class="form-control" placeholder="联系方式"/>
+				
 			</span>
 		</div>
 	</div>
@@ -95,8 +95,8 @@
 		<div class="col-xs-12 col-sm-9">
 			<div class="clearfix">
 				<span class="block input-icon width-40">
-					<input type="passWord" name="password" id="password" value="${user.password!}" maxlength="32" class="form-control" placeholder="密码"/>
-					<i class="icon-user"></i>
+					<input type="passWord" name="password"readonly id="password" value="${user.password!}" maxlength="32" class="form-control" placeholder="密码"/>
+					
 				</span>
 			</div>
 		</div>
@@ -106,8 +106,8 @@
 		<div class="col-xs-12 col-sm-9">
 			<div class="clearfix">
 				<span class="block input-icon width-40">
-					<input type="text" name="password" id="password" value="￥${user.personalMany!}" maxlength="32" class="form-control" placeholder="余额"/>
-					<i class="icon-user"></i>
+					<input type="text" name="password" id="password" readonly value="￥${user.personalMany!}" maxlength="32" class="form-control" placeholder="余额"/>
+					
 				</span>
 			</div>
 		</div>
@@ -119,7 +119,7 @@
 		<div class="clearfix">
 			<span class="block input-icon width-40">
 				<input type="text" name="expert" readonly id="expert" value="${tagUtils.formatDate(user.ctiontime)}" maxlength="32" value="" class="form-control" placeholder="擅长"/>
-				<i class="icon-user"></i>
+				
 			</span>
 		</div>
 	</div>

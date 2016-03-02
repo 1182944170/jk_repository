@@ -127,9 +127,9 @@ function selectMap(){
 		</div>
 	</div>
 </div>
-<#assign fieldName="activitypicture" />不要超过5张图片
-<#assign fieldLabel="活动图片" />不要超过5张图片
-<#include "/common-admin/upload/upload_field_pre.ftl" />不要超过5张图片
+<#assign fieldName="activitypicture" />
+<#assign fieldLabel="活动图片" />
+<#include "/common-admin/upload/upload_field_pre.ftl" />
 
 
 
@@ -166,7 +166,7 @@ function selectMap(){
 		</#if>
 		<#if oop.type==1> 
 		取消审核
-		</#if>交		
+		</#if>		
 
 		</button>
 		&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;

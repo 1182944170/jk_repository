@@ -41,7 +41,7 @@
 							<a class="green" href="${ctx}/admin/common/help/${u.id}/edit${suffix}" alt="编辑">
 								<i class="icon-pencil bigger-130"></i>
 							</a>
-							<a class="red" href="${ctx}/admin/common/help/${u.id}/delete${suffix}" alt="Delete">
+							<a class="red" href="${ctx}/admin/common/help/${u.id}/delete${suffix}" alt="Delete" onclick="return confirm('你确定删除么?');">
 								<i class="icon-trash bigger-130"></i> 
 							</a>
 						</div>
@@ -60,7 +60,7 @@
 										</a>
 									</li>
 									<li>
-										<a href="${ctx}/admin/common/help/${u.id}/delete${suffix}" class="tooltip-error" data-rel="tooltip" title="" data-original-title="Delete">
+										<a href="${ctx}/admin/common/help/${u.id}/delete${suffix}" class="tooltip-error" onclick="return confirm('你确定删除么?');" data-rel="tooltip" title="" data-original-title="Delete">
 											<span class="red">
 												<i class="icon-trash bigger-120"></i>
 											</span>

@@ -9,9 +9,7 @@
 
 	<select id="doPager" resultMap="Monlyjournallist">
          select * from  monlyjournal where 1=1
-         <if test = "page.searchMap.type!= null">
-		
-		</if>
+         
 	</select> 
 
 	<update id="update" parameterType="com.rpframework.website.luoluo.domain.Monlyjournallist" />

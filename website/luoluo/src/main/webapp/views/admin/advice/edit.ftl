@@ -30,9 +30,8 @@
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<span class="block input-icon width-40">
-				<@fck value="${(user.comments)!''}" instanceName="entintroduction" inputName="entintroduction" height="300px;" toolbarSet="Basic">
-		    	${fck_body}
-		    </@fck>
+				<textarea rows="10" cols="50">${(user.comments)!''}</textarea>
+			
 			</span>
 		</div>
 	</div>
