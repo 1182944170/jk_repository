@@ -83,6 +83,9 @@
 				)
 			GROUP BY t2.sponsorld having count(*)>=2
 	</select>
+	<select id="doJoinUserById" resultType="Integer">
+			SELECT count(id) FROM activity_registration WHERE sponsorld = #{param1}
+	</select>
 	<select id="selectname" resultMap="Activity">
 		select * from release_activity where activityname LIKE '%' #{name} '%' order by id
 	</select>

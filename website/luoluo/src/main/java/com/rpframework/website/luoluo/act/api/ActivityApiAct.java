@@ -83,23 +83,30 @@ public class ActivityApiAct extends BaseAct{
 			obj.addProperty("cover", li.getCover());//图片
 			obj.addProperty("address", li.getActivitylocation());//地址
 			String week = DateUtils.getWeekOfDate(li.getStarttime());
-			String weekend = "";
-			obj.addProperty("time", week);//开始时间
-			if("周六".equals(week)||"周日".equals(week)){//周末字样
-				weekend = "周末";
-			}
+			String spans ="";
+			obj.addProperty("week", week);//开始时间
 			if(li.getSponsorid()==1){//官方字样
-				
+				spans+="1";
 			}
 			if(li.getActivitypicture().length()>1){//多图
-				
+				spans+="2";
 			}
 			//多妹子 活动报名表里
 			List<Integer> idList = service.doActivityIdList();
-			json.addProperty("idList", idList.toString());
-			obj.addProperty("weekend",weekend);
-			obj.addProperty("span", "标签");//标签 1官方 2多图 3多妹子 4周末
-			obj.addProperty("person", "人数");//人数
+			String strList = idList.toString().replace("[", "");
+			strList = strList.replace("]", "");
+			boolean flag = service.isExist(li.getId().toString(),strList);
+			if(!flag){
+				spans+="3";
+			}
+			if("周六".equals(week)||"周日".equals(week)){//周末字样
+				spans+="4";
+			}
+			String sdate = TagUtils.formatDate(li.getStarttime());
+			obj.addProperty("date",sdate.substring(5,10).replace("-", "/"));//要不要做成01/01 1/1
+			obj.addProperty("time",sdate.substring(sdate.length()-8,sdate.length()-3));
+			obj.addProperty("span",spans);//标签 1官方 2多图 3多妹子 4周末
+			obj.addProperty("person", service.getJoinUserById(li.getId()));//人数
 			array.add(obj);
 		}
 		json.add("array", array);

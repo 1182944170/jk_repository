@@ -133,6 +133,11 @@ public class ActivityService extends BaseService{
 		
 		return iactivitydao.doActivityIdList();
 	}
+	public Integer getJoinUserById(Integer id) {
+		Integer i = 0;
+		i = iactivitydao.doJoinUserById(id);
+		return i == null ? 0 : i; 
+	}
 	
 
 }
