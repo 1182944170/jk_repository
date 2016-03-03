@@ -123,6 +123,12 @@ public class ActivityService extends BaseService{
 		// TODO Auto-generated method stub
 		return iactivitydao.selectluist(sponsorid);
 	}
+	public List<Activity> doApiList(Integer categoryId, Long st, Long et,
+			Integer days, Integer span, Integer area, Integer page,
+			Integer limit) {
+		
+		return iactivitydao.doActivityList();
+	}
 
 	
 

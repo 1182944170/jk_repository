@@ -14,4 +14,6 @@ public interface IActivityDao extends IDao{
 	List<Activity> selectact(String lat, String lng, String city,
 			Integer activitycategoryid);
 	List<Activity> selectluist(Integer sponsorid);
+	
+	List<Activity> doActivityList();
 }

@@ -47,6 +47,34 @@
 	<select id="select" parameterType="Integer" resultMap="Activity">
 		select * from release_activity where id=#{activiid} order by id
 	</select>
+	<select id="doActivityList" resultMap="Activity">
+		SELECT * FROM release_activity t1
+		<!-- 按类型分类 1户外 2旅行 #{param1}-->
+		WHERE t1.activitycategory = 2
+		<!-- 开始时间1456615800  为今天 明天 后天 大于后天  #{param2}  #{param3}-->
+		AND t1.starttime BETWEEN 1456610000 <!--#今天凌晨00：00-->
+		                 AND 1456620000 <!-- 今天晚上23：59-->
+		<!--活动天数-->
+		AND (t1.outtime - t1.starttime) &lt; 86400*1 <!-- #{param4} 一天以内含一天 86400 = 1天-->
+		<!--同城市 周边 省外 179  #{param5}-->
+		AND t1.city IN <!--Not 长途活动 省外-->
+			<!--(SELECT c.code FROM city c  WHERE c.codycity = 179) 同城-->
+			<!--周边-->	
+		(SELECT c.code FROM city c LEFT JOIN city cc ON cc.countryCode = c.countryCode WHERE c.codycity = 179) 
+		<!--多妹子-->
+		AND t1.Id IN 
+		<!--报名表里sponsorid 报名 用户性别为女的 只是有妹子  #{param6} #{param7}-->
+		(SELECT t2.sponsorld FROM activity_registration t2 WHERE t2.myld IN(
+			SELECT t3.id FROM user t3 WHERE t3.sex = 1
+		)) ORDER BY t1.starttime LIMIT 0,5
+		<!-- 
+			SELECT t2.sponsorld
+				FROM activity_registration t2 WHERE t2.myld IN(
+					SELECT t3.id FROM user t3 WHERE t3.sex = 1
+				)
+			GROUP BY t2.sponsorld ORDER BY COUNT(*) DESC LIMIT 1
+		 -->
+	</select>
 	<select id="selectname" resultMap="Activity">
 		select * from release_activity where activityname LIKE '%' #{name} '%' order by id
 	</select>
