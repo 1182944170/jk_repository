@@ -82,7 +82,7 @@ public class ActivityApiAct extends BaseAct{
 			obj.addProperty("cover", li.getCover());//图片
 			obj.addProperty("address", li.getActivitylocation());//地址
 			obj.addProperty("time", TagUtils.formatDate(li.getStarttime()));//开始时间
-			obj.addProperty("span", "标签");//标签
+			obj.addProperty("span", "标签");//标签 1官方 2多图 3多妹子 4周末
 			obj.addProperty("person", "人数");//人数
 			array.add(obj);
 		}
