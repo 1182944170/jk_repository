@@ -111,9 +111,9 @@
 				nickName: {
 					required: true
 				},
-				phone:{
-					required: true,
-					number:true
+				mainFile:{
+					required: true
+					
 				},
 				passWord:{
 					required: true

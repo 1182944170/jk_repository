@@ -163,7 +163,7 @@ public class ApiActivityAct extends BaseAct{
 		json.addProperty("lat", activity.getLat());
 		json.addProperty("lng", activity.getLng());
 		json.addProperty("type", activity.getType());
-		json.addProperty("zhuagnt", activity.getZhuangttai());
+		json.addProperty("zhuangttai", activity.getZhuangttai());
 		List<Activity> listseize=activityService.selectluist(activity.getSponsorid());
 		json.addProperty("chenggong", listseize.size());
 		json.addProperty("typeok", activity.getTypeok());

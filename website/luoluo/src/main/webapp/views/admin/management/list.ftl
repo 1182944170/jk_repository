@@ -70,7 +70,7 @@ $(function (){
 				<#list pager.itemList as u>
 					<tr class="ff">
 						<td><span class="gray center">${u.ordernumber!}</span></td>
-						
+	
 					<@miactivit cmd="get_miactivit_list" type="${u.sponsorld}" pagerString="1_" pageSize="50">
 						<#if (s_pager.itemList?size > 0)>
 							<#list s_pager.itemList as lo>

@@ -44,7 +44,13 @@
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<div class="ace-file-input width-40">
+			<#if user??>
+			<input type="file" name="mainFile" value="${user.syimages!}" id="id-input-file-2">
+				<#else>
 				<input type="file" name="mainFile" id="id-input-file-2">
+					
+				</#if>
+			
 			</div>
 			<br/>
 		</div>
@@ -128,9 +134,6 @@ $(document).ready(function(){
 			},
 			iconFile: {
 				required: true
-			},
-			mainFile:{
-				required: true
 			}
 		},
 	
@@ -140,9 +143,6 @@ $(document).ready(function(){
 			},
 			iconFile: {
 				required: "请输入分类图标."
-			},
-			mainFile: {
-				required: "请选择分类主图."
 			}
 		},
 	
@@ -167,4 +167,18 @@ $(document).ready(function(){
 		}
 	});
 });
+</script>
+<script>
+$(function (){
+	<#if user??>
+	
+		var o ="${user.syimages!}";
+		var dt = $(".file-name").attr("data-title");
+		$(".file-name").attr("data-title",o);
+		$(".file-label").attr("data-title","重新选择文件");
+	<#else>
+	
+	</#if>
+
+})
 </script>

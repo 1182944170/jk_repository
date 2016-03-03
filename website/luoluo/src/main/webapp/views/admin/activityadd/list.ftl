@@ -35,11 +35,11 @@
 									<i class="icon-pencil bigger-130"></i>
 								</a>
 							<#if u.type==0>
-								<a class="red" href="${ctx}/admin/activiadd/${u.id}/saveUserda${suffix}" onclick="return confirm('你确定禁止用户么?');" alt="Delete">
+								<a class="red" href="${ctx}/admin/activiadd/${u.id}/saveUserda${suffix}" onclick="return confirm('你确定禁止信息么?');" alt="Delete">
 									<img src="${ctx}/resources/images/zhengque.jpg" width="15" height="15" alt="" />
 								</a>
 							<#elseif u.type==1>
-								<a class="red" href="${ctx}/admin/activiadd/${u.id}/saveUserda${suffix}" onclick="return confirm('你确定允许用户么?');" alt="Delete">
+								<a class="red" href="${ctx}/admin/activiadd/${u.id}/saveUserda${suffix}" onclick="return confirm('你确定允许信息么?');" alt="Delete">
 									<img src="${ctx}/resources/images/jinzhi.jpg" width="15" height="15" alt="" />
 								</a>
 							</#if>

@@ -71,16 +71,16 @@ public class AdminActiciaddAct extends AdminAct{
 					//将图片，id，密码放入user对象中
 					fileService.saveFile(eoppos.getInputStream(), relativelyVideoPath); 
 					widen.setSyimages(relativelyVideoPath);
-					widen.setSytime(System.currentTimeMillis()/1000);
-					widen.setState(2);
-					widenserivece.wideninsert(widen);
-					setInfoMsg("新增操作成功！", attr);
-					return redirect("/admin/activiadd/list");
+					
 				} catch(Exception e) {
 					throw new IllegalArgumentException(e.getLocalizedMessage());
 				}
 			}
-
+			widen.setSytime(System.currentTimeMillis()/1000);
+			widen.setState(2);
+			widenserivece.wideninsert(widen);
+			setInfoMsg("新增操作成功！", attr);
+			return redirect("/admin/activiadd/list");
 		}else{
 //修改内容
 		if(!eoppos.isEmpty()){
@@ -90,14 +90,14 @@ public class AdminActiciaddAct extends AdminAct{
 				//将图片，id，密码放入user对象中
 				fileService.saveFile(eoppos.getInputStream(), relativelyVideoPath); 
 				widen.setSyimages(relativelyVideoPath);
-				widenserivece.updatewiden(widen);
-				setInfoMsg("更新操作成功！", attr);
-				return redirect("/admin/activiadd/list");
+				
+				
 			} catch(Exception e) {
 				throw new IllegalArgumentException(e.getLocalizedMessage());
 			}
 		}
-			
+		widenserivece.updatewiden(widen);
+		setInfoMsg("更新操作成功！", attr);
 		}
 		return redirect("/admin/activiadd/list");
 	}

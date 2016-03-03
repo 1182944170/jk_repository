@@ -32,7 +32,7 @@
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<div class="ace-file-input width-40">
-				<input type="file" name="iconFile" id="id-input-file-2">
+				<input type="file" name="iconFile" value="${(slideshow.icon)!''}" id="id-input-file-2">
 			</div>
 			<small>* 已经存在的icon如果不修改则不需要填写</small>
 		</div>
@@ -44,7 +44,7 @@
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<span class="block input-icon width-40">
-				<input type="text" name="url" id="url" value="${(slideshow.url)!''}" class="form-control" placeholder="幻灯片URL"/>
+				<input type="text" name="url" id="url" value="" class="form-control" placeholder="幻灯片URL"/>
 				<i class="icon-user"></i>
 			</span>
 		</div>
@@ -126,6 +126,10 @@ $(document).ready(function(){
 				required: true,
 				number:true
 			},
+			iconFile:{
+				required: true
+				
+			},
 			type: {
 				required: true
 			},
@@ -141,6 +145,9 @@ $(document).ready(function(){
 		messages: {
 			title: {
 				required: "请输入幻灯片标题."
+			},
+			iconFile: {
+				required: "请输入幻灯片图片."
 			},
 			state: {
 				required: "请选择幻灯片状态."

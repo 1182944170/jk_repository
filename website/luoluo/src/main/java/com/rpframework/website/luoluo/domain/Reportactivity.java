@@ -16,11 +16,22 @@ public class Reportactivity {
 	@FieldMapperAnnotation
 	private String reportContext; //举报内容
 	@FieldMapperAnnotation
+	private String picmsg; //举报内容
+	@FieldMapperAnnotation
 	private long acttime;  //举报时间
 	
 	public Integer getId() {
 		return id;
 	}
+	
+	public String getPicmsg() {
+		return picmsg;
+	}
+
+	public void setPicmsg(String picmsg) {
+		this.picmsg = picmsg;
+	}
+
 	public void setActtime(long acttime) {
 		this.acttime = acttime;
 	}
