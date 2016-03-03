@@ -14,6 +14,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.rpframework.core.BaseAct;
 import com.rpframework.core.utils.TagUtils;
+import com.rpframework.utils.DateUtils;
 import com.rpframework.website.luoluo.domain.Activity;
 import com.rpframework.website.luoluo.service.ActivityService;
 
@@ -81,7 +82,22 @@ public class ActivityApiAct extends BaseAct{
 			obj.addProperty("name", li.getActivityname());//
 			obj.addProperty("cover", li.getCover());//图片
 			obj.addProperty("address", li.getActivitylocation());//地址
-			obj.addProperty("time", TagUtils.formatDate(li.getStarttime()));//开始时间
+			String week = DateUtils.getWeekOfDate(li.getStarttime());
+			String weekend = "";
+			obj.addProperty("time", week);//开始时间
+			if("周六".equals(week)||"周日".equals(week)){//周末字样
+				weekend = "周末";
+			}
+			if(li.getSponsorid()==1){//官方字样
+				
+			}
+			if(li.getActivitypicture().length()>1){//多图
+				
+			}
+			//多妹子 活动报名表里
+			List<Integer> idList = service.doActivityIdList();
+			json.addProperty("idList", idList.toString());
+			obj.addProperty("weekend",weekend);
 			obj.addProperty("span", "标签");//标签 1官方 2多图 3多妹子 4周末
 			obj.addProperty("person", "人数");//人数
 			array.add(obj);

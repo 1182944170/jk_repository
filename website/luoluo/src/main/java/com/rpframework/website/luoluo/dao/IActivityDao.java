@@ -16,4 +16,5 @@ public interface IActivityDao extends IDao{
 	List<Activity> selectluist(Integer sponsorid);
 	
 	List<Activity> doActivityList();
+	List<Integer> doActivityIdList();
 }

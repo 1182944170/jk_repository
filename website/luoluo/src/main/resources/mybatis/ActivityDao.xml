@@ -75,6 +75,14 @@
 			GROUP BY t2.sponsorld ORDER BY COUNT(*) DESC LIMIT 1
 		 -->
 	</select>
+	<!-- 为了提高用户访问量，有2个以上的妹子就是多妹子 查询妹子多的活动Id-->
+	<select id="doActivityIdList" resultType="Integer">
+			SELECT t2.sponsorld
+				FROM activity_registration t2 WHERE t2.myld IN(
+					SELECT t3.id FROM user t3 WHERE t3.sex = 1
+				)
+			GROUP BY t2.sponsorld having count(*)>=2
+	</select>
 	<select id="selectname" resultMap="Activity">
 		select * from release_activity where activityname LIKE '%' #{name} '%' order by id
 	</select>

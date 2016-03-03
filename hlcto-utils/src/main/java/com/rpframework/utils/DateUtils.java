@@ -373,4 +373,96 @@ public class DateUtils {
 		
 		return i1 == i2;
 	}
+	/**  
+	 * 格式化时间
+	 * YYYY_MM_DD_HH_MM_SS  2015-11-24 17:12:00
+	 * YYYY_MM_DD_HH_MM     2015-11-24 17:12
+	 * data 2015-11-24 17:12
+	 * @return 2015-11-24 17:12:00格式的时间
+	 */
+	public static String timeDate(String seconds,String format) {  
+        if(seconds == null || seconds.isEmpty() || seconds.equals("null")){  
+            return "";  
+        }  
+        if(format == null || format.isEmpty());  
+        SimpleDateFormat sdf = new SimpleDateFormat(format);  
+        return sdf.format(new Date(Long.valueOf(seconds+"000")));  
+   }
+	/**  
+	 * 格式化时间为周 星期几
+	 * @param long l 时间戳
+	 * return 周几
+	 */
+	public static String getWeekOfDate(Long l) {
+		Date dt = new Date(l);
+	    String[] weekDays = {"周日", "周一", "周二", "周三", "周四", "周五", "周六"};
+	    Calendar cal = Calendar.getInstance();
+	    cal.setTime(dt);
+	    int w = cal.get(Calendar.DAY_OF_WEEK) - 1;
+	    if (w < 0)
+	        w = 0;
+	    return weekDays[w];
+	}
+	
+	// 获得当天0点时间
+		public static Date getTimesmorning() {
+			Calendar cal = Calendar.getInstance();
+			cal.set(Calendar.HOUR_OF_DAY, 0);
+			cal.set(Calendar.SECOND, 0);
+			cal.set(Calendar.MINUTE, 0);
+			cal.set(Calendar.MILLISECOND, 0);
+			return cal.getTime();
+		}
+
+		// 获得当天24点时间
+		public static Date getTimesnight() {
+			Calendar cal = Calendar.getInstance();
+			cal.set(Calendar.HOUR_OF_DAY, 24);
+			cal.set(Calendar.SECOND, 0);
+			cal.set(Calendar.MINUTE, 0);
+			cal.set(Calendar.MILLISECOND, 0);
+			return cal.getTime();
+		}
+
+		// 获得本周一0点时间
+		public static Date getTimesWeekmorning() {
+			Calendar cal = Calendar.getInstance();
+			cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONDAY), cal.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
+			cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+			return cal.getTime();
+		}
+		
+		// 获得本周日24点时间
+		public static Date getTimesWeeknight() {
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(getTimesWeekmorning());
+			cal.add(Calendar.DAY_OF_WEEK, 7);
+			return cal.getTime();
+		}
+
+		// 获得本月第一天0点时间
+		public static Date getTimesMonthmorning() {
+			Calendar cal = Calendar.getInstance();
+			cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONDAY), cal.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
+			cal.set(Calendar.DAY_OF_MONTH, cal.getActualMinimum(Calendar.DAY_OF_MONTH));
+			return cal.getTime();
+		}
+
+		// 获得本月最后一天24点时间
+		public static Date getTimesMonthnight() {
+			Calendar cal = Calendar.getInstance();
+			cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONDAY), cal.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
+			cal.set(Calendar.DAY_OF_MONTH, cal.getActualMaximum(Calendar.DAY_OF_MONTH));
+			cal.set(Calendar.HOUR_OF_DAY, 24);
+			return cal.getTime();
+		}
+		/**
+		 * 	System.out.println("当前时间："+ new Date().toLocaleString());
+			System.out.println("当天0点时间："+ getTimesmorning().toLocaleString());
+			System.out.println("当天24点时间："+ getTimesnight().toLocaleString());
+			System.out.println("本周周一0点时间："+ getTimesWeekmorning().toLocaleString());
+			System.out.println("本周周日24点时间："+ getTimesWeeknight().toLocaleString());
+			System.out.println("本月初0点时间："+ getTimesMonthmorning().toLocaleString());
+			System.out.println("本月未24点时间："+ getTimesMonthnight().toLocaleString());
+		 */
 }

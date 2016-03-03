@@ -129,7 +129,10 @@ public class ActivityService extends BaseService{
 		
 		return iactivitydao.doActivityList();
 	}
-
+	public List<Integer> doActivityIdList(){
+		
+		return iactivitydao.doActivityIdList();
+	}
 	
 
 }
