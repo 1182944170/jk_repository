@@ -23,69 +23,48 @@ import com.rpframework.website.luoluo.service.ActivityService;
 public class ActivityApiAct extends BaseAct{
 	@Resource ActivityService service;
 	
-	//活动筛选 根据 sponsorid主办方只发活动 myld==userId谁参加
-	//1.activitycategory活动分类id 
-	//2.活动开始时间（今天，明天，后天，大于后天） starttime
-	//3.活动天数（开始时间--结束时间区间） starttime outtime
-	//4.多妹子（活动报名表，用户性别为女） 
-	//5.同城活动 city相同，周边活动（同省），长途（除了同城的，除了周边的）
-	/**
-	 * 
-	 * @param categoryId
-	 * @param time
-	 * @param days
-	 * @param span
-	 * @param area
-	 * @return
-	 * @time 2016年3月3日 下午4:14:35
-	 * 
-	 * #所有活动
-		SELECT * FROM release_activity t1
-		#按类型分类 1户外 2旅行
-		WHERE t1.activitycategory = 2
-		#开始时间1456615800  为今天 明天 后天 大于后天
-		AND t1.starttime BETWEEN 1456610000 #今天凌晨00：00
-		                 AND 1456620000 #今天晚上23：59
-		#活动天数
-		AND (t1.outtime - t1.starttime) < 86400*1 #一天以内含一天 86400 = 1天
-		#同城市 周边 省外 #179 330100
-		AND t1.city IN #Not 长途活动 省外
-									 #(SELECT c.code FROM city c  WHERE c.codycity = 179) #同城
-							     (SELECT c.code FROM city c LEFT JOIN city cc ON cc.countryCode = c.countryCode WHERE c.codycity = 179) #周边			
-		#多妹子
-		AND
-		t1.Id IN 
-		#报名表里sponsorid 报名 用户性别为女的 只能是有妹子
-		(SELECT t2.sponsorld FROM activity_registration t2 WHERE t2.myld IN(
-			SELECT t3.id FROM user t3 WHERE t3.sex = 1
-		))
+	/*  #{0} lng 经度
+	    #{1} lat 纬度
+	    #{2} categoryId 分类id
+	    #{3} st 传入日期的凌晨00:00点时间戳1456610000 
+	    #{4} et 传入日期的23:59点时间戳1456620000
+	    #{5} days 传入活动时间几天 1 2 3 4 5 6 7 8 * 86400
+	    #{6} baiduCode 传入百度表对应city表的codycity 
+	    #{7} page
+	    #{8} limit
 	 */
 	@RequestMapping("/list")
 	public @ResponseBody JsonElement activityList(
+			@RequestParam(value="lng",required=false) String lng,//经度
+			@RequestParam(value="lat",required=false) String lat,//纬度
 			@RequestParam(value="categoryId",required=false) Integer categoryId,//分类id
 			@RequestParam(value="time",required=false) Integer time,//活动开始时间 1今天 2明天 3后天 4大于后天
 			@RequestParam(value="days",required=false) Integer days,//活动天数  1-7天，大于7天
 			@RequestParam(value="span",required=false) Integer span,//标签 1官方 2多妹子 3多图 4周末
 			@RequestParam(value="area",required=false) Integer area,//区域 1同城 2周边同省 3其它不同省 179
+			@RequestParam(value="baiduCode",required=false) Integer baiduCode,//区域 1同城 2周边同省 3其它不同省 179
+			@RequestParam(value="type",required=false) String type,//8个页面  home find publish join near nearh nearp finish
 			@RequestParam(value="page",required=false) Integer page,//分页
 			@RequestParam(value="limit",required=false) Integer limit,//每页数量
-			@RequestParam(value="remark",required=false) String remark//每页数量
+			@RequestParam(value="remark",required=false) String remark//备注
 			){
 		JsonObject json = new JsonObject();
 		if(remark!=null && "Y".equals(remark.toUpperCase()))
 			json.add("remark",service.getJsonInfo());
-		Long st = System.currentTimeMillis()/1000;
-		Long et = System.currentTimeMillis()/1000;
-		List<Activity> list = service.doApiList(categoryId,st,et,days,span,area,page,limit); 
+		//参数处理 time day span area
+		Long l = days*86400l;//几天 days
+		Long[] arrl = service.getFormatTime(time); 
+		
+		List<Activity> list = service.doApiList(lng,lat,categoryId,arrl[0],arrl[1],l,baiduCode,page,limit); 
 		JsonArray array = new JsonArray();
-		json.addProperty("totalPage", service.doApiList(categoryId,st,et,days,span,area));
+		json.addProperty("totalPage", service.doApiCount(lng,lat,categoryId,arrl[0],arrl[1],l,baiduCode));
 		for(Activity li : list){
 			JsonObject obj = new JsonObject();
 			obj.addProperty("id", li.getId());//
 			obj.addProperty("name", li.getActivityname());//
 			obj.addProperty("cover", li.getCover());//图片
 			obj.addProperty("address", li.getActivitylocation());//地址
-			String week = DateUtils.getWeekOfDate(li.getStarttime());
+			String week = DateUtils.getWeekOfDate(li.getStarttime()*1000);
 			StringBuilder spans =new StringBuilder();
 			obj.addProperty("week", week);//开始时间
 			if(li.getSponsorid()==1){//官方字样
@@ -122,6 +101,12 @@ public class ActivityApiAct extends BaseAct{
 		json.add("array", array);
 		return json;
 	}
+	/**
+	 * 格式化距离 1.43565868652
+	 * @param String r
+	 * @return 1.435km
+	 * @time 2016年3月4日 上午11:26:21
+	 */
 	public String format(String r){
 		String range ="";
 		if(r.indexOf(".")>0){
@@ -135,4 +120,5 @@ public class ActivityApiAct extends BaseAct{
 		range = range+"km";
 		return range;
 	}
+	
 }

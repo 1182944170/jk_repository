@@ -15,8 +15,13 @@ public interface IActivityDao extends IDao{
 			Integer activitycategoryid);
 	List<Activity> selectluist(Integer sponsorid);
 	
-	List<Activity> doActivityList();
 	List<Integer> doActivityIdList();
 	Integer doJoinUserById(Integer id);
-	Integer doApiListCount();
+	//查记录
+	List<Activity> doActivityList(String lng, String lat, Integer categoryId,
+			Long st, Long et, Long l, Integer baiduCode, Integer page,
+			Integer limit);
+	//查总数
+	Integer doApiListCount(String lng, String lat, Integer categoryId, Long st,
+			Long et, Long l, Integer baiduCode);
 }

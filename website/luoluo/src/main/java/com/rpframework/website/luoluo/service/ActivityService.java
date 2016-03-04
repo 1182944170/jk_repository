@@ -1,5 +1,6 @@
 package com.rpframework.website.luoluo.service;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -125,12 +126,6 @@ public class ActivityService extends BaseService{
 		// TODO Auto-generated method stub
 		return iactivitydao.selectluist(sponsorid);
 	}
-	public List<Activity> doApiList(Integer categoryId, Long st, Long et,
-			Integer days, Integer span, Integer area, Integer page,
-			Integer limit) {
-		
-		return iactivitydao.doActivityList();
-	}
 	public List<Integer> doActivityIdList(){
 		
 		return iactivitydao.doActivityIdList();
@@ -156,12 +151,67 @@ public class ActivityService extends BaseService{
 		
 		return json;
 	}
-	public Integer doApiList(Integer categoryId, Long st, Long et, Integer days,
-			Integer span, Integer area) {
+	/**
+	 * 根据time 返回开始时间 结束时间 
+	 * @param time
+	 * @return
+	 * @time 2016年3月4日 上午11:59:12
+	 */
+	public Long[] getFormatTime(Integer time) {
+		if(NumberUtils.isNotValid(time)) return null;
+		Long[] arrl = new Long[2];
+		Long st = 0l;
+		Long et = 0l;
+		Date nowDate = DateUtils.getTimesmorning();
+		Date endDate = DateUtils.getTimesnight();
+		switch (time) {
+		case 1:
+			st = nowDate.getTime()/1000;
+			et = endDate.getTime()/1000;
+			break;
+		case 2:
+			st = DateUtils.dayAdd(time,nowDate).getTime()/1000;
+			et = DateUtils.dayAdd(time,endDate).getTime()/1000;
+			break;
+		case 3:
+			st = DateUtils.dayAdd(time,nowDate).getTime()/1000;
+			et = DateUtils.dayAdd(time,endDate).getTime()/1000;
+			break;
+
+		default:
+			st = DateUtils.dayAdd(time+1,nowDate).getTime()/1000;
+			et = DateUtils.dayAdd(time+1,endDate).getTime()/1000;
+			break;
+		};
+		arrl[0] =st; 
+		arrl[1] =et; 
+		return arrl;
+	}
+	public List<Activity> doApiList(String lng, String lat, Integer categoryId,
+			Long st, Long et, Long l, Integer baiduCode, Integer page,
+			Integer limit) {
+		page = Integer.valueOf(page*limit-limit);
+		return iactivitydao.doActivityList(lng,lat,categoryId,st,et,l,baiduCode,page,limit);
+	}
+	/**
+	 * 
+	 * @param lng
+	 * @param lat
+	 * @param categoryId
+	 * @param st
+	 * @param et
+	 * @param l
+	 * @param days
+	 * @param span
+	 * @param area
+	 * @return
+	 * @time 2016年3月4日 下午1:22:04
+	 */
+	public Integer doApiCount(String lng, String lat, Integer categoryId,
+			Long st, Long et, Long l, Integer baiduCode) {
 		Integer i = 0;
-		i = iactivitydao.doApiListCount();
+		i = iactivitydao.doApiListCount(lng,lat,categoryId,st,et,l,baiduCode);
 		return i == null ? 0 : i; 
 	}
-	
 
 }

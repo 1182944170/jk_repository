@@ -447,8 +447,11 @@ public class DateUtils {
 			cal.set(Calendar.DAY_OF_MONTH, cal.getActualMinimum(Calendar.DAY_OF_MONTH));
 			return cal.getTime();
 		}
-
-		// 获得本月最后一天24点时间
+		/**
+		 * 获得本月最后一天24点时间
+		 * @return
+		 * @time 2016年3月4日 上午11:47:53
+		 */
 		public static Date getTimesMonthnight() {
 			Calendar cal = Calendar.getInstance();
 			cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONDAY), cal.get(Calendar.DAY_OF_MONTH), 0, 0, 0);

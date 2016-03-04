@@ -48,56 +48,63 @@
 		select * from release_activity where id=#{activiid} order by id
 	</select>
 	<select id="doApiListCount" resultType="Integer">
-		SELECT count(id) FROM release_activity t1
+	      SELECT count(*),
+		<!--sqrt(POWER((121.21937542-120.170455),2)+POWER((31.25924446-30.278896),2)) AS juli-->
+		sqrt(POWER((#{0}-t1.lng),2)+POWER((#{1}-t1.lat),2)) AS juli
+		FROM release_activity t1
 		<!-- 按类型分类 1户外 2旅行 #{param1}-->
-		WHERE t1.activitycategory = 2
+		WHERE t1.activitycategory = #{2}
 		<!-- 开始时间1456615800  为今天 明天 后天 大于后天  #{param2}  #{param3}-->
-		AND t1.starttime BETWEEN 1456610000 <!--#今天凌晨00：00-->
-		                 AND 1456620000 <!-- 今天晚上23：59-->
+		AND t1.starttime BETWEEN #{3} <!--#今天凌晨00：00-->
+		                 AND #{4} <!-- 今天晚上23：59-->
 		<!--活动天数-->
-		AND (t1.outtime - t1.starttime) &lt; 86400*1 <!-- #{param4} 一天以内含一天 86400 = 1天-->
+		AND #{5} &gt;=(t1.outtime - t1.starttime) <!-- #{param4} 一天以内含一天 86400 = 1天-->
 		<!--同城市 周边 省外 179  #{param5}-->
 		AND t1.city IN <!--Not 长途活动 省外-->
 			<!--(SELECT c.code FROM city c  WHERE c.codycity = 179) 同城-->
 			<!--周边-->	
-		(SELECT c.code FROM city c LEFT JOIN city cc ON cc.countryCode = c.countryCode WHERE c.codycity = 179) 
+		(SELECT c.code FROM city c LEFT JOIN city cc ON cc.countryCode = c.countryCode WHERE c.codycity = #{6}) 
 		<!--多妹子-->
 		AND t1.Id IN 
 		<!--报名表里sponsorid 报名 用户性别为女的 只是有妹子  #{param6} #{param7}-->
 		(SELECT t2.sponsorld FROM activity_registration t2 WHERE t2.myld IN(
 			SELECT t3.id FROM user t3 WHERE t3.sex = 1
 		))
-		<!-- 
-			SELECT t2.sponsorld
-				FROM activity_registration t2 WHERE t2.myld IN(
-					SELECT t3.id FROM user t3 WHERE t3.sex = 1
-				)
-			GROUP BY t2.sponsorld ORDER BY COUNT(*) DESC LIMIT 1
-		 -->
 	</select>
+	   <!-- 
+	    #{0} 经度
+	    #{1} 纬度
+	    #{2} 分类id
+	    #{3} 传入日期的凌晨00:00点时间戳1456610000 
+	    #{4} 传入日期的23:59点时间戳1456620000
+	    #{5} 传入活动时间几天 1 2 3 4 5 6 7 8 * 86400
+	    #{6} 传入百度表对应city表的codycity
+	    #{7} page
+	    #{8} limit
+	     -->
 	<select id="doActivityList" resultMap="Activity">
 	    SELECT * ,
 		<!--sqrt(POWER((121.21937542-120.170455),2)+POWER((31.25924446-30.278896),2)) AS juli-->
-		sqrt(POWER((121.21937542-t1.lng),2)+POWER((31.25924446-t1.lat),2)) AS juli
+		sqrt(POWER((#{0}-t1.lng),2)+POWER((#{1}-t1.lat),2)) AS juli
 		FROM release_activity t1
 		<!-- 按类型分类 1户外 2旅行 #{param1}-->
-		WHERE t1.activitycategory = 2
+		WHERE t1.activitycategory = #{2}
 		<!-- 开始时间1456615800  为今天 明天 后天 大于后天  #{param2}  #{param3}-->
-		AND t1.starttime BETWEEN 1456610000 <!--#今天凌晨00：00-->
-		                 AND 1456620000 <!-- 今天晚上23：59-->
+		AND t1.starttime BETWEEN #{3} <!--#今天凌晨00：00-->
+		                 AND #{4} <!-- 今天晚上23：59-->
 		<!--活动天数-->
-		AND (t1.outtime - t1.starttime) &lt; 86400*1 <!-- #{param4} 一天以内含一天 86400 = 1天-->
+		AND #{5} &gt;=(t1.outtime - t1.starttime) <!-- #{param4} 一天以内含一天 86400 = 1天-->
 		<!--同城市 周边 省外 179  #{param5}-->
 		AND t1.city IN <!--Not 长途活动 省外-->
 			<!--(SELECT c.code FROM city c  WHERE c.codycity = 179) 同城-->
 			<!--周边-->	
-		(SELECT c.code FROM city c LEFT JOIN city cc ON cc.countryCode = c.countryCode WHERE c.codycity = 179) 
+		(SELECT c.code FROM city c LEFT JOIN city cc ON cc.countryCode = c.countryCode WHERE c.codycity = #{6}) 
 		<!--多妹子-->
 		AND t1.Id IN 
 		<!--报名表里sponsorid 报名 用户性别为女的 只是有妹子  #{param6} #{param7}-->
 		(SELECT t2.sponsorld FROM activity_registration t2 WHERE t2.myld IN(
 			SELECT t3.id FROM user t3 WHERE t3.sex = 1
-		)) ORDER BY t1.starttime LIMIT 0,5
+		)) ORDER BY juli LIMIT #{7},#{8}
 		<!-- 
 			目前只是有妹子，而不是多妹子，多妹了 是下面的sql 活动报名里 同活动报名的成员 的性别多的一方为女，则是多妹子
 			SELECT t2.sponsorld
