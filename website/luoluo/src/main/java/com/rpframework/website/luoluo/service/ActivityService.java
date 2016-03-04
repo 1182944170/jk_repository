@@ -164,25 +164,22 @@ public class ActivityService extends BaseService{
 		Long et = 0l;
 		Date nowDate = DateUtils.getTimesmorning();
 		Date endDate = DateUtils.getTimesnight();
-		switch (time) {
-		case 1:
+		if(time==1){
 			st = nowDate.getTime()/1000;
 			et = endDate.getTime()/1000;
-			break;
-		case 2:
-			st = DateUtils.dayAdd(time,nowDate).getTime()/1000;
-			et = DateUtils.dayAdd(time,endDate).getTime()/1000;
-			break;
-		case 3:
-			st = DateUtils.dayAdd(time,nowDate).getTime()/1000;
-			et = DateUtils.dayAdd(time,endDate).getTime()/1000;
-			break;
-
-		default:
-			st = DateUtils.dayAdd(time+1,nowDate).getTime()/1000;
-			et = DateUtils.dayAdd(time+1,endDate).getTime()/1000;
-			break;
-		};
+		}
+			if(time==2){
+				st = DateUtils.dayAdd(time,nowDate).getTime()/1000;
+				et = DateUtils.dayAdd(time,endDate).getTime()/1000;
+			}
+				if(time==3){
+					st = DateUtils.dayAdd(time,nowDate).getTime()/1000;
+					et = DateUtils.dayAdd(time,endDate).getTime()/1000;
+				}
+					if(time>=4){
+						st = DateUtils.dayAdd(time+1,nowDate).getTime()/1000;
+						et = DateUtils.dayAdd(time+1,endDate).getTime()/1000;
+					}
 		arrl[0] =st; 
 		arrl[1] =et; 
 		return arrl;
