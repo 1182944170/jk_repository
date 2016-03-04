@@ -8,6 +8,8 @@ import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.rpframework.core.BaseService;
 import com.rpframework.core.api.FileService;
 import com.rpframework.utils.DateUtils;
@@ -136,6 +138,28 @@ public class ActivityService extends BaseService{
 	public Integer getJoinUserById(Integer id) {
 		Integer i = 0;
 		i = iactivitydao.doJoinUserById(id);
+		return i == null ? 0 : i; 
+	}
+	public JsonElement getJsonInfo() {
+		JsonObject json = new JsonObject();
+		json.addProperty("id", "主键id");
+		json.addProperty("name", "活动标题");
+		json.addProperty("cover", "活动封面图");
+		json.addProperty("address", "活动地址");
+		json.addProperty("week", "周几");
+		json.addProperty("date", "日期");
+		json.addProperty("time", "时间");
+		json.addProperty("span", "标签 1官方 2多图 3多妹子 4周末 如：13就显示[官方，多妹子]");
+		json.addProperty("count", "参加人数");
+		json.addProperty("range", "距离");
+		
+		
+		return json;
+	}
+	public Integer doApiList(Integer categoryId, Long st, Long et, Integer days,
+			Integer span, Integer area) {
+		Integer i = 0;
+		i = iactivitydao.doApiListCount();
 		return i == null ? 0 : i; 
 	}
 	

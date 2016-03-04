@@ -48,7 +48,7 @@ public class ActivityApiAct extends BaseAct{
 		                 AND 1456620000 #今天晚上23：59
 		#活动天数
 		AND (t1.outtime - t1.starttime) < 86400*1 #一天以内含一天 86400 = 1天
-		#同城市 周边 省外 #179
+		#同城市 周边 省外 #179 330100
 		AND t1.city IN #Not 长途活动 省外
 									 #(SELECT c.code FROM city c  WHERE c.codycity = 179) #同城
 							     (SELECT c.code FROM city c LEFT JOIN city cc ON cc.countryCode = c.countryCode WHERE c.codycity = 179) #周边			
@@ -68,14 +68,17 @@ public class ActivityApiAct extends BaseAct{
 			@RequestParam(value="span",required=false) Integer span,//标签 1官方 2多妹子 3多图 4周末
 			@RequestParam(value="area",required=false) Integer area,//区域 1同城 2周边同省 3其它不同省 179
 			@RequestParam(value="page",required=false) Integer page,//分页
-			@RequestParam(value="limit",required=false) Integer limit//每页数量
-			
+			@RequestParam(value="limit",required=false) Integer limit,//每页数量
+			@RequestParam(value="remark",required=false) String remark//每页数量
 			){
 		JsonObject json = new JsonObject();
+		if(remark!=null && "Y".equals(remark.toUpperCase()))
+			json.add("remark",service.getJsonInfo());
 		Long st = System.currentTimeMillis()/1000;
 		Long et = System.currentTimeMillis()/1000;
 		List<Activity> list = service.doApiList(categoryId,st,et,days,span,area,page,limit); 
 		JsonArray array = new JsonArray();
+		json.addProperty("totalPage", service.doApiList(categoryId,st,et,days,span,area));
 		for(Activity li : list){
 			JsonObject obj = new JsonObject();
 			obj.addProperty("id", li.getId());//
@@ -83,13 +86,13 @@ public class ActivityApiAct extends BaseAct{
 			obj.addProperty("cover", li.getCover());//图片
 			obj.addProperty("address", li.getActivitylocation());//地址
 			String week = DateUtils.getWeekOfDate(li.getStarttime());
-			String spans ="";
+			StringBuilder spans =new StringBuilder();
 			obj.addProperty("week", week);//开始时间
 			if(li.getSponsorid()==1){//官方字样
-				spans+="1";
+				spans.append("1");
 			}
 			if(li.getActivitypicture().length()>1){//多图
-				spans+="2";
+				spans = !spans.toString().equals("") ? spans.append(",").append("2") : spans.append("2");
 			}
 			//多妹子 活动报名表里
 			List<Integer> idList = service.doActivityIdList();
@@ -97,20 +100,39 @@ public class ActivityApiAct extends BaseAct{
 			strList = strList.replace("]", "");
 			boolean flag = service.isExist(li.getId().toString(),strList);
 			if(!flag){
-				spans+="3";
+				spans = !spans.toString().equals("") ? spans.append(",").append("3") :spans.append("3");
 			}
 			if("周六".equals(week)||"周日".equals(week)){//周末字样
-				spans+="4";
+				spans = !spans.toString().equals("") ? spans.append(",").append("4") :spans.append("4");
 			}
 			String sdate = TagUtils.formatDate(li.getStarttime());
 			obj.addProperty("date",sdate.substring(5,10).replace("-", "/"));//要不要做成01/01 1/1
 			obj.addProperty("time",sdate.substring(sdate.length()-8,sdate.length()-3));
-			obj.addProperty("span",spans);//标签 1官方 2多图 3多妹子 4周末
-			obj.addProperty("person", service.getJoinUserById(li.getId()));//人数
+			obj.addProperty("span",spans.toString());//标签 1官方 2多图 3多妹子 4周末
+			obj.addProperty("count", service.getJoinUserById(li.getId()));//人数
+			String range = "";
+			if(li.getJuli()!=null&&li.getJuli()>0){
+				range = format(li.getJuli().toString());
+			}else{
+				range = "0.000km";
+			}
+			obj.addProperty("range",range);//人数
 			array.add(obj);
 		}
 		json.add("array", array);
 		return json;
 	}
-	
+	public String format(String r){
+		String range ="";
+		if(r.indexOf(".")>0){
+			r = r.replace(".", ",");
+			String[] arr = r.split(",");
+			if(arr[1].length()>=3) range =arr[0]+"."+arr[1].substring(0,3);
+			else range = arr[0]+"."+arr[1];
+		}else{
+			range = "0.000";
+		}
+		range = range+"km";
+		return range;
+	}
 }

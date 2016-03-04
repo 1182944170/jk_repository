@@ -18,4 +18,5 @@ public interface IActivityDao extends IDao{
 	List<Activity> doActivityList();
 	List<Integer> doActivityIdList();
 	Integer doJoinUserById(Integer id);
+	Integer doApiListCount();
 }

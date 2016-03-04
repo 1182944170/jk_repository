@@ -65,15 +65,7 @@ public class Activity {
 	private Integer zhuangttai; //地址
 	
 	private Integer bm_num; //纬度
-	private Integer juli; //纬度
-
-	public Integer getJuli() {
-		return juli;
-	}
-
-	public void setJuli(Integer juli) {
-		this.juli = juli;
-	}
+	private Double juli; //纬度
 
 	public Integer getZhuangttai() {
 		return zhuangttai;
@@ -299,6 +291,20 @@ public class Activity {
 				+ activitycontent + ", starttime=" + starttime + ", outtime="
 				+ outtime + ", nowforetime=" + nowforetime + ", type=" + type
 				+ ", typeok=" + typeok + ", lng=" + lng + ", lat=" + lat + "]";
+	}
+
+	/**
+	 * @return the juli
+	 */
+	public Double getJuli() {
+		return juli;
+	}
+
+	/**
+	 * @param juli the juli to set
+	 */
+	public void setJuli(Double juli) {
+		this.juli = juli;
 	}
 
 
