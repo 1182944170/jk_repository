@@ -222,5 +222,49 @@ public class ActivityService extends BaseService{
 		// TODO Auto-generated method stub
 		return iactivitydao.doApiTest();
 	}
+	public Pager<Activity> getPagerTest(Pager<Activity> pager){
+		long startTime = System.currentTimeMillis();
+		List<Activity> list = iactivitydao.doPagerTest(this.packageMyBatisParam(pager));
+		pager.setItemList(list);
+		pager.setCostTime(System.currentTimeMillis() - startTime);
+		return pager;
+	}
+	/**
+	 * 当前登录用户发布的
+	 * @param userId
+	 * @param page
+	 * @param limit
+	 * @return
+	 * @time 2016年3月5日 下午2:13:31
+	 */
+	public List<Activity> doActivityListByUserId(Integer userId, Integer page,
+			Integer limit) {
+		page = Integer.valueOf(page*limit-limit);
+		return iactivitydao.doActivityListByUserId(userId, page, limit);
+	}
+	/**
+	 * 当前登录用户参加的
+	 * @param userId
+	 * @param page
+	 * @param limit
+	 * @return
+	 * @time 2016年3月5日 下午2:14:24
+	 */
+	public List<Activity> doActivityListByUserJoin(Integer userId, Integer page,
+			Integer limit) {
+		page = Integer.valueOf(page*limit-limit);
+		return iactivitydao.doActivityListByUserJoin(userId, page, limit);
+	}
+	/**
+	 * 活动成功举办的
+	 * @param page
+	 * @param limit
+	 * @return
+	 * @time 2016年3月5日 下午2:14:34
+	 */
+	public List<Activity> doActivityListByFinish(Integer page, Integer limit) {
+		page = Integer.valueOf(page*limit-limit);
+		return iactivitydao.doActivityListByFinish(page, limit);
+	}
 
 }

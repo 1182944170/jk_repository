@@ -47,73 +47,91 @@
 	<select id="select" parameterType="Integer" resultMap="Activity">
 		select * from release_activity where id=#{activiid} order by id
 	</select>
-	<select id="doApiListCount" resultType="Integer">
-	      SELECT count(*),
+
+	<select id="doPagerTest" parameterType="map" resultMap="Activity">
+	     SELECT * 
 		<!--sqrt(POWER((121.21937542-120.170455),2)+POWER((31.25924446-30.278896),2)) AS juli-->
-		sqrt(POWER((#{0}-t1.lng),2)+POWER((#{1}-t1.lat),2)) AS juli
+	    <if test = "page.searchMap.lng != null">
+		    <if test = "page.searchMap.lat != null">
+				 ,sqrt(POWER((#{page.searchMap.lng}-t1.lng),2)+POWER((#{page.searchMap.lat}-t1.lat),2)) AS juli
+			</if>
+		</if>
 		FROM release_activity t1
 		<!-- 按类型分类 1户外 2旅行 #{param1}-->
-		WHERE t1.activitycategory = #{2}
+		WHERE 1=1
+		<if test = "page.searchMap.categoryId != null">
+			AND t1.activitycategory = #{page.searchMap.categoryId}
+		</if>
 		<!-- 开始时间1456615800  为今天 明天 后天 大于后天  #{param2}  #{param3}-->
-		AND t1.starttime BETWEEN #{3} <!--#今天凌晨00：00-->
-		                 AND #{4} <!-- 今天晚上23：59-->
+		<if test = "page.searchMap.st != null">
+			<if test = "page.searchMap.et != null">
+				AND t1.starttime BETWEEN #{page.searchMap.st} <!--#今天凌晨00：00-->
+			                 AND #{page.searchMap.et} <!-- 今天晚上23：59-->
+			</if>
+		</if>
 		<!--活动天数-->
-		AND #{5} &gt;=(t1.outtime - t1.starttime) <!-- #{param4} 一天以内含一天 86400 = 1天-->
-		<!--同城市 周边 省外 179  #{param5}-->
-		AND t1.city IN <!--Not 长途活动 省外-->
-			<!--(SELECT c.code FROM city c  WHERE c.codycity = 179) 同城-->
-			<!--周边-->	
-		(SELECT c.code FROM city c LEFT JOIN city cc ON cc.countryCode = c.countryCode WHERE c.codycity = #{6}) 
-		<!--多妹子-->
-		AND t1.Id IN 
+		<if test = "page.searchMap.l != null">
+			AND #{page.searchMap.l} &lt;=(t1.outtime - t1.starttime) <!-- #{param4} 一天以内含一天 86400 = 1天-->
+		</if>
+		<if test = "page.searchMap.baiduCode != null">
+		    <choose>
+            <when test="page.searchMap.city != null">
+				 AND t1.city IN
+				  (SELECT c.code FROM city c  WHERE c.codycity = #{page.searchMap.baiduCode})
+            </when>
+            <when test="page.searchMap.province != null">
+				 AND t1.city IN 
+				  (SELECT c.code FROM city c LEFT JOIN city cc ON cc.countryCode = c.countryCode WHERE c.codycity = #{page.searchMap.baiduCode}) 
+            </when>
+            <when test="page.searchMap.other != null">
+				 AND t1.city Not IN 
+				  (SELECT c.code FROM city c LEFT JOIN city cc ON cc.countryCode = c.countryCode WHERE c.codycity = #{page.searchMap.baiduCode}) 
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+		</if>
+		  <choose>
+            <when test="page.searchMap.moregirl != null">
+				    AND t1.Id IN 
+					(SELECT t2.sponsorld FROM activity_registration t2 WHERE t2.myld IN(
+						SELECT t3.id FROM user t3 WHERE t3.sex = 1
+					))
+            </when>
+            <when test="page.searchMap.authority != null">
+				 AND t1.sponsorid = 1
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
 		<!--报名表里sponsorid 报名 用户性别为女的 只是有妹子  #{param6} #{param7}-->
-		(SELECT t2.sponsorld FROM activity_registration t2 WHERE t2.myld IN(
-			SELECT t3.id FROM user t3 WHERE t3.sex = 1
-		))
+		<if test = "page.searchMap.lng != null">
+		    <if test = "page.searchMap.lat != null">
+				ORDER BY juli ASC
+			</if>
+		</if>
+		<if test = "page.searchMap.page != null">
+			<if test = "page.searchMap.limit != null">
+				 LIMIT #{page.searchMap.page},#{page.searchMap.limit}
+			</if>
+		</if>
 	</select>
-	   <!-- 
-	    #{0} 经度
-	    #{1} 纬度
-	    #{2} 分类id
-	    #{3} 传入日期的凌晨00:00点时间戳1456610000 
-	    #{4} 传入日期的23:59点时间戳1456620000
-	    #{5} 传入活动时间几天 1 2 3 4 5 6 7 8 * 86400
-	    #{6} 传入百度表对应city表的codycity
-	    #{7} page
-	    #{8} limit
-	     -->
-	<select id="doActivityList" resultMap="Activity">
-	    SELECT * ,
-		<!--sqrt(POWER((121.21937542-120.170455),2)+POWER((31.25924446-30.278896),2)) AS juli-->
-		sqrt(POWER((#{0}-t1.lng),2)+POWER((#{1}-t1.lat),2)) AS juli
-		FROM release_activity t1
-		<!-- 按类型分类 1户外 2旅行 #{param1}-->
-		WHERE t1.activitycategory = #{2}
-		<!-- 开始时间1456615800  为今天 明天 后天 大于后天  #{param2}  #{param3}-->
-		AND t1.starttime BETWEEN #{3} <!--#今天凌晨00：00-->
-		                 AND #{4} <!-- 今天晚上23：59-->
-		<!--活动天数-->
-		AND #{5} &gt;=(t1.outtime - t1.starttime) <!-- #{param4} 一天以内含一天 86400 = 1天-->
-		<!--同城市 周边 省外 179  #{param5}-->
-		AND t1.city IN <!--Not 长途活动 省外-->
-			<!--(SELECT c.code FROM city c  WHERE c.codycity = 179) 同城-->
-			<!--周边-->	
-		(SELECT c.code FROM city c LEFT JOIN city cc ON cc.countryCode = c.countryCode WHERE c.codycity = #{6}) 
-		<!--多妹子-->
-		AND t1.Id IN 
-		<!--报名表里sponsorid 报名 用户性别为女的 只是有妹子  #{param6} #{param7}-->
-		(SELECT t2.sponsorld FROM activity_registration t2 WHERE t2.myld IN(
-			SELECT t3.id FROM user t3 WHERE t3.sex = 1
-		)) ORDER BY juli LIMIT #{7},#{8}
-		<!-- 
-			目前只是有妹子，而不是多妹子，多妹了 是下面的sql 活动报名里 同活动报名的成员 的性别多的一方为女，则是多妹子
-			SELECT t2.sponsorld
-				FROM activity_registration t2 WHERE t2.myld IN(
-					SELECT t3.id FROM user t3 WHERE t3.sex = 1
-				)
-			GROUP BY t2.sponsorld ORDER BY COUNT(*) DESC LIMIT 1
-		 -->
+	<select id="doActivityListByUserId" resultMap="Activity">
+			SELECT * FROM release_activity WHERE sponsorid in(
+			SELECT Id FROM sponsor WHERE userid = #{0}) ORDER BY starttime DESC LIMIT #{1},#{2}
 	</select>
+	
+	<select id="doActivityListByUserJoin" resultMap="Activity">
+		    SELECT * FROM release_activity WHERE Id in(
+				SELECT sponsorld FROM activity_registration WHERE myld = #{0}
+			) 
+			 ORDER BY starttime DESC LIMIT #{1},#{2}
+	</select>
+	<select id="doActivityListByFinish" resultMap="Activity">
+		    SELECT * FROM release_activity WHERE starttime &lt; UNIX_TIMESTAMP()
+			 ORDER BY starttime DESC LIMIT #{0},#{1}
+	</select>
+	
 	<!-- 为了提高用户访问量，有2个以上的妹子就是多妹子 查询妹子多的活动Id-->
 	<select id="doActivityIdList" resultType="Integer">
 			SELECT t2.sponsorld
@@ -121,9 +139,6 @@
 					SELECT t3.id FROM user t3 WHERE t3.sex = 1
 				)
 			GROUP BY t2.sponsorld having count(*)>=2
-	</select>
-	<select id="doApiCount1" resultType="Integer">
-			select count(*) from activity_registration
 	</select>
 
 	<select id="doJoinUserById" resultType="Integer">
@@ -134,11 +149,6 @@
 	</select>
 	<select id="selectnumbers" resultMap="Activity">
 		select * from release_activity where activitynumber LIKE '%' #{tole} '%' order by id
-	</select>
-	<select id="doApiTest" resultMap="Activity">
-		select * ,
-		sqrt(POWER((121.21937542-120.170455),2)+POWER((31.25924446-30.278896),2)) AS juli
-		from release_activity t1 where 1=1 ORDER BY juli LIMIT 0,10
 	</select>
 	<select id="selectluist" resultMap="Activity">
 		select * from release_activity where sponsorid=#{sponsorid} and typeok=6

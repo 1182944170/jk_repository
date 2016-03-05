@@ -27,4 +27,10 @@ public interface IActivityDao extends IDao{
 	Integer doApiCount1();
 	List<Activity> doApiList1();
 	List<Activity> doApiTest();
+	List<Activity> doPagerTest(Map packageMyBatisParam);
+	List<Activity> doActivityListByUserId(Integer userId, Integer page,
+			Integer limit);
+	List<Activity> doActivityListByUserJoin(Integer userId, Integer page,
+			Integer limit);
+	List<Activity> doActivityListByFinish(Integer page, Integer limit);
 }

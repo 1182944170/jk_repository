@@ -3,6 +3,7 @@ package com.rpframework.website.luoluo.act.api;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +16,11 @@ import com.google.gson.JsonObject;
 import com.rpframework.core.BaseAct;
 import com.rpframework.core.utils.TagUtils;
 import com.rpframework.utils.DateUtils;
+import com.rpframework.utils.NumberUtils;
+import com.rpframework.utils.Pager;
 import com.rpframework.website.luoluo.domain.Activity;
+import com.rpframework.website.luoluo.domain.User;
+import com.rpframework.website.luoluo.exception.APICodeException;
 import com.rpframework.website.luoluo.service.ActivityService;
 
 @Controller
@@ -35,6 +40,8 @@ public class ActivityApiAct extends BaseAct{
 	 */
 	@RequestMapping("/list")
 	public @ResponseBody JsonElement activityList(
+			//HttpSession session,
+			@RequestParam(value="pager", required=false)Pager<Activity> pager,
 			@RequestParam(value="lng",required=false) String lng,//经度
 			@RequestParam(value="lat",required=false) String lat,//纬度
 			@RequestParam(value="categoryId",required=false) Integer categoryId,//分类id
@@ -43,24 +50,97 @@ public class ActivityApiAct extends BaseAct{
 			@RequestParam(value="span",required=false) Integer span,//标签 1官方 2多妹子 3多图 4周末
 			@RequestParam(value="area",required=false) Integer area,//区域 1同城 2周边同省 3其它不同省 179
 			@RequestParam(value="baiduCode",required=false) Integer baiduCode,//区域 1同城 2周边同省 3其它不同省 179
-			@RequestParam(value="type",required=false) String type,//8个页面  home find publish join near nearh nearp finish
+			@RequestParam(value="type",required=false) String type,//8个页面 publish join finish
 			@RequestParam(value="page",required=false) Integer page,//分页
 			@RequestParam(value="limit",required=false) Integer limit,//每页数量
 			@RequestParam(value="remark",required=false) String remark//备注
 			){
 		JsonObject json = new JsonObject();
+		//User user = getSessionUser(session);
+		//if(user == null){
+		//	throw new APICodeException(-4, "你还没登陆!");
+		//}	
+		if(pager==null){
+			pager=new Pager<Activity>();
+		}
+		if(NumberUtils.isNotValid(page) && NumberUtils.isNotValid(limit)){
+			throw new APICodeException(-5, "page,limit为必填参数！");
+		}
+		Integer userId=4;
+		if(lng!=null)
+		pager.getSearchMap().put("lng", String.valueOf(lng));
+		if(lat!=null)
+		pager.getSearchMap().put("lat", String.valueOf(lat));
+		if(categoryId!=null)
+		pager.getSearchMap().put("categoryId", String.valueOf(categoryId));
+		if(NumberUtils.isValid(days)){
+			Long l =null;
+			l = days*86400l;//几天 days
+			pager.getSearchMap().put("l", String.valueOf(l));
+		}
+		if(NumberUtils.isValid(time)){
+			Long[] arrl = null;
+			arrl = service.getFormatTime(time); 
+			pager.getSearchMap().put("st", String.valueOf(arrl[0]));
+			pager.getSearchMap().put("et", String.valueOf(arrl[1]));
+		}
+		pager.getSearchMap().put("baiduCode", String.valueOf(baiduCode));
+		if(NumberUtils.isValid(span)){
+			if(span == 1){
+				pager.getSearchMap().put("authority", String.valueOf("authority"));
+			}
+			if(span == 3){
+				pager.getSearchMap().put("moregirl", String.valueOf("moregirl"));
+			}
+		}
+		if(NumberUtils.isValid(area)){
+			if(area == 1){
+				pager.getSearchMap().put("city", String.valueOf("city"));
+			}
+			if(area == 2){
+				pager.getSearchMap().put("province", String.valueOf("province"));
+			}
+			if(area == 3){
+				pager.getSearchMap().put("other", String.valueOf("other"));
+			}
+		}
+		pager=service.getPagerTest(pager);
 		if(remark!=null && "Y".equals(remark.toUpperCase()))
 			json.add("remark",service.getJsonInfo());
 		//参数处理 time day span area
-		//Long l = days*86400l;//几天 days
-		//Long[] arrl = service.getFormatTime(time); 
 		
-		json.addProperty("totalPage", service.doApiCount1());
-		List<Activity> list = service.doApiTest();
-				//service.doApiList(lng,lat,categoryId,arrl[0],arrl[1],l,baiduCode,page,limit); 
 		JsonArray array = new JsonArray();
+		List<Activity> list =null;
+		
+		if("publish".equals(type)){//查我发布的 
+			list = service.doActivityListByUserId(userId,page,limit);
+			//json.addProperty("totalPage",list.get(0).getTotalPage());
+			array = getArray(list,span);
+			json.add("array", array);
+			return json;
+		}
+		if("join".equals(type)){//查我参加的
+			list = service.doActivityListByUserJoin(userId,page,limit);
+			//json.addProperty("totalPage",list.get(0).getTotalPage());
+			array = getArray(list,span);
+			json.add("array", array);
+			return json;
+		}
+		if("finish".equals(type)){//查询成功举办的
+			list = service.doActivityListByFinish(page,limit);
+			//json.addProperty("totalPage",list.get(0).getTotalPage());
+			array = getArray(list,span);
+			json.add("array", array);
+			return json;
+		}
+		json.addProperty("totalPage", pager.getTotalCount());
+		list = pager.getItemList();
+		if(NumberUtils.isValid(span)){
+				array  = getArray(list,span);
+		}else
 		array = getArray(list,0);
 		json.add("array", array);
+		
 		return json;
 	}
 	/**
@@ -82,22 +162,42 @@ public class ActivityApiAct extends BaseAct{
 		range = range+"km";
 		return range;
 	}
-	private JsonArray getArray(List<Activity> list, Integer area) {
+	private JsonArray getArray(List<Activity> list, Integer span) {
 		JsonArray array = new JsonArray();
 		if(list!=null && list.size()>0)
 			for(Activity li : list){
 				JsonObject obj = new JsonObject();
+				String week = DateUtils.getWeekOfDate(li.getStarttime()*1000);
+				if(span == 2){
+					if(li.getActivitypicture().indexOf(",")<0){
+						continue;
+					}
+				}
+				if(span == 3){
+					List<Integer> idList = service.doActivityIdList();
+					String strList = idList.toString().replace("[", "");
+					strList = strList.replace("]", "");
+					boolean flag = service.isExist(li.getId().toString(),strList);
+					if(!flag){
+						continue;
+					}
+				}
+				if(span == 4){
+					if("周六".equals(week)||"周日".equals(week)){
+					}else{
+						continue;
+					}
+				}
 				obj.addProperty("id", li.getId());//
 				obj.addProperty("name", li.getActivityname());//
 				obj.addProperty("cover", IMG+li.getCover());//图片
 				obj.addProperty("address", li.getActivitylocation());//地址
-				String week = DateUtils.getWeekOfDate(li.getStarttime()*1000);
 				StringBuilder spans =new StringBuilder();
 				obj.addProperty("week", week);//开始时间
 				if(li.getSponsorid()==1){//官方字样
 					spans.append("1");
 				}
-				if(li.getActivitypicture().length()>1){//多图
+				if(li.getActivitypicture().indexOf(",")>0){//多图
 					spans = !spans.toString().equals("") ? spans.append(",").append("2") : spans.append("2");
 				}
 				//多妹子 活动报名表里
@@ -112,10 +212,16 @@ public class ActivityApiAct extends BaseAct{
 					spans = !spans.toString().equals("") ? spans.append(",").append("4") :spans.append("4");
 				}
 				String sdate = TagUtils.formatDate(li.getStarttime());
+				String edate = TagUtils.formatDate(li.getOuttime());
+				
 				obj.addProperty("date",sdate.substring(5,10).replace("-", "/"));//要不要做成01/01 1/1
 				obj.addProperty("time",sdate.substring(sdate.length()-8,sdate.length()-3));
+				obj.addProperty("timeFormat", 
+	week+" "+sdate.substring(5,10).replace("-", "/")+" "+sdate.substring(sdate.length()-8,sdate.length()-3)+" - "+DateUtils.getWeekOfDate(li.getOuttime()*1000)+" "+edate.substring(5,10).replace("-", "/")+" "+edate.substring(edate.length()-8,edate.length()-3));
+				obj.addProperty("startTime", li.getStarttime());
+				obj.addProperty("endTime", li.getOuttime());
 				obj.addProperty("span",spans.toString());//标签 1官方 2多图 3多妹子 4周末
-				obj.addProperty("count", service.getJoinUserById(li.getId()));//人数
+				obj.addProperty("count", service.getJoinUserById(li.getId())==0 ? "0" : service.getJoinUserById(li.getId()).toString());//人数
 				String range = "";
 				if(li.getJuli()!=null&&li.getJuli()>0){
 					range = format(li.getJuli().toString());
