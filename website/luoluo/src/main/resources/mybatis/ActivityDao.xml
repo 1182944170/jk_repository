@@ -83,6 +83,9 @@
 			SELECT * FROM release_activity WHERE sponsorid in(
 			SELECT Id FROM sponsor WHERE userid = #{0}) ORDER BY starttime DESC LIMIT #{1},#{2}
 	</select>
+	<select id="doApiListByCollection" resultMap="Activity">
+	    SELECT * FROM release_activity r left join myactivities m on m.activitiesid = r.id
+	</select>
 	
 	<select id="doActivityListByUserJoin" resultMap="Activity">
 		    SELECT * FROM release_activity WHERE Id in(

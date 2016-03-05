@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -49,7 +50,7 @@ public class ActivityApiAct extends BaseAct{
 			@RequestParam(value="span",required=false) Integer span,//标签 1官方 2多妹子 3多图 4周末
 			@RequestParam(value="area",required=false) Integer area,//区域 1同城 2周边同省 3其它不同省 179
 			@RequestParam(value="baiduCode",required=false) Integer baiduCode,//区域 1同城 2周边同省 3其它不同省 179
-			@RequestParam(value="type",required=false) String type,//8个页面 publish join finish
+			@RequestParam(value="type",required=false) String type,//8个页面 publish join finish collection
 			@RequestParam(value="page",required=false) Integer page,//分页
 			@RequestParam(value="limit",required=false) Integer limit,//每页数量
 			@RequestParam(value="remark",required=false) String remark//备注
@@ -92,6 +93,13 @@ public class ActivityApiAct extends BaseAct{
 			json.add("array", array);
 			return json;
 		}
+		if("collection".equals(type)){//查询成功举办的
+			list = service.doApiListByCollection(userId,page,limit);
+			//json.addProperty("totalPage",list.get(0).getTotalPage());
+			array = getArray(list,span);
+			json.add("array", array);
+			return json;
+		}
 		if(lng!=null)
 		pager.getSearchMap().put("lng", String.valueOf(lng));
 		if(lat!=null)
@@ -109,7 +117,9 @@ public class ActivityApiAct extends BaseAct{
 			pager.getSearchMap().put("st", String.valueOf(arrl[0]));
 			pager.getSearchMap().put("et", String.valueOf(arrl[1]));
 		}
-		pager.getSearchMap().put("baiduCode", String.valueOf(baiduCode));
+		if(NumberUtils.isValid(baiduCode)){
+			pager.getSearchMap().put("baiduCode", String.valueOf(baiduCode));
+		}
 		if(NumberUtils.isValid(span)){
 			if(span == 1){
 				pager.getSearchMap().put("authority", String.valueOf("authority"));

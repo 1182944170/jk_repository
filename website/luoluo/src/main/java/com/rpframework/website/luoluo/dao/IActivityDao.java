@@ -33,4 +33,6 @@ public interface IActivityDao extends IDao{
 	List<Activity> doActivityListByUserJoin(Integer userId, Integer page,
 			Integer limit);
 	List<Activity> doActivityListByFinish(Integer page, Integer limit);
+	List<Activity> doApiListByCollection(Integer userId, Integer page,
+			Integer limit);
 }

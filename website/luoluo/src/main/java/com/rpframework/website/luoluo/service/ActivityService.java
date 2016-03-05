@@ -257,5 +257,10 @@ public class ActivityService extends BaseService{
 		page = Integer.valueOf(page*limit-limit);
 		return iactivitydao.doActivityListByFinish(page, limit);
 	}
+	public List<Activity> doApiListByCollection(Integer userId, Integer page,
+			Integer limit) {
+		
+		return iactivitydao.doApiListByCollection(userId,page,limit);
+	}
 
 }
