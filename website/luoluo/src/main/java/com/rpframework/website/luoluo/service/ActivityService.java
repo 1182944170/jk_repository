@@ -25,8 +25,6 @@ public class ActivityService extends BaseService{
 	@Resource IActivityDao iactivitydao;
 	@Resource FileService fileService;
 	
-	
-	
 	public Pager<Activity> getpager(Pager<Activity> pager){
 		long startTime = System.currentTimeMillis();
 		List<Activity> list = iactivitydao.doPager(this.packageMyBatisParam(pager));
@@ -221,13 +219,6 @@ public class ActivityService extends BaseService{
 	public List<Activity> doApiTest() {
 		// TODO Auto-generated method stub
 		return iactivitydao.doApiTest();
-	}
-	public Pager<Activity> getPagerTest(Pager<Activity> pager){
-		long startTime = System.currentTimeMillis();
-		List<Activity> list = iactivitydao.doPagerTest(this.packageMyBatisParam(pager));
-		pager.setItemList(list);
-		pager.setCostTime(System.currentTimeMillis() - startTime);
-		return pager;
 	}
 	/**
 	 * 当前登录用户发布的

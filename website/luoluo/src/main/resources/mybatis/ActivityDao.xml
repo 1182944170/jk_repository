@@ -7,48 +7,6 @@
 		<id property="id" column="id" />
 	</resultMap>		
 	<select id="doPager" parameterType="map" resultMap="Activity">
-		select * from release_activity where 1=1		
-		<if test = "page.searchMap.calid != null">
-			and activitycategory = #{page.searchMap.calid}
-		</if>
-		<if test = "page.searchMap.cityoles != null">
-				and city = #{pager.getSearchMap.cityoles}
-		</if>
-		<if test = "page.searchMap.type != null">
-			and type = #{page.searchMap.type}
-		</if>
-		<if test = "page.searchMap.typeok != null">
-			and typeok = #{page.searchMap.typeok}
-		</if>
-		<if test = "page.searchMap.activiid != null">
-			and sponsorid = #{page.searchMap.activiid}
-		</if>
-		<if test = "page.searchMap.ssid != null">
-			and id = #{page.searchMap.ssid}
-		</if>
-		<if test = "page.searchMap.city != null">
-			and city = #{page.searchMap.city}
-		</if>
-		<if test = "page.searchMap.name!= null">
-			and activityname like '%${page.searchMap.name}%' 
-			or activitynumber like '%${page.searchMap.name}%'  
-		</if>
-		<if test = "page.searchMap.se!= null">
-			and typeok!=5 and typeok!=3  and typeok!=6
-		</if>
-		
-		 order by id desc
-			
-	
-	</select>
-	<update id="update" parameterType="com.rpframework.website.luoluo.domain.Activity" />
-	<insert id="insert" parameterType="com.rpframework.website.luoluo.domain.Activity" useGeneratedKeys="true" keyProperty="id"/>
-	<delete id="delete" parameterType="com.rpframework.website.luoluo.domain.Activity" />
-	<select id="select" parameterType="Integer" resultMap="Activity">
-		select * from release_activity where id=#{activiid} order by id
-	</select>
-
-	<select id="doPagerTest" parameterType="map" resultMap="Activity">
 	     SELECT * 
 		<!--sqrt(POWER((121.21937542-120.170455),2)+POWER((31.25924446-30.278896),2)) AS juli-->
 	    <if test = "page.searchMap.lng != null">
@@ -56,9 +14,9 @@
 				 ,sqrt(POWER((#{page.searchMap.lng}-t1.lng),2)+POWER((#{page.searchMap.lat}-t1.lat),2)) AS juli
 			</if>
 		</if>
-		FROM release_activity t1
+		FROM release_activity t1 
 		<!-- 按类型分类 1户外 2旅行 #{param1}-->
-		WHERE 1=1
+		WHERE 1=1 and t1.type = 1
 		<if test = "page.searchMap.categoryId != null">
 			AND t1.activitycategory = #{page.searchMap.categoryId}
 		</if>
@@ -88,6 +46,8 @@
 				  (SELECT c.code FROM city c LEFT JOIN city cc ON cc.countryCode = c.countryCode WHERE c.codycity = #{page.searchMap.baiduCode}) 
             </when>
             <otherwise>
+                 AND t1.city IN
+				  (SELECT c.code FROM city c  WHERE c.codycity = #{page.searchMap.baiduCode})
             </otherwise>
         </choose>
 		</if>
@@ -110,12 +70,15 @@
 				ORDER BY juli ASC
 			</if>
 		</if>
-		<if test = "page.searchMap.page != null">
-			<if test = "page.searchMap.limit != null">
-				 LIMIT #{page.searchMap.page},#{page.searchMap.limit}
-			</if>
-		</if>
 	</select>
+	<update id="update" parameterType="com.rpframework.website.luoluo.domain.Activity" />
+	<insert id="insert" parameterType="com.rpframework.website.luoluo.domain.Activity" useGeneratedKeys="true" keyProperty="id"/>
+	<delete id="delete" parameterType="com.rpframework.website.luoluo.domain.Activity" />
+	<select id="select" parameterType="Integer" resultMap="Activity">
+		select * from release_activity where id=#{activiid} order by id
+	</select>
+
+	
 	<select id="doActivityListByUserId" resultMap="Activity">
 			SELECT * FROM release_activity WHERE sponsorid in(
 			SELECT Id FROM sponsor WHERE userid = #{0}) ORDER BY starttime DESC LIMIT #{1},#{2}

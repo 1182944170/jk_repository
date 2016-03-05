@@ -19,7 +19,6 @@ import com.rpframework.utils.DateUtils;
 import com.rpframework.utils.NumberUtils;
 import com.rpframework.utils.Pager;
 import com.rpframework.website.luoluo.domain.Activity;
-import com.rpframework.website.luoluo.domain.User;
 import com.rpframework.website.luoluo.exception.APICodeException;
 import com.rpframework.website.luoluo.service.ActivityService;
 
@@ -65,8 +64,34 @@ public class ActivityApiAct extends BaseAct{
 		}
 		if(NumberUtils.isNotValid(page) && NumberUtils.isNotValid(limit)){
 			throw new APICodeException(-5, "page,limit为必填参数！");
+		}else{
+			pager.setCurrentPage(page);
 		}
+
+		JsonArray array = new JsonArray();
+		List<Activity> list =null;
 		Integer userId=4;
+		if("publish".equals(type)){//查我发布的 
+			list = service.doActivityListByUserId(userId,page,limit);
+			//json.addProperty("totalPage",list.get(0).getTotalPage());
+			array = getArray(list,span);
+			json.add("array", array);
+			return json;
+		}
+		if("join".equals(type)){//查我参加的
+			list = service.doActivityListByUserJoin(userId,page,limit);
+			//json.addProperty("totalPage",list.get(0).getTotalPage());
+			array = getArray(list,span);
+			json.add("array", array);
+			return json;
+		}
+		if("finish".equals(type)){//查询成功举办的
+			list = service.doActivityListByFinish(page,limit);
+			//json.addProperty("totalPage",list.get(0).getTotalPage());
+			array = getArray(list,span);
+			json.add("array", array);
+			return json;
+		}
 		if(lng!=null)
 		pager.getSearchMap().put("lng", String.valueOf(lng));
 		if(lat!=null)
@@ -104,45 +129,25 @@ public class ActivityApiAct extends BaseAct{
 				pager.getSearchMap().put("other", String.valueOf("other"));
 			}
 		}
-		pager=service.getPagerTest(pager);
+		//service.getPagerTest(pager);
+		service.getpager(pager);
 		if(remark!=null && "Y".equals(remark.toUpperCase()))
 			json.add("remark",service.getJsonInfo());
 		//参数处理 time day span area
-		
-		JsonArray array = new JsonArray();
-		List<Activity> list =null;
-		
-		if("publish".equals(type)){//查我发布的 
-			list = service.doActivityListByUserId(userId,page,limit);
-			//json.addProperty("totalPage",list.get(0).getTotalPage());
-			array = getArray(list,span);
-			json.add("array", array);
-			return json;
-		}
-		if("join".equals(type)){//查我参加的
-			list = service.doActivityListByUserJoin(userId,page,limit);
-			//json.addProperty("totalPage",list.get(0).getTotalPage());
-			array = getArray(list,span);
-			json.add("array", array);
-			return json;
-		}
-		if("finish".equals(type)){//查询成功举办的
-			list = service.doActivityListByFinish(page,limit);
-			//json.addProperty("totalPage",list.get(0).getTotalPage());
-			array = getArray(list,span);
-			json.add("array", array);
-			return json;
-		}
-		json.addProperty("totalPage", pager.getTotalCount());
+		json.addProperty("totalPages", pager.getTotalPages());
+		json.addProperty("currentPage", pager.getCurrentPage());
+		json.addProperty("totalCount", pager.getTotalCount());
 		list = pager.getItemList();
 		if(NumberUtils.isValid(span)){
-				array  = getArray(list,span);
-		}else
-		array = getArray(list,0);
+			array  = getArray(list,span);
+		}else{
+			array = getArray(list,0);
+		}
 		json.add("array", array);
 		
 		return json;
 	}
+	
 	/**
 	 * 格式化距离 1.43565868652
 	 * @param String r
@@ -192,8 +197,9 @@ public class ActivityApiAct extends BaseAct{
 				obj.addProperty("name", li.getActivityname());//
 				obj.addProperty("cover", IMG+li.getCover());//图片
 				obj.addProperty("address", li.getActivitylocation());//地址
+				obj.addProperty("bm", li.getBm_num() == null ? "" : li.getBm_num().toString());//报名
+				obj.addProperty("number", li.getNumber() == null ? "" : li.getNumber().toString());//限制
 				StringBuilder spans =new StringBuilder();
-				obj.addProperty("week", week);//开始时间
 				if(li.getSponsorid()==1){//官方字样
 					spans.append("1");
 				}
@@ -214,8 +220,8 @@ public class ActivityApiAct extends BaseAct{
 				String sdate = TagUtils.formatDate(li.getStarttime());
 				String edate = TagUtils.formatDate(li.getOuttime());
 				
-				obj.addProperty("date",sdate.substring(5,10).replace("-", "/"));//要不要做成01/01 1/1
-				obj.addProperty("time",sdate.substring(sdate.length()-8,sdate.length()-3));
+				//obj.addProperty("date",sdate.substring(5,10).replace("-", "/"));//要不要做成01/01 1/1
+				//obj.addProperty("time",sdate.substring(sdate.length()-8,sdate.length()-3));
 				obj.addProperty("timeFormat", 
 	week+" "+sdate.substring(5,10).replace("-", "/")+" "+sdate.substring(sdate.length()-8,sdate.length()-3)+" - "+DateUtils.getWeekOfDate(li.getOuttime()*1000)+" "+edate.substring(5,10).replace("-", "/")+" "+edate.substring(edate.length()-8,edate.length()-3));
 				obj.addProperty("startTime", li.getStarttime());
