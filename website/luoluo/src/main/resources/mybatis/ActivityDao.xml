@@ -93,6 +93,12 @@
 	<select id="doActivityListByFinish" resultMap="Activity">
 		    SELECT * FROM release_activity WHERE starttime &lt; UNIX_TIMESTAMP()
 			 ORDER BY starttime DESC LIMIT #{0},#{1}
+			 <!-- 
+	   SELECT *
+ 			 ,sqrt(POWER((#{2}-t1.lng),2)+POWER((#{3}-t1.lat),2)) AS juli
+ 				FROM release_activity t1 WHERE starttime &lt; UNIX_TIMESTAMP()
+			 ORDER BY juli DESC LIMIT #{0},#{1}
+	 -->
 	</select>
 	
 	<!-- 为了提高用户访问量，有2个以上的妹子就是多妹子 查询妹子多的活动Id-->
