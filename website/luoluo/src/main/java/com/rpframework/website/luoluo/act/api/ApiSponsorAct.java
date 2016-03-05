@@ -3,6 +3,7 @@ package com.rpframework.website.luoluo.act.api;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -105,15 +106,16 @@ public class ApiSponsorAct extends BaseAct{
 	
 	
 	//通过主办方id 查询
-	@RequestMapping("listonetoone")
+	@RequestMapping("/listonetoone")
 	public @ResponseBody JsonElement listonetoone(
-			@RequestParam(required= false)Integer sponsorid,
-			HttpSession session) throws ParserException, InterruptedException{
+			@RequestParam(value="sponsorid",required= false) Integer sponsorid
+			//,HttpSession session
+			) throws ParserException, InterruptedException{
 		Sponsorlis sponsor=sponsorService.seletOne(sponsorid);
 
 		JsonObject json=new JsonObject();
 		json.addProperty("id", sponsor.getId());
-		json.addProperty("name", sponsor.getName());
+		json.addProperty("name", StringUtils.isNotBlank(sponsor.getName()) ? "" : sponsor.getName());
 		json.addProperty("Userphone", sponsor.getUserphone());
 		json.addProperty("usernowlive", sponsor.getUsernowlive());
 		json.addProperty("telephone", sponsor.getTelephone());

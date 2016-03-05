@@ -111,6 +111,7 @@
 	        <mvc:mapping path="/api/**"/>
 	        <mvc:exclude-mapping path="/api/huodong/*"/>
 	        <mvc:exclude-mapping path="/api/user/*"/>
+	        <mvc:exclude-mapping path="/api/spons/*"/>
 	        <!-- 定义在mvc:interceptor下面的表示是对特定的请求才进行拦截的 -->  
 	        <bean class="com.rpframework.website.luoluo.springmvc.handler.ApiInterceptor"/>  
 	    </mvc:interceptor>  
