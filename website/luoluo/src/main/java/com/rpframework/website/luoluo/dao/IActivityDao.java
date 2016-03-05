@@ -24,4 +24,7 @@ public interface IActivityDao extends IDao{
 	//查总数
 	Integer doApiListCount(String lng, String lat, Integer categoryId, Long st,
 			Long et, Long l, Integer baiduCode);
+	Integer doApiCount1();
+	List<Activity> doApiList1();
+	List<Activity> doApiTest();
 }

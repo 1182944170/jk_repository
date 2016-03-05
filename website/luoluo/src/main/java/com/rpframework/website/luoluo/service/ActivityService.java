@@ -210,5 +210,17 @@ public class ActivityService extends BaseService{
 		i = iactivitydao.doApiListCount(lng,lat,categoryId,st,et,l,baiduCode);
 		return i == null ? 0 : i; 
 	}
+	public Integer doApiCount1() {
+		Integer i = 0;
+		i = iactivitydao.doApiCount1();
+		return i == null ? 0 : i;
+	}
+	public List<Activity> doApiList1() {
+		return iactivitydao.doApiList1();
+	}
+	public List<Activity> doApiTest() {
+		// TODO Auto-generated method stub
+		return iactivitydao.doApiTest();
+	}
 
 }

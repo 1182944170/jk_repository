@@ -122,6 +122,10 @@
 				)
 			GROUP BY t2.sponsorld having count(*)>=2
 	</select>
+	<select id="doApiCount1" resultType="Integer">
+			select count(*) from activity_registration
+	</select>
+
 	<select id="doJoinUserById" resultType="Integer">
 			SELECT count(id) FROM activity_registration WHERE sponsorld = #{param1}
 	</select>
@@ -130,6 +134,11 @@
 	</select>
 	<select id="selectnumbers" resultMap="Activity">
 		select * from release_activity where activitynumber LIKE '%' #{tole} '%' order by id
+	</select>
+	<select id="doApiTest" resultMap="Activity">
+		select * ,
+		sqrt(POWER((121.21937542-120.170455),2)+POWER((31.25924446-30.278896),2)) AS juli
+		from release_activity t1 where 1=1 ORDER BY juli LIMIT 0,10
 	</select>
 	<select id="selectluist" resultMap="Activity">
 		select * from release_activity where sponsorid=#{sponsorid} and typeok=6

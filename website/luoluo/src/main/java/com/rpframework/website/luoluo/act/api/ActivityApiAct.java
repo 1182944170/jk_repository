@@ -52,52 +52,14 @@ public class ActivityApiAct extends BaseAct{
 		if(remark!=null && "Y".equals(remark.toUpperCase()))
 			json.add("remark",service.getJsonInfo());
 		//参数处理 time day span area
-		Long l = days*86400l;//几天 days
-		Long[] arrl = service.getFormatTime(time); 
+		//Long l = days*86400l;//几天 days
+		//Long[] arrl = service.getFormatTime(time); 
 		
-		List<Activity> list = service.doApiList(lng,lat,categoryId,arrl[0],arrl[1],l,baiduCode,page,limit); 
+		json.addProperty("totalPage", service.doApiCount1());
+		List<Activity> list = service.doApiTest();
+				//service.doApiList(lng,lat,categoryId,arrl[0],arrl[1],l,baiduCode,page,limit); 
 		JsonArray array = new JsonArray();
-		json.addProperty("totalPage", service.doApiCount(lng,lat,categoryId,arrl[0],arrl[1],l,baiduCode));
-		for(Activity li : list){
-			JsonObject obj = new JsonObject();
-			obj.addProperty("id", li.getId());//
-			obj.addProperty("name", li.getActivityname());//
-			obj.addProperty("cover", li.getCover());//图片
-			obj.addProperty("address", li.getActivitylocation());//地址
-			String week = DateUtils.getWeekOfDate(li.getStarttime()*1000);
-			StringBuilder spans =new StringBuilder();
-			obj.addProperty("week", week);//开始时间
-			if(li.getSponsorid()==1){//官方字样
-				spans.append("1");
-			}
-			if(li.getActivitypicture().length()>1){//多图
-				spans = !spans.toString().equals("") ? spans.append(",").append("2") : spans.append("2");
-			}
-			//多妹子 活动报名表里
-			List<Integer> idList = service.doActivityIdList();
-			String strList = idList.toString().replace("[", "");
-			strList = strList.replace("]", "");
-			boolean flag = service.isExist(li.getId().toString(),strList);
-			if(!flag){
-				spans = !spans.toString().equals("") ? spans.append(",").append("3") :spans.append("3");
-			}
-			if("周六".equals(week)||"周日".equals(week)){//周末字样
-				spans = !spans.toString().equals("") ? spans.append(",").append("4") :spans.append("4");
-			}
-			String sdate = TagUtils.formatDate(li.getStarttime());
-			obj.addProperty("date",sdate.substring(5,10).replace("-", "/"));//要不要做成01/01 1/1
-			obj.addProperty("time",sdate.substring(sdate.length()-8,sdate.length()-3));
-			obj.addProperty("span",spans.toString());//标签 1官方 2多图 3多妹子 4周末
-			obj.addProperty("count", service.getJoinUserById(li.getId()));//人数
-			String range = "";
-			if(li.getJuli()!=null&&li.getJuli()>0){
-				range = format(li.getJuli().toString());
-			}else{
-				range = "0.000km";
-			}
-			obj.addProperty("range",range);//人数
-			array.add(obj);
-		}
+		array = getArray(list,0);
 		json.add("array", array);
 		return json;
 	}
@@ -120,5 +82,49 @@ public class ActivityApiAct extends BaseAct{
 		range = range+"km";
 		return range;
 	}
-	
+	private JsonArray getArray(List<Activity> list, Integer area) {
+		JsonArray array = new JsonArray();
+		if(list!=null && list.size()>0)
+			for(Activity li : list){
+				JsonObject obj = new JsonObject();
+				obj.addProperty("id", li.getId());//
+				obj.addProperty("name", li.getActivityname());//
+				obj.addProperty("cover", li.getCover());//图片
+				obj.addProperty("address", li.getActivitylocation());//地址
+				String week = DateUtils.getWeekOfDate(li.getStarttime()*1000);
+				StringBuilder spans =new StringBuilder();
+				obj.addProperty("week", week);//开始时间
+				if(li.getSponsorid()==1){//官方字样
+					spans.append("1");
+				}
+				if(li.getActivitypicture().length()>1){//多图
+					spans = !spans.toString().equals("") ? spans.append(",").append("2") : spans.append("2");
+				}
+				//多妹子 活动报名表里
+				List<Integer> idList = service.doActivityIdList();
+				String strList = idList.toString().replace("[", "");
+				strList = strList.replace("]", "");
+				boolean flag = service.isExist(li.getId().toString(),strList);
+				if(!flag){
+					spans = !spans.toString().equals("") ? spans.append(",").append("3") :spans.append("3");
+				}
+				if("周六".equals(week)||"周日".equals(week)){//周末字样
+					spans = !spans.toString().equals("") ? spans.append(",").append("4") :spans.append("4");
+				}
+				String sdate = TagUtils.formatDate(li.getStarttime());
+				obj.addProperty("date",sdate.substring(5,10).replace("-", "/"));//要不要做成01/01 1/1
+				obj.addProperty("time",sdate.substring(sdate.length()-8,sdate.length()-3));
+				obj.addProperty("span",spans.toString());//标签 1官方 2多图 3多妹子 4周末
+				obj.addProperty("count", service.getJoinUserById(li.getId()));//人数
+				String range = "";
+				if(li.getJuli()!=null&&li.getJuli()>0){
+					range = format(li.getJuli().toString());
+				}else{
+					range = "0.000km";
+				}
+				obj.addProperty("range",range);//人数
+				array.add(obj);
+			}
+		return array;
+	}
 }
