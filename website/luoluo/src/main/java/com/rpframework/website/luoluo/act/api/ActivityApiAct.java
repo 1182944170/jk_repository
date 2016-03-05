@@ -89,7 +89,7 @@ public class ActivityApiAct extends BaseAct{
 				JsonObject obj = new JsonObject();
 				obj.addProperty("id", li.getId());//
 				obj.addProperty("name", li.getActivityname());//
-				obj.addProperty("cover", li.getCover());//图片
+				obj.addProperty("cover", IMG+li.getCover());//图片
 				obj.addProperty("address", li.getActivitylocation());//地址
 				String week = DateUtils.getWeekOfDate(li.getStarttime()*1000);
 				StringBuilder spans =new StringBuilder();

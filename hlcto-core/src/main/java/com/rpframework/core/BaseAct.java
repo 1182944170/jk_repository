@@ -12,6 +12,7 @@ public class BaseAct {
 	public static final String SESSION_ADMIN_USER_KEY = "sessionAdminUser";
 	public static final String SESSION_USER_KEY = "sessionUser";
 	public static final String SESSION_FRONT_USER = "session_front_user";
+	public static final String IMG = "http://img.rofor.com:8080/";
 	
 	
 	@SuppressWarnings("unchecked")
