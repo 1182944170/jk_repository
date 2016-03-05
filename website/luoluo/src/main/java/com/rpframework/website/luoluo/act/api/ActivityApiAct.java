@@ -173,26 +173,29 @@ public class ActivityApiAct extends BaseAct{
 			for(Activity li : list){
 				JsonObject obj = new JsonObject();
 				String week = DateUtils.getWeekOfDate(li.getStarttime()*1000);
-				if(span == 2){
-					if(li.getActivitypicture().indexOf(",")<0){
-						continue;
+				if(NumberUtils.isValid(span)){
+					if(span == 2){
+						if(li.getActivitypicture().indexOf(",")<0){
+							continue;
+						}
+					}
+					if(span == 3){
+						List<Integer> idList = service.doActivityIdList();
+						String strList = idList.toString().replace("[", "");
+						strList = strList.replace("]", "");
+						boolean flag = service.isExist(li.getId().toString(),strList);
+						if(!flag){
+							continue;
+						}
+					}
+					if(span == 4){
+						if("周六".equals(week)||"周日".equals(week)){
+						}else{
+							continue;
+						}
 					}
 				}
-				if(span == 3){
-					List<Integer> idList = service.doActivityIdList();
-					String strList = idList.toString().replace("[", "");
-					strList = strList.replace("]", "");
-					boolean flag = service.isExist(li.getId().toString(),strList);
-					if(!flag){
-						continue;
-					}
-				}
-				if(span == 4){
-					if("周六".equals(week)||"周日".equals(week)){
-					}else{
-						continue;
-					}
-				}
+				
 				obj.addProperty("id", li.getId());//
 				obj.addProperty("name", li.getActivityname());//
 				obj.addProperty("cover", IMG+li.getCover());//图片
