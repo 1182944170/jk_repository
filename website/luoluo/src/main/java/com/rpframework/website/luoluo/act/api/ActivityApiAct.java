@@ -5,7 +5,6 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,6 +19,7 @@ import com.rpframework.utils.DateUtils;
 import com.rpframework.utils.NumberUtils;
 import com.rpframework.utils.Pager;
 import com.rpframework.website.luoluo.domain.Activity;
+import com.rpframework.website.luoluo.domain.User;
 import com.rpframework.website.luoluo.exception.APICodeException;
 import com.rpframework.website.luoluo.service.ActivityService;
 
@@ -40,7 +40,7 @@ public class ActivityApiAct extends BaseAct{
 	 */
 	@RequestMapping("/list")
 	public @ResponseBody JsonElement activityList(
-			//HttpSession session,
+			HttpSession session,
 			@RequestParam(value="pager", required=false)Pager<Activity> pager,
 			@RequestParam(value="lng",required=false) String lng,//经度
 			@RequestParam(value="lat",required=false) String lat,//纬度
@@ -56,10 +56,10 @@ public class ActivityApiAct extends BaseAct{
 			@RequestParam(value="remark",required=false) String remark//备注
 			){
 		JsonObject json = new JsonObject();
-		//User user = getSessionUser(session);
-		//if(user == null){
-		//	throw new APICodeException(-4, "你还没登陆!");
-		//}	
+		User user = getSessionUser(session);
+		if(user == null){
+			throw new APICodeException(-4, "你还没登陆!");
+		}	
 		if(pager==null){
 			pager=new Pager<Activity>();
 		}
@@ -71,7 +71,8 @@ public class ActivityApiAct extends BaseAct{
 
 		JsonArray array = new JsonArray();
 		List<Activity> list =null;
-		Integer userId=4;
+		//Integer userId=4; 换成有数据的测试用户id
+		Integer userId =user.getId();
 		if("publish".equals(type)){//查我发布的 
 			list = service.doActivityListByUserId(userId,page,limit);
 			//json.addProperty("totalPage",list.get(0).getTotalPage());
