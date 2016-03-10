@@ -18,39 +18,30 @@
 	window.onload = function () {
 		var u = navigator.userAgent;
 		if (u.indexOf('Android') > -1 || u.indexOf('Linux') > -1) {//安卓手机
-			
 			$("#upload").removeAttr("href");
 			$("#upload").attr("href","${ctx}/resources/apk/luoluo.apk");
 		} else if (u.indexOf('iPhone') > -1) {//苹果手机
 			
 			$("#upload").removeAttr("href");
-			$("#upload").attr("href","https://itunes.apple.com/cn/app/e-fang-bao/id1011866639?mt=8");
+			$("#upload").attr("href","https://itunes.apple.com/us/app/luo-luo/id1085453339?l=zh&ls=1&mt=8");
 		} else if (u.indexOf('Windows Phone') > -1) {//
-			
 			$("#upload").removeAttr("href");
-			$("#upload").attr("href","http://zhushou.360.cn/detail/index/soft_id/3068740?recrefer=SE_D_e房宝");
+			$("#upload").attr("href","${ctx}/resources/apk/luoluo.apk");
 		}
 	}
 </script>
 
 </head>
-
 <body>
-<!--二维码-->
-<div class="mm_er clearfix">
-    <dl>
-        <dt><img src="${ctx}/resources/images/android.png" /></dt>
-        <dd>android下载</dd>
-    </dl>
-    <dl>
-        <dt><img src="${ctx}/resources/images/ios.png" /></dt>
-        <dd>ios下载</dd>
-    </dl>
+<div style="text-align:center">
+  <div>
+    <em><img src="${ctx}/resources/css/images/erweima.jpg" width="190" height="190" /></em>
+  </div>
 </div>
 <div class="mm_an"><a href="##" id="upload">立即安装</a></div>
 </body>
 </html>
-<script src="${ctx}/resources/js/swiper.min1.js"></script>
+<script src="${ctx}/resources/js/swiper.min.js"></script>
 <script type="text/javascript">
     var mySwiper = new Swiper('.swiper-container',{
         pagination : '.swiper-pagination',
