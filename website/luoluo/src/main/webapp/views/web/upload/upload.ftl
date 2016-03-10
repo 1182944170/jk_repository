@@ -13,6 +13,7 @@
 <title>首页</title>
 <link href="${ctx}/resources/css/reset1.css" type="text/css" rel="stylesheet">
 <link href="${ctx}/resources/css/style1.css" type="text/css" rel="stylesheet">
+<script src="${ctx}/resources/js/jquery-1.9.1.min.js"></script>
 <script language="javascript">
 	window.onload = function () {
 		var u = navigator.userAgent;
