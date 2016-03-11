@@ -284,5 +284,9 @@ public class ActivityService extends BaseService{
 		return f1&&f2;
 		 
 	}
+	public Integer doIsJoin(Integer activityId, Integer userId) {
+		 Integer i = iactivitydao.isJoinByUser(activityId,userId);
+		return i > 0 ? 2 : 1;//1可以报名  2不能报名
+	}
 
 }

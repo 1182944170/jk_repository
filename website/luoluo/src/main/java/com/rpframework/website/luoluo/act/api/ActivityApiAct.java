@@ -70,7 +70,7 @@ public class ActivityApiAct extends BaseAct{
 		}else{
 			pager.setCurrentPage(page);
 		}
-
+		
 		JsonArray array = new JsonArray();
 		List<Activity> list =null;
 		//Integer userId=4; 换成有数据的测试用户id

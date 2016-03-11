@@ -145,15 +145,22 @@ public class ApiActivityAct extends BaseAct{
 			json.addProperty("succ", false);
 			return json;
 		}
+		User user = getSessionUser(session);
+		if(user == null){
+			throw new APICodeException(-4, "你还没登陆!");
+		}
 		json.addProperty("id", activity.getId());
-		//已报名的人数
+		if(user.getId() == activity.getSponsorid()){
+			json.addProperty("join",2);
+		}else
+		json.addProperty("join",activityService.doIsJoin(activiid,user.getId()));
 		json.addProperty("sponsorid", activity.getSponsorid());
 		json.addProperty("cover", activity.getCover());
 		json.addProperty("activitynumber", activity.getActivitynumber());
 		json.addProperty("activitycategory", activity.getActivitycategory());
 		json.addProperty("activityname", activity.getActivityname());
 		json.addProperty("activitylocation", activity.getActivitylocation());
-		json.addProperty("number", activityService.getJoinNumber(activity.getId()));
+		json.addProperty("number", activityService.getJoinNumber(activity.getId()));	//已报名的人数
 		json.addProperty("children_expense", activity.getChildren_expense());
 		json.addProperty("old_expense", activity.getOld_expense());
 		json.addProperty("gril_expense", activity.getGril_expense());
