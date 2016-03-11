@@ -89,7 +89,7 @@ public class ApiActivitypictureAct extends BaseAct{
 			Activitypicture Activitypi=activitypictureSercice.seletzzle(currUser.getId(), sponsorlds);
 			long i=System.currentTimeMillis()/1000;
 			if(activity.getStarttime()<i ||activity.getStarttime()==i){
-				throw new APICodeException(-4, "活动已经开始不允许报名");
+				throw new APICodeException(-20, "活动已经开始不允许报名");
 			}
 			if(Activitypi==null){
 				Activitypi=new Activitypicture();
