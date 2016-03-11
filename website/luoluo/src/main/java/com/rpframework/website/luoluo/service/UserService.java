@@ -21,7 +21,7 @@ import com.sun.xml.internal.txw2.IllegalAnnotationException;
 @Service
 public class UserService extends BaseService{
 	
-	@Resource IUserDao iuserdao;
+	public @Resource IUserDao iuserdao;
 	@Resource UserService userService;
 	
 	public Pager<User> Userpager(Pager<User> pager){
@@ -186,5 +186,8 @@ public class UserService extends BaseService{
 	public List<User> selectactivice(String lat, String lng) {
 		// TODO Auto-generated method stub
 		return iuserdao.selectact(lat,lng);
+	}	
+	public List<User> getUserListByActivity(Integer id) {
+		return iuserdao.doJoinUserList(id);
 	}	
 }

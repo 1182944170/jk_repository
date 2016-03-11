@@ -19,4 +19,5 @@ public interface IUserDao extends IDao{
 	User AccoutSelect(String uid);
 	User selectmonly(Integer sponid);
 	List<User> selectact(String lat, String lng);
+	List<User> doJoinUserList(Integer id);
 }

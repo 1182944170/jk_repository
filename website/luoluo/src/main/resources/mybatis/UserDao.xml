@@ -36,6 +36,10 @@
 	 <select id="AccoutSelect" resultMap="user" parameterType="String">
 		select * from user where acnumber=#{uid} and type=1
     </select>
+   	<select id="doJoinUserList" resultMap="user">
+	   SELECT * FROM user u LEFT JOIN activity_registration a ON a.myld = u.id 
+		WHERE a.sponsorld = #{0}
+	</select>
     
 	<update id="update" parameterType="com.rpframework.website.luoluo.domain.User" />
 	<insert id="insert" parameterType="com.rpframework.website.luoluo.domain.User" useGeneratedKeys="true" keyProperty="id"/>

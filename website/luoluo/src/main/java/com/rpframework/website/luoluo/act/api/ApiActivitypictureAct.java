@@ -189,6 +189,7 @@ public class ApiActivitypictureAct extends BaseAct{
 			throw new APICodeException(-4, "你还没登陆!");
 		}	
  		pager.getSearchMap().put("sponserid", String.valueOf(id));
+ 		pager.getSearchMap().put("myld", currUser.getId().toString());
  		pager.getSearchMap().put("typeOrder", 2+"");
  		pager.getSearchMap().put("type", 1+"");
  		activitypictureSercice.getpager(pager);
