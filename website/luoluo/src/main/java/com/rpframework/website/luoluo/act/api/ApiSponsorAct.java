@@ -115,7 +115,7 @@ public class ApiSponsorAct extends BaseAct{
 
 		JsonObject json=new JsonObject();
 		json.addProperty("id", sponsor.getId());
-		json.addProperty("name", StringUtils.isNotBlank(sponsor.getName()) ? "" : sponsor.getName());
+		json.addProperty("name", StringUtils.isBlank(sponsor.getName()) ? "" : sponsor.getName());
 		json.addProperty("Userphone", sponsor.getUserphone());
 		json.addProperty("usernowlive", sponsor.getUsernowlive());
 		json.addProperty("telephone", sponsor.getTelephone());
