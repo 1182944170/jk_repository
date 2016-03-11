@@ -262,6 +262,12 @@ public class ActivityService extends BaseService{
 		
 		return iactivitydao.doApiListByCollection(userId,page,limit);
 	}
+	/**
+	 * 报名的人数
+	 * @param id
+	 * @return
+	 * @time 2016年3月11日 下午5:43:54
+	 */
 	public Integer getJoinNumber(Integer id) {
 		Integer c = 0;
 		c = iactivitydao.doJoinNumber(id);
