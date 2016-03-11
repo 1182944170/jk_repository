@@ -89,7 +89,7 @@
 			select count(*) from activity_registration WHERE sponsorld = #{0}
 	</select>
 	<select id="doFinishCount" resultType="Integer">
-			select count(*) from activity_registration WHERE starttime &gt; UNIX_TIMESTAMP()
+			select count(*) from release_activity WHERE starttime &gt; UNIX_TIMESTAMP()
 	</select>
 	
 	<select id="doActivityListByUserId" resultMap="Activity">
