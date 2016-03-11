@@ -317,5 +317,73 @@ public class UserloginApiAct extends BaseAct{
 		}	
 		return json;
 	}
-	
+	/**
+	 * 修改手机
+	 * @param telphone
+	 * @param callback
+	 * @return
+	 * @time 2016年3月11日 下午9:09:25
+	 */
+	@RequestMapping(value="modifycode/{telphone}",produces = "application/json; charset=utf-8")
+	public @ResponseBody String valTelphones(@PathVariable(value="telphone") String telphone,
+			@RequestParam(value="callback",required=false) String callback){
+		JsonObject json = new JsonObject();
+		
+		if(StringUtils.isEmpty(telphone)) {
+			throw new APICodeException(-1, "非法手机号!");
+		}
+		
+		String verifyCode = String.valueOf(NumberUtils.random(6));
+		String sendContent = DictionarySettingUtils.getParameterValue("sendsms.modify");
+		if(StringUtils.isBlank(sendContent)) {
+			sendContent =  "本次注册验证码:{}，请牢记";
+		}
+		sendContent = MessageFormatter.format(sendContent, verifyCode);
+		
+		boolean bFlag = smsService.sendSMS(5, telphone, verifyCode, sendContent);
+		if(!bFlag) {
+			throw new APICodeException(-3, "短信发送失败!");
+		}
+		
+		if(bFlag){ 
+			json.addProperty("succ", true);
+		} else { 
+			json.addProperty("error", false);
+		} 
+		if(StringUtils.isBlank(callback)){
+			return json.toString();
+		}
+		return (callback + "(" + json.toString() + ")");
+	}
+	/**
+	 * 修改手机
+	 * @param newTelphone
+	 * @param verifyCode
+	 * @return
+	 */
+	@RequestMapping(value="/change_telphone",produces = "application/json; charset=utf-8")
+	public @ResponseBody String changeTelphone(HttpServletRequest request,
+			HttpSession session,
+			@RequestParam(value="callback",required=false) String callback) {
+		String newTelphone = request.getParameter("newTelphone");
+	    String verifyCode = request.getParameter("verifyCode");
+		if(StringUtils.isBlank(newTelphone) || StringUtils.isBlank(verifyCode)) {
+			throw new APICodeException(-1, "非法参数!");
+		}
+		User user = getSessionUser(session);	
+		if(user == null){
+			throw new APICodeException(-4, "你还没登陆!");
+		}
+		if(!smsService.checkVerifyCode(5, newTelphone, verifyCode)) {
+			throw new APICodeException(-3, "验证码错误!");
+		}
+		user.setPhone(newTelphone);
+		userService.update(user);
+		JsonObject json = new JsonObject();
+		json.addProperty("succ", true);
+		if(StringUtils.isBlank(callback)){
+			return json.toString();
+		}
+		return (callback + "(" + json.toString() + ")");
+	}
 }

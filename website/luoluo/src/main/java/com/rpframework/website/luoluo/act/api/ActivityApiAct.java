@@ -255,7 +255,6 @@ public class ActivityApiAct extends BaseAct{
 			}
 		return array;
 	}
-	
 	@RequestMapping("/del")
 	public @ResponseBody JsonElement deleteActivity(
 			@RequestParam(value="id",required=false) Integer id){
