@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -70,7 +71,7 @@ public class ApiActivitypictureAct extends BaseAct{
 			@RequestParam(required=false) String emergencyname,
 			@RequestParam(required=false) String oldboy,
 			@RequestParam(required=false) String chindenboy,
-			@RequestParam(required=false) String grilexpense,
+			@RequestParam(required=false) String grilexpense,//女生人数
 			@RequestParam(required=false) double money,
 			@RequestParam(required=false) String mood,
 			@RequestParam(required=false) String insure, //投保证件
@@ -93,10 +94,10 @@ public class ApiActivitypictureAct extends BaseAct{
 			}
 			if(Activitypi==null){
 				Activitypi=new Activitypicture();
-				if(currUser.getSex()==1){
-					Activity a = activityService.select(sponsorld);
-					if(a!=null){
-						a.setJoinNumber(a.getJoinNumber()+1);
+				Activity a = activityService.select(sponsorld);
+				if(a!=null){
+					if(StringUtils.isNotBlank(grilexpense)){
+						a.setJoinNumber(a.getJoinNumber()+Integer.valueOf(grilexpense));
 						activityService.update(a);
 					}
 				}
