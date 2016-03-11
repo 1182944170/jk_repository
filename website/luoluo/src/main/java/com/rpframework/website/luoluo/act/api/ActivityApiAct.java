@@ -260,9 +260,16 @@ public class ActivityApiAct extends BaseAct{
 	public @ResponseBody JsonElement deleteActivity(
 			@RequestParam(value="id",required=false) Integer id){
 		JsonObject json = new JsonObject();
+		Integer i = service.getJoinNumber(id);
+		if(i>0){
+			json.addProperty("succ", false);
+			json.addProperty("msg", "当前活动已经有人报名！");
+			return json;
+		}
 		boolean f = service.deleteAll(id);
 		if(f){
 			json.addProperty("succ", true);
+			json.addProperty("msg", "删除成功！");
 		}else{
 			json.addProperty("succ", false);
 			json.addProperty("msg", "删除失败！");
