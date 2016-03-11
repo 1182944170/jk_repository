@@ -279,9 +279,8 @@ public class ActivityService extends BaseService{
 		return c;
 	}
 	public boolean deleteAll(Integer id) {
-		boolean f1 = iactivitydao.doDeleteRelative(id);
 		boolean f2 = iactivitydao.delete(id);
-		return f1&&f2;
+		return f2;
 		 
 	}
 	public Integer doIsJoin(Integer activityId, Integer userId) {

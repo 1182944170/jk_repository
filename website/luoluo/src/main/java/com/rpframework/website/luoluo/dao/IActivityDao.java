@@ -37,6 +37,5 @@ public interface IActivityDao extends IDao{
 			Integer limit);
 	Integer doJoinNumber(Integer id);
 	Integer doFinishCount();
-	boolean doDeleteRelative(Integer id);
 	Integer isJoinByUser(Integer activityId, Integer userId);
 }

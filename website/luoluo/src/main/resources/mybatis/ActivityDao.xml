@@ -102,9 +102,6 @@
 	<select id="doApiListByCollection" resultMap="Activity">
 	    SELECT * FROM release_activity r left join myactivities m on m.activitiesid = r.id where userid = #{0} LIMIT #{1},#{2}
 	</select>
-	<select id="doDeleteRelative">
-	 	 DELETE * FROM activity_registration WHERE sponsorld = 1 
-	</select>
 	
 	<select id="doActivityListByUserJoin" resultMap="Activity">
 		    SELECT * FROM release_activity WHERE Id in(
