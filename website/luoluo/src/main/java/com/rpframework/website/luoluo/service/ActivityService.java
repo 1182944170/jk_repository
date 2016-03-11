@@ -262,5 +262,21 @@ public class ActivityService extends BaseService{
 		
 		return iactivitydao.doApiListByCollection(userId,page,limit);
 	}
+	public Integer getJoinNumber(Integer id) {
+		Integer c = 0;
+		c = iactivitydao.doJoinNumber(id);
+		return c;
+	}
+	public Integer getFinishCount() {
+		Integer c = 0;
+		c = iactivitydao.doFinishCount();
+		return c;
+	}
+	public boolean deleteAll(Integer id) {
+		boolean f1 = iactivitydao.doDeleteRelative(id);
+		boolean f2 = iactivitydao.delete(id);
+		return f1&&f2;
+		 
+	}
 
 }

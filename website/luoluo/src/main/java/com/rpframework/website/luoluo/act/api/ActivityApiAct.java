@@ -22,11 +22,13 @@ import com.rpframework.website.luoluo.domain.Activity;
 import com.rpframework.website.luoluo.domain.User;
 import com.rpframework.website.luoluo.exception.APICodeException;
 import com.rpframework.website.luoluo.service.ActivityService;
+import com.rpframework.website.luoluo.service.UserService;
 
 @Controller
 @RequestMapping("api/huodong")
 public class ActivityApiAct extends BaseAct{
 	@Resource ActivityService service;
+	@Resource UserService userService;
 	
 	/*  #{0} lng 经度
 	    #{1} lat 纬度
@@ -252,5 +254,19 @@ public class ActivityApiAct extends BaseAct{
 				array.add(obj);
 			}
 		return array;
+	}
+	
+	@RequestMapping("/del")
+	public @ResponseBody JsonElement deleteActivity(
+			@RequestParam(value="id",required=false) Integer id){
+		JsonObject json = new JsonObject();
+		boolean f = service.deleteAll(id);
+		if(f){
+			json.addProperty("succ", true);
+		}else{
+			json.addProperty("succ", false);
+			json.addProperty("msg", "删除失败！");
+		}
+		return json;
 	}
 }

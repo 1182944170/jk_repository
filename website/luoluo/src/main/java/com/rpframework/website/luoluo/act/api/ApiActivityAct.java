@@ -146,13 +146,14 @@ public class ApiActivityAct extends BaseAct{
 			return json;
 		}
 		json.addProperty("id", activity.getId());
+		//已报名的人数
 		json.addProperty("sponsorid", activity.getSponsorid());
 		json.addProperty("cover", activity.getCover());
 		json.addProperty("activitynumber", activity.getActivitynumber());
 		json.addProperty("activitycategory", activity.getActivitycategory());
 		json.addProperty("activityname", activity.getActivityname());
 		json.addProperty("activitylocation", activity.getActivitylocation());
-		json.addProperty("number", activity.getNumber());
+		json.addProperty("number", activityService.getJoinNumber(activity.getId()));
 		json.addProperty("children_expense", activity.getChildren_expense());
 		json.addProperty("old_expense", activity.getOld_expense());
 		json.addProperty("gril_expense", activity.getGril_expense());
@@ -165,7 +166,7 @@ public class ApiActivityAct extends BaseAct{
 		json.addProperty("type", activity.getType());
 		json.addProperty("zhuangttai", activity.getZhuangttai());
 		List<Activity> listseize=activityService.selectluist(activity.getSponsorid());
-		json.addProperty("chenggong", listseize.size());
+		json.addProperty("chenggong", activityService.getFinishCount());
 		json.addProperty("typeok", activity.getTypeok());
 		json.addProperty("starttime", activity.getStarttime());
 		Classification classors=classificationService.selectcal(activity.getActivitycategory());
@@ -210,7 +211,6 @@ public class ApiActivityAct extends BaseAct{
 	public @ResponseBody JsonElement baoming(
 			@RequestParam(required=false) Integer activiid,HttpSession session){
 		JsonObject json=new JsonObject();
-		
 		List<Activitypicture> activitypict=activitypictureSercice.selectlist(activiid);
 		JsonArray array = new JsonArray();
 		json.add("arrays", array);
@@ -587,6 +587,7 @@ public class ApiActivityAct extends BaseAct{
 		}
 		return json;
 	}
+	
 	@RequestMapping("/search_list")
 	public @ResponseBody JsonElement searchlist(
 			@RequestParam(value="pager",required=false) Pager<Activity> pager,

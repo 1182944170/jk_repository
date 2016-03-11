@@ -15,8 +15,14 @@
 			</if>
 		</if>
 		FROM release_activity t1 
+		WHERE 1=1
+		<!-- 过期的数据查不出来 -->
+		and t1.starttime &gt; UNIX_TIMESTAMP()
+		and t1.type = 1
+		<if test = "page.searchMap.se != null">
+			or t1.type = 0
+		</if>
 		<!-- 按类型分类 1户外 2旅行 #{param1}-->
-		WHERE 1=1 and t1.type = 1
 		<if test = "page.searchMap.categoryId != null">
 			AND t1.activitycategory = #{page.searchMap.categoryId}
 		</if>
@@ -79,12 +85,22 @@
 	</select>
 
 	
+	<select id="doJoinNumber" resultType="Integer">
+			select count(*) from activity_registration WHERE sponsorld = #{0}
+	</select>
+	<select id="doFinishCount" resultType="Integer">
+			select count(*) from activity_registration WHERE starttime &gt; UNIX_TIMESTAMP()
+	</select>
+	
 	<select id="doActivityListByUserId" resultMap="Activity">
 			SELECT * FROM release_activity WHERE sponsorid in(
 			SELECT Id FROM sponsor WHERE userid = #{0}) ORDER BY starttime DESC LIMIT #{1},#{2}
 	</select>
 	<select id="doApiListByCollection" resultMap="Activity">
-	    SELECT * FROM release_activity r left join myactivities m on m.activitiesid = r.id
+	    SELECT * FROM release_activity r left join myactivities m on m.activitiesid = r.id and userid = #{0} LIMIT #{1},#{2}
+	</select>
+	<select id="doDeleteRelative">
+	 	 DELETE * FROM activity_registration WHERE sponsorld = 1 
 	</select>
 	
 	<select id="doActivityListByUserJoin" resultMap="Activity">
