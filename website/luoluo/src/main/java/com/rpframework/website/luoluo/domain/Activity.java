@@ -31,6 +31,10 @@ public class Activity {
 	private String activitylocation;   //活动地点
 	@FieldMapperAnnotation
 	private Integer number;  //活动人数
+	
+	@FieldMapperAnnotation
+	private Integer joinNumber;  //已经报名妹子人数
+	
 	@FieldMapperAnnotation
 	private Integer children_expense;    //儿童费用
 	@FieldMapperAnnotation
@@ -305,6 +309,20 @@ public class Activity {
 	 */
 	public void setJuli(Double juli) {
 		this.juli = juli;
+	}
+
+	/**
+	 * @return the joinNumber
+	 */
+	public Integer getJoinNumber() {
+		return joinNumber;
+	}
+
+	/**
+	 * @param joinNumber the joinNumber to set
+	 */
+	public void setJoinNumber(Integer joinNumber) {
+		this.joinNumber = joinNumber;
 	}
 
 

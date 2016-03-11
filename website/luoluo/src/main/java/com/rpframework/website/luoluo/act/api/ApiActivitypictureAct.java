@@ -93,6 +93,13 @@ public class ApiActivitypictureAct extends BaseAct{
 			}
 			if(Activitypi==null){
 				Activitypi=new Activitypicture();
+				if(currUser.getSex()==1){
+					Activity a = activityService.select(sponsorld);
+					if(a!=null){
+						a.setJoinNumber(a.getJoinNumber()+1);
+						activityService.update(a);
+					}
+				}
 				Activitypi.setSponsorld(sponsorlds);
 				Activitypi.setMyld(currUser.getId());
 				Activitypi.setName(name);

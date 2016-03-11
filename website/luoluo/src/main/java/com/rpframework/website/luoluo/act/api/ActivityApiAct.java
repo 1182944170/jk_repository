@@ -223,11 +223,11 @@ public class ActivityApiAct extends BaseAct{
 					spans = !spans.toString().equals("") ? spans.append(",").append("2") : spans.append("2");
 				}
 				//多妹子 活动报名表里
-				List<Integer> idList = service.doActivityIdList();
-				String strList = idList.toString().replace("[", "");
-				strList = strList.replace("]", "");
-				boolean flag = service.isExist(li.getId().toString(),strList);
-				if(!flag){
+				//List<Integer> idList = service.doActivityIdList();
+				//String strList = idList.toString().replace("[", "");
+				//strList = strList.replace("]", "");
+				//boolean flag = service.isExist(li.getId().toString(),strList);
+				if(li.getJoinNumber()>=3){
 					spans = !spans.toString().equals("") ? spans.append(",").append("3") :spans.append("3");
 				}
 				if("周六".equals(week)||"周日".equals(week)){//周末字样

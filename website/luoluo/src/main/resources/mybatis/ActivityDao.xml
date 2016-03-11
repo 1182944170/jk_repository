@@ -59,10 +59,11 @@
 		</if>
 		  <choose>
             <when test="page.searchMap.moregirl != null">
-				    AND t1.Id IN 
+				  <!--   AND t1.Id IN 
 					(SELECT t2.sponsorld FROM activity_registration t2 WHERE t2.myld IN(
 						SELECT t3.id FROM user t3 WHERE t3.sex = 1
-					))
+					))-->
+					AND t1.joinNumber &gt;= 3
             </when>
             <when test="page.searchMap.authority != null">
 				 AND t1.sponsorid = 1

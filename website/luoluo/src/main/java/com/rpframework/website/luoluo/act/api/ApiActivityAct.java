@@ -153,14 +153,14 @@ public class ApiActivityAct extends BaseAct{
 		if(user.getId() == activity.getSponsorid()){
 			json.addProperty("join",2);
 		}else
-		json.addProperty("join",activityService.doIsJoin(activiid,user.getId()));
+		json.addProperty("join",activityService.doIsJoin(activiid,user.getId()));//是否能报名 1能报名 2不能报名
 		json.addProperty("sponsorid", activity.getSponsorid());
 		json.addProperty("cover", activity.getCover());
 		json.addProperty("activitynumber", activity.getActivitynumber());
 		json.addProperty("activitycategory", activity.getActivitycategory());
 		json.addProperty("activityname", activity.getActivityname());
 		json.addProperty("activitylocation", activity.getActivitylocation());
-		json.addProperty("number", activityService.getJoinNumber(activity.getId()));	//已报名的人数
+		json.addProperty("number", activity.getNumber());//限制人数
 		json.addProperty("children_expense", activity.getChildren_expense());
 		json.addProperty("old_expense", activity.getOld_expense());
 		json.addProperty("gril_expense", activity.getGril_expense());
@@ -206,7 +206,7 @@ public class ApiActivityAct extends BaseAct{
 			act.setBm_num(bm_num);
 			
 		}
-		json.addProperty("bm_num", bm_num);
+		json.addProperty("bm_num", activityService.getJoinNumber(activity.getId()));//已报名的人数
 		return json;
 	}
 	/**
