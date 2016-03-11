@@ -213,8 +213,8 @@ public class ActivityApiAct extends BaseAct{
 				obj.addProperty("name", li.getActivityname());//
 				obj.addProperty("cover", IMG+li.getCover());//图片
 				obj.addProperty("address", li.getActivitylocation());//地址
-				obj.addProperty("bm", li.getBm_num() == null ? "" : li.getBm_num().toString());//报名
-				obj.addProperty("number",service.getJoinNumber(li.getId()));//限制
+				obj.addProperty("bm", service.getJoinNumber(li.getId()));//报名
+				obj.addProperty("number",li.getNumber());//限制
 				StringBuilder spans =new StringBuilder();
 				if(li.getSponsorid()==1){//官方字样
 					spans.append("1");
