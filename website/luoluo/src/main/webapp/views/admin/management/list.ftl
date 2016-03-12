@@ -56,6 +56,8 @@ $(function (){
 					
 						<th>订单号</th>
 						<th>活动名称</th>
+						<th>活动地址</th>
+						<th>主办方</th>
 						<th>支付金额</th>
 						<th>实际费用</th>
 						<th>手续费</th>

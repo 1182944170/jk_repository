@@ -64,7 +64,7 @@ public class ApiActivitypictureAct extends BaseAct{
 	 */
 	@RequestMapping("/add")
 	public  @ResponseBody JsonElement add(
-			@RequestParam(required=false) String sponsorld,
+			@RequestParam(required=false) String sponsorld,//活动id
 			@RequestParam(required=false) String name,
 			@RequestParam(required=false) String phone,
 			@RequestParam(required=false) String emergencyphone,

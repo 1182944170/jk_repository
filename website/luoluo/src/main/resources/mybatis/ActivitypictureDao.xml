@@ -14,9 +14,6 @@
 		<if test = "page.searchMap.myld != null">
 			and myld = #{page.searchMap.myld}
 		</if>
-		<if test = "page.searchMap.typeOrder != null">
-			and typeOrder = #{page.searchMap.typeOrder}
-		</if>
 		<if test = "page.searchMap.type != null">
 			and type = #{page.searchMap.type}
 		</if>
