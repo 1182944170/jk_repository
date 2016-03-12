@@ -19,9 +19,11 @@ import com.rpframework.utils.DateUtils;
 import com.rpframework.utils.NumberUtils;
 import com.rpframework.utils.Pager;
 import com.rpframework.website.luoluo.domain.Activity;
+import com.rpframework.website.luoluo.domain.Activitypicture;
 import com.rpframework.website.luoluo.domain.User;
 import com.rpframework.website.luoluo.exception.APICodeException;
 import com.rpframework.website.luoluo.service.ActivityService;
+import com.rpframework.website.luoluo.service.ActivitypictureSercice;
 import com.rpframework.website.luoluo.service.UserService;
 
 @Controller
@@ -29,6 +31,7 @@ import com.rpframework.website.luoluo.service.UserService;
 public class ActivityApiAct extends BaseAct{
 	@Resource ActivityService service;
 	@Resource UserService userService;
+	@Resource ActivitypictureSercice joinService;
 	
 	/*  #{0} lng 经度
 	    #{1} lat 纬度
@@ -275,4 +278,46 @@ public class ActivityApiAct extends BaseAct{
 		}
 		return json;
 	}
+	//已报名的人员列表
+	@RequestMapping("/joinList")
+	public @ResponseBody JsonElement joinList(
+			@RequestParam(value="activityId",required=false) Integer activityId,
+			HttpSession session
+			){
+		JsonObject json = new JsonObject();
+		if(NumberUtils.isNotValid(activityId)){
+			throw new APICodeException(-5, "activityId为必填参数！");
+		}
+		User user = getSessionUser(session);
+		if(user == null){
+			throw new APICodeException(-4, "你还没登陆!");
+		}	
+		List<Activitypicture> list = joinService.getListByActivity(activityId);
+		JsonArray array = new JsonArray();
+		for(Activitypicture li : list){
+			User u = userService.select(li.getMyld());
+			JsonObject obj = new JsonObject();
+			obj.addProperty("image",IMG+u.getNamePic());
+			obj.addProperty("name", u.getNameNick());
+			obj.addProperty("girl", li.getGrilexpense());//
+			obj.addProperty("man", li.getOldboy());//
+			obj.addProperty("child", li.getChindenboy());//
+			Activity a = service.select(li.getSponsorld());
+			if(a!=null && a.getSponsorid() == user.getId()){
+				obj.addProperty("tel", u.getPhone());
+				obj.addProperty("insure", li.getInsure());//投保证件
+				obj.addProperty("money", li.getMonely());//投保金额
+				obj.addProperty("info", "");//投保金额
+			}else{
+				obj.addProperty("tel", "");
+				obj.addProperty("insure", "");//投保证件
+				obj.addProperty("money", "");//投保金额
+				obj.addProperty("info", "");//投保金额
+			}
+			array.add(obj);
+		}
+		json.add("array", array);
+		return json;
+	}
+	
 }

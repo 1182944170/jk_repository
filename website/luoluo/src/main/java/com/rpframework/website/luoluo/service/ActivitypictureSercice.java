@@ -149,5 +149,10 @@ public class ActivitypictureSercice extends BaseService{
 		return tActivitypictureDao.seletzzleorrle(id,sponsorlds);
 	}
 
+	public List<Activitypicture> getListByActivity(Integer activityId) {
+		// TODO Auto-generated method stub
+		return tActivitypictureDao.doListByActivity(activityId);
+	}
+
 
 }

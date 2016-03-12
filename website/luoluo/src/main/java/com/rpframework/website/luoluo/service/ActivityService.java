@@ -22,7 +22,7 @@ import com.rpframework.website.luoluo.domain.Activity;
 
 @Service
 public class ActivityService extends BaseService{
-	@Resource IActivityDao iactivitydao;
+	public @Resource IActivityDao iactivitydao;
 	@Resource FileService fileService;
 	
 	public Pager<Activity> getpager(Pager<Activity> pager){

@@ -28,6 +28,12 @@
 	<select id="select" parameterType="Integer" resultMap="Activitypicture">
 		select * from activity_registration where id=#{id} order by id
 	</select>
+	
+	<select id="doListByActivity" parameterType="Integer" resultMap="Activitypicture" >
+		SELECT * FROM activity_registration a WHERE sponsorld = #{0}
+	</select>
+	
+	
 	<select id="selectole" parameterType="Integer" resultMap="Activitypicture" >
 		select * from activity_registration where sponsorld=#{activiid} and typeOrder=2
 	</select>
