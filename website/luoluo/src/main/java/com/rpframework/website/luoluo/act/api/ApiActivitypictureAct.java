@@ -94,7 +94,7 @@ public class ApiActivitypictureAct extends BaseAct{
 			}
 			if(Activitypi==null){
 				Activitypi=new Activitypicture();
-				Activity a = activityService.select(sponsorld);
+				Activity a = activityService.select(sponsorlds);
 				if(a!=null){
 					if(StringUtils.isNotBlank(grilexpense)){
 						a.setJoinNumber(a.getJoinNumber()+Integer.valueOf(grilexpense));
