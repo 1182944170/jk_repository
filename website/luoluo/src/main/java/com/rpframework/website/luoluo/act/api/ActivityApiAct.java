@@ -296,6 +296,7 @@ public class ActivityApiAct extends BaseAct{
 		JsonArray array = new JsonArray();
 		for(Activitypicture li : list){
 			User u = userService.select(li.getMyld());
+			if(u==null){continue;}
 			JsonObject obj = new JsonObject();
 			obj.addProperty("image",IMG+u.getNamePic());
 			obj.addProperty("name", u.getNameNick());
