@@ -53,7 +53,7 @@ public class AdminActivityAct extends AdminAct{
 		if(!admin.getAdminRole().getId().equals(1)){
 			pager.getSearchMap().put("cityoles", admin.getCityCode());
 		}
-		pager.getSearchMap().put("se", "se");
+		//pager.getSearchMap().put("se", "se"); //后台没有模糊搜索的功能
 		List<Classification> cal=classificationService.queryAll();
 		pager=activityService.getpager(pager);
 		List<Activity> list=pager.getItemList();

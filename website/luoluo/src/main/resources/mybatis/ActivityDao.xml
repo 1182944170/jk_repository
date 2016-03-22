@@ -11,17 +11,21 @@
 		<!--sqrt(POWER((121.21937542-120.170455),2)+POWER((31.25924446-30.278896),2)) AS juli-->
 	    <if test = "page.searchMap.lng != null">
 		    <if test = "page.searchMap.lat != null">
-				 ,sqrt(POWER((#{page.searchMap.lng}-t1.lng),2)+POWER((#{page.searchMap.lat}-t1.lat),2)) AS juli
+				 <!-- ,sqrt(POWER((#{page.searchMap.lng}-t1.lng),2)+POWER((#{page.searchMap.lat}-t1.lat),2)) AS juli -->
+				 <!-- 单位是千米 -->
+				 ,round(6378.138*2*asin(sqrt(pow(sin( (#{page.searchMap.lat}*pi()/180-lat*pi()/180)/2),2)+cos(#{page.searchMap.lat}*pi()/180)*cos(lat*pi()/180)* pow(sin( (#{page.searchMap.lng}*pi()/180-lng*pi()/180)/2),2)))*1000)/1000 AS juli
 			</if>
 		</if>
 		FROM release_activity t1 
 		WHERE 1=1
 		<!-- 过期的数据查不出来 -->
 		and t1.starttime &gt; UNIX_TIMESTAMP()
-		and t1.type = 1
-		<if test = "page.searchMap.se != null">
-			or t1.type = 0
+		<!-- 客户端未审核的数据不显示 后台未审核的数据要显示 并且能审核-->
+		
+		<if test = "page.searchMap.type != null">
+			and t1.type = #{page.searchMap.type}
 		</if>
+		
 		<!-- 按类型分类 1户外 2旅行 #{param1}-->
 		<if test = "page.searchMap.categoryId != null">
 			AND t1.activitycategory = #{page.searchMap.categoryId}
