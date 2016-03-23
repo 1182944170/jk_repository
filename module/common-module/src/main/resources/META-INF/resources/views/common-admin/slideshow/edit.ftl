@@ -34,7 +34,6 @@
 			<div class="ace-file-input width-40">
 				<input type="file" name="iconFile" value="${(slideshow.icon)!''}" id="id-input-file-2">
 			</div>
-			<small>* 已经存在的icon如果不修改则不需要填写</small>
 		</div>
 	</div>
 </div>
@@ -173,4 +172,16 @@ $(document).ready(function(){
 		submitHandler: function(form) {RP.Form.submitHandler(form);}
 	});
 });
+</script>
+<script>
+$(function (){
+	<#if slideshow??>
+		var o ="${slideshow.icon!}";
+		var dt = $(".file-name").attr("data-title");
+		$(".file-name").attr("data-title",o);
+		$(".file-label").attr("data-title","重新选择文件");
+	<#else>
+	
+	</#if>
+})
 </script>
