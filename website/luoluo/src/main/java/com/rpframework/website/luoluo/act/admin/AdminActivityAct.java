@@ -295,10 +295,14 @@ public class AdminActivityAct extends AdminAct{
 	 */
 	@RequestMapping("/{id}/deletUser")
 	public String deletUser(@PathVariable Integer id,RedirectAttributes attr){
-		Activity activity=activityService.selectcal(id);
-		activity.setTypeok(5);
-		activityService.updatedo(activity);
+		//Activity activity=activityService.selectcal(id);
+		//activity.setTypeok(5);
+		//activityService.updatedo(activity);
+		boolean f = activityService.delete(id);
+		if(f)
 		setInfoMsg("删除成功！", attr);
+		else
+		setInfoMsg("删除失败！", attr);
 		return redirect("/admin/actcy/list");
 	}
 	
