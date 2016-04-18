@@ -82,27 +82,77 @@ window.print();
                 </tr>
                
             	<tr>
-            		<th width="10%">活动名称</th>
-            		<th width="10%">开始时间</th>
-            		<th width="10%">结束时间</th>
-            		<th width="10%">成人数量</th>
-            		<th width="10%">儿童数量</th>
-            	
+            		<th width="10%">
+            			活动名称
+            		</th>
+            		<th width="10%">
+            			报名人
+            		</th>
+            		<th width="10%">
+            			报名电话
+            		</th>
+            		<th width="10%">
+            			紧急联系人
+            		</th>
+            		<th width="10%">
+            			紧急联系人电话
+            		</th>
+            		<th width="10%">
+            			开始时间
+            		</th>
+            		<th width="10%">
+        				结束时间
+            		</th>
+            		<th width="10%">
+            			成人数量
+            		</th>
+            		<th width="10%">
+            			儿童数量
+            		</th>
+            		<th width="10%">
+            			女生数量
+            		</th>
             	</tr>
           
 	            <tr>
-	            <@miactivit cmd="get_miactivit_list" type="${acp.sponsorld}" pagerString="1_" pageSize="50">
-						<#list s_pager.itemList as lo>
-				        <td style="text-align:center">${lo.activityname}</td>
-				        <td style="text-align:center">${tagUtils.formatDate(lo.starttime)}</td>
-				        <td style="text-align:center">${tagUtils.formatDate(lo.outtime)}</td>
-				        <td style="text-align:center">${lo.old_expense}</td>
-				        <td style="text-align:center">${lo.children_expense}</td>
-				        
-						</#list>
- 					</@miactivit>
+			        <td style="text-align:center">
+			        	<#if activity??>
+            				${activity.activityname!}
+            			</#if>
+        			</td>
+			        <td style="text-align:center">
+			        	${acp.name}
+        			</td>
+			        <td style="text-align:center">
+			        	${acp.phone}
+        			</td>
+			        <td style="text-align:center">
+			        	${acp.emergencyname}
+        			</td>
+			        <td style="text-align:center">
+			        	${acp.emergencyphone}
+        			</td>
+        			
+			        <td style="text-align:center">
+		    		    <#if activity??>
+        					${tagUtils.formatDate(activity.starttime)}
+            			</#if>  
+			        </td>
+			        <td style="text-align:center">
+			        	<#if activity??>
+        					${tagUtils.formatDate(activity.outtime)}
+            			</#if>
+			        </td>
+			        <td style="text-align:center">
+			        	${acp.oldboy}
+			        </td>
+			        <td style="text-align:center">
+			        	${acp.chindenboy}
+			        </td>
+			        <td style="text-align:center">
+			        	${acp.grilexpense}
+			        </td>
 	            </tr>
-	       
             </table>
             <br>
              <table  width="99%" border="0" align="center" cellpadding="0" cellspacing="0" class="list_t_03">
@@ -145,7 +195,7 @@ window.print();
 	                   		<tr><th>保险姓名</th></tr>
 	                   		<#list name as o>
 		                   		<tr>
-		                   			<td align="center">${o}</td>
+		                   			<td align="center">${acp.insurenName!}</td>
 		                   		</tr>
 	                   		</#list>
 	                   </table>
@@ -155,7 +205,7 @@ window.print();
 	                   		<tr><th>保险证件</th></tr>
 	                   		<#list num as z>
 	                   			<tr>
-	                   				<td align="center">${z}</td>
+	                   				<td align="center">${acp.insure!}</td>
 	                   			</tr>
 	                   		</#list>
 	                   </table>
@@ -163,7 +213,28 @@ window.print();
                 </tr>
             
             </table>
+           <table  width="99%" border="0" align="center" cellpadding="0" cellspacing="0" class="list_t_03">
+            	<tr>
+                    <th colspan="16">
+                        <div align="left"><div class="title_pic"></div>
+                        <font class="text2">备注信息</font></div>
+                    </th>
+                </tr>
+               
+            	<tr>
+            		<th width="10%">
+            			备注
+            		</th>
+            		
+            	</tr>
           
+	            <tr>
+			       
+			        <td style="text-align:center">
+			        		${acp.mood}
+			        </td>
+	            </tr>
+            </table>
 	       <table border="0" cellspacing="0" cellpadding="0"  class="back_menu" align="center" >
 	        <tr> 
 	        	<td>

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.rpframework.core.IDao;
 import com.rpframework.website.luoluo.domain.Activity;
+import com.rpframework.website.luoluo.domain.Activitypicture;
 
 public interface IActivityDao extends IDao{
 	List<Activity> doPager(Map<?, ?> map);
@@ -38,4 +39,5 @@ public interface IActivityDao extends IDao{
 	Integer doJoinNumber(Integer id);
 	Integer doFinishCount();
 	Integer isJoinByUser(Integer activityId, Integer userId);
+	List<Activity> queryAll();
 }

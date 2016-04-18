@@ -6,6 +6,11 @@
 	<resultMap type="com.rpframework.website.luoluo.domain.Activity" id="Activity" autoMapping="true">
 		<id property="id" column="id" />
 	</resultMap>		
+	
+	<select id="queryAll" resultMap="Activity">
+			select * from release_activity 
+	</select>
+	
 	<select id="doPager" parameterType="map" resultMap="Activity">
 	     SELECT * 
 		<!--sqrt(POWER((121.21937542-120.170455),2)+POWER((31.25924446-30.278896),2)) AS juli-->
@@ -89,7 +94,6 @@
 		select * from release_activity where id=#{activiid} order by id
 	</select>
 
-	
 	<select id="isJoinByUser" resultType="Integer">
 			select count(*) from activity_registration WHERE sponsorld = #{0} and myld = #{1}
 	</select>

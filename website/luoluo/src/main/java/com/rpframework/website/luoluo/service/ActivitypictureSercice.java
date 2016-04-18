@@ -1,5 +1,6 @@
 package com.rpframework.website.luoluo.service;
 
+import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -23,6 +24,7 @@ public class ActivitypictureSercice extends BaseService{
 	@Resource SponsorService sponsorService;
 	@Resource MonlyjournallistService monlyjournalsService;
 	@Resource ClassificationService classfica;
+	@Resource ActivityService activityService;
 
 	
 	public boolean updatedo(Activitypicture activitypi) {
@@ -47,6 +49,15 @@ public class ActivitypictureSercice extends BaseService{
 	public Pager<Activitypicture> getpager(Pager<Activitypicture> pager){
 		long startTime = System.currentTimeMillis();
 		List<Activitypicture> list = tActivitypictureDao.doPager(this.packageMyBatisParam(pager));
+		for(Iterator<Activitypicture> iter = list.iterator(); iter.hasNext();){
+			Activitypicture item = iter.next();
+			if(null == item.getId())
+				break;
+			Activity t = activityService.select(item.getSponsorld());
+			if(t != null ){
+				item.setActivity(t);
+			}
+		}
 		pager.setItemList(list);
 		pager.setCostTime(System.currentTimeMillis() - startTime);
 		return pager;
@@ -153,6 +164,13 @@ public class ActivitypictureSercice extends BaseService{
 		// TODO Auto-generated method stub
 		return tActivitypictureDao.doListByActivity(activityId);
 	}
-
+	/**
+	 * 根据活动id查询报名列表
+	 * @param id
+	 * @return
+	 */
+	public List<Activitypicture> queryByAcitvity(Integer id) {
+		return tActivitypictureDao.queryByActivity(id);
+	}
 
 }

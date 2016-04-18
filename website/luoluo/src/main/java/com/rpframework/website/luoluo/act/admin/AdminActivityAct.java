@@ -24,10 +24,12 @@ import com.rpframework.utils.DateUtils;
 import com.rpframework.utils.NumberUtils;
 import com.rpframework.utils.Pager;
 import com.rpframework.website.luoluo.domain.Activity;
+import com.rpframework.website.luoluo.domain.Activitypicture;
 import com.rpframework.website.luoluo.domain.Banscity;
 import com.rpframework.website.luoluo.domain.Classification;
 import com.rpframework.website.luoluo.domain.Sponsorlis;
 import com.rpframework.website.luoluo.service.ActivityService;
+import com.rpframework.website.luoluo.service.ActivitypictureSercice;
 import com.rpframework.website.luoluo.service.BanscityService;
 import com.rpframework.website.luoluo.service.ClassificationService;
 import com.rpframework.website.luoluo.service.SponsorService;
@@ -39,6 +41,7 @@ public class AdminActivityAct extends AdminAct{
 	@Resource BanscityService banscityService;
 	@Resource FileService fileService;
 	@Resource ActivityService activityService;
+	@Resource ActivitypictureSercice apService;
 	@Resource SponsorService sponsorlisService;
 	@Resource ClassificationService classificationService;
 
@@ -58,11 +61,18 @@ public class AdminActivityAct extends AdminAct{
 		pager=activityService.getpager(pager);
 		List<Activity> list=pager.getItemList();
 		for(Activity act :list){
-			Sponsorlis sponsorlis=sponsorlisService.seletOne(act.getSponsorid());
-			if(sponsorlis==null){
-				act.setBm_num(0);
-			}else{
-				act.setBm_num(sponsorlis.getTypeopp());	
+			//Sponsorlis sponsorlis=sponsorlisService.seletOne(act.getSponsorid());
+			//if(sponsorlis==null){
+				//act.setBm_num(0);
+			//}else{
+			//	act.setBm_num(sponsorlis.getTypeopp());	
+			//}
+			//查询活动报名表list 遍历相加成人儿童和妹子
+			int bm = 0;
+			List<Activitypicture> apList = apService.queryByAcitvity(act.getId());
+			for(Activitypicture li : apList){
+				bm = Integer.valueOf(li.getOldboy())+Integer.valueOf(li.getChindenboy())+Integer.valueOf(li.getGrilexpense());
+				act.setBm_num(bm);
 			}
 		}
 		model.put("cal", cal);

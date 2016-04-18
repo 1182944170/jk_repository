@@ -57,7 +57,7 @@ $(function (){
 						<th>订单号</th>
 						<th>活动名称</th>
 						<th>活动地址</th>
-						<th>主办方</th>
+						<th>主办方id</th>
 						<th>支付金额</th>
 						<th>实际费用</th>
 						<th>手续费</th>
@@ -72,17 +72,28 @@ $(function (){
 				<#list pager.itemList as u>
 					<tr class="ff">
 						<td><span class="gray center">${u.ordernumber!}</span></td>
-	
-					<@miactivit cmd="get_miactivit_list" type="${u.sponsorld}" pagerString="1_" pageSize="50">
-						<#if (s_pager.itemList?size > 0)>
-							<#list s_pager.itemList as lo>
-								<td><span class="gray center">${lo.activityname}</span></td>
-							</#list>
-						<#else >
-							<td><span class="gray center"> </span></td>
-						</#if >
- 					</@miactivit>
- 					
+						<td><span class="gray center">
+							${u.activity.activityname}
+						</span></td>
+						<td><span class="gray center">
+							${u.activity.activitylocation}
+						</span></td>
+						<td><span class="gray center">
+							${u.myld}
+						</span></td>
+						<#--<@miactivit cmd="get_activity_list">
+								<#list activityList as o>
+									<#if o.id == u.sponsorld>
+									<td><span class="gray center">
+										${o.activityname!}
+											</span></td>
+									<td><span class="gray center">
+										${o.activitylocation!}
+											</span></td>
+									</#if>
+								</#list>
+						</@miactivit>
+ 					-->
 				        <td>￥<span class="gray center wore">${u.monely!}</span></td>
 				          <td>￥<span class="gray center" >${u.actualamount!}</span></td>
 				          <td>￥<span class="gray center" >${u.counterFee!}</span></td>

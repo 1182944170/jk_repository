@@ -51,6 +51,7 @@ public class Activitypicture {
 	@FieldMapperAnnotation
 	private long newtime;  // 订单状态
 	
+	Activity activity;
 	
 	private Integer bm_num;  // 订单状态
 	private User user;
@@ -224,6 +225,12 @@ public class Activitypicture {
 				+ ", chindenboy=" + chindenboy + ", monely=" + monely
 				+ ", mood=" + mood + ", type=" + type + ", insure=" + insure
 				+ "]";
+	}
+	public Activity getActivity() {
+		return activity;
+	}
+	public void setActivity(Activity activity) {
+		this.activity = activity;
 	}
 	
 }

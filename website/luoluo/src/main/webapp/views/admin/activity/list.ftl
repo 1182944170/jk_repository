@@ -18,7 +18,8 @@
 						<th>活动编号</th>
 						<th>活动名称</th>
 						<th>活动类别</th>
-						<th>活动人数</th>
+						<th>活动限制人数</th>
+						<th>活动报名人数</th>
 						<th>活动开始时间</th>
 						<th>活动结束时间</th>
 						<th>申请时间</th>
@@ -40,6 +41,7 @@
 				            </#list>
   						</@mifancut>
 				        <td><span class="gray center">${u.number!}</span></td>
+				        <td><span class="gray center">${u.bm_num!}</span></td>
 			
 				        <td><span class="gray center">${tagUtils.formatDate(u.starttime!)}</span></td>
 				        <td><span class="gray center">${tagUtils.formatDate(u.outtime!)}</span></td>

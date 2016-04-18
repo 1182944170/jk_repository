@@ -6,6 +6,7 @@ package com.rpframework.website.luoluo.event.impl;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
@@ -17,10 +18,10 @@ import com.rpframework.core.freemarker.directive.BaseTemplateDirectiveModel;
 import com.rpframework.core.freemarker.directive.DirectiveUtils;
 import com.rpframework.core.utils.SpringUtils;
 import com.rpframework.utils.Pager;
-
-
-
+import com.rpframework.website.luoluo.domain.Activity;
+import com.rpframework.website.luoluo.domain.Activitypicture;
 import com.rpframework.website.luoluo.service.ActivityService;
+import com.rpframework.website.luoluo.service.ActivitypictureSercice;
 
 import freemarker.core.Environment;
 import freemarker.template.ObjectWrapper;
@@ -33,6 +34,7 @@ public class MyactivityShow extends BaseTemplateDirectiveModel {
 
 	final Logger logger = LoggerFactory.getLogger(getClass());
 	static final String GET_MFCUTPIC_LIST = "get_miactivit_list";
+	static final String GET_ACTIVITY_LIST = "get_activity_list";
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
@@ -44,7 +46,8 @@ public class MyactivityShow extends BaseTemplateDirectiveModel {
 		boolean pass = true;
 		if (StringUtils.isBlank(cmd)) {
 			
-		} else if (StringUtils.equals(cmd, GET_MFCUTPIC_LIST)) {
+		}
+		else if (StringUtils.equals(cmd, GET_MFCUTPIC_LIST)) {
 			//int source = DirectiveUtils.getInt("source", params);
 			Integer type = DirectiveUtils.getInt("type", params);
 			ActivityService activityService = SpringUtils.getBean(ActivityService.class);
@@ -60,6 +63,11 @@ public class MyactivityShow extends BaseTemplateDirectiveModel {
 			activityService.getpager(pager);
 
 			paramWarp.put("s_pager", ObjectWrapper.DEFAULT_WRAPPER.wrap(pager));
+		}
+		else if (StringUtils.equals(cmd, GET_ACTIVITY_LIST)) {
+			ActivityService activityService = SpringUtils.getBean(ActivityService.class);
+			List<Activity> activityList = activityService.queryAll();
+			paramWarp.put("activityList", ObjectWrapper.DEFAULT_WRAPPER.wrap(activityList));
 		}
 
 		Map origWarp = DirectiveUtils.addParamsToVariable(env, paramWarp);

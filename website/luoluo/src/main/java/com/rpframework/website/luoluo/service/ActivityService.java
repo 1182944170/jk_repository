@@ -18,6 +18,7 @@ import com.rpframework.utils.NumberUtils;
 import com.rpframework.utils.Pager;
 import com.rpframework.website.luoluo.dao.IActivityDao;
 import com.rpframework.website.luoluo.domain.Activity;
+import com.rpframework.website.luoluo.domain.Activitypicture;
 
 
 @Service
@@ -286,6 +287,10 @@ public class ActivityService extends BaseService{
 	public Integer doIsJoin(Integer activityId, Integer userId) {
 		 Integer i = iactivitydao.isJoinByUser(activityId,userId);
 		return i > 0 ? 2 : 1;//1可以报名  2不能报名
+	}
+	public List<Activity> queryAll() {
+		// TODO Auto-generated method stub
+		return iactivitydao.queryAll();
 	}
 
 }

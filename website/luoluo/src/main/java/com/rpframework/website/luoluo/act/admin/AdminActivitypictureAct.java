@@ -13,13 +13,16 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.rpframework.core.exception.AdminIllegalArgumentException;
 import com.rpframework.utils.Pager;
+import com.rpframework.website.luoluo.domain.Activity;
 import com.rpframework.website.luoluo.domain.Activitypicture;
+import com.rpframework.website.luoluo.service.ActivityService;
 import com.rpframework.website.luoluo.service.ActivitypictureSercice;
 
 @Controller
 @RequestMapping("admin/actcyitypic")
 public class AdminActivitypictureAct extends AdminAct{
 	@Resource  ActivitypictureSercice activitypictureSercice;
+	@Resource  ActivityService activityService;
 	/**
 	 * 透过活动id查询用户表内的信息
 	 * @param id
@@ -60,6 +63,10 @@ public class AdminActivitypictureAct extends AdminAct{
 		Activitypicture activitypicture=activitypictureSercice.selectone(id);
 		if(activitypicture == null) {
 			throw new AdminIllegalArgumentException("不存在的ID:" + id);
+		}
+		Activity a = activityService.select(activitypicture.getSponsorld());
+		if(a!=null){
+			model.put("activity", a);
 		}
 		String [] arr = activitypicture.getInsure().split(",");
 		String [] forname = activitypicture.getInsurenName().split(",");

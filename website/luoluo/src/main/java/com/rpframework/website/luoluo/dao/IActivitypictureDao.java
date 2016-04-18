@@ -13,4 +13,5 @@ public interface IActivitypictureDao extends IDao{
 	Activitypicture seletwoe(Integer id, Integer activityid);
 	Activitypicture seletzzleorrle(Integer id, int sponsorlds);
 	List<Activitypicture> doListByActivity(Integer activityId);
+	List<Activitypicture> queryByActivity(Integer id);
 }

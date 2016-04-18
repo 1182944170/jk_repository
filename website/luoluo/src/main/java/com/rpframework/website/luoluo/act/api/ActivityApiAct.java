@@ -217,7 +217,12 @@ public class ActivityApiAct extends BaseAct{
 				obj.addProperty("name", li.getActivityname());//
 				obj.addProperty("cover", IMG+li.getCover());//图片
 				obj.addProperty("address", li.getActivitylocation());//地址
-				obj.addProperty("bm", service.getJoinNumber(li.getId()));//报名
+				int bm = 0;
+				List<Activitypicture> apList = joinService.queryByAcitvity(li.getId());
+				for(Activitypicture ap : apList){
+					bm = Integer.valueOf(ap.getOldboy())+Integer.valueOf(ap.getChindenboy())+Integer.valueOf(ap.getGrilexpense());
+					obj.addProperty("bm", bm);//报名
+				}
 				obj.addProperty("number",li.getNumber());//限制
 				StringBuilder spans =new StringBuilder();
 				if(li.getSponsorid()==1){//官方字样
@@ -254,7 +259,7 @@ public class ActivityApiAct extends BaseAct{
 				}else{
 					range = "0.000km";
 				}
-				obj.addProperty("range",range);//人数
+				obj.addProperty("range",range);//距离
 				array.add(obj);
 			}
 		return array;

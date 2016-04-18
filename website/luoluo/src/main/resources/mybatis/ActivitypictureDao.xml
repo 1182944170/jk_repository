@@ -30,7 +30,6 @@
 		SELECT * FROM activity_registration a WHERE sponsorld = #{0}
 	</select>
 	
-	
 	<select id="selectole" parameterType="Integer" resultMap="Activitypicture" >
 		select * from activity_registration where sponsorld=#{activiid} and typeOrder=2
 	</select>
@@ -42,5 +41,8 @@
 	</select>
 	<select id="seletzzleorrle" parameterType="map" resultMap="Activitypicture" >
 		select * from activity_registration where myld=#{0} and sponsorld=#{1} and typeOrder=1
+	</select>
+	<select id="queryByActivity" resultMap="Activitypicture" >
+		select oldboy,chindenboy,grilexpense from activity_registration
 	</select>
 </mapper>
