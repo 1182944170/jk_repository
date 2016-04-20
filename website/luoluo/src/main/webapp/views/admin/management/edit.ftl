@@ -193,21 +193,17 @@ window.print();
             		<td>
 	                   <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="list_t_03">
 	                   		<tr><th>保险姓名</th></tr>
-	                   		<#list name as o>
 		                   		<tr>
 		                   			<td align="center">${acp.insurenName!}</td>
 		                   		</tr>
-	                   		</#list>
 	                   </table>
                    </td>
             		<td>
 	                   <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="list_t_03">
 	                   		<tr><th>保险证件</th></tr>
-	                   		<#list num as z>
 	                   			<tr>
 	                   				<td align="center">${acp.insure!}</td>
 	                   			</tr>
-	                   		</#list>
 	                   </table>
                    </td>
                 </tr>

@@ -107,9 +107,21 @@ public class ApiActivitypictureAct extends BaseAct{
 				Activitypi.setPhone(phone);
 				Activitypi.setEmergencyname(emergencyname);
 				Activitypi.setEmergencyphone(emergencyphone);
-				Activitypi.setOldboy(oldboy);
-				Activitypi.setChindenboy(chindenboy);
-				Activitypi.setGrilexpense(grilexpense);
+				if(StringUtils.isNotBlank(oldboy)){
+					Activitypi.setOldboy(oldboy);
+				}else{
+					Activitypi.setOldboy(String.valueOf(0));
+				}
+				if(StringUtils.isNotBlank(chindenboy)){
+					Activitypi.setChindenboy(chindenboy);
+				}else{
+					Activitypi.setChindenboy(String.valueOf(0));
+				}
+				if(StringUtils.isNotBlank(grilexpense)){
+					Activitypi.setGrilexpense(grilexpense);
+				}else{
+					Activitypi.setGrilexpense(String.valueOf(0));
+				}
 				Activitypi.setMonely(money);
 				double cc=money;
 				double counterFee=0;
