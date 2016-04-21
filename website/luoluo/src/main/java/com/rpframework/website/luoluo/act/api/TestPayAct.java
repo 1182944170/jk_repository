@@ -219,7 +219,7 @@ public class TestPayAct {
 			            json.addProperty("noncestr", appMap.get("noncestr"));
 			            json.addProperty("prepayid", appMap.get("prepayid"));
 			            json.addProperty("appid", appMap.get("appid"));
-			            json.addProperty("packge", "Sign=WXPay");
+			            json.addProperty("package", "Sign=WXPay");
 			        } else {
 			            System.out.println(WXpayCore.getErrMsg(retMap));
 			        }
