@@ -227,11 +227,9 @@ public class TestPayAct {
 					return json;
 		}
 		@RequestMapping(value="/wx_pay_notify",produces = "application/json; charset=utf-8")
-		public @ResponseBody JsonElement wxPayNotify(
-				) {
-			JsonObject json = new JsonObject();
-			json.addProperty("notify", "回调成功");
-			return json;
+		public String wxPayNotify() {
+			System.out.println(" =============回调成功====================");
+			return "";
 		}
 		public static Map<String, String> testUnifiedorder(String orderId, String claName, String money) {
 	        Map<String, String> testMap = new HashMap<String, String>();
