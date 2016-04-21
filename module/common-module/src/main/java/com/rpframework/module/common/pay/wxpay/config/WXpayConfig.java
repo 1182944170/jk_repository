@@ -22,11 +22,11 @@ public class WXpayConfig {
 
     // ↓↓↓↓↓↓↓↓↓↓请在这里配置您的基本信息↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
     // APPid
-    public static String appid = "wx21922ce19d2a4dc6"; //pay.properties
+    public static String appid = "wx4a414cd9978ae93a"; //pay.properties wx4a414cd9978ae93a  wx21922ce19d2a4dc6
     // API 密钥
-    public static String api_key = "1b3f056c0f01ec04c2cfbf777346762f";
+    public static String api_key = "4048bb384827afc47445ab2b6837913d"; // 4048bb384827afc47445ab2b6837913d 62c2a2592930f3998f18836b815a8545 1b3f056c0f01ec04c2cfbf777346762f
     // 商户号
-    public static String mch_id = "1249261801";
+    public static String mch_id = "1303003701"; // 1303003701 1249261801
 
     public static String notifyURL = "";
     // ↑↑↑↑↑↑↑↑↑↑请在这里配置您的基本信息↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
