@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import sun.print.resources.serviceui;
+
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.rpframework.module.common.pay.alipay.config.AlipayConfig;
@@ -194,61 +196,26 @@ public class TestPayAct {
 			return ret;
 		} 	
 		
-		@RequestMapping(value="/wx_pay",produces = "application/json; charset=utf-8")
-		public @ResponseBody JsonElement wxPay(
-				@RequestParam(value="orderId",required=true) String orderId,//订单id
-				@RequestParam(value="ClaName",required=true) String ClaName,//订单名
-				@RequestParam(value="Activityname",required=true) String Activityname,//订单内容
-				@RequestParam(value="money",required=true) Double money,//订单价格										
-				@RequestParam(value="memo",required=false) String memo//显示备注
-				) {
-					JsonObject json = new JsonObject();
-					System.out.println(" =============》预付款开始:");
-					Double d = money*100;
-					Map<String, String> retMap = testUnifiedorder(orderId,ClaName,String.valueOf(d.intValue()));
-			        System.out.println(" =============》预付款结束:");
-			        System.out.println(WXpayCore.isRetSuccess(retMap)); // 判断统一下单（预支付）接口是否成功
-			        if (WXpayCore.isRetSuccess(retMap)) {
-			        	Map<String, String> appMap = WXpayApi.makePaymentMap(retMap);
-			            // 预支付成功，组装真正支付需要的参数，返回给app使用
-			            System.out.println(" =============》组装app使用参数:");
-			            System.out.println(appMap);
-			            json.addProperty("sign", appMap.get("sign"));
-			            json.addProperty("timestamp", appMap.get("timestamp"));
-			            json.addProperty("partnerid", appMap.get("partnerid"));
-			            json.addProperty("noncestr", appMap.get("noncestr"));
-			            json.addProperty("prepayid", appMap.get("prepayid"));
-			            json.addProperty("appid", appMap.get("appid"));
-			            json.addProperty("package", "Sign=WXPay");
-			        } else {
-			            System.out.println(WXpayCore.getErrMsg(retMap));
-			        }
-					
-					return json;
-		}
 		@RequestMapping(value="/wx_pay_notify",produces = "application/json; charset=utf-8")
-		public String wxPayNotify() {
-			System.out.println(" =============回调成功====================");
+		public String wxPayNotify(HttpServletRequest request) throws UnsupportedEncodingException {
+			String rc = new String(request.getParameter("result_code").getBytes("ISO-8859-1"),"UTF-8");
+			if("SUCCESS".equals(rc)){
+				System.out.println(" =============回调成功====================");
+				String out_trade_no = new String(request.getParameter("out_trade_no").getBytes("ISO-8859-1"),"UTF-8");
+				Activitypicture t = activitypictureSercice.selecttrade(out_trade_no);
+				if(t==null){
+					System.out.println("===================报名不存在=========================");			
+				}else{
+					t.setType(2);
+					boolean f = activitypictureSercice.update(t);
+					if(f){
+						System.out.println("===================更改状态成功=========================");			
+					}else{
+						System.out.println("===================更改状态失败=========================");			
+					}
+				}
+			}
+			System.out.println("===================回调验证失败=========================");			
 			return "";
 		}
-		public static Map<String, String> testUnifiedorder(String orderId, String claName, String money) {
-	        Map<String, String> testMap = new HashMap<String, String>();
-	       // testMap.put("device_info", "aaa"); // 设备号
-	        testMap.put("body", claName); // 商品描述
-	       // testMap.put("detail", "离子水1，离子水2"); // 商品详情
-	       // testMap.put("attach", "附加数据"); // 附加数据
-	        testMap.put("out_trade_no", orderId); // 商户订单号
-	        testMap.put("total_fee", money); // 总金额
-	        testMap.put("spbill_create_ip", "192.168.0.1"); // 终端IP
-	       // testMap.put("time_start", ""); // 交易起始时间
-	       // testMap.put("time_expire", ""); // 交易结束时间
-
-	      //  testMap.put("goods_tag", ""); // 商品标记
-	        testMap.put("notify_url", "app.rofor.com:8080/api/order/wx_pay_notify"); // 通知地址
-	        testMap.put("trade_type", "APP"); // 交易类型
-	      //testMap.put("product_id", ""); // 商品ID
-	      // testMap.put("openid", ""); // 用户标识
-	        Map<String, String> retMap = WXpayApi.unifiedOrderRetMap(testMap);
-	        return retMap;
-	    }
 }
