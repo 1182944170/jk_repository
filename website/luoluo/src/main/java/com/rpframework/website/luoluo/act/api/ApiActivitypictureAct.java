@@ -61,6 +61,7 @@ public class ApiActivitypictureAct extends BaseAct{
 	 * @param insure
 	 * @return
 	 * @throws Exception
+	 * 
 	 */
 	@RequestMapping("/add")
 	public  @ResponseBody JsonElement add(
