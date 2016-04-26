@@ -70,9 +70,9 @@ public class ApiActivitypictureAct extends BaseAct{
 			@RequestParam(required=false) String phone,
 			@RequestParam(required=false) String emergencyphone,
 			@RequestParam(required=false) String emergencyname,
-			@RequestParam(required=false) String oldboy,
-			@RequestParam(required=false) String chindenboy,
-			@RequestParam(required=false) String grilexpense,//女生人数
+			@RequestParam(required=false) Integer oldboy,
+			@RequestParam(required=false) Integer chindenboy,
+			@RequestParam(required=false) Integer grilexpense,//女生人数
 			@RequestParam(required=false) double money,
 			@RequestParam(required=false) String mood,
 			@RequestParam(required=false) String insure, //投保证件
@@ -97,7 +97,7 @@ public class ApiActivitypictureAct extends BaseAct{
 				Activitypi=new Activitypicture();
 				Activity a = activityService.select(sponsorlds);
 				if(a!=null){
-					if(StringUtils.isNotBlank(grilexpense)){
+					if(NumberUtils.isValid(grilexpense)){
 						a.setJoinNumber(a.getJoinNumber()+Integer.valueOf(grilexpense));
 						activityService.update(a);
 					}
@@ -108,20 +108,20 @@ public class ApiActivitypictureAct extends BaseAct{
 				Activitypi.setPhone(phone);
 				Activitypi.setEmergencyname(emergencyname);
 				Activitypi.setEmergencyphone(emergencyphone);
-				if(StringUtils.isNotBlank(oldboy)){
+				if(NumberUtils.isValid(oldboy)){
 					Activitypi.setOldboy(oldboy);
 				}else{
-					Activitypi.setOldboy(String.valueOf(0));
+					Activitypi.setOldboy(0);
 				}
-				if(StringUtils.isNotBlank(chindenboy)){
+				if(NumberUtils.isValid(chindenboy)){
 					Activitypi.setChindenboy(chindenboy);
 				}else{
-					Activitypi.setChindenboy(String.valueOf(0));
+					Activitypi.setChindenboy(0);
 				}
-				if(StringUtils.isNotBlank(grilexpense)){
+				if(NumberUtils.isValid(grilexpense)){
 					Activitypi.setGrilexpense(grilexpense);
 				}else{
-					Activitypi.setGrilexpense(String.valueOf(0));
+					Activitypi.setGrilexpense(0);
 				}
 				Activitypi.setMonely(money);
 				double cc=money;

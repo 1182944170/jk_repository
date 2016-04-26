@@ -94,13 +94,13 @@ public class ApiActivityAct extends BaseAct{
 			int i=0;
 			for (Activitypicture tt : cc) {
 				if("".equals(tt.getGrilexpense())){
-					tt.setGrilexpense(0+"");
+					tt.setGrilexpense(0);
 				}else if("".equals(tt.getChindenboy())){
-					tt.setChindenboy(0+"");
+					tt.setChindenboy(0);
 				}else if("".equals(tt.getOldboy())){
-					tt.setOldboy(0+"");
+					tt.setOldboy(0);
 				}
-				i=Integer.parseInt(tt.getGrilexpense())+Integer.parseInt(tt.getChindenboy())+Integer.parseInt(tt.getOldboy());
+				i=tt.getOldboy()+tt.getChindenboy()+tt.getGrilexpense();
 				bm_num+=i;
 			}
 			act.setBm_num(bm_num);
@@ -201,7 +201,7 @@ public class ApiActivityAct extends BaseAct{
 		int bm_num=0;
 		for (Activitypicture act : activitypict) {
 			int i=0;
-				i=Integer.parseInt(act.getGrilexpense())+Integer.parseInt(act.getChindenboy())+Integer.parseInt(act.getOldboy());
+			i=act.getOldboy()+act.getChindenboy()+act.getGrilexpense();
 				bm_num+=i;
 			act.setBm_num(bm_num);
 			
@@ -226,7 +226,7 @@ public class ApiActivityAct extends BaseAct{
 			act.setUser(user);
 			int bm_num=0;
 			int i=0;
-				i=Integer.parseInt(act.getGrilexpense())+Integer.parseInt(act.getChindenboy())+Integer.parseInt(act.getOldboy());
+			i=act.getOldboy()+act.getChindenboy()+act.getGrilexpense();
 				bm_num+=i;
 			act.setBm_num(bm_num);
 			
@@ -305,7 +305,7 @@ public class ApiActivityAct extends BaseAct{
 			int bm_num=0;
 			int i=0;
 			for (Activitypicture tt : cc) {
-				i=Integer.parseInt(tt.getGrilexpense())+Integer.parseInt(tt.getChindenboy())+Integer.parseInt(tt.getOldboy());
+				i=tt.getOldboy()+tt.getChindenboy()+tt.getGrilexpense();
 				bm_num+=i;
 				
 			}
@@ -391,7 +391,7 @@ public class ApiActivityAct extends BaseAct{
 			int bm_num=0;
 			int i=0;
 			for (Activitypicture tt : cc) {
-				i=Integer.parseInt(tt.getGrilexpense())+Integer.parseInt(tt.getChindenboy())+Integer.parseInt(tt.getOldboy());
+				i=tt.getOldboy()+tt.getChindenboy()+tt.getGrilexpense();
 				bm_num+=i;
 				
 			}
@@ -620,7 +620,7 @@ public class ApiActivityAct extends BaseAct{
 			int bm_num=0;
 			int i=0;
 			for (Activitypicture tt : cc) {
-				i=Integer.parseInt(tt.getGrilexpense())+Integer.parseInt(tt.getChindenboy())+Integer.parseInt(tt.getOldboy());
+				i=tt.getOldboy()+tt.getChindenboy()+tt.getGrilexpense();
 				bm_num+=i;
 				
 			}
