@@ -71,7 +71,7 @@ public class AdminActivityAct extends AdminAct{
 			int bm = 0;
 			List<Activitypicture> apList = apService.queryByAcitvity(act.getId());
 			for(Activitypicture li : apList){
-				bm = Integer.valueOf(li.getOldboy())+Integer.valueOf(li.getChindenboy())+Integer.valueOf(li.getGrilexpense());
+				bm = bm + li.getOldboy()+li.getChindenboy()+li.getGrilexpense();
 				act.setBm_num(bm);
 			}
 		}
