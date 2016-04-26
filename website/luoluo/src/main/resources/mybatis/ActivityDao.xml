@@ -83,7 +83,7 @@
 		<!--报名表里sponsorid 报名 用户性别为女的 只是有妹子  #{param6} #{param7}-->
 		<if test = "page.searchMap.lng != null">
 		    <if test = "page.searchMap.lat != null">
-				ORDER BY juli ASC
+				ORDER BY t1.starttime,juli ASC
 			</if>
 		</if>
 	</select>

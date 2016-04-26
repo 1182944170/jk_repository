@@ -17,11 +17,13 @@ public class Activitypicture {
 	@FieldMapperAnnotation
 	private String emergencyname;
 	@FieldMapperAnnotation
-	private String oldboy;
+	
+	private Integer oldboy;
 	@FieldMapperAnnotation
-	private String grilexpense;
+	private Integer grilexpense;
 	@FieldMapperAnnotation
-	private String chindenboy;
+	private Integer chindenboy;
+	
 	@FieldMapperAnnotation
 	private double monely;  //金额
 	@FieldMapperAnnotation
@@ -62,12 +64,6 @@ public class Activitypicture {
 	}
 	public void setActivitypicture(Activitypicture activitypicture) {
 		this.activitypicture = activitypicture;
-	}
-	public String getGrilexpense() {
-		return grilexpense;
-	}
-	public void setGrilexpense(String grilexpense) {
-		this.grilexpense = grilexpense;
 	}
 	public Integer getId() {
 		return id;
@@ -126,19 +122,6 @@ public class Activitypicture {
 	public void setEmergencyname(String emergencyname) {
 		this.emergencyname = emergencyname;
 	}
-	public String getOldboy() {
-		return oldboy;
-	}
-	public void setOldboy(String oldboy) {
-		this.oldboy = oldboy;
-	}
-	public String getChindenboy() {
-		return chindenboy;
-	}
-	public void setChindenboy(String chindenboy) {
-		this.chindenboy = chindenboy;
-	}
-
 	public String getMood() {
 		return mood;
 	}
@@ -231,6 +214,24 @@ public class Activitypicture {
 	}
 	public void setActivity(Activity activity) {
 		this.activity = activity;
+	}
+	public Integer getOldboy() {
+		return oldboy;
+	}
+	public void setOldboy(Integer oldboy) {
+		this.oldboy = oldboy;
+	}
+	public Integer getGrilexpense() {
+		return grilexpense;
+	}
+	public void setGrilexpense(Integer grilexpense) {
+		this.grilexpense = grilexpense;
+	}
+	public Integer getChindenboy() {
+		return chindenboy;
+	}
+	public void setChindenboy(Integer chindenboy) {
+		this.chindenboy = chindenboy;
 	}
 	
 }

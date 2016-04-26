@@ -220,7 +220,7 @@ public class ActivityApiAct extends BaseAct{
 				int bm = 0;
 				List<Activitypicture> apList = joinService.queryByAcitvity(li.getId());
 				for(Activitypicture ap : apList){
-					bm = Integer.valueOf(ap.getOldboy())+Integer.valueOf(ap.getChindenboy())+Integer.valueOf(ap.getGrilexpense());
+					bm = bm+ap.getOldboy()+ap.getChindenboy()+ap.getGrilexpense();//每条报名的总人数
 					obj.addProperty("bm", bm);//报名
 				}
 				obj.addProperty("number",li.getNumber());//限制
