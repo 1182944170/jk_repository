@@ -221,8 +221,8 @@ public class ActivityApiAct extends BaseAct{
 				List<Activitypicture> apList = joinService.queryByAcitvity(li.getId());
 				for(Activitypicture ap : apList){
 					bm = bm+ap.getOldboy()+ap.getChindenboy()+ap.getGrilexpense();//每条报名的总人数
-					obj.addProperty("bm", bm);//报名
 				}
+				obj.addProperty("bm", bm);//报名
 				obj.addProperty("number",li.getNumber());//限制
 				StringBuilder spans =new StringBuilder();
 				if(li.getSponsorid()==1){//官方字样
