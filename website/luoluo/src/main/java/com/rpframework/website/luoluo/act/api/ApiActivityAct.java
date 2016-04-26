@@ -197,17 +197,12 @@ public class ApiActivityAct extends BaseAct{
 			}
 		}
 		json.add("imgs", imgArray);
-		List<Activitypicture> activitypict=activitypictureSercice.selectlist(activiid);
-		int bm_num=0;
-		for (Activitypicture act : activitypict) {
-			int i=0;
-			i=act.getOldboy()+act.getChindenboy()+act.getGrilexpense();
-				bm_num+=i;
-			act.setBm_num(bm_num);
-			
+		int bm = 0;
+		List<Activitypicture> apList = activitypictureSercice.queryByAcitvity(activity.getId());
+		for(Activitypicture ap : apList){
+			bm = bm+ap.getOldboy()+ap.getChindenboy()+ap.getGrilexpense();//每条报名的总人数
 		}
-		//json.addProperty("bm_num", activityService.getJoinNumber(activity.getId()));//已报名的人数
-		json.addProperty("bm_num", bm_num);//已报名的人数
+		json.addProperty("bm_num", bm);//已报名的人数
 		return json;
 	}
 	/**
