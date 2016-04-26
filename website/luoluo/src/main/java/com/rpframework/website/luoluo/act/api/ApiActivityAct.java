@@ -206,7 +206,8 @@ public class ApiActivityAct extends BaseAct{
 			act.setBm_num(bm_num);
 			
 		}
-		json.addProperty("bm_num", activityService.getJoinNumber(activity.getId()));//已报名的人数
+		//json.addProperty("bm_num", activityService.getJoinNumber(activity.getId()));//已报名的人数
+		json.addProperty("bm_num", bm_num);//已报名的人数
 		return json;
 	}
 	/**
