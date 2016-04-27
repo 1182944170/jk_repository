@@ -94,8 +94,13 @@ public class ApiActivitypictureAct extends BaseAct{
 				throw new APICodeException(-20, "活动已经开始不允许报名");
 			}
 			//查出当前活限制人数 和已报名人数  取出当前准备报名的人数 
-			int bm = oldboy+chindenboy+grilexpense;
-			if(bm>activity.getNumber()){
+			int bmnow = oldboy+chindenboy+grilexpense;
+			int bm = 0;
+			List<Activitypicture> apList = activitypictureSercice.queryByAcitvity(activity.getId());//原来的报名人数
+			for(Activitypicture ap : apList){
+				bm = bm+ap.getOldboy()+ap.getChindenboy()+ap.getGrilexpense();//每条报名的总人数
+			}
+			if(bm+bmnow>activity.getNumber()){
 				JsonObject json = new JsonObject();
 				json.addProperty("succ", false);
 				json.addProperty("msg", "报名人数超过上限！");
