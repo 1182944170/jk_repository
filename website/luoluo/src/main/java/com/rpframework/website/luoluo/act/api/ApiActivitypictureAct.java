@@ -93,11 +93,19 @@ public class ApiActivitypictureAct extends BaseAct{
 			if(activity.getStarttime()<i ||activity.getStarttime()==i){
 				throw new APICodeException(-20, "活动已经开始不允许报名");
 			}
+			//查出当前活限制人数 和已报名人数  取出当前准备报名的人数 
+			int bm = oldboy+chindenboy+grilexpense;
+			if(bm>activity.getNumber()){
+				JsonObject json = new JsonObject();
+				json.addProperty("succ", false);
+				json.addProperty("msg", "报名人数超过上限！");
+				return json;
+			}
 			if(Activitypi==null){
 				Activitypi=new Activitypicture();
 				Activity a = activityService.select(sponsorlds);
 				if(a!=null){
-					if(NumberUtils.isValid(grilexpense)){
+					if(NumberUtils.isValid(grilexpense)){//报名成功添加妹子
 						a.setJoinNumber(a.getJoinNumber()+Integer.valueOf(grilexpense));
 						activityService.update(a);
 					}
@@ -136,7 +144,7 @@ public class ApiActivitypictureAct extends BaseAct{
 				Activitypi.setInsurenName(insurename);
 				Activitypi.setTypeMonely(typeMonely);
 				Activitypi.setNewtime(System.currentTimeMillis()/1000);
-				Activitypi.setType(activity.getType());
+				Activitypi.setType(1);
 				Activitypi.setTypeOrder(1);
 				activitypictureSercice.insertdo(Activitypi);
 				Activitypi.setOrdernumber(DateUtils.nowDate(DateUtils.YYYYMMDDHHMMSS) + NumberUtils.random(5)+Activitypi.getId());
