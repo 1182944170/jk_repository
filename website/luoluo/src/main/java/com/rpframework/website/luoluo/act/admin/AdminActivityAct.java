@@ -61,12 +61,12 @@ public class AdminActivityAct extends AdminAct{
 		pager=activityService.getpager(pager);
 		List<Activity> list=pager.getItemList();
 		for(Activity act :list){
-			//Sponsorlis sponsorlis=sponsorlisService.seletOne(act.getSponsorid());
-			//if(sponsorlis==null){
-				//act.setBm_num(0);
-			//}else{
-			//	act.setBm_num(sponsorlis.getTypeopp());	
-			//}
+			Sponsorlis sponsorlis=sponsorlisService.seletOne(act.getSponsorid());
+			if(sponsorlis==null){
+				act.setBm_num(0);
+			}else{
+				act.setBm_num(sponsorlis.getTypeopp());	
+			}
 			//查询活动报名表list 遍历相加成人儿童和妹子
 			int bm = 0;
 			List<Activitypicture> apList = apService.queryByAcitvity(act.getId());
