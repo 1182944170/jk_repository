@@ -309,6 +309,9 @@ public class ActivityApiAct extends BaseAct{
 			obj.addProperty("girl", li.getGrilexpense());//
 			obj.addProperty("man", li.getOldboy());//
 			obj.addProperty("child", li.getChindenboy());//
+			obj.addProperty("id", u.getId());//
+			obj.addProperty("sex", u.getSex());//
+			obj.addProperty("age", u.getAge());//0男 1女
 			Activity a = service.select(li.getSponsorld());
 			if(a!=null && a.getSponsorid() == user.getId()){
 				obj.addProperty("tel", u.getPhone());

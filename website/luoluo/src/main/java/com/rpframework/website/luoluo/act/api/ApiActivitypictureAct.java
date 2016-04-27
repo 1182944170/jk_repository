@@ -149,7 +149,7 @@ public class ApiActivitypictureAct extends BaseAct{
 						TestPayAct ss=new TestPayAct();
 						String memo = null;
 						return ss.orderList(Activitypi.getOrdernumber() , activity.getActivityname(),classi.getClaName(), money,memo);
-						///支付宝支付
+						//支付宝支付
 					} else if (typeMonely == 2) {
 						
 						bFlag = activitypictureSercice.bagPay(currUser.getId(), Activitypi.getId(),activity);
