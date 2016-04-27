@@ -162,4 +162,9 @@
 		ORDER BY juli 
 		LIMIT 50
 	</select>
+	<select id="doActivitySearch" parameterType="map" resultMap="Activity">
+		select * from release_activity where activityname like '%' #{0} '%' or activitynumber like '%' #{0} '%' and  type = 2 ORDER BY starttime limit #{1},#{2}
+	</select>
+	
+	
 </mapper>

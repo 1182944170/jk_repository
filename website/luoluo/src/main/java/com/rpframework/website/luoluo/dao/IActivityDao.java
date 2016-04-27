@@ -40,4 +40,5 @@ public interface IActivityDao extends IDao{
 	Integer doFinishCount();
 	Integer isJoinByUser(Integer activityId, Integer userId);
 	List<Activity> queryAll();
+	List<Activity> doActivitySearch(String search, Integer page, Integer limit);
 }

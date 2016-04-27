@@ -292,5 +292,10 @@ public class ActivityService extends BaseService{
 		// TODO Auto-generated method stub
 		return iactivitydao.queryAll();
 	}
+	public List<Activity> doActivityListSearch(String search, Integer page,
+			Integer limit) {
+		page = Integer.valueOf(page*limit-limit);
+		return iactivitydao.doActivitySearch(search,page,limit);
+	}
 
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -47,6 +48,7 @@ public class ActivityApiAct extends BaseAct{
 	public @ResponseBody JsonElement activityList(
 			HttpSession session,
 			@RequestParam(value="pager", required=false)Pager<Activity> pager,
+			@RequestParam(value="search",required=false) String search,//经度
 			@RequestParam(value="lng",required=false) String lng,//经度
 			@RequestParam(value="lat",required=false) String lat,//纬度
 			@RequestParam(value="categoryId",required=false) Integer categoryId,//分类id
@@ -78,6 +80,12 @@ public class ActivityApiAct extends BaseAct{
 		List<Activity> list =null;
 		//Integer userId=4; 换成有数据的测试用户id
 		Integer userId =user.getId();
+		if(StringUtils.isNotBlank(search)){//查活动编号或 
+			list = service.doActivityListSearch(search,page,limit);
+			array = getArray(list,span);
+			json.add("array", array);
+			return json;
+		}
 		if("publish".equals(type)){//查我发布的 
 			list = service.doActivityListByUserId(userId,page,limit);
 			//json.addProperty("totalPage",list.get(0).getTotalPage());
