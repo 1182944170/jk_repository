@@ -27,7 +27,8 @@
 	</select>
 	
 	<select id="doListByActivity" parameterType="Integer" resultMap="Activitypicture" >
-		SELECT * FROM activity_registration a WHERE sponsorld = #{0}
+		 select a.* from activity_registration a
+		left join release_activity r on a.sponsorld = r.id WHERE a.type = 2 or r.zhuangttai = 1 AND r.Id = #{0}
 	</select>
 	
 	<select id="selectole" parameterType="Integer" resultMap="Activitypicture" >
