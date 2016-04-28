@@ -85,6 +85,19 @@ public class ApiActivitypictureAct extends BaseAct{
 			if(currUser == null){
 				throw new APICodeException(-4, "你还没登陆!");
 			}	
+			/*
+			 * 报名
+			 * 报名 页面
+			 1.真实姓名  和 电话号码 不用修改的
+			 2.字段填写 ：
+			紧急联系人姓名 紧急联系人电话
+			男生 女生 儿童
+			保险人姓名 保险人身份证号
+			心情 
+			总计费用 
+			 * */
+			
+			
 			int sponsorlds=Integer.parseInt(sponsorld);
 			Activity activity = activityService.selectcal(sponsorlds);
 			Classification  classi = classiftionservice.selectcal(activity.getActivitycategory());
@@ -94,7 +107,17 @@ public class ApiActivitypictureAct extends BaseAct{
 				throw new APICodeException(-20, "活动已经开始不允许报名");
 			}
 			//查出当前活限制人数 和已报名人数  取出当前准备报名的人数 
-			int bmnow = oldboy+chindenboy+grilexpense;
+			
+			int bmnow =0 ;
+			if(NumberUtils.isValid(oldboy)){
+				bmnow += oldboy;
+			}
+			if(NumberUtils.isValid(chindenboy)){
+				bmnow += chindenboy;
+			}
+			if(NumberUtils.isValid(grilexpense)){
+				bmnow += grilexpense;
+			}
 			int bm = 0;
 			List<Activitypicture> apList = activitypictureSercice.queryByAcitvity(activity.getId());//原来的报名人数
 			for(Activitypicture ap : apList){
@@ -178,7 +201,9 @@ public class ApiActivitypictureAct extends BaseAct{
 					throw new APICodeException(-2, "请选择支付类型...");
 				}
 			}else{
+				orderjson.addProperty("succ", true);
 				orderjson.addProperty("zhuangtai", 1);
+				orderjson.addProperty("msg", "报名成功，线下收费！");
 			}
 		
 		if(bFlag){

@@ -26,11 +26,12 @@
 		<!-- 过期的数据查不出来 -->
 		and t1.starttime &gt; UNIX_TIMESTAMP()
 		<!-- 客户端未审核的数据不显示 后台未审核的数据要显示 并且能审核-->
-		
 		<if test = "page.searchMap.type != null">
-			and t1.type = #{page.searchMap.type}
+		 and t1.type = #{page.searchMap.type}
+            and t1.sponsorid in (
+      			select s.id from sponsor s where s.typeopp = 1
+            )
 		</if>
-		
 		<!-- 按类型分类 1户外 2旅行 #{param1}-->
 		<if test = "page.searchMap.categoryId != null">
 			AND t1.activitycategory = #{page.searchMap.categoryId}

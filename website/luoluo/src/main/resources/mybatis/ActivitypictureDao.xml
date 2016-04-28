@@ -43,6 +43,7 @@
 		select * from activity_registration where myld=#{0} and sponsorld=#{1} and typeOrder=1
 	</select>
 	<select id="queryByActivity" resultMap="Activitypicture" >
-		select oldboy,chindenboy,grilexpense from activity_registration WHERE sponsorld = #{0} and type = 2
+	    select a.oldboy,a.chindenboy,a.grilexpense from activity_registration a
+		left join release_activity r on a.sponsorld = r.id WHERE a.type = 2 or r.zhuangttai = 1 AND r.Id = #{0}
 	</select>
 </mapper>
