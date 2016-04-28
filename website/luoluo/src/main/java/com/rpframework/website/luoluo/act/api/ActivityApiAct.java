@@ -123,7 +123,9 @@ public class ActivityApiAct extends BaseAct{
 		if(NumberUtils.isValid(days)){
 			Long l =null;
 			l = days*86400l;//几天 days
-			pager.getSearchMap().put("l", String.valueOf(l));
+			if(days<=7){
+				pager.getSearchMap().put("l", String.valueOf(l));
+			}
 		}
 		if(NumberUtils.isValid(time)){
 			Long[] arrl = null;
