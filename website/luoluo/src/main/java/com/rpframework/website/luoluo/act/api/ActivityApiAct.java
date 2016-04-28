@@ -128,8 +128,10 @@ public class ActivityApiAct extends BaseAct{
 		if(NumberUtils.isValid(time)){
 			Long[] arrl = null;
 			arrl = service.getFormatTime(time); 
-			pager.getSearchMap().put("st", String.valueOf(arrl[0]));
-			pager.getSearchMap().put("et", String.valueOf(arrl[1]));
+			if(time<4){
+				pager.getSearchMap().put("st", String.valueOf(arrl[0]));
+				pager.getSearchMap().put("et", String.valueOf(arrl[1]));
+			}
 		}
 		if(NumberUtils.isValid(baiduCode)){
 			pager.getSearchMap().put("baiduCode", String.valueOf(baiduCode));
