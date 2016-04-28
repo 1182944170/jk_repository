@@ -47,10 +47,10 @@
 				        <td><span class="gray center">${tagUtils.formatDate(u.outtime!)}</span></td>
 				   
 				        <td><span class="gray center">${tagUtils.formatDate(u.nowforetime!)}</span></td>
-				       <#if u.type == 1 >
+				       <#if u.type == 2 >
 						<td><span class="gray center" style="color:Green"><b>已审核</b></span></td>
 						</#if>
-						<#if u.type == 0 >
+						<#if u.type == 1 >
 						<td><span class="gray center" style="color:red"><b>未审核</b></span></td>
 						</#if>
 						<#if u.bm_num == 1 >

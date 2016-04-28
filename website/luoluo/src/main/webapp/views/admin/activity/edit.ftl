@@ -161,10 +161,10 @@ function selectMap(){
 
 <div class="form-group">
 	<div class="col-md-offset-3 col-md-9">
-		<button class="btn btn-info" type="submit"><i class="icon-ok bigger-110"></i>		<#if oop.type==0> 
+		<button class="btn btn-info" type="submit"><i class="icon-ok bigger-110"></i>		<#if oop.type==1> 
 		审核
 		</#if>
-		<#if oop.type==1> 
+		<#if oop.type==2> 
 		取消审核
 		</#if>		
 

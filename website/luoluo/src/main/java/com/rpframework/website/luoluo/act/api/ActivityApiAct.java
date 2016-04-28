@@ -153,7 +153,7 @@ public class ActivityApiAct extends BaseAct{
 				pager.getSearchMap().put("other", String.valueOf("other"));
 			}
 		}
-		pager.getSearchMap().put("type", "1");//这是客户端的请求 只允许查询审核通过的数据
+		pager.getSearchMap().put("type", "2");//这是客户端的请求 只允许查询审核通过的数据
 		//service.getPagerTest(pager);
 		service.getpager(pager);
 		if(remark!=null && "Y".equals(remark.toUpperCase()))

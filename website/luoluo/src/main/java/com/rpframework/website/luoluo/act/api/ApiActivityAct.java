@@ -470,7 +470,7 @@ public class ApiActivityAct extends BaseAct{
 			} */
 			//缺活动图片
 			activity.setActivitycontent(activitycontent);
-			activity.setType(0);
+			activity.setType(1);//
 			activity.setTypeok(1);
 			activity.setZhuangttai(type);
 			activity.setLng(lng);
@@ -555,7 +555,7 @@ public class ApiActivityAct extends BaseAct{
 					} */
 					//缺活动图片
 					activity.setActivitycontent(activitycontent);
-					activity.setType(0);
+					activity.setType(1);
 					activity.setZhuangttai(type);
 					activity.setLng(lng);
 					activity.setLat(lat);
@@ -566,6 +566,98 @@ public class ApiActivityAct extends BaseAct{
 						json.addProperty("error", false);
 					} 
 					return json;
+	}
+	//编辑的时候将值取出来
+	@RequestMapping("/activity_edit")
+	public @ResponseBody JsonElement activityEdit(@RequestParam(value = "id",required=false) Integer id){//活动的id
+		JsonObject json = new  JsonObject();
+		Activity t =  activityService.select(id);
+		if(t!=null && t.getTypeok() == 0){
+			//查看是否有人报名
+			List<Activitypicture> list = activitypictureSercice.queryByAcitvity(t.getId());
+			if(list!=null && list.size()>0){
+				json.addProperty("succ", false);
+				json.addProperty("msg", "不可更改,活动已经有人报名！");
+			}
+			//没人报名 且是第一次更改
+			json.addProperty("succ", true);
+			json.addProperty("msg", "可以编辑!");
+			json.add("remark", getJsonInfo());
+			json.add("data", getActivityDetail(t));
+		}else{
+			json.addProperty("succ", false);
+			json.addProperty("msg", "不可更改,您已更改过一次！");
+		}
+		
+		return json;
+	}
+	
+	
+	public JsonElement getActivityDetail(Activity t) {
+		JsonObject json = new JsonObject();
+		/**
+		 * 活动封面（图片数组）
+		 * 活动名称
+		 * 活动类别
+		 * 活动地址 （如果没换地址 经纬度不更改）
+		 * 活动人数
+		 * 开始时间
+		 * 结束时间
+		 * 男生费用 
+		 * 女生费用 
+		 * 儿童费用 
+		 * 费用类型
+		 * 内容编辑（图片数组）
+		 * 内容编辑内容
+		 */
+		json.addProperty("id", t.getId());
+		json.addProperty("cover", t.getCover());
+		json.addProperty("name", t.getActivityname());
+		json.addProperty("category", t.getActivitycategory());
+		json.addProperty("location", t.getActivitylocation());
+		json.addProperty("number", t.getNumber());
+		json.addProperty("starttime", t.getStarttime());
+		json.addProperty("outtime", t.getOuttime());
+		json.addProperty("old", t.getOld_expense());
+		json.addProperty("children", t.getChildren_expense());
+		json.addProperty("girl", t.getGril_expense()); 
+		json.addProperty("zhuangtai", t.getZhuangttai());//确定谁收费 费用类型
+		json.addProperty("content", t.getActivitycontent());
+		json.addProperty("picture", t.getActivitypicture());
+		return json;
+	}
+	public JsonElement getJsonInfo() {
+		JsonObject json = new JsonObject();
+		/**
+		 * 活动封面（图片数组）
+		 * 活动名称
+		 * 活动类别
+		 * 活动地址 （如果没换地址 经纬度不更改）
+		 * 活动人数
+		 * 开始时间
+		 * 结束时间
+		 * 男生费用 
+		 * 女生费用 
+		 * 儿童费用 
+		 * 费用类型
+		 * 内容编辑（图片数组）
+		 * 内容编辑内容
+		 */
+		json.addProperty("id", "id");
+		json.addProperty("cover", "活动封面");
+		json.addProperty("name", "活动名称");
+		json.addProperty("category", "活动类别");
+		json.addProperty("location", "活动地址");
+		json.addProperty("number", "活动人数");
+		json.addProperty("starttime","开始时间");
+		json.addProperty("outtime","结束时间");
+		json.addProperty("old", "男生费用");
+		json.addProperty("children", "儿童费用 ");
+		json.addProperty("girl", "女生费用"); 
+		json.addProperty("zhuangtai", "费用类型");//确定谁收费 费用类型
+		json.addProperty("content", "内容编辑内容");
+		json.addProperty("picture", "内容编辑（图片数组）");
+		return json;
 	}
 	/*
 	 * 删除

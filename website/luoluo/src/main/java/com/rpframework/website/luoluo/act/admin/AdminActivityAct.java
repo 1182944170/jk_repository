@@ -196,9 +196,9 @@ public class AdminActivityAct extends AdminAct{
 		activity=activityService.selectcal(activity.getId());
 
 		if(activity.getType()==1){
-			activity.setType(0);
+			activity.setType(2);
 			activityService.updatedo(activity);
-		}else if(activity.getType()==0){
+		}else if(activity.getType()==2){
 			activity.setType(1);
 			activityService.updatedo(activity);
 		}
