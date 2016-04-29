@@ -86,7 +86,7 @@ public class TestPayAct {
 						json.addProperty("out_trade_no", orderId);//订单号
 						json.addProperty("subject", ClaName);//订单名
 						json.addProperty("body", Activityname);//订单内容
-						json.addProperty("total_fee",money);//订单价格
+						json.addProperty("total_fee",money*1.03);//订单价格
 						//json.addProperty("total_fee",0.1);//订单价格
 					
 						if(memo!=null && "YES".equals(memo.toUpperCase())){
