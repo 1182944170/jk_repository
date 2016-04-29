@@ -123,7 +123,6 @@ $(document).ready(function(){
 			},
 			url:{
 				required: true,
-				number:true
 			},
 			iconFile:{
 				required: true
