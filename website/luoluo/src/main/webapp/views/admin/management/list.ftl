@@ -73,10 +73,15 @@ $(function (){
 					<tr class="ff">
 						<td><span class="gray center">${u.ordernumber!}</span></td>
 						<td><span class="gray center">
-							${u.activity.activityname}
+							<#if u.activity ??>
+								${u.activity.activityname}
+							</#if>
 						</span></td>
 						<td><span class="gray center">
-							${u.activity.activitylocation}
+							<#if u.activity ??>
+								${u.activity.activitylocation}
+							</#if>
+							
 						</span></td>
 						<td><span class="gray center">
 							${u.myld}
