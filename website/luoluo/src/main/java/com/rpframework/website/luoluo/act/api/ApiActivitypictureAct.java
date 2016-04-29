@@ -221,7 +221,7 @@ public class ApiActivitypictureAct extends BaseAct{
 	public JsonObject wxPay(String orderId, String ClaName, Double money) {
 		JsonObject json = new JsonObject();
 		System.out.println(" =============》预付款开始:");
-		Double d = money*100*1.03;
+		Double d = money*100;
 		Map<String, String> retMap = testUnifiedorder(orderId,ClaName,String.valueOf(d.intValue()));
         System.out.println(" =============》预付款结束:");
         System.out.println(WXpayCore.isRetSuccess(retMap)); // 判断统一下单（预支付）接口是否成功

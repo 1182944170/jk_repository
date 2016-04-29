@@ -611,6 +611,7 @@ public class ApiActivityAct extends BaseAct{
 		 * 内容编辑内容
 		 */
 		json.addProperty("id", t.getId());
+		json.addProperty("sponsorid", t.getSponsorid());
 		json.addProperty("cover", t.getCover());
 		json.addProperty("name", t.getActivityname());
 		json.addProperty("category", t.getActivitycategory());
