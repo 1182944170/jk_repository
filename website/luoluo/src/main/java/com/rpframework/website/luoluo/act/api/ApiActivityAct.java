@@ -150,7 +150,8 @@ public class ApiActivityAct extends BaseAct{
 			throw new APICodeException(-4, "你还没登陆!");
 		}
 		json.addProperty("id", activity.getId());
-		if(user.getId() == activity.getSponsorid()){
+		Sponsorlis sp = sponsorSercice.seletOnesponsor(user.getId());
+		if(sp.getId() == activity.getSponsorid()){
 			json.addProperty("join",2);
 		}else
 		json.addProperty("join",activityService.doIsJoin(activiid,user.getId()));//是否能报名 1能报名 2不能报名

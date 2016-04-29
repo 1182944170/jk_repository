@@ -96,7 +96,7 @@
 	</select>
 
 	<select id="isJoinByUser" resultType="Integer">
-			select count(*) from activity_registration WHERE sponsorld = #{0} and myld = #{1} and type = 1
+			select count(*) from activity_registration WHERE sponsorld = #{0} and myld = #{1} and type = 2
 	</select>
 	<select id="doJoinNumber" resultType="Integer">
 			select count(*) from activity_registration WHERE sponsorld = #{0}
