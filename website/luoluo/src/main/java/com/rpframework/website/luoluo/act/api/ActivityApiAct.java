@@ -326,10 +326,12 @@ public class ActivityApiAct extends BaseAct{
 			obj.addProperty("age", u.getAge());//0男 1女
 			Activity a = service.select(li.getSponsorld());
 			if(a!=null && a.getSponsorid() == user.getId()){
-				obj.addProperty("tel", u.getPhone());
+				obj.addProperty("tel", u.getPhone());//电话
 				obj.addProperty("insure", li.getInsure());//投保证件
 				obj.addProperty("money", li.getMonely());//投保金额
-				obj.addProperty("info", li.getMood());//投保金额
+				obj.addProperty("info", li.getMood());//备注
+				obj.addProperty("info", li.getEmergencyname());//紧急联系人
+				obj.addProperty("info", li.getEmergencyphone());//紧急联系电话
 			}else{
 				obj.addProperty("tel", "");
 				obj.addProperty("insure", "");//投保证件
