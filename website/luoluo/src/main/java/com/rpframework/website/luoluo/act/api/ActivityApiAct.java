@@ -329,7 +329,7 @@ public class ActivityApiAct extends BaseAct{
 				obj.addProperty("tel", u.getPhone());
 				obj.addProperty("insure", li.getInsure());//投保证件
 				obj.addProperty("money", li.getMonely());//投保金额
-				obj.addProperty("info", "");//投保金额
+				obj.addProperty("info", li.getMood());//投保金额
 			}else{
 				obj.addProperty("tel", "");
 				obj.addProperty("insure", "");//投保证件
