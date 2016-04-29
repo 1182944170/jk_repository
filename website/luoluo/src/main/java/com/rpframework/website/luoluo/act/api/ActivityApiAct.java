@@ -328,6 +328,7 @@ public class ActivityApiAct extends BaseAct{
 			obj.addProperty("money", li.getMonely());//投保金额
 			if(a!=null && a.getSponsorid() == user.getId()){
 				obj.addProperty("tel", u.getPhone());//电话
+				obj.addProperty("insureName", li.getInsurenName());//投保人
 				obj.addProperty("insure", li.getInsure());//投保证件
 				obj.addProperty("info", li.getMood());//备注
 				obj.addProperty("linkman", li.getEmergencyname());//紧急联系人
