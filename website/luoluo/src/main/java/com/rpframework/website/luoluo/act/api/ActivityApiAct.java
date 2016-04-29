@@ -330,13 +330,15 @@ public class ActivityApiAct extends BaseAct{
 				obj.addProperty("insure", li.getInsure());//投保证件
 				obj.addProperty("money", li.getMonely());//投保金额
 				obj.addProperty("info", li.getMood());//备注
-				obj.addProperty("info", li.getEmergencyname());//紧急联系人
-				obj.addProperty("info", li.getEmergencyphone());//紧急联系电话
+				obj.addProperty("linkman", li.getEmergencyname());//紧急联系人
+				obj.addProperty("linktel", li.getEmergencyphone());//紧急联系电话
 			}else{
 				obj.addProperty("tel", "");
 				obj.addProperty("insure", "");//投保证件
 				obj.addProperty("money", "");//投保金额
 				obj.addProperty("info", "");//投保金额
+				obj.addProperty("linkman", "");//紧急联系人
+				obj.addProperty("linktel", "");//紧急联系电话
 			}
 			array.add(obj);
 		}
