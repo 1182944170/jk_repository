@@ -67,6 +67,8 @@ public class Activity {
 	private String city; //地址
 	@FieldMapperAnnotation
 	private Integer zhuangttai; //地址
+	@FieldMapperAnnotation
+	Integer typeopp; //地址
 	
 	private Integer bm_num; //纬度
 	private Double juli; //纬度
@@ -324,6 +326,15 @@ public class Activity {
 	public void setJoinNumber(Integer joinNumber) {
 		this.joinNumber = joinNumber;
 	}
+
+	public Integer getTypeopp() {
+		return typeopp;
+	}
+
+	public void setTypeopp(Integer typeopp) {
+		this.typeopp = typeopp;
+	}
+
 
 
 	

@@ -53,12 +53,12 @@
 						<#if u.type == 1 >
 						<td><span class="gray center" style="color:red"><b>未审核</b></span></td>
 						</#if>
-						<#if u.bm_num == 1 >
+						<#if u.typeopp == 2 >
 						<td>
 							<a class="green" href="${ctx}/admin/spons/${u.sponsorid}/edit${suffix}" ><span class="gray center" style="color:Green"><b>已审核</b></span></a>
 						</td>
 						</#if>
-						<#if u.bm_num == 0 >
+						<#if u.typeopp == 1 >
 						<td>
 							<a class="green" href="${ctx}/admin/spons/${u.sponsorid}/edit${suffix}" ><span class="gray center" style="color:red"><b>未审核</b></span></a>
 						</td>

@@ -74,6 +74,7 @@ public class AdminActivityAct extends AdminAct{
 				bm = bm + li.getOldboy()+li.getChindenboy()+li.getGrilexpense();
 				act.setBm_num(bm);
 			}
+			act.setTypeopp(sponsorlis.getTypeopp());
 		}
 		model.put("cal", cal);
 		model.put("pager", pager);

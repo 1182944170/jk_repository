@@ -174,15 +174,15 @@ function selectMap(){
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 	<label class="blue">
-		<input  type="radio" name="typeopp" id="typeopp" value="1" class="ace"  />
+		<input  type="radio" name="typeopp" id="typeopp" value="2" class="ace"  />
 		<span class="lbl"> 启用</span>
 	</label>
 	<label class="red">
-		<input  type="radio" name="typeopp" id="typeopp" value="2" class="ace"  />
+		<input  type="radio" name="typeopp" id="typeopp" value="3" class="ace"  />
 		<span class="lbl"> 未通过</span>
 	</label>
 	<label class="red">
-		<input  type="radio" name="typeopp" id="typeopp" value="0" class="ace"  />
+		<input  type="radio" name="typeopp" id="typeopp" value="1" class="ace"  />
 		<span class="lbl"> 禁用</span>
 	</label>
 
