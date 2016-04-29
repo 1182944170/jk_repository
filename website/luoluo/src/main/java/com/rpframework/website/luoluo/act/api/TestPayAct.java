@@ -9,19 +9,25 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.helpers.MessageFormatter;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import sun.print.resources.serviceui;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.rpframework.core.utils.SpringUtils;
 import com.rpframework.module.common.pay.alipay.config.AlipayConfig;
 import com.rpframework.module.common.pay.alipay.util.AlipayNotify;
 import com.rpframework.module.common.pay.wxpay.api.WXpayApi;
 import com.rpframework.module.common.pay.wxpay.util.WXpayCore;
+import com.rpframework.module.common.springmvc.event.OrderPaySuccEvent;
+import com.rpframework.module.common.springmvc.event.vo.OrderPaySuccVO;
 import com.rpframework.utils.NumberUtils;
 import com.rpframework.website.luoluo.domain.Activity;
 import com.rpframework.website.luoluo.domain.Activitypicture;
@@ -156,6 +162,7 @@ public class TestPayAct {
 					Activitypicture  cc= activitypictureSercice.selecttrade(out_trade_no);
 					
 					cc.setTypeOrder(2);
+					cc.setType(2);//回调成功 更改状态 
 					activitypictureSercice.updatedo(cc);
 					
 					
@@ -195,13 +202,22 @@ public class TestPayAct {
 		//	}
 			return ret;
 		} 	
-		
-		@RequestMapping(value="/wx_pay_notify",produces = "application/json; charset=utf-8")
-		public String wxPayNotify(HttpServletRequest request) throws UnsupportedEncodingException {
-			String rc = new String(request.getParameter("result_code").getBytes("ISO-8859-1"),"UTF-8");
-			if("SUCCESS".equals(rc)){
-				System.out.println(" =============回调成功====================");
-				String out_trade_no = new String(request.getParameter("out_trade_no").getBytes("ISO-8859-1"),"UTF-8");
+		@RequestMapping("wx_pay_notify")
+		public @ResponseBody String wxNotify(@RequestBody String body,
+				HttpServletRequest request) throws UnsupportedEncodingException {
+			String ret = "<xml><return_code><![CDATA[{}]]></return_code> <return_msg><![CDATA[{}]]></return_msg></xml>";
+			System.out.println(body);
+			//PAY.info("wxNotify--" + body);
+			Map<String, String> retMap = WXpayCore.getRetMap(body);
+			boolean retSuccess = WXpayCore.isRetSuccess(retMap);
+			
+			if(retSuccess) {
+				double total_fee = NumberUtils.parseDouble(retMap.get("total_fee"));
+				total_fee /= 100; //分转化为元
+				
+				//——请根据您的业务逻辑来编写程序（以下代码仅作参考）——
+				String out_trade_no = retMap.get("out_trade_no");
+				
 				Activitypicture t = activitypictureSercice.selecttrade(out_trade_no);
 				if(t==null){
 					System.out.println("===================报名不存在=========================");			
@@ -214,8 +230,17 @@ public class TestPayAct {
 						System.out.println("===================更改状态失败=========================");			
 					}
 				}
+				
+				try {
+					ret = MessageFormatter.format(ret, "SUCCESS", "OK");
+				} catch (Exception e) {
+					e.printStackTrace();
+					ret = MessageFormatter.format(ret, "FAIL", e.getLocalizedMessage());
+				}
+				
+			} else {
+				ret = MessageFormatter.format(ret, "FAIL", "校验不通过!");
 			}
-			System.out.println("===================回调验证失败=========================");			
-			return "";
+			return ret;
 		}
 }
