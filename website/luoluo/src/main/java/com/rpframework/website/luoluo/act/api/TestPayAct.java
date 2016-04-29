@@ -194,6 +194,15 @@ public class TestPayAct {
 					weifu.setRemark(dd.getClaName()+"- 支付");
 					monlyjournalsService.insertdo(weifu);
 				
+				}else{
+					Activitypicture  cc= activitypictureSercice.selecttrade(out_trade_no);
+					if(cc !=null){
+						boolean flag = activitypictureSercice.delete(cc);
+						if(flag){
+							System.out.println("删除无效订单成功~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+						}
+					}
+					
 				}
 				ret = "success";	//请不要修改或删除
 				//////////////////////////////////////////////////////////////////////////////////////////
@@ -239,6 +248,14 @@ public class TestPayAct {
 				}
 				
 			} else {
+				String out_trade_no = retMap.get("out_trade_no");
+				Activitypicture  cc= activitypictureSercice.selecttrade(out_trade_no);
+				if(cc !=null){
+					boolean flag = activitypictureSercice.delete(cc);
+					if(flag){
+						System.out.println("校验不通过,删除无效订单成功~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+					}
+				}
 				ret = MessageFormatter.format(ret, "FAIL", "校验不通过!");
 			}
 			return ret;
