@@ -43,7 +43,11 @@
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
 			<span class="block input-icon width-40">
-				<input type="text" name="url" id="url" value="" class="form-control" placeholder="幻灯片URL"/>
+				<#if slideshow??>
+					<input type="text" name="url" id="url" value="${slideshow.url!}" class="form-control" placeholder="幻灯片URL"/>
+				<#else>
+					<input type="text" name="url" id="url" value="" class="form-control" placeholder="幻灯片URL"/>
+				</#if>
 				<i class="icon-user"></i>
 			</span>
 		</div>
