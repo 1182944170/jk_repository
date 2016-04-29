@@ -326,17 +326,17 @@ public class ActivityApiAct extends BaseAct{
 			obj.addProperty("age", u.getAge());//0男 1女
 			Activity a = service.select(li.getSponsorld());
 			obj.addProperty("money", li.getMonely());//投保金额
+			obj.addProperty("info", li.getMood());//备注
 			if(a!=null && a.getSponsorid() == user.getId()){
 				obj.addProperty("tel", u.getPhone());//电话
 				obj.addProperty("insureName", li.getInsurenName());//投保人
 				obj.addProperty("insure", li.getInsure());//投保证件
-				obj.addProperty("info", li.getMood());//备注
 				obj.addProperty("linkman", li.getEmergencyname());//紧急联系人
 				obj.addProperty("linktel", li.getEmergencyphone());//紧急联系电话
 			}else{
 				obj.addProperty("tel", "");
+				obj.addProperty("insureName", "");//投保人
 				obj.addProperty("insure", "");//投保证件
-				obj.addProperty("info", "");//投保金额
 				obj.addProperty("linkman", "");//紧急联系人
 				obj.addProperty("linktel", "");//紧急联系电话
 			}
