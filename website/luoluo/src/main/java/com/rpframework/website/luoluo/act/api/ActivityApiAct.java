@@ -21,10 +21,12 @@ import com.rpframework.utils.NumberUtils;
 import com.rpframework.utils.Pager;
 import com.rpframework.website.luoluo.domain.Activity;
 import com.rpframework.website.luoluo.domain.Activitypicture;
+import com.rpframework.website.luoluo.domain.Sponsorlis;
 import com.rpframework.website.luoluo.domain.User;
 import com.rpframework.website.luoluo.exception.APICodeException;
 import com.rpframework.website.luoluo.service.ActivityService;
 import com.rpframework.website.luoluo.service.ActivitypictureSercice;
+import com.rpframework.website.luoluo.service.SponsorService;
 import com.rpframework.website.luoluo.service.UserService;
 
 @Controller
@@ -33,6 +35,7 @@ public class ActivityApiAct extends BaseAct{
 	@Resource ActivityService service;
 	@Resource UserService userService;
 	@Resource ActivitypictureSercice joinService;
+	@Resource SponsorService spService;
 	
 	/*  #{0} lng 经度
 	    #{1} lat 纬度
@@ -327,10 +330,10 @@ public class ActivityApiAct extends BaseAct{
 			Activity a = service.select(li.getSponsorld());
 			obj.addProperty("money", li.getMonely());//投保金额
 			obj.addProperty("info", li.getMood());//备注
-			if(a!=null && a.getSponsorid() == user.getId()){
+			Sponsorlis sp = spService.select(a.getSponsorid());
+			if(sp!=null && sp.getUserid() == user.getId()){
 				obj.addProperty("tel", u.getPhone());//电话
-				obj.addProperty("insureName", li.getInsurenName());//投保人
-				obj.addProperty("insure", li.getInsure());//投保证件
+				obj.add("insures", arr(li.getInsurenName(),li.getInsure()));//投保人
 				obj.addProperty("linkman", li.getEmergencyname());//紧急联系人
 				obj.addProperty("linktel", li.getEmergencyphone());//紧急联系电话
 			}else{
@@ -346,4 +349,39 @@ public class ActivityApiAct extends BaseAct{
 		return json;
 	}
 	
+	public JsonArray arr(String names, String cards){
+		JsonArray arr = new JsonArray();
+		if(names.indexOf(",")>0 && cards.indexOf(",")>0){
+			String name[] = names.split(",");
+			String card[] = cards.split(",");
+			if(name.length == card.length){//因提交时没做限制 避免数组越界
+				for(int i = 0 ; i<name.length;i++){
+					JsonObject obj = new JsonObject();
+					obj.addProperty("name", name[i]);
+					obj.addProperty("card", card[i]);
+					arr.add(obj);
+				}
+			}else if(name.length > card.length){
+				for(int i = 0 ; i<card.length;i++){
+					JsonObject obj = new JsonObject();
+					obj.addProperty("name", name[i]);
+					obj.addProperty("card", card[i]);
+					arr.add(obj);
+				}
+			}else{
+				for(int i = 0 ; i<name.length;i++){
+					JsonObject obj = new JsonObject();
+					obj.addProperty("name", name[i]);
+					obj.addProperty("card", card[i]);
+					arr.add(obj);
+				}
+			}
+		}else{
+			JsonObject obj = new JsonObject();
+			obj.addProperty("name", names);
+			obj.addProperty("card", cards);
+			arr.add(obj);
+		}
+		return arr;
+	}
 }

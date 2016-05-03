@@ -23,7 +23,7 @@ import com.rpframework.website.luoluo.domain.Sponsorlis;
 
 @Service
 public class SponsorService extends BaseService{
-	@Resource ISponsorDao isponsorDao;
+	public @Resource ISponsorDao isponsorDao;
 	@Resource FileService fileService;
 	/**
 	 * 查询整个表

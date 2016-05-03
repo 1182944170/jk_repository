@@ -325,7 +325,7 @@ public class ApiSponsorAct extends BaseAct{
 			String corle=sponsorService.addPhotos(iconFile);
 			ss.setUserinformation("["+corle+"]");*/
 			ss.setActivityTime(System.currentTimeMillis()/1000);	
-			ss.setTypeopp(0);
+			ss.setTypeopp(1);
 			sponsorService.updatedo(ss);
 			json.addProperty("succ", "修改成功");
 			return json;

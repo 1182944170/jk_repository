@@ -50,10 +50,10 @@
 				        <#if u.type==2>
 				        	<td><span class="gray center">公司</span></td>
 				        </#if>
-				       <#if u.typeopp == 1 >
+				       <#if u.typeopp == 2 >
 						<td><span class="gray center" style="color:Green"><b>已审核</b></span></td>
 						</#if>
-						<#if u.typeopp == 0 >
+						<#if u.typeopp == 1 >
 						<td><span class="gray center" style="color:red"><b>未审核</b></span></td>
 						</#if>
 				        
