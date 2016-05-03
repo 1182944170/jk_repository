@@ -29,7 +29,7 @@
 		<if test = "page.searchMap.type != null">
 		 and t1.type = #{page.searchMap.type}
             and t1.sponsorid in (
-      			select s.id from sponsor s where s.typeopp = 1
+      			select s.id from sponsor s where s.typeopp = 2
             )
 		</if>
 		<!-- 按类型分类 1户外 2旅行 #{param1}-->
