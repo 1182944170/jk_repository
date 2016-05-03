@@ -25,7 +25,7 @@ import com.rpframework.module.common.event.ISMSEvent;
 public abstract class SMSAbstractSendChannel1Event implements ISMSEvent {
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
 	protected String charset = "UTF-8";
-	protected String serverIP = "222.73.117.156";
+	protected String serverIP = "222.73.117.158";
 	protected String serverPort = "80";
 	protected String accout = "vip_xdem";
 	protected String pswd = "Tch123456";
