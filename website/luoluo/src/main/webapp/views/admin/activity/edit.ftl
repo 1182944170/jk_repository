@@ -86,7 +86,7 @@ function selectMap(){
 	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">活动人数:</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
-			<span class="block input-icon width-40">
+			<span class="block input-icon width-20">
 				<input type="text" readonly id="name" value="${(oop.number)!''}" maxlength="32" class="form-control" />
 				<i class="icon-user"></i>
 			</span>
@@ -106,10 +106,10 @@ function selectMap(){
 	</div>
 </div>
 <div class="form-group">
-	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">成人费用:</label>
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">男士费用:</label>
 	<div class="col-xs-12 col-sm-9" >
 		<div class="clearfix" >
-			<span class="block input-icon width-40">
+			<span class="block input-icon width-20">
 				<input type="text" readonly id="name" value="${(oop.old_expense)!''}" maxlength="32" class="form-control" />
 				<i class="icon-user"></i>
 			</span>
@@ -120,7 +120,7 @@ function selectMap(){
 	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">女孩费用:</label>
 	<div class="col-xs-12 col-sm-9" >
 		<div class="clearfix" >
-			<span class="block input-icon width-40">
+			<span class="block input-icon width-20">
 				<input type="text" readonly id="name" value="${(oop.gril_expense)!''}" maxlength="32" class="form-control" />
 				<i class="icon-user"></i>
 			</span>

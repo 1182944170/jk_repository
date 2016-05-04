@@ -139,36 +139,39 @@ $.fn.datebox.defaults.parser = function(s){
 	</div>
 </div>
 <div class="form-group">
-	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">成人费用:</label>
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">男士费用(￥):</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
-			<span class="block input-icon width-40">
-				<input type="text" name="old_expense" id="old_expense" value="${(oop.old_expense)!''}" maxlength="32" class="form-control" onchange="" />/元
+			<span class="block input-icon width-20">
+				<input type="text" name="old_expense" id="old_expense" value="${(oop.old_expense)!''}" maxlength="32" class="form-control" onchange="" />
 				<!--<i class="icon-user"></i>-->
 			</span>
 		</div>
 	</div>
 </div>
 <div class="form-group">
-	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">（儿童费用）:</label>
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">女士费用(￥):</label>
 	<div class="col-xs-12 col-sm-9">
 		<div class="clearfix">
-			<span class="block input-icon width-40">
-				<input type="text" name="children_expense" id="children_expense" value="" maxlength="32" class="form-control" placeholder="（备选）"/>/元
-				<!--<i class="icon-user"></i>-->
-			</span>
-		</div>
-	</div>
-	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">（女孩费用）:</label>
-	<div class="col-xs-12 col-sm-9">
-		<div class="clearfix">
-			<span class="block input-icon width-40">
-				<input type="text" name="gril_expense" id="gril_expense" value="" maxlength="32" class="form-control" placeholder="（备选）"/>/元
+			<span class="block input-icon width-20">
+				<input type="text" name="gril_expense" id="gril_expense" value="" maxlength="32" class="form-control" placeholder=""/>
 				<!--<i class="icon-user"></i>-->
 			</span>
 		</div>
 	</div>
 </div>
+<div class="form-group">
+	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">儿童费用(￥):</label>
+	<div class="col-xs-12 col-sm-9">
+		<div class="clearfix">
+			<span class="block input-icon width-20">
+				<input type="text" name="children_expense" id="children_expense" value="" maxlength="32" class="form-control" placeholder=""/>
+				<!--<i class="icon-user"></i>-->
+			</span>
+		</div>
+	</div>
+</div>
+
 
 <#assign fieldName="activitypicture" />
 <#assign fieldLabel="活动图片" />
