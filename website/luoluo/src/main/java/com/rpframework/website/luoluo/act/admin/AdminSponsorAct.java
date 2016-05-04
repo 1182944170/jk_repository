@@ -216,7 +216,7 @@ public class AdminSponsorAct extends AdminAct{
 				userOne.setTypeopp(span.getTypeopp());
 				userOne.setMsg(span.getMsg());
 				sponsorService.updatedo(userOne);
-				if(userOne.getType()==1){
+				if(userOne.getType()==2){
 					setInfoMsg("审核成功！", attr);
 					return redirect("/admin/actcy/list");
 				}

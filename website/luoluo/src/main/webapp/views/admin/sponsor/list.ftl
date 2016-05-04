@@ -9,13 +9,13 @@
 						
 						<th>真实头像</th>
 						<th>领队电话</th>
-						
+						<th>俱乐部名称</th>
 				<#if se??>
 						<th>公司姓名</th>
 						<th>公司负责手机</th>
 						<th>公司电话</th>
-						
 						<th>公司信息</th>
+						
 				</#if>		
 						<th>类型</th>
 						<th>状态</th>
@@ -33,7 +33,7 @@
 						
   						<th><img src="${tagUtils.getFileFullPath(u.userpicture!)}" width="90px" height="40px"/></th>
 							<td><span class="gray center">${u.userphone!}</span></td>
-					        
+					         <td><span class="gray center">${u.name!}</span></td>
 				        <#if u.type==2>
 							<td><span class="gray center">${u.companyname!}</span></td>
 							<td><span class="gray center">${u.usertelephone!}</span></td>
