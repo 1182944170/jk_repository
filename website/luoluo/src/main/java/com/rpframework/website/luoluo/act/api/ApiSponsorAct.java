@@ -174,6 +174,7 @@ public class ApiSponsorAct extends BaseAct{
 		sponsor.setResponname(responname);
 		sponsor.setEntintroduction(entintroduction);
 		sponsor.setType(2);
+		sponsor.setTypeopp(1);
 		sponsor.setUserpicture(userpicture);
 		sponsor.setActivityTime(System.currentTimeMillis()/1000);
 		sponsor.setResponsibility(responsibility);
