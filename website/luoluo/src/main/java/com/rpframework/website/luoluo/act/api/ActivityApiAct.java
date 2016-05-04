@@ -2,6 +2,7 @@ package com.rpframework.website.luoluo.act.api;
 
 import java.util.List;
 
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
@@ -16,6 +17,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.rpframework.core.BaseAct;
 import com.rpframework.core.utils.TagUtils;
+import com.rpframework.module.common.domain.Slideshow;
+import com.rpframework.module.common.service.SlideshowService;
 import com.rpframework.utils.DateUtils;
 import com.rpframework.utils.NumberUtils;
 import com.rpframework.utils.Pager;
@@ -36,6 +39,7 @@ public class ActivityApiAct extends BaseAct{
 	@Resource UserService userService;
 	@Resource ActivitypictureSercice joinService;
 	@Resource SponsorService spService;
+	@Resource SlideshowService slideshowService;
 	
 	/*  #{0} lng 经度
 	    #{1} lat 纬度
@@ -383,5 +387,77 @@ public class ActivityApiAct extends BaseAct{
 			arr.add(obj);
 		}
 		return arr;
+	}
+	
+	@RequestMapping(value="/detail" , produces = "application/json; charset=utf-8")
+	public @ResponseBody String detail(	
+			@RequestParam(value="id",required = false ) Integer id,//查我发布的
+			@RequestParam(value = "callback",required = false ) String callback,
+			HttpSession session
+			){
+	    if(NumberUtils.isNotValid(id)){
+	    	throw new APICodeException(-6, "id为必填参数!");
+	    }
+//    	Interact t = service.select(id);
+	    Activity t = service.select(id);
+    	JsonObject obj = new JsonObject();
+    	obj.add("remark", getJsonRemark());
+    	if(t!=null){
+    		obj.addProperty("id", t.getId());
+    		obj.addProperty("name", t.getActivityname());
+    		obj.addProperty("address", t.getActivitylocation());
+    		String date = "";
+    		obj.addProperty("date","");
+    		obj.addProperty("number", t.getNumber());
+    		obj.addProperty("manFee", t.getOld_expense());
+    		obj.addProperty("girlFee",t.getGril_expense() );
+    		obj.addProperty("childrenFee", t.getChildren_expense());
+    		obj.addProperty("activityNo", t.getActivitynumber());
+    		obj.addProperty("infomation", t.getActivitycontent());
+    		int bm = 0;
+			List<Activitypicture> apList = joinService.queryByAcitvity(t.getId());
+			for(Activitypicture ap : apList){
+				bm = bm+ap.getOldboy()+ap.getChindenboy()+ap.getGrilexpense();//每条报名的总人数
+			}
+    		obj.addProperty("joinNumber", bm);
+    		Sponsorlis sp = spService.select(id);
+    		if(sp!=null){
+    			obj.addProperty("sponsor", sp.getTypeopp()==2 ? "已审核" : "未审核");
+    			obj.addProperty("sponsorFinish",service.getFinishCount());
+    		}else{
+    			obj.addProperty("sponsor", 0);//主办方都未通过 
+    			obj.addProperty("sponsorFinish",0);//
+    		}
+    		List<Slideshow> list = slideshowService.queryEffectiveSlideshow(2);
+    		if(list!=null && list.size()>0){//数据库 没有type为2的url的情况下 是空
+    			obj.addProperty("linkurl",list.get(0).getUrl());
+    		}else{
+    			obj.addProperty("linkurl","##");
+    		}
+    	}else{
+			obj.addProperty("code", -1);
+			obj.addProperty("msg", "用户或互动无效！");
+		}
+
+		return (callback + "(" + obj + ")");
+	}
+
+	public JsonElement getJsonRemark() {
+		JsonObject obj = new JsonObject();
+		obj.addProperty("id", "活动id");
+		obj.addProperty("name", "活动名称");
+		obj.addProperty("address", "活动地点");
+		obj.addProperty("date","活动时间");
+		obj.addProperty("number","限制人数");
+		obj.addProperty("manFee", "男士费用");
+		obj.addProperty("girlFee","女士费用");
+		obj.addProperty("childrenFee", "儿童费用");
+		obj.addProperty("activityNo", "活动编号");
+		obj.addProperty("infomation","活动详情");
+		obj.addProperty("joinNumber", "已报名人数");
+		obj.addProperty("sponsor","主办方显示已审核");
+		obj.addProperty("sponsorFinish","成功举办的次数");
+		obj.addProperty("linkurl","赞助商广告地址");
+		return obj;
 	}
 }
