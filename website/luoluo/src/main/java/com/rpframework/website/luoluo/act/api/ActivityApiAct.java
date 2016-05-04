@@ -392,8 +392,7 @@ public class ActivityApiAct extends BaseAct{
 	@RequestMapping(value="/detail" , produces = "application/json; charset=utf-8")
 	public @ResponseBody String detail(	
 			@RequestParam(value="id",required = false ) Integer id,//查我发布的
-			@RequestParam(value = "callback",required = false ) String callback,
-			HttpSession session
+			@RequestParam(value = "callback",required = false ) String callback
 			){
 	    if(NumberUtils.isNotValid(id)){
 	    	throw new APICodeException(-6, "id为必填参数!");
@@ -401,13 +400,11 @@ public class ActivityApiAct extends BaseAct{
 //    	Interact t = service.select(id);
 	    Activity t = service.select(id);
     	JsonObject obj = new JsonObject();
-    	obj.add("remark", getJsonRemark());
     	if(t!=null){
     		obj.addProperty("id", t.getId());
     		obj.addProperty("name", t.getActivityname());
     		obj.addProperty("address", t.getActivitylocation());
-    		String date = "";
-    		obj.addProperty("date","");
+    		obj.addProperty("date",DateUtils.getWeekOfDate(t.getStarttime()*1000) + " " + TagUtils.formatDate(t.getStarttime()).substring(0,10));
     		obj.addProperty("number", t.getNumber());
     		obj.addProperty("manFee", t.getOld_expense());
     		obj.addProperty("girlFee",t.getGril_expense() );
@@ -438,8 +435,10 @@ public class ActivityApiAct extends BaseAct{
 			obj.addProperty("code", -1);
 			obj.addProperty("msg", "用户或互动无效！");
 		}
-
-		return (callback + "(" + obj + ")");
+    	JsonObject json = new JsonObject();
+    	json.add("remark", getJsonRemark());
+    	json.add("data", obj);
+		return (callback + "(" + json + ")");
 	}
 
 	public JsonElement getJsonRemark() {
