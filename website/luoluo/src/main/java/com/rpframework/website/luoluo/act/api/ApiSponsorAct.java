@@ -236,7 +236,7 @@ public class ApiSponsorAct extends BaseAct{
 			//领队图片
 			String iconFiletrl=sponsorService.addPhotos(iconFile);
 			ss.setUserinformation("["+iconFiletrl+"]");*/
-			ss.setTypeopp(0);
+			ss.setTypeopp(1);
 				sponsorService.updatedo(ss);
 				json.addProperty("succ", "添加成功");
 				return json;
