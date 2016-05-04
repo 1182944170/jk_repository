@@ -401,6 +401,7 @@ public class ActivityApiAct extends BaseAct{
 	    Activity t = service.select(id);
     	JsonObject obj = new JsonObject();
     	if(t!=null){
+    		obj.addProperty("code", 200);
     		obj.addProperty("id", t.getId());
     		obj.addProperty("name", t.getActivityname());
     		obj.addProperty("address", t.getActivitylocation());
@@ -428,7 +429,9 @@ public class ActivityApiAct extends BaseAct{
     		List<Slideshow> list = slideshowService.queryEffectiveSlideshow(2);
     		if(list!=null && list.size()>0){//数据库 没有type为2的url的情况下 是空
     			obj.addProperty("linkurl",list.get(0).getUrl());
+    			obj.addProperty("icon",TagUtils.getFileFullPath(list.get(0).getIcon()));
     		}else{
+    			obj.addProperty("icon","");
     			obj.addProperty("linkurl","##");
     		}
     	}else{
