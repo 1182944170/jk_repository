@@ -19,7 +19,7 @@ import com.rpframework.website.luoluo.domain.User;
 
 @Service
 public class ActivitypictureSercice extends BaseService{
-	@Resource IActivitypictureDao tActivitypictureDao;
+	public @Resource IActivitypictureDao tActivitypictureDao;
 	@Resource UserService userService;
 	@Resource SponsorService sponsorService;
 	@Resource MonlyjournallistService monlyjournalsService;

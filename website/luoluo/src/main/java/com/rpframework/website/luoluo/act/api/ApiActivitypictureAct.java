@@ -173,7 +173,8 @@ public class ApiActivitypictureAct extends BaseAct{
 				Activitypi.setTypeMonely(typeMonely);
 				Activitypi.setNewtime(System.currentTimeMillis()/1000);
 				Activitypi.setTypeOrder(1);
-				activitypictureSercice.insertdo(Activitypi);
+				Activitypi.setType(1);
+				activitypictureSercice.insert(Activitypi);
 				Activitypi.setOrdernumber(DateUtils.nowDate(DateUtils.YYYYMMDDHHMMSS) + NumberUtils.random(5)+Activitypi.getId());
 			}
 			JsonObject orderjson=new JsonObject();
@@ -182,18 +183,14 @@ public class ApiActivitypictureAct extends BaseAct{
 					if(typeMonely == 1){
 						TestPayAct ss=new TestPayAct();
 						String memo = null;
-						Activitypi.setType(1);
-						activitypictureSercice.insertdo(Activitypi);
 						return ss.orderList(Activitypi.getOrdernumber() , activity.getActivityname(),classi.getClaName(), money,memo);
 						//支付宝支付
 					} else if (typeMonely == 2) {
 						Activitypi.setType(2);
-						activitypictureSercice.insertdo(Activitypi);
+						activitypictureSercice.update(Activitypi);
 						bFlag = activitypictureSercice.bagPay(currUser.getId(), Activitypi.getId(),activity);
 					
 					} else if(typeMonely == 3){
-						Activitypi.setType(1);
-						activitypictureSercice.insertdo(Activitypi);
 						orderjson = wxPay(Activitypi.getOrdernumber(),classi.getClaName(),money);
 						return orderjson;
 						
@@ -208,7 +205,7 @@ public class ApiActivitypictureAct extends BaseAct{
 				orderjson.addProperty("zhuangtai", 1);
 				orderjson.addProperty("msg", "报名成功，线下收费！");
 				Activitypi.setType(2);
-				activitypictureSercice.updatedo(Activitypi);
+				activitypictureSercice.update(Activitypi);
 			}
 			
 		if(bFlag){
