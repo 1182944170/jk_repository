@@ -250,7 +250,7 @@ public class AdminActivityAct extends AdminAct{
 		}
 		activity.setSponsorid(1);
 		activity.setNowforetime(System.currentTimeMillis()/1000);
-		activity.setType(1);
+		activity.setType(2);
 		activity.setTypeok(0);
 		activityService.insertone(activity);
 		setInfoMsg("添加成功！", attr);
