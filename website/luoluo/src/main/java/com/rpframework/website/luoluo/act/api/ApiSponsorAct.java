@@ -276,6 +276,7 @@ public class ApiSponsorAct extends BaseAct{
 			sponsor.setUserphone(userphone);
 			sponsor.setEntintroduction(entintroduction);
 			sponsor.setType(1);
+			sponsor.setTypeopp(1);
 			sponsor.setUserpicture(userpicture);
 			sponsor.setUserinformation(userinformation);
 	//头像图片		
