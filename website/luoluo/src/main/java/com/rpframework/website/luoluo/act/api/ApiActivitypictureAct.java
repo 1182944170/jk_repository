@@ -174,8 +174,8 @@ public class ApiActivitypictureAct extends BaseAct{
 				Activitypi.setNewtime(System.currentTimeMillis()/1000);
 				Activitypi.setTypeOrder(1);
 				Activitypi.setType(1);
-				activitypictureSercice.insert(Activitypi);
 				Activitypi.setOrdernumber(DateUtils.nowDate(DateUtils.YYYYMMDDHHMMSS) + NumberUtils.random(5)+Activitypi.getId());
+				activitypictureSercice.insert(Activitypi);
 			}
 			JsonObject orderjson=new JsonObject();
 			if(activity.getZhuangttai()==0){	
